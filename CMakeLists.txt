@@ -13,6 +13,8 @@ set(CMAKE_C_EXTENSIONS OFF)
 add_library(
     bc2_wallet_core
     firmware/wallet/bc2_network.c
+    firmware/wallet/bc2_derivation.c
+    firmware/crypto/bc2_sha256.c
 )
 
 target_include_directories(
@@ -43,6 +45,10 @@ target_link_libraries(
 
 enable_testing()
 
+#
+# Network Tests
+#
+
 add_executable(
     test_bc2_network
     tests/test_bc2_network.c
@@ -57,4 +63,44 @@ target_link_libraries(
 add_test(
     NAME bc2_network_parameters
     COMMAND test_bc2_network
+)
+
+#
+# Derivation Tests
+#
+
+add_executable(
+    test_bc2_derivation
+    tests/test_bc2_derivation.c
+)
+
+target_link_libraries(
+    test_bc2_derivation
+    PRIVATE
+    bc2_wallet_core
+)
+
+add_test(
+    NAME bc2_derivation_paths
+    COMMAND test_bc2_derivation
+)
+
+#
+# SHA-256 Tests
+#
+
+add_executable(
+    test_bc2_sha256
+    tests/test_bc2_sha256.c
+)
+
+target_link_libraries(
+    test_bc2_sha256
+    PRIVATE
+    bc2_wallet_core
+)
+
+add_test(
+    NAME bc2_sha256_vectors
+    COMMAND test_bc2_sha256
 )

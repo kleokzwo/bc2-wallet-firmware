@@ -15,6 +15,8 @@ add_library(
     firmware/wallet/bc2_network.c
     firmware/wallet/bc2_derivation.c
     firmware/crypto/bc2_sha256.c
+    firmware/crypto/bc2_hash.c
+    firmware/crypto/bc2_hex.c
 )
 
 target_include_directories(
@@ -103,4 +105,44 @@ target_link_libraries(
 add_test(
     NAME bc2_sha256_vectors
     COMMAND test_bc2_sha256
+)
+
+#
+# Hash Tests
+#
+
+add_executable(
+    test_bc2_hash
+    tests/test_bc2_hash.c
+)
+
+target_link_libraries(
+    test_bc2_hash
+    PRIVATE
+    bc2_wallet_core
+)
+
+add_test(
+    NAME bc2_hash_vectors
+    COMMAND test_bc2_hash
+)
+
+#
+# Hex Tests
+#
+
+add_executable(
+    test_bc2_hex
+    tests/test_bc2_hex.c
+)
+
+target_link_libraries(
+    test_bc2_hex
+    PRIVATE
+    bc2_wallet_core
+)
+
+add_test(
+    NAME bc2_hex_conversion
+    COMMAND test_bc2_hex
 )

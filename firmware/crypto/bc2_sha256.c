@@ -177,6 +177,11 @@ void bc2_sha256_update(
     return;
   }
 
+  if (data_length == 0U)
+  {
+    return;
+  }
+
   size_t offset = 0U;
 
   context->total_length += data_length;

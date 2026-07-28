@@ -1,0 +1,17 @@
+build/
+cmake-build-*/
+.vscode/
+.idea/
+
+*.o
+*.a
+*.elf
+*.bin
+*.hex
+*.map
+*.log
+
+# KiCad
+*-backups/
+_autosave-*
+*.lck

@@ -16,6 +16,8 @@ qt_add_executable(bc2-wallet-simulator
     src/watchonlysync.h
     src/epaperwidget.cpp
     src/epaperwidget.h
+    src/simulatorhal.cpp
+    src/simulatorhal.h
     src/psbtinspectordialog.cpp
     src/psbtinspectordialog.h
 )

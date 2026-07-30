@@ -4,7 +4,7 @@
 
 Version 0.5.0 implementiert die erste echte Watch-only-Electrum-Synchronisation im Qt-6-Desktop-Simulator. Der C17-Wallet-Core bleibt die einzige Wallet- und Kryptografieimplementierung.
 
-## Neu in v0.7.0
+## Neu in v0.8.0
 
 - echte Electrum-Abfragen für öffentliche BC2-Scripthashes
 - bestätigte und unbestätigte Kontostände
@@ -84,7 +84,7 @@ Diese Version verwendet noch einen festen, veröffentlichten Testvektor. Der sp�
 - `docs/SECURITY.md` – Sicherheitsgrenzen und offene Risiken
 - `TEST-RESULTS.txt` – tatsächlich ausgeführte Prüfungen
 
-## v0.7.0 – Geräteabläufe und Sperrlogik
+## v0.8.0 – Geräteabläufe und Sperrlogik
 
 - gemeinsame C17-Zustandsmaschine für Simulator und spätere Hardware
 - Sperrbildschirm und explizite Entsperrung im Qt-Simulator
@@ -96,5 +96,19 @@ Diese Version verwendet noch einen festen, veröffentlichten Testvektor. Der sp�
 Der vollständige Plan steht in `docs/DEVICE-FLOWS-AND-LOCKING-PLAN.md`.
 
 
-## v0.7.0 PSBT-Transaktionsprüfung
+## v0.8.0 PSBT-Transaktionsprüfung
 Unterstützt PSBT v0 mit nativen P2WPKH-Inputs über witness_utxo. Zeigt Inputs, Outputs, exakte Gebühr und gegen Watch-only-Scripts geprüftes Wechselgeld. Signieren bleibt deaktiviert.
+
+
+## Hardware-Abstraktion v0.8.0
+
+Der gemeinsame C17-Core besitzt jetzt eine HAL für E-Paper, Tasten, Zeit, Zufall, nichtflüchtigen Speicher und USB. Siehe `docs/HARDWARE-ABSTRACTION-PLAN.md`.
+
+## ESP32-S3 Hardware (v0.9.0)
+Zielboard: Waveshare ESP32-S3-ePaper-1.54 (200×200). Für den Hardware-Build wird ESP-IDF 5.5.0 oder neuer benötigt:
+
+```bash
+./scripts/build-hardware.sh
+```
+
+Vor Aktivierung des physischen Displays muss die Boardrevision V1 oder V2 bestätigt werden; Waveshare kennzeichnet die Beispielprogramme als nicht austauschbar.

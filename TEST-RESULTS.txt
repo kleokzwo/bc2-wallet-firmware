@@ -1,32 +1,6 @@
-BC2 Cold Wallet v0.7.0 - Test Results
-Date: 2026-07-30
-
-Core configuration:
-  cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBC2_BUILD_SIMULATOR=OFF
-
-Core build:
-  SUCCESS
-
-CTest:
-  9/9 tests passed
-  crypto, encoding, bip39, bip32, address, sign, wallet, device_state, psbt
-
-New PSBT transaction-review coverage:
-  - PSBT v0 global unsigned transaction parsing
-  - Input prevout and witness_utxo amount parsing
-  - Multiple outputs
-  - Total input/output amount calculation
-  - Exact fee calculation
-  - External recipient amount calculation
-  - Change recognition against a known watch-only script
-  - P2WPKH address rendering
-  - malformed/truncated input rejection
-
-Qt simulator:
-  Source and CMake integration completed.
-  Binary build not executed in this environment because Qt 6 development packages are unavailable.
-
-Security status:
-  NOT production ready. Signing remains disabled.
-  Supported review profile is PSBT v0 with native P2WPKH inputs carrying witness_utxo.
-  non_witness_utxo, PSBT v2, Taproot, multisig and final signing are not yet supported.
+BC2 Cold Wallet v0.9.0
+Host build: ausgeführt
+Host tests: 11/11 bestanden
+Qt-Simulator: Quellcode auf 200x200 Displayreferenz aktualisiert; Build in dieser Umgebung nicht ausgeführt (Qt SDK nicht installiert).
+ESP-IDF hardware project: strukturell vollständig; Build in dieser Umgebung nicht ausgeführt (ESP-IDF Toolchain nicht installiert).
+Sicherheitsstatus: Hardware bring-up only; kein Seed, keine PIN-Speicherung, keine Signierung.

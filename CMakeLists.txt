@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 
 project(
     bc2_cold_wallet
-    VERSION 0.7.0
+    VERSION 0.9.0
     LANGUAGES C CXX
 )
 
@@ -20,6 +20,9 @@ add_library(
     firmware/encoding/bc2_encoding.c
     firmware/platform/bc2_secure.c
     firmware/platform/bc2_device_state.c
+    firmware/platform/bc2_hal.c
+    firmware/platform/bc2_device_ui.c
+    firmware/protocol/bc2_usb_protocol.c
     firmware/wallet/bc2_address.c
     firmware/wallet/bc2_bip32.c
     firmware/wallet/bc2_bip39.c
@@ -77,7 +80,7 @@ endif()
 
 enable_testing()
 
-foreach(test_name crypto encoding bip39 bip32 address sign wallet device_state psbt)
+foreach(test_name crypto encoding bip39 bip32 address sign wallet device_state psbt hal usb_protocol)
     add_executable(test_${test_name} tests/test_${test_name}.c)
     target_link_libraries(test_${test_name} PRIVATE bc2_wallet_core)
 

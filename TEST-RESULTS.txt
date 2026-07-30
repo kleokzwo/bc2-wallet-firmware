@@ -1,0 +1,53 @@
+BC2 Cold Wallet v0.6.0 – Testergebnisse
+========================================
+
+Datum: 2026-07-29
+Konfiguration: Release, BC2_BUILD_SIMULATOR=OFF
+Compiler: GCC 14.2.0
+CMake: 3.31.6
+OpenSSL: 3.5.5
+
+C17 Wallet-Core
+---------------
+Build: erfolgreich
+Tests: 9 von 9 bestanden
+Fehler: 0
+
+Getestete Bereiche:
+- Kryptografie
+- Encoding
+- BIP39
+- BIP32
+- Adressen
+- Signaturgrundlagen
+- Wallet-Service
+- Geräte-Zustandsmaschine und Sperrlogik
+- PSBT-Strukturprüfung
+
+Neue Geräteablauf-Tests:
+- Boot und erfolgreiche Entsperrung
+- Empfangsbestätigung
+- Transaktionsabbruch
+- manuelle Sperrung
+- fünf Fehlversuche
+- zeitgesteuerte Sperrphase
+- automatischer Ablauf der Sperrphase
+- Aktivitätsverlängerung
+- automatische Session-Sperre
+- Setup- und Fehlerwiederherstellung
+
+Qt-6-Simulator
+---------------
+Quellintegration: vollständig
+Binärbuild in dieser Umgebung: nicht ausgeführt
+Grund: Qt-6-Entwicklungspakete sind in der Erstellungsumgebung nicht installiert.
+
+Die Simulator-Quellen benötigen Qt 6.4 oder neuer mit Widgets und Network.
+Diese Einschränkung bedeutet, dass der Qt-Teil hier nicht als Binärdatei verifiziert wurde.
+Der C17-Core wurde vollständig kompiliert und getestet.
+
+Sicherheitsstatus
+-----------------
+Nicht produktionsreif. Der Simulator-Test-PIN 2468 ist ausdrücklich keine sichere
+PIN-Implementierung. Nichtflüchtiges Anti-Hammering, sichere PIN-Ableitung,
+Secure Element und Hardware-Manipulationsschutz fehlen weiterhin.

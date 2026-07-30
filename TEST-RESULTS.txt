@@ -1,53 +1,32 @@
-BC2 Cold Wallet v0.6.0 – Testergebnisse
-========================================
+BC2 Cold Wallet v0.7.0 - Test Results
+Date: 2026-07-30
 
-Datum: 2026-07-29
-Konfiguration: Release, BC2_BUILD_SIMULATOR=OFF
-Compiler: GCC 14.2.0
-CMake: 3.31.6
-OpenSSL: 3.5.5
+Core configuration:
+  cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBC2_BUILD_SIMULATOR=OFF
 
-C17 Wallet-Core
----------------
-Build: erfolgreich
-Tests: 9 von 9 bestanden
-Fehler: 0
+Core build:
+  SUCCESS
 
-Getestete Bereiche:
-- Kryptografie
-- Encoding
-- BIP39
-- BIP32
-- Adressen
-- Signaturgrundlagen
-- Wallet-Service
-- Geräte-Zustandsmaschine und Sperrlogik
-- PSBT-Strukturprüfung
+CTest:
+  9/9 tests passed
+  crypto, encoding, bip39, bip32, address, sign, wallet, device_state, psbt
 
-Neue Geräteablauf-Tests:
-- Boot und erfolgreiche Entsperrung
-- Empfangsbestätigung
-- Transaktionsabbruch
-- manuelle Sperrung
-- fünf Fehlversuche
-- zeitgesteuerte Sperrphase
-- automatischer Ablauf der Sperrphase
-- Aktivitätsverlängerung
-- automatische Session-Sperre
-- Setup- und Fehlerwiederherstellung
+New PSBT transaction-review coverage:
+  - PSBT v0 global unsigned transaction parsing
+  - Input prevout and witness_utxo amount parsing
+  - Multiple outputs
+  - Total input/output amount calculation
+  - Exact fee calculation
+  - External recipient amount calculation
+  - Change recognition against a known watch-only script
+  - P2WPKH address rendering
+  - malformed/truncated input rejection
 
-Qt-6-Simulator
----------------
-Quellintegration: vollständig
-Binärbuild in dieser Umgebung: nicht ausgeführt
-Grund: Qt-6-Entwicklungspakete sind in der Erstellungsumgebung nicht installiert.
+Qt simulator:
+  Source and CMake integration completed.
+  Binary build not executed in this environment because Qt 6 development packages are unavailable.
 
-Die Simulator-Quellen benötigen Qt 6.4 oder neuer mit Widgets und Network.
-Diese Einschränkung bedeutet, dass der Qt-Teil hier nicht als Binärdatei verifiziert wurde.
-Der C17-Core wurde vollständig kompiliert und getestet.
-
-Sicherheitsstatus
------------------
-Nicht produktionsreif. Der Simulator-Test-PIN 2468 ist ausdrücklich keine sichere
-PIN-Implementierung. Nichtflüchtiges Anti-Hammering, sichere PIN-Ableitung,
-Secure Element und Hardware-Manipulationsschutz fehlen weiterhin.
+Security status:
+  NOT production ready. Signing remains disabled.
+  Supported review profile is PSBT v0 with native P2WPKH inputs carrying witness_utxo.
+  non_witness_utxo, PSBT v2, Taproot, multisig and final signing are not yet supported.

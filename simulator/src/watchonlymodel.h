@@ -2,6 +2,7 @@
 #define BC2_WATCHONLYMODEL_H
 
 #include <QObject>
+#include <QByteArray>
 #include <QString>
 #include <QVector>
 
@@ -21,6 +22,7 @@ struct WatchAddress {
     QString address;
     QString path;
     QString scriptHash;
+    QByteArray scriptPubKey;
     bool change = false;
     unsigned int index = 0;
     qint64 confirmed = 0;

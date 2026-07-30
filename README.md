@@ -4,7 +4,7 @@
 
 Version 0.5.0 implementiert die erste echte Watch-only-Electrum-Synchronisation im Qt-6-Desktop-Simulator. Der C17-Wallet-Core bleibt die einzige Wallet- und Kryptografieimplementierung.
 
-## Neu in v0.6.0
+## Neu in v0.7.0
 
 - echte Electrum-Abfragen für öffentliche BC2-Scripthashes
 - bestätigte und unbestätigte Kontostände
@@ -84,7 +84,7 @@ Diese Version verwendet noch einen festen, veröffentlichten Testvektor. Der sp�
 - `docs/SECURITY.md` – Sicherheitsgrenzen und offene Risiken
 - `TEST-RESULTS.txt` – tatsächlich ausgeführte Prüfungen
 
-## v0.6.0 – Geräteabläufe und Sperrlogik
+## v0.7.0 – Geräteabläufe und Sperrlogik
 
 - gemeinsame C17-Zustandsmaschine für Simulator und spätere Hardware
 - Sperrbildschirm und explizite Entsperrung im Qt-Simulator
@@ -94,3 +94,7 @@ Diese Version verwendet noch einen festen, veröffentlichten Testvektor. Der sp�
 - Test-PIN im Simulator: `2468` – ausschließlich Entwicklungswert, niemals echte PIN verwenden
 
 Der vollständige Plan steht in `docs/DEVICE-FLOWS-AND-LOCKING-PLAN.md`.
+
+
+## v0.7.0 PSBT-Transaktionsprüfung
+Unterstützt PSBT v0 mit nativen P2WPKH-Inputs über witness_utxo. Zeigt Inputs, Outputs, exakte Gebühr und gegen Watch-only-Scripts geprüftes Wechselgeld. Signieren bleibt deaktiviert.

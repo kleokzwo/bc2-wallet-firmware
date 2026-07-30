@@ -13,17 +13,18 @@ namespace {
 constexpr const char *kTestMnemonic =
     "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about";
 
-QString scriptHashForPublicKey(const uint8_t publicKey[33]) {
+QByteArray scriptForPublicKey(const uint8_t publicKey[33]) {
     uint8_t keyHash[20] = {0};
-    uint8_t script[22] = {0};
+    if (!bc2_hash160(publicKey, 33U, keyHash)) return {};
+    QByteArray script(22, Qt::Uninitialized);
+    script[0] = 0x00; script[1] = 0x14;
+    for (int i = 0; i < 20; ++i) script[2 + i] = static_cast<char>(keyHash[i]);
+    return script;
+}
+
+QString scriptHashForScript(const QByteArray &scriptBytes) {
     uint8_t digest[32] = {0};
-    if (!bc2_hash160(publicKey, 33U, keyHash)) {
-        return {};
-    }
-    script[0] = 0x00;
-    script[1] = 0x14;
-    std::copy(keyHash, keyHash + 20, script + 2);
-    if (!bc2_sha256(script, sizeof(script), digest)) {
+    if (scriptBytes.size() != 22 || !bc2_sha256(reinterpret_cast<const uint8_t *>(scriptBytes.constData()), static_cast<size_t>(scriptBytes.size()), digest)) {
         return {};
     }
     QByteArray reversed(32, Qt::Uninitialized);
@@ -47,13 +48,14 @@ bool WatchOnlyModel::buildDemoAccount(unsigned int receiveCount, unsigned int ch
                 addresses_.clear();
                 return false;
             }
-            const QString scriptHash = scriptHashForPublicKey(result.public_key);
-            if (scriptHash.isEmpty()) {
+            const QByteArray scriptPubKey = scriptForPublicKey(result.public_key);
+            const QString scriptHash = scriptHashForScript(scriptPubKey);
+            if (scriptHash.isEmpty() || scriptPubKey.isEmpty()) {
                 addresses_.clear();
                 return false;
             }
             addresses_.push_back(WatchAddress{QString::fromLatin1(result.address),
-                                              QString::fromLatin1(result.path), scriptHash,
+                                              QString::fromLatin1(result.path), scriptHash, scriptPubKey,
                                               change != 0, index, 0, 0, {}, {}});
         }
     }

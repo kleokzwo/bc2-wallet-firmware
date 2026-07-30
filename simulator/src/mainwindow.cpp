@@ -81,7 +81,7 @@ MainWindow::MainWindow(QWidget *parent)
       electrum_(new ElectrumClient(this)),
       watchModel_(new WatchOnlyModel(this)),
       watchSync_(new WatchOnlySync(electrum_, watchModel_, this)) {
-    setWindowTitle(QStringLiteral("BC2 Cold Wallet — Simulator 0.6.0"));
+    setWindowTitle(QStringLiteral("BC2 Cold Wallet — Simulator 0.7.0"));
     resize(1180, 800);
     setMinimumSize(980, 680);
     watchModel_->buildDemoAccount();
@@ -158,7 +158,7 @@ QWidget *MainWindow::buildShell() {
     connect(transactions, &QPushButton::clicked, this, [this] {
         if (!device_->isUnlocked()) { showLockScreen(); return; }
         device_->openTransactionReview();
-        PsbtInspectorDialog dialog(this);
+        PsbtInspectorDialog dialog(watchModel_, this);
         dialog.exec();
         device_->cancel();
     });

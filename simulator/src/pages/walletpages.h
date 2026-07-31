@@ -3,8 +3,10 @@
 
 #include <QString>
 #include <QWidget>
+#include "../watchonlymodel.h"
 
 class QLabel;
+class QTableWidget;
 
 class TransactionPage final : public QWidget {
     Q_OBJECT
@@ -17,6 +19,10 @@ signals:
 class HistoryPage final : public QWidget {
 public:
     explicit HistoryPage(QWidget *parent = nullptr);
+    void setTransactions(const QVector<WatchTransaction> &transactions, int blockHeight);
+private:
+    QTableWidget *table_ = nullptr;
+    QLabel *statusLabel_ = nullptr;
 };
 
 class SettingsPage final : public QWidget {

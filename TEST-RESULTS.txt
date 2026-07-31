@@ -1,19 +1,24 @@
-BC2 Cold Wallet v0.17.7
-Test date: 2026-07-31
+BC2 Cold Wallet v0.18.0
+Date: 2026-07-31
 
-Host validation:
-- CMake configure: PASSED
-- C17 wallet core build: PASSED
-- CLI build: PASSED
-- CTest: 13/13 PASSED
+Host core build: PASSED
+Compiler: GCC 14.2.0
+OpenSSL: 3.5.5
 
-Windows CI evidence from v0.17.6:
-- Qt/MSVC compile: PASSED
-- CTest: 13/13 PASSED
-- CPack: FAILED only during Qt runtime deployment because the executable file name contained spaces
+CTest results: 13/13 PASSED
+- crypto
+- encoding
+- bip39
+- bip32
+- address
+- sign
+- wallet
+- device_state
+- device_flow
+- device_service
+- psbt
+- hal
+- usb_protocol
 
-v0.17.7 fix:
-- Executable output renamed to BC2-Cold-Wallet.exe so the generated Qt deployment script receives one unambiguous path argument
-
-Pending confirmation:
-- Windows GitHub Actions packaging rerun
+Qt simulator build: NOT EXECUTED
+Reason: Qt 6 development package is not installed in this execution environment.

@@ -1,9 +1,23 @@
 # BC2 Cold Wallet
 
-## Version 0.17.7
+## Version 0.18.0
 
-Die aktuelle Version schließt Sprint 7 als sichere Waveshare-Hardware-Bring-up-Basis ab. Der ESP32-S3 besitzt jetzt einen getesteten BC2-USB-Transport für Geräteinformationen und Zustandsabfragen; unbekannte Display- und Button-Pins bleiben bewusst gesperrt.
+Sprint v0.18.0 konzentriert den Desktop-Simulator auf eine praktisch nutzbare Watch-only-Wallet. Die bestehende Electrum-Synchronisation wurde um robuste Verbindungssteuerung, Blockhöhe, automatische Aktualisierung, getrennte Kontostände und eine echte Transaktionsübersicht ergänzt.
 
+## Neu in v0.18.0
+
+- manuelles Verbinden und Trennen des Electrum-Servers
+- SSL/TLS-Verbindung mit strikt abgelehnten Zertifikatsfehlern
+- 15-Sekunden-Zeitlimit pro Electrum-Anfrage
+- automatische Wiederverbindung mit begrenztem Backoff
+- Electrum-Header-Abonnement und aktuelle Blockhöhe
+- manueller Refresh und automatischer Refresh alle fünf Minuten
+- letzte erfolgreiche Synchronisation mit Datum und Uhrzeit
+- Gesamt-, bestätigtes und unbestätigtes Guthaben
+- Verlaufstabelle mit TXID, Status, bekanntem Betrag und Bestätigungen
+- vorbereitete Account- und XPUB-Strukturen ohne Seed- oder Private-Key-Speicherung
+- keine Signierung im Watch-only-Pfad
+- 13/13 Wallet-Core-Tests erfolgreich
 
 ## Neu in v0.16.0
 

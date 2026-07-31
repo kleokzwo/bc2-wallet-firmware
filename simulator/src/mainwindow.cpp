@@ -9,6 +9,7 @@
 #include "watchonlymodel.h"
 #include "watchonlysync.h"
 #include "components/bc2button.h"
+#include "pages/walletpages.h"
 
 extern "C" {
 #include "bc2_wallet.h"
@@ -20,6 +21,7 @@ extern "C" {
 #include <QCloseEvent>
 #include <QClipboard>
 #include <QDesktopServices>
+#include <QDateTime>
 #include <QFrame>
 #include <QGridLayout>
 #include <QHeaderView>
@@ -60,7 +62,7 @@ MainWindow::MainWindow(QWidget *parent)
       electrum_(new ElectrumClient(this)),
       watchModel_(new WatchOnlyModel(this)),
       watchSync_(new WatchOnlySync(electrum_, watchModel_, this)) {
-    setWindowTitle(QStringLiteral("BC2 Cold Wallet — Simulator 0.17.4"));
+    setWindowTitle(QStringLiteral("BC2 Cold Wallet — Simulator 0.18.0"));
     resize(1180, 800);
     setMinimumSize(DesignTokens::WindowMinimumWidth, DesignTokens::WindowMinimumHeight);
     appSettings_ = new AppSettings;
@@ -75,6 +77,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(electrum_, &ElectrumClient::stateChanged, this, &MainWindow::handleNetworkState);
     connect(electrum_, &ElectrumClient::serverVersionReceived, this, &MainWindow::handleServerVersion);
+    connect(electrum_, &ElectrumClient::blockHeightChanged, this, &MainWindow::handleBlockHeight);
     connect(electrum_, &ElectrumClient::errorOccurred, this, &MainWindow::handleNetworkError);
     connect(watchSync_, &WatchOnlySync::progressChanged, this, &MainWindow::handleSyncProgress);
     connect(watchSync_, &WatchOnlySync::finished, this, &MainWindow::handleSyncFinished);
@@ -93,6 +96,11 @@ MainWindow::MainWindow(QWidget *parent)
             button->setCompact(width() < DesignTokens::CompactBreakpoint);
         }
     });
+
+    automaticRefreshTimer_ = new QTimer(this);
+    automaticRefreshTimer_->setInterval(5 * 60 * 1000);
+    connect(automaticRefreshTimer_, &QTimer::timeout, this, &MainWindow::automaticRefresh);
+    automaticRefreshTimer_->start();
 
     refreshWatchOnlyView();
     device_->boot();
@@ -309,6 +317,11 @@ void MainWindow::openAddressInExplorer() {
 }
 
 void MainWindow::connectElectrum() {
+    if (electrum_->isConnected()) {
+        electrum_->disconnectFromServer();
+        handleNetworkState(QStringLiteral("Manuell getrennt"), false);
+        return;
+    }
     if (serverVersionLabel_ != nullptr) {
         serverVersionLabel_->setText(QStringLiteral("Serverversion wird abgefragt …"));
     }
@@ -335,12 +348,23 @@ void MainWindow::handleNetworkState(const QString &status, bool connected) {
         restyle(networkStatusLabel_, connected ? QStringLiteral("success") : QStringLiteral("muted"));
     }
     updateDashboardNetwork(status, connected);
+    if (connectButton_ != nullptr) connectButton_->setText(connected ? QStringLiteral("Trennen") : QStringLiteral("Verbinden"));
 }
 
 void MainWindow::handleServerVersion(const QString &serverName, const QString &protocolVersion) {
     if (serverVersionLabel_ != nullptr) {
         serverVersionLabel_->setText(QStringLiteral("%1 · Electrum-Protokoll %2").arg(serverName, protocolVersion));
     }
+}
+
+void MainWindow::handleBlockHeight(int height) {
+    blockHeight_ = height;
+    if (blockHeightLabel_ != nullptr) blockHeightLabel_->setText(QStringLiteral("Blockhöhe: %1").arg(height));
+    refreshWatchOnlyView();
+}
+
+void MainWindow::automaticRefresh() {
+    if (electrum_->isConnected() && !watchSync_->isRunning()) startWatchOnlySync();
 }
 
 void MainWindow::handleNetworkError(const QString &message) {
@@ -362,12 +386,18 @@ void MainWindow::handleSyncFinished(bool success, const QString &message) {
     syncButton_->setEnabled(true);
     syncStatusLabel_->setText(message);
     restyle(syncStatusLabel_, success ? QStringLiteral("success") : QStringLiteral("error"));
+    if (success && lastSyncLabel_ != nullptr) {
+        lastSyncLabel_->setText(QStringLiteral("Letzte Synchronisation: %1").arg(QDateTime::currentDateTime().toString(QStringLiteral("dd.MM.yyyy HH:mm:ss"))));
+    }
     refreshWatchOnlyView();
 }
 
 void MainWindow::refreshWatchOnlyView() {
     const QString total = formatBc2(watchModel_->totalConfirmed() + watchModel_->totalUnconfirmed());
     if (dashboardBalanceLabel_ != nullptr) dashboardBalanceLabel_->setText(total);
+    if (confirmedBalanceLabel_ != nullptr) confirmedBalanceLabel_->setText(QStringLiteral("Bestätigt: %1").arg(formatBc2(watchModel_->totalConfirmed())));
+    if (unconfirmedBalanceLabel_ != nullptr) unconfirmedBalanceLabel_->setText(QStringLiteral("Unbestätigt: %1").arg(formatBc2(watchModel_->totalUnconfirmed())));
+    if (historyPage_ != nullptr) historyPage_->setTransactions(watchModel_->transactions(), blockHeight_);
     if (syncSummaryLabel_ != nullptr) {
         syncSummaryLabel_->setText(QStringLiteral("%1 · %2 Transaktionen · %3 UTXOs")
                                        .arg(total)

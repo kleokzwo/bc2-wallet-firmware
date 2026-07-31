@@ -8,18 +8,29 @@
 
 namespace {
 constexpr qsizetype kMaximumResponseBuffer = 4 * 1024 * 1024;
+constexpr qint64 kRequestTimeoutMs = 15000;
+constexpr int kMaximumReconnectDelayMs = 30000;
 }
 
 ElectrumClient::ElectrumClient(QObject *parent) : QObject(parent) {
+    clock_.start();
+    timeoutTimer_.setInterval(1000);
+    reconnectTimer_.setSingleShot(true);
     connect(&socket_, &QSslSocket::connected, this, &ElectrumClient::onConnected);
     connect(&socket_, &QSslSocket::encrypted, this, &ElectrumClient::onEncrypted);
     connect(&socket_, &QSslSocket::readyRead, this, &ElectrumClient::onReadyRead);
     connect(&socket_, &QSslSocket::errorOccurred, this, &ElectrumClient::onSocketError);
     connect(&socket_, &QSslSocket::sslErrors, this, &ElectrumClient::onSslErrors);
+    connect(&timeoutTimer_, &QTimer::timeout, this, &ElectrumClient::checkRequestTimeouts);
+    connect(&reconnectTimer_, &QTimer::timeout, this, &ElectrumClient::reconnect);
+    timeoutTimer_.start();
 }
 
 void ElectrumClient::connectToServer(const QString &host, quint16 port, bool useSsl) {
-    disconnectFromServer();
+    manualDisconnect_ = false;
+    reconnectTimer_.stop();
+    if (socket_.state() != QAbstractSocket::UnconnectedState) socket_.abort();
+    failPendingRequests(QStringLiteral("Verbindung wird neu aufgebaut."));
     host_ = host.trimmed();
     port_ = port;
     useSsl_ = useSsl;
@@ -40,6 +51,8 @@ void ElectrumClient::connectToServer(const QString &host, quint16 port, bool use
 }
 
 void ElectrumClient::disconnectFromServer() {
+    manualDisconnect_ = true;
+    reconnectTimer_.stop();
     failPendingRequests(QStringLiteral("Verbindung wurde getrennt."));
     if (socket_.state() != QAbstractSocket::UnconnectedState) {
         socket_.abort();
@@ -66,7 +79,14 @@ qint64 ElectrumClient::requestUnspent(const QString &scriptHash) {
     return sendScriptHashRequest(QStringLiteral("blockchain.scripthash.listunspent"), scriptHash);
 }
 
+qint64 ElectrumClient::requestHeaderSubscription() {
+    return sendRequest(QStringLiteral("blockchain.headers.subscribe"), QJsonArray{});
+}
+
+void ElectrumClient::setAutoReconnect(bool enabled) { autoReconnect_ = enabled; }
+
 void ElectrumClient::onConnected() {
+    reconnectAttempt_ = 0;
     if (!useSsl_) {
         emit stateChanged(QStringLiteral("Verbunden · unverschlüsselt"), true);
         sendVersionRequest();
@@ -85,7 +105,7 @@ void ElectrumClient::sendVersionRequest() {
         return;
     }
     sendRequest(QStringLiteral("server.version"),
-                QJsonArray{QStringLiteral("BC2-Cold-Wallet-Simulator/0.5.0"),
+                QJsonArray{QStringLiteral("BC2-Cold-Wallet-Simulator/0.18.0"),
                            QJsonArray{QStringLiteral("1.4"), QStringLiteral("1.4.2")}});
     versionRequestSent_ = true;
 }
@@ -118,7 +138,7 @@ qint64 ElectrumClient::sendRequest(const QString &method, const QJsonArray &para
         return -1;
     }
 
-    pending_.insert(requestId, PendingRequest{method, scriptHash});
+    pending_.insert(requestId, PendingRequest{method, scriptHash, clock_.elapsed()});
     return requestId;
 }
 
@@ -151,9 +171,16 @@ void ElectrumClient::processLine(const QByteArray &line) {
 
     const QJsonObject object = document.object();
     const qint64 requestId = object.value(QStringLiteral("id")).toInteger(-1);
-    if (requestId < 0 || !pending_.contains(requestId)) {
+    if (requestId < 0) {
+        if (object.value(QStringLiteral("method")).toString() == QStringLiteral("blockchain.headers.subscribe")) {
+            const QJsonArray params = object.value(QStringLiteral("params")).toArray();
+            if (!params.isEmpty() && params.first().isObject()) {
+                emit blockHeightChanged(params.first().toObject().value(QStringLiteral("height")).toInt());
+            }
+        }
         return;
     }
+    if (!pending_.contains(requestId)) return;
 
     const PendingRequest pending = pending_.take(requestId);
     const QJsonValue error = object.value(QStringLiteral("error"));
@@ -176,6 +203,11 @@ void ElectrumClient::processLine(const QByteArray &line) {
         } else {
             emit requestFailed(requestId, pending.method, {}, QStringLiteral("Ungültige server.version-Antwort."));
         }
+        requestHeaderSubscription();
+        return;
+    }
+    if (pending.method == QStringLiteral("blockchain.headers.subscribe") && result.isObject()) {
+        emit blockHeightChanged(result.toObject().value(QStringLiteral("height")).toInt());
         return;
     }
 
@@ -188,6 +220,7 @@ void ElectrumClient::onSocketError(QAbstractSocket::SocketError error) {
     failPendingRequests(message);
     emit stateChanged(QStringLiteral("Nicht verbunden"), false);
     emit errorOccurred(message);
+    scheduleReconnect();
 }
 
 void ElectrumClient::onSslErrors(const QList<QSslError> &errors) {
@@ -201,6 +234,33 @@ void ElectrumClient::onSslErrors(const QList<QSslError> &errors) {
     failPendingRequests(message);
     emit stateChanged(QStringLiteral("SSL-Prüfung fehlgeschlagen"), false);
     emit errorOccurred(message);
+    scheduleReconnect();
+}
+
+void ElectrumClient::checkRequestTimeouts() {
+    const qint64 now = clock_.elapsed();
+    QList<qint64> timedOut;
+    for (auto it = pending_.cbegin(); it != pending_.cend(); ++it) {
+        if (now - it.value().startedAtMs >= kRequestTimeoutMs) timedOut.append(it.key());
+    }
+    for (qint64 id : timedOut) {
+        const PendingRequest request = pending_.take(id);
+        emit requestFailed(id, request.method, request.scriptHash, QStringLiteral("Electrum-Anfrage hat das Zeitlimit überschritten."));
+    }
+}
+
+void ElectrumClient::scheduleReconnect() {
+    if (!autoReconnect_ || manualDisconnect_ || host_.isEmpty() || port_ == 0 || reconnectTimer_.isActive()) return;
+    const int delay = qMin(1000 * (1 << qMin(reconnectAttempt_, 5)), kMaximumReconnectDelayMs);
+    ++reconnectAttempt_;
+    emit stateChanged(QStringLiteral("Offline · neuer Versuch in %1 s").arg(delay / 1000), false);
+    reconnectTimer_.start(delay);
+}
+
+void ElectrumClient::reconnect() {
+    if (manualDisconnect_) return;
+    emit stateChanged(QStringLiteral("Automatische Wiederverbindung …"), false);
+    if (useSsl_) socket_.connectToHostEncrypted(host_, port_); else socket_.connectToHost(host_, port_);
 }
 
 void ElectrumClient::failPendingRequests(const QString &message) {

@@ -18,6 +18,18 @@ struct WatchHistoryItem {
     int height = 0;
 };
 
+struct WatchAccount {
+    QString id;
+    QString name;
+    QString xpub;
+};
+
+struct WatchTransaction {
+    QString txHash;
+    int height = 0;
+    qint64 knownAmount = 0;
+};
+
 struct WatchAddress {
     QString address;
     QString path;
@@ -38,6 +50,8 @@ public:
 
     bool buildDemoAccount(unsigned int receiveCount = 10U, unsigned int changeCount = 5U);
     const QVector<WatchAddress> &addresses() const;
+    const QVector<WatchAccount> &accounts() const;
+    QVector<WatchTransaction> transactions() const;
     qint64 totalConfirmed() const;
     qint64 totalUnconfirmed() const;
     int transactionCount() const;
@@ -54,6 +68,7 @@ signals:
 private:
     WatchAddress *find(const QString &scriptHash);
     QVector<WatchAddress> addresses_;
+    QVector<WatchAccount> accounts_;
 };
 
 #endif

@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.18.0 - 2026-07-31
+
+### Added
+- Robuste Watch-only-Verbindungssteuerung mit manuellem Disconnect.
+- Automatische Wiederverbindung und Request-Timeouts.
+- Blockhöhen-Abonnement über Electrum.
+- Automatische Synchronisation alle fünf Minuten.
+- Getrennte bestätigte und unbestätigte Kontostände.
+- Transaktionsverlauf mit Status, TXID, bekanntem Betrag und Bestätigungen.
+- Vorbereitete Multi-Account- und Multi-XPUB-Datenstrukturen.
+
+### Security
+- Keine Seeds oder privaten Schlüssel werden gespeichert.
+- Keine Signierung wurde dem Watch-only-Pfad hinzugefügt.
+
 ## 0.17.7 - Windows packaging hotfix
 
 - Fixed Qt deployment packaging on Windows by removing spaces from the executable file name.

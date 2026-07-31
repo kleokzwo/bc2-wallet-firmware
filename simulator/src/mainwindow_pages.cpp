@@ -143,7 +143,8 @@ QWidget *MainWindow::buildShell() {
     transactionPage_ = new TransactionPage;
     connect(transactionPage_, &TransactionPage::reviewRequested, this, &MainWindow::openTransactionReview);
     router_->registerPage(PageRouter::Page::Transaction, transactionPage_);
-    router_->registerPage(PageRouter::Page::History, new HistoryPage);
+    historyPage_ = new HistoryPage;
+    router_->registerPage(PageRouter::Page::History, historyPage_);
     router_->registerPage(PageRouter::Page::Settings, new SettingsPage);
     router_->registerPage(PageRouter::Page::About, new AboutPage);
     router_->registerPage(PageRouter::Page::Recovery, new RecoveryPage);
@@ -259,6 +260,9 @@ QWidget *MainWindow::buildWatchOnlyPage() {
     summary->setContentsMargins(22, 20, 22, 20);
     syncSummaryLabel_ = sectionTitle(QStringLiteral("0,00000000 BC2"));
     syncStatusLabel_ = muted(QStringLiteral("Noch nicht synchronisiert"));
+    confirmedBalanceLabel_ = muted(QStringLiteral("Bestätigt: 0,00000000 BC2"));
+    unconfirmedBalanceLabel_ = muted(QStringLiteral("Unbestätigt: 0,00000000 BC2"));
+    lastSyncLabel_ = muted(QStringLiteral("Letzte Synchronisation: noch nie"));
     syncProgress_ = new QProgressBar;
     syncProgress_->setRange(0, 1);
     syncProgress_->setValue(0);
@@ -266,6 +270,9 @@ QWidget *MainWindow::buildWatchOnlyPage() {
     connect(syncButton_, &QPushButton::clicked, this, &MainWindow::startWatchOnlySync);
     summary->addWidget(syncSummaryLabel_);
     summary->addWidget(syncStatusLabel_);
+    summary->addWidget(confirmedBalanceLabel_);
+    summary->addWidget(unconfirmedBalanceLabel_);
+    summary->addWidget(lastSyncLabel_);
     summary->addWidget(syncProgress_);
     summary->addWidget(syncButton_, 0, Qt::AlignLeft);
     layout->addWidget(summaryCard);
@@ -312,8 +319,10 @@ QWidget *MainWindow::buildNetworkPage() {
     status->setContentsMargins(24, 22, 24, 22);
     networkStatusLabel_ = muted(QStringLiteral("Nicht verbunden"));
     serverVersionLabel_ = muted(QStringLiteral("Serverversion noch nicht abgefragt"));
+    blockHeightLabel_ = muted(QStringLiteral("Blockhöhe: unbekannt"));
     status->addWidget(networkStatusLabel_);
     status->addWidget(serverVersionLabel_);
+    status->addWidget(blockHeightLabel_);
     layout->addWidget(statusCard);
     auto *explorer = new Bc2Button(QStringLiteral("BC2 Block Explorer öffnen"));
     connect(explorer, &QPushButton::clicked, this, [] {

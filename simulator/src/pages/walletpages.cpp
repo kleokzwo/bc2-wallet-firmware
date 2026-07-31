@@ -10,6 +10,7 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QFormLayout>
+#include <QHeaderView>
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
@@ -66,13 +67,35 @@ TransactionPage::TransactionPage(QWidget *parent) : QWidget(parent) {
 HistoryPage::HistoryPage(QWidget *parent) : QWidget(parent) {
     auto *layout = pageLayout(this, QStringLiteral("Verlauf"),
                               QStringLiteral("Watch-only Transaktionsübersicht ohne private Schlüssel."));
-    auto *table = new QTableWidget(0, 4);
-    table->setHorizontalHeaderLabels({QStringLiteral("Status"), QStringLiteral("Datum"),
-                                      QStringLiteral("Transaktion"), QStringLiteral("Betrag")});
-    table->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    table->setSelectionBehavior(QAbstractItemView::SelectRows);
-    layout->addWidget(table, 1);
-    layout->addWidget(new Bc2StatusBar(QStringLiteral("Noch keine synchronisierten Transaktionen.")));
+    table_ = new QTableWidget(0, 6);
+    table_->setHorizontalHeaderLabels({QStringLiteral("Status"), QStringLiteral("Datum"),
+                                       QStringLiteral("Uhrzeit"), QStringLiteral("TXID"),
+                                       QStringLiteral("Betrag"), QStringLiteral("Bestätigungen")});
+    table_->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    table_->setSelectionBehavior(QAbstractItemView::SelectRows);
+    table_->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
+    layout->addWidget(table_, 1);
+    statusLabel_ = muted(QStringLiteral("Noch keine synchronisierten Transaktionen."));
+    layout->addWidget(statusLabel_);
+}
+
+void HistoryPage::setTransactions(const QVector<WatchTransaction> &transactions, int blockHeight) {
+    table_->setRowCount(transactions.size());
+    for (int row = 0; row < transactions.size(); ++row) {
+        const WatchTransaction &transaction = transactions.at(row);
+        const int confirmations = transaction.height > 0 && blockHeight >= transaction.height
+            ? blockHeight - transaction.height + 1 : 0;
+        table_->setItem(row, 0, new QTableWidgetItem(confirmations > 0 ? QStringLiteral("Bestätigt") : QStringLiteral("Ausstehend")));
+        table_->setItem(row, 1, new QTableWidgetItem(QStringLiteral("–")));
+        table_->setItem(row, 2, new QTableWidgetItem(QStringLiteral("–")));
+        table_->setItem(row, 3, new QTableWidgetItem(transaction.txHash));
+        const double amount = static_cast<double>(transaction.knownAmount) / 100000000.0;
+        table_->setItem(row, 4, new QTableWidgetItem(QString::number(amount, 'f', 8) + QStringLiteral(" BC2")));
+        table_->setItem(row, 5, new QTableWidgetItem(QString::number(confirmations)));
+    }
+    statusLabel_->setText(transactions.isEmpty()
+        ? QStringLiteral("Keine Transaktionen für die beobachteten Adressen gefunden.")
+        : QStringLiteral("%1 öffentliche Transaktionen synchronisiert.").arg(transactions.size()));
 }
 
 SettingsPage::SettingsPage(QWidget *parent) : QWidget(parent) {
@@ -99,7 +122,7 @@ SettingsPage::SettingsPage(QWidget *parent) : QWidget(parent) {
 AboutPage::AboutPage(QWidget *parent) : QWidget(parent) {
     auto *layout = pageLayout(this, QStringLiteral("Über BC2 Cold Wallet"),
                               QStringLiteral("Open-Source BC2-only Hardware-Wallet."));
-    layout->addWidget(informationCard(QStringLiteral("Version 0.17.4"),
+    layout->addWidget(informationCard(QStringLiteral("Version 0.18.0"),
         QStringLiteral("Desktop-Simulator: Qt 6 · Wallet-Core: C17 · Zielhardware: Waveshare ESP32-S3 1.54\" E-Paper AIoT Development Board · Firmware: ESP-IDF.")));
     layout->addWidget(informationCard(QStringLiteral("Sicherheitsmodell"),
         QStringLiteral("Seed und private Schlüssel bleiben auf der Hardware. Empfangsadressen und Transaktionen müssen vollständig auf dem Gerät geprüft und bestätigt werden.")));

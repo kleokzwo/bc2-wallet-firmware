@@ -24,6 +24,7 @@ class ThemeManager;
 class QResizeEvent;
 class QCloseEvent;
 class TransactionPage;
+class HistoryPage;
 class Bc2Button;
 class AppSettings;
 
@@ -61,6 +62,8 @@ private slots:
     void startWatchOnlySync();
     void handleNetworkState(const QString &status, bool connected);
     void handleServerVersion(const QString &serverName, const QString &protocolVersion);
+    void handleBlockHeight(int height);
+    void automaticRefresh();
     void handleNetworkError(const QString &message);
     void handleSyncProgress(int completed, int total, const QString &message);
     void handleSyncFinished(bool success, const QString &message);
@@ -97,6 +100,10 @@ private:
     QLabel *serverVersionLabel_ = nullptr;
     QLabel *syncStatusLabel_ = nullptr;
     QLabel *syncSummaryLabel_ = nullptr;
+    QLabel *confirmedBalanceLabel_ = nullptr;
+    QLabel *unconfirmedBalanceLabel_ = nullptr;
+    QLabel *lastSyncLabel_ = nullptr;
+    QLabel *blockHeightLabel_ = nullptr;
     QLineEdit *hostEdit_ = nullptr;
     QSpinBox *portSpin_ = nullptr;
     QCheckBox *sslCheck_ = nullptr;
@@ -115,6 +122,9 @@ private:
     WatchOnlyModel *watchModel_ = nullptr;
     WatchOnlySync *watchSync_ = nullptr;
     TransactionPage *transactionPage_ = nullptr;
+    HistoryPage *historyPage_ = nullptr;
+    QTimer *automaticRefreshTimer_ = nullptr;
+    int blockHeight_ = 0;
     QVector<Bc2Button *> navigationButtons_;
     QString currentAddress_;
     unsigned int addressIndex_ = 0U;

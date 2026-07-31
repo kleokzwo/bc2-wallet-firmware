@@ -6,6 +6,8 @@
 #include <QObject>
 #include <QSslSocket>
 #include <QString>
+#include <QElapsedTimer>
+#include <QTimer>
 
 class ElectrumClient final : public QObject {
     Q_OBJECT
@@ -21,6 +23,8 @@ public:
     qint64 requestBalance(const QString &scriptHash);
     qint64 requestHistory(const QString &scriptHash);
     qint64 requestUnspent(const QString &scriptHash);
+    qint64 requestHeaderSubscription();
+    void setAutoReconnect(bool enabled);
 
 signals:
     void stateChanged(const QString &status, bool connected);
@@ -28,6 +32,7 @@ signals:
     void responseReceived(qint64 requestId, const QString &method, const QString &scriptHash, const QJsonValue &result);
     void requestFailed(qint64 requestId, const QString &method, const QString &scriptHash, const QString &message);
     void errorOccurred(const QString &message);
+    void blockHeightChanged(int height);
 
 private slots:
     void onConnected();
@@ -35,11 +40,14 @@ private slots:
     void onReadyRead();
     void onSocketError(QAbstractSocket::SocketError error);
     void onSslErrors(const QList<QSslError> &errors);
+    void checkRequestTimeouts();
+    void reconnect();
 
 private:
     struct PendingRequest {
         QString method;
         QString scriptHash;
+        qint64 startedAtMs = 0;
     };
 
     void sendVersionRequest();
@@ -47,6 +55,7 @@ private:
     qint64 sendRequest(const QString &method, const QJsonArray &params, const QString &scriptHash = {});
     void processLine(const QByteArray &line);
     void failPendingRequests(const QString &message);
+    void scheduleReconnect();
 
     QSslSocket socket_;
     QByteArray receiveBuffer_;
@@ -56,6 +65,12 @@ private:
     bool versionRequestSent_ = false;
     qint64 nextRequestId_ = 1;
     QHash<qint64, PendingRequest> pending_;
+    QElapsedTimer clock_;
+    QTimer timeoutTimer_;
+    QTimer reconnectTimer_;
+    bool autoReconnect_ = true;
+    bool manualDisconnect_ = false;
+    int reconnectAttempt_ = 0;
 };
 
 #endif

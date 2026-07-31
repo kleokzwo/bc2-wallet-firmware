@@ -39,6 +39,8 @@ WatchOnlyModel::WatchOnlyModel(QObject *parent) : QObject(parent) {}
 
 bool WatchOnlyModel::buildDemoAccount(unsigned int receiveCount, unsigned int changeCount) {
     addresses_.clear();
+    accounts_.clear();
+    accounts_.push_back({QStringLiteral("account-0"), QStringLiteral("BC2 Hauptkonto"), QStringLiteral("Vorbereitet für XPUB-Import")});
     for (unsigned int change = 0; change < 2; ++change) {
         const unsigned int count = change == 0 ? receiveCount : changeCount;
         for (unsigned int index = 0; index < count; ++index) {
@@ -64,6 +66,26 @@ bool WatchOnlyModel::buildDemoAccount(unsigned int receiveCount, unsigned int ch
 }
 
 const QVector<WatchAddress> &WatchOnlyModel::addresses() const { return addresses_; }
+const QVector<WatchAccount> &WatchOnlyModel::accounts() const { return accounts_; }
+
+QVector<WatchTransaction> WatchOnlyModel::transactions() const {
+    QHash<QString, WatchTransaction> items;
+    for (const WatchAddress &address : addresses_) {
+        for (const WatchHistoryItem &history : address.history) {
+            auto item = items.value(history.txHash, WatchTransaction{history.txHash, history.height, 0});
+            item.height = qMax(item.height, history.height);
+            for (const WatchUtxo &utxo : address.utxos) {
+                if (utxo.txHash == history.txHash) item.knownAmount += utxo.value;
+            }
+            items.insert(history.txHash, item);
+        }
+    }
+    QVector<WatchTransaction> result;
+    result.reserve(items.size());
+    for (auto it = items.cbegin(); it != items.cend(); ++it) result.push_back(it.value());
+    std::sort(result.begin(), result.end(), [](const WatchTransaction &a, const WatchTransaction &b) { return a.height > b.height; });
+    return result;
+}
 
 qint64 WatchOnlyModel::totalConfirmed() const {
     qint64 total = 0;

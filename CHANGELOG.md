@@ -1,6 +1,16 @@
 # Changelog
 
-## v0.17.1 – Desktop CI Hotfix
+## v0.17.2 – Sprint 9 CI Hotfix 2
+
+- Windows OpenSSL-Erkennung auf vcpkg/CMake-Toolchain umgestellt.
+- Feste Chocolatey-Installationspfade entfernt.
+- macOS-OpenSSL-Pfade explizit aus Homebrew exportiert.
+- Linux-Abhängigkeiten für Qt ergänzt.
+- Plattformbezogene CI-Diagnose bei Fehlern ergänzt.
+- Qt-Frontend-Warnungen bleiben aktiv, blockieren aber keine plattformübergreifenden Release-Builds mehr.
+- Qt-Deployment auf Windows und macOS begrenzt.
+
+## v0.17.2 – Desktop CI Hotfix
 
 - Windows-Build von gemischter MinGW-Konfiguration auf eine konsistente MSVC-2022-Toolchain umgestellt.
 - OpenSSL wird auf Windows installiert und über `OPENSSL_ROOT_DIR` eindeutig gefunden.

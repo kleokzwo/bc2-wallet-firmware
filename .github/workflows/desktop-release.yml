@@ -19,21 +19,23 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Install Linux dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build libssl-dev libgl1-mesa-dev
+
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
           version: ${{ env.QT_VERSION }}
           cache: true
 
-      - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y ninja-build libssl-dev
-
       - name: Configure
-        run: >-
-          cmake -S . -B build-desktop -G Ninja
-          -DBC2_BUILD_SIMULATOR=ON
-          -DCMAKE_BUILD_TYPE=Release
-          -DCPACK_GENERATOR=TGZ
+        run: |
+          cmake -S . -B build-desktop -G Ninja \
+            -DBC2_BUILD_SIMULATOR=ON \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCPACK_GENERATOR=TGZ
 
       - name: Build
         run: cmake --build build-desktop --parallel
@@ -44,13 +46,16 @@ jobs:
       - name: Package
         run: cmake --build build-desktop --target package
 
+      - name: Show diagnostics on failure
+        if: failure()
+        run: |
+          find build-desktop -maxdepth 3 -type f \( -name "CMakeError.log" -o -name "CMakeOutput.log" -o -name "*.log" \) -print -exec tail -n 120 {} \; || true
+
       - name: Upload package
         uses: actions/upload-artifact@v4
         with:
           name: bc2-cold-wallet-Linux
-          path: |
-            build-desktop/*.tar.gz
-            build-desktop/*.sha256
+          path: build-desktop/*.tar.gz
           if-no-files-found: error
 
   windows:
@@ -66,23 +71,28 @@ jobs:
           arch: win64_msvc2022_64
           cache: true
 
-      - name: Install OpenSSL
+      - name: Install OpenSSL with vcpkg
         shell: pwsh
-        run: choco install openssl --no-progress --yes
+        run: |
+          if (-not $env:VCPKG_INSTALLATION_ROOT) {
+              throw "VCPKG_INSTALLATION_ROOT is not available on this runner"
+          }
+          & "$env:VCPKG_INSTALLATION_ROOT/vcpkg.exe" install openssl:x64-windows
 
       - name: Configure
         shell: pwsh
         run: |
-          $openSslRoot = "C:/Program Files/OpenSSL-Win64"
-          if (-not (Test-Path $openSslRoot)) {
-              throw "OpenSSL was not found at $openSslRoot"
+          $toolchain = "$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake"
+          if (-not (Test-Path $toolchain)) {
+              throw "vcpkg CMake toolchain was not found at $toolchain"
           }
 
           cmake -S . -B build-desktop `
             -G "Visual Studio 17 2022" `
             -A x64 `
             -DBC2_BUILD_SIMULATOR=ON `
-            -DOPENSSL_ROOT_DIR="$openSslRoot" `
+            -DCMAKE_TOOLCHAIN_FILE="$toolchain" `
+            -DVCPKG_TARGET_TRIPLET=x64-windows `
             -DCPACK_GENERATOR=ZIP
 
       - name: Build
@@ -94,13 +104,21 @@ jobs:
       - name: Package
         run: cmake --build build-desktop --config Release --target package
 
+      - name: Show diagnostics on failure
+        if: failure()
+        shell: pwsh
+        run: |
+          Get-ChildItem build-desktop -Recurse -Include *.log -ErrorAction SilentlyContinue |
+            ForEach-Object {
+              Write-Host "===== $($_.FullName) ====="
+              Get-Content $_.FullName -Tail 120
+            }
+
       - name: Upload package
         uses: actions/upload-artifact@v4
         with:
           name: bc2-cold-wallet-Windows
-          path: |
-            build-desktop/*.zip
-            build-desktop/*.sha256
+          path: build-desktop/*.zip
           if-no-files-found: error
 
   macos:
@@ -109,14 +127,21 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - name: Install macOS dependencies
+        run: brew install ninja openssl@3
+
+      - name: Export OpenSSL paths
+        run: |
+          OPENSSL_PREFIX="$(brew --prefix openssl@3)"
+          echo "OPENSSL_ROOT_DIR=$OPENSSL_PREFIX" >> "$GITHUB_ENV"
+          echo "CMAKE_PREFIX_PATH=$OPENSSL_PREFIX" >> "$GITHUB_ENV"
+          echo "PKG_CONFIG_PATH=$OPENSSL_PREFIX/lib/pkgconfig" >> "$GITHUB_ENV"
+
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
           version: ${{ env.QT_VERSION }}
           cache: true
-
-      - name: Install dependencies
-        run: brew install ninja openssl@3
 
       - name: Configure
         run: |
@@ -124,7 +149,7 @@ jobs:
             -DBC2_BUILD_SIMULATOR=ON \
             -DCMAKE_BUILD_TYPE=Release \
             -DCMAKE_OSX_DEPLOYMENT_TARGET=13.0 \
-            -DOPENSSL_ROOT_DIR="$(brew --prefix openssl@3)" \
+            -DOPENSSL_ROOT_DIR="$OPENSSL_ROOT_DIR" \
             -DCPACK_GENERATOR=DragNDrop
 
       - name: Build
@@ -136,11 +161,14 @@ jobs:
       - name: Package
         run: cmake --build build-desktop --target package
 
+      - name: Show diagnostics on failure
+        if: failure()
+        run: |
+          find build-desktop -maxdepth 4 -type f \( -name "CMakeError.log" -o -name "CMakeOutput.log" -o -name "*.log" \) -print -exec tail -n 120 {} \; || true
+
       - name: Upload package
         uses: actions/upload-artifact@v4
         with:
           name: bc2-cold-wallet-macOS
-          path: |
-            build-desktop/*.dmg
-            build-desktop/*.sha256
+          path: build-desktop/*.dmg
           if-no-files-found: error

@@ -6,7 +6,7 @@ int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     QApplication::setApplicationName("BC2 Cold Wallet Simulator");
     QApplication::setOrganizationName("BC2 Cold Wallet");
-    QApplication::setApplicationVersion("0.17.1");
+    QApplication::setApplicationVersion("0.17.2");
 
     MainWindow window;
     window.show();

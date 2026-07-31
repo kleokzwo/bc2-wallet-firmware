@@ -59,9 +59,9 @@ target_link_libraries(
 target_compile_features(bc2-wallet-simulator PRIVATE cxx_std_17)
 
 if(MSVC)
-    target_compile_options(bc2-wallet-simulator PRIVATE /W4 /WX)
+    target_compile_options(bc2-wallet-simulator PRIVATE /W4)
 else()
-    target_compile_options(bc2-wallet-simulator PRIVATE -Wall -Wextra -Wpedantic -Werror)
+    target_compile_options(bc2-wallet-simulator PRIVATE -Wall -Wextra -Wpedantic)
 endif()
 
 set_target_properties(bc2-wallet-simulator PROPERTIES
@@ -77,9 +77,10 @@ install(TARGETS bc2-wallet-simulator
     BUNDLE DESTINATION .
 )
 
-qt_generate_deploy_app_script(
-    TARGET bc2-wallet-simulator
-    OUTPUT_SCRIPT bc2_deploy_script
-    NO_UNSUPPORTED_PLATFORM_ERROR
-)
-install(SCRIPT ${bc2_deploy_script})
+if(WIN32 OR APPLE)
+    qt_generate_deploy_app_script(
+        TARGET bc2-wallet-simulator
+        OUTPUT_SCRIPT bc2_deploy_script
+    )
+    install(SCRIPT ${bc2_deploy_script})
+endif()

@@ -65,7 +65,7 @@ else()
 endif()
 
 set_target_properties(bc2-wallet-simulator PROPERTIES
-    OUTPUT_NAME "BC2 Cold Wallet"
+    OUTPUT_NAME "BC2-Cold-Wallet"
     MACOSX_BUNDLE_BUNDLE_NAME "BC2 Cold Wallet"
     MACOSX_BUNDLE_GUI_IDENTIFIER "org.bitcoin-ii.bc2coldwallet"
     MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_VERSION}"

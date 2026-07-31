@@ -1,16 +1,19 @@
-BC2 Cold Wallet v0.17.6
+BC2 Cold Wallet v0.17.7
+Test date: 2026-07-31
 
-Local host verification
-- CMake configure: PASS
-- C17 wallet core build: PASS
-- CLI build: PASS
-- Tests: 13/13 PASS
+Host validation:
+- CMake configure: PASSED
+- C17 wallet core build: PASSED
+- CLI build: PASSED
+- CTest: 13/13 PASSED
 
-Qt/MSVC hotfix verification
-- Added QDesktopServices include: VERIFIED IN SOURCE
-- Added explorer URL in mainwindow_pages.cpp: VERIFIED IN SOURCE
-- Renamed local pageChanged boolean: VERIFIED IN SOURCE
+Windows CI evidence from v0.17.6:
+- Qt/MSVC compile: PASSED
+- CTest: 13/13 PASSED
+- CPack: FAILED only during Qt runtime deployment because the executable file name contained spaces
 
-Native Windows Qt build
-- Must be confirmed by the next GitHub Actions Windows run.
-- The exact compiler errors from the previous run were addressed.
+v0.17.7 fix:
+- Executable output renamed to BC2-Cold-Wallet.exe so the generated Qt deployment script receives one unambiguous path argument
+
+Pending confirmation:
+- Windows GitHub Actions packaging rerun

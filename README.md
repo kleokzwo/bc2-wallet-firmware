@@ -1,6 +1,6 @@
 # BC2 Cold Wallet
 
-## Version 0.17.6
+## Version 0.17.7
 
 Die aktuelle Version schließt Sprint 7 als sichere Waveshare-Hardware-Bring-up-Basis ab. Der ESP32-S3 besitzt jetzt einen getesteten BC2-USB-Transport für Geräteinformationen und Zustandsabfragen; unbekannte Display- und Button-Pins bleiben bewusst gesperrt.
 
@@ -173,3 +173,7 @@ docs/DESKTOP-BUILD-GUIDE.md
 ```
 
 Unter Linux kann der Desktop-Build mit `./scripts/build-desktop-linux.sh` gestartet werden. Native Windows- und macOS-Pakete werden reproduzierbar über `.github/workflows/desktop-release.yml` erzeugt.
+
+### Windows executable name
+
+The packaged Windows application is named `BC2-Cold-Wallet.exe`. The hyphenated file name is intentional: Qt's deployment helper must receive the executable path as one argument during CPack packaging.

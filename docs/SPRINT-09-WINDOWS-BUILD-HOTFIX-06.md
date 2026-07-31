@@ -1,4 +1,4 @@
-# BC2 Cold Wallet v0.17.6
+# BC2 Cold Wallet v0.17.7
 
 ## Windows Qt compile hotfix
 

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 
 project(
     bc2_cold_wallet
-    VERSION 0.17.6
+    VERSION 0.17.7
     LANGUAGES C CXX
 )
 

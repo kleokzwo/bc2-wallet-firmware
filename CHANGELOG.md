@@ -1,6 +1,13 @@
 # Changelog
 
-## v0.17.6 – Qt/MSVC Compile Hotfix
+## 0.17.7 - Windows packaging hotfix
+
+- Fixed Qt deployment packaging on Windows by removing spaces from the executable file name.
+- The executable is now `BC2-Cold-Wallet.exe`; the visible application and bundle name remains “BC2 Cold Wallet”.
+- Prevents `qt_deploy_runtime_dependencies` from interpreting parts of the executable name as unsupported arguments.
+- No wallet-core, cryptographic, network, seed, signing, or hardware behavior changed.
+
+## v0.17.7 – Qt/MSVC Compile Hotfix
 
 - Added the missing `QDesktopServices` include in `mainwindow_pages.cpp`.
 - Added the BC2 explorer URL in the translation unit that uses it.

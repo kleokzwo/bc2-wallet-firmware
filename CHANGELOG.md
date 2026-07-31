@@ -1,6 +1,14 @@
 # Changelog
 
-## v0.17.4 – Windows C17 Portability Hotfix
+## v0.17.5
+
+- Windows release build no longer treats compiler warnings as fatal errors.
+- MSVC remains configured with warning level `/W4`.
+- Windows test targets explicitly undefine `NDEBUG` so assertions remain active.
+- Native desktop builds now use verbose compiler output for reliable diagnostics.
+- No wallet behavior, cryptography, network, seed, signing, or hardware logic changed.
+
+## v0.17.5 – Windows C17 Portability Hotfix
 
 - Gemeinsame KISS-Kompatibilitätsschicht `bc2_compat.h` ergänzt.
 - POSIX-`strtok_r` wird unter MSVC sicher auf `strtok_s` abgebildet.

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 
 project(
     bc2_cold_wallet
-    VERSION 0.17.4
+    VERSION 0.17.5
     LANGUAGES C CXX
 )
 
@@ -51,7 +51,7 @@ target_compile_definitions(
 )
 
 if(MSVC)
-    target_compile_options(bc2_wallet_core PRIVATE /W4 /WX)
+    target_compile_options(bc2_wallet_core PRIVATE /W4)
 else()
     target_compile_options(
         bc2_wallet_core
@@ -68,7 +68,7 @@ add_executable(bc2-wallet-cli firmware/app/main.c)
 target_link_libraries(bc2-wallet-cli PRIVATE bc2_wallet_core)
 
 if(MSVC)
-    target_compile_options(bc2-wallet-cli PRIVATE /W4 /WX)
+    target_compile_options(bc2-wallet-cli PRIVATE /W4)
 else()
     target_compile_options(
         bc2-wallet-cli
@@ -88,7 +88,7 @@ foreach(test_name crypto encoding bip39 bip32 address sign wallet device_state d
     target_link_libraries(test_${test_name} PRIVATE bc2_wallet_core)
 
     if(MSVC)
-        target_compile_options(test_${test_name} PRIVATE /W4 /WX)
+        target_compile_options(test_${test_name} PRIVATE /W4 /UNDEBUG)
     else()
         target_compile_options(
             test_${test_name}

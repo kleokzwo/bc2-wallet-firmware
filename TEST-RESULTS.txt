@@ -1,4 +1,4 @@
-BC2 Cold Wallet v0.17.4 – Test Results
+BC2 Cold Wallet v0.17.5 – Test Results
 
 Local Linux host validation
 - CMake configure: PASS

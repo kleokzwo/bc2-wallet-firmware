@@ -35,11 +35,11 @@ void PageRouter::show(Page page) {
             continue;
         }
 
-        const bool pageChanged = stack_->currentWidget() != widget;
+        const bool hasPageChanged = stack_->currentWidget() != widget;
         stack_->setCurrentWidget(widget);
         currentPage_ = page;
 
-        if (pageChanged) {
+        if (hasPageChanged) {
             animatePage(widget);
         }
 

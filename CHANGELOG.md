@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.17.6 – Qt/MSVC Compile Hotfix
+
+- Added the missing `QDesktopServices` include in `mainwindow_pages.cpp`.
+- Added the BC2 explorer URL in the translation unit that uses it.
+- Renamed the local `pageChanged` boolean to avoid shadowing the Qt signal on MSVC.
+- No wallet-core, cryptography, seed, signing, networking, or hardware behavior changed.
+
 ## v0.17.5
 
 - Windows release build no longer treats compiler warnings as fatal errors.

@@ -13,6 +13,7 @@
 
 #include <QAbstractItemView>
 #include <QCheckBox>
+#include <QDesktopServices>
 #include <QFrame>
 #include <QGridLayout>
 #include <QHeaderView>
@@ -31,6 +32,8 @@
 #include <QWidget>
 
 namespace {
+constexpr const char *kExplorerBaseUrl = "https://explorer.bitcoin-ii.org";
+
 QLabel *sectionTitle(const QString &text) {
     auto *label = new QLabel(text);
     label->setObjectName(QStringLiteral("sectionTitle"));

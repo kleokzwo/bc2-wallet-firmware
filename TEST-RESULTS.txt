@@ -1,17 +1,16 @@
-BC2 Cold Wallet v0.17.5 – Test Results
+BC2 Cold Wallet v0.17.6
 
-Local Linux host validation
+Local host verification
 - CMake configure: PASS
-- C17 wallet core build with warnings as errors: PASS
+- C17 wallet core build: PASS
 - CLI build: PASS
 - Tests: 13/13 PASS
 
-Windows CI correction
-- Replaced POSIX-only strtok_r usage with bc2_strtok compatibility wrapper.
-- Replaced strcpy usage with checked bc2_copy_string.
-- Kept MSVC /W4 /WX enabled.
-- Suppressed only OpenSSL's deprecation attributes for the existing tested EC API.
-- Native Windows confirmation requires a new GitHub Actions run.
+Qt/MSVC hotfix verification
+- Added QDesktopServices include: VERIFIED IN SOURCE
+- Added explorer URL in mainwindow_pages.cpp: VERIFIED IN SOURCE
+- Renamed local pageChanged boolean: VERIFIED IN SOURCE
 
-Qt desktop GUI
-- Not built locally because Qt 6 development packages are unavailable in this environment.
+Native Windows Qt build
+- Must be confirmed by the next GitHub Actions Windows run.
+- The exact compiler errors from the previous run were addressed.

@@ -1,8 +1,40 @@
 # BC2 Cold Wallet
 
-## Version 0.5.0
+## Version 0.17.0
 
-Version 0.5.0 implementiert die erste echte Watch-only-Electrum-Synchronisation im Qt-6-Desktop-Simulator. Der C17-Wallet-Core bleibt die einzige Wallet- und Kryptografieimplementierung.
+Die aktuelle Version schließt Sprint 7 als sichere Waveshare-Hardware-Bring-up-Basis ab. Der ESP32-S3 besitzt jetzt einen getesteten BC2-USB-Transport für Geräteinformationen und Zustandsabfragen; unbekannte Display- und Button-Pins bleiben bewusst gesperrt.
+
+
+## Neu in v0.16.0
+
+- KISS-Refactoring des Waveshare-BSP
+- USB Serial/JTAG als HAL-Transport für das gerahmte BC2-Protokoll
+- gemeinsamer C17-Geräteservice mit `PING`, `GET_INFO` und `GET_STATE`
+- getrennte USB-Protokoll- und Logkanäle
+- explizite Hardware-Bereitschaft für Display und Buttons
+- keine erfundenen GPIO-Pinbelegungen
+- neuer Geräteservice-Test
+- 13/13 Host-Tests erfolgreich
+
+## Neu in v0.14.0
+
+- gemeinsame `bc2_device_flow`-Schicht im plattformunabhängigen C17-Core
+- zentrale Zuordnung von Gerätezuständen zu E-Paper-Bildschirmen
+- zentrale Übersetzung physischer Tasten in Geräteereignisse
+- ESP32-Einstiegspunkt verwendet Zustandsmaschine, Flow-Mapping und HAL gemeinsam
+- Qt-Controller kann dieselben Hardware-Tastenereignisse verarbeiten
+- neuer plattformübergreifender Flow-Test
+- 12/12 Host-Tests erfolgreich
+- Wi-Fi, Bluetooth, Signierung und echte Seed-Verarbeitung bleiben deaktiviert
+
+## Neu in v0.9.1
+
+- Repository-Cleanup ohne neue Features
+- Trennung von Qt-Seitenaufbau und MainWindow-Verhaltenslogik
+- kleinere und leichter lesbare Hauptdatei
+- verbindlicher Development Master Plan
+- Sprint-Report mit Build- und Testnachweis
+- 11/11 Host-Tests erfolgreich
 
 ## Neu in v0.8.0
 
@@ -82,6 +114,20 @@ Diese Version verwendet noch einen festen, veröffentlichten Testvektor. Der sp�
 - `docs/WATCH-ONLY-SYNC-PLAN.md` – verbindlicher Stand und nächste Ausbaustufen
 - `docs/PHASES-3-6-PLAN.md` – Gesamtplan für Phasen 3–6
 - `docs/SECURITY.md` – Sicherheitsgrenzen und offene Risiken
+- `docs/DEVELOPMENT-MASTER-PLAN.md` – verbindliche Roadmap und Entwicklungsrichtlinie
+- `docs/SPRINT-01-REPORT.md` – Abschlussbericht für v0.9.1
+- `docs/QT-FOUNDATION.md` – Architektur des modernen Qt-Grundgerüsts
+- `docs/SPRINT-02-REPORT.md` – Abschlussbericht für v0.10.0
+- `docs/SPRINT-03-DEVELOPMENT-PLAN.md` – verbindlicher Plan für das Komponentensystem
+- `docs/SPRINT-03-REPORT.md` – Abschlussbericht für v0.11.0
+- `docs/SPRINT-04-DEVELOPMENT-PLAN.md` – verbindlicher Plan für vollständige Wallet-Seiten
+- `docs/SPRINT-04-REPORT.md` – Abschlussbericht für v0.12.0
+- `docs/SPRINT-05-DEVELOPMENT-PLAN.md` – verbindlicher Plan für Navigation und Design Polish
+- `docs/SPRINT-05-REPORT.md` – Abschlussbericht für v0.13.0
+- `docs/SPRINT-06-DEVELOPMENT-PLAN.md` – verbindlicher Plan für HAL- und Gerätefluss-Synchronisierung
+- `docs/SPRINT-06-REPORT.md` – Abschlussbericht für v0.14.0
+- `docs/SPRINT-07-DEVELOPMENT-PLAN.md` – verbindlicher Plan für Waveshare-Bring-up
+- `docs/SPRINT-07-REPORT.md` – Abschlussbericht für v0.16.0
 - `TEST-RESULTS.txt` – tatsächlich ausgeführte Prüfungen
 
 ## v0.8.0 – Geräteabläufe und Sperrlogik
@@ -112,3 +158,18 @@ Zielboard: Waveshare ESP32-S3-ePaper-1.54 (200×200). Für den Hardware-Build wi
 ```
 
 Vor Aktivierung des physischen Displays muss die Boardrevision V1 oder V2 bestätigt werden; Waveshare kennzeichnet die Beispielprogramme als nicht austauschbar.
+
+
+## Desktop readiness v0.16.0
+
+Die Desktop-App speichert Theme, Fenstergeometrie und Electrum-Verbindungsdaten lokal. Seeds, private Schlüssel, PINs und Signierdaten werden niemals als Desktop-Einstellung gespeichert. Der reale Waveshare-Wire-up folgt erst nach Ankunft der Hardware.
+
+## Desktop-Builds
+
+Die verbindliche Anleitung für Linux, Windows und macOS liegt unter:
+
+```text
+docs/DESKTOP-BUILD-GUIDE.md
+```
+
+Unter Linux kann der Desktop-Build mit `./scripts/build-desktop-linux.sh` gestartet werden. Native Windows- und macOS-Pakete werden reproduzierbar über `.github/workflows/desktop-release.yml` erzeugt.

@@ -1,0 +1,75 @@
+name: Desktop Build
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux
+            os: ubuntu-24.04
+            generator: TGZ
+          - name: Windows
+            os: windows-2025
+            generator: ZIP
+          - name: macOS
+            os: macos-15
+            generator: DragNDrop
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: "6.8.3"
+          cache: true
+
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y ninja-build libssl-dev
+
+      - name: Install macOS dependencies
+        if: runner.os == 'macOS'
+        run: brew install ninja openssl@3
+
+      - name: Configure
+        shell: bash
+        run: >-
+          cmake -S . -B build-desktop -G Ninja
+          -DBC2_BUILD_SIMULATOR=ON
+          -DCMAKE_BUILD_TYPE=Release
+          -DCPACK_GENERATOR=${{ matrix.generator }}
+          ${{ runner.os == 'macOS' && '-DOPENSSL_ROOT_DIR=$(brew --prefix openssl@3)' || '' }}
+
+      - name: Build
+        run: cmake --build build-desktop --parallel
+
+      - name: Test
+        run: ctest --test-dir build-desktop --output-on-failure
+
+      - name: Package
+        run: cmake --build build-desktop --target package
+
+      - name: Upload package
+        uses: actions/upload-artifact@v4
+        with:
+          name: bc2-cold-wallet-${{ matrix.name }}
+          path: |
+            build-desktop/*.zip
+            build-desktop/*.tar.gz
+            build-desktop/*.dmg
+            build-desktop/*.sha256
+          if-no-files-found: error

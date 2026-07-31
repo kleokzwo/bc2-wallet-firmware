@@ -5,6 +5,7 @@
 #include <QString>
 
 extern "C" {
+#include "bc2_device_flow.h"
 #include "bc2_device_state.h"
 }
 
@@ -33,6 +34,7 @@ public slots:
     void openTransactionReview();
     void openSettings();
     void confirm();
+    void handleButton(bc2_button_t button, bc2_button_action_t action);
 
 signals:
     void changed();

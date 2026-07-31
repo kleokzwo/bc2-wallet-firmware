@@ -1,6 +1,20 @@
-BC2 Cold Wallet v0.9.0
-Host build: ausgeführt
-Host tests: 11/11 bestanden
-Qt-Simulator: Quellcode auf 200x200 Displayreferenz aktualisiert; Build in dieser Umgebung nicht ausgeführt (Qt SDK nicht installiert).
-ESP-IDF hardware project: strukturell vollständig; Build in dieser Umgebung nicht ausgeführt (ESP-IDF Toolchain nicht installiert).
-Sicherheitsstatus: Hardware bring-up only; kein Seed, keine PIN-Speicherung, keine Signierung.
+BC2 Cold Wallet v0.17.0 – Test Results
+Date: 2026-07-31
+
+Host configuration: PASS
+C17 wallet core build: PASS
+CLI build: PASS
+Compiler warnings as errors: PASS
+CTest: 13/13 PASS
+
+Desktop release infrastructure:
+- Linux native build script: added
+- Windows native build script: added
+- Linux/Windows/macOS CI workflow: added
+- CMake/CPack packaging: configured
+- Qt runtime deployment: configured
+
+Environment limitation:
+The current container does not provide Qt 6 development files, so the Qt GUI binary and platform packages could not be compiled here. Native CI jobs are included to compile and package the GUI on Linux, Windows and macOS.
+
+ESP-IDF/hardware build: intentionally not part of this sprint.

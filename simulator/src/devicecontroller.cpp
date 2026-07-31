@@ -38,6 +38,14 @@ void DeviceController::openTransactionReview() { dispatch(BC2_DEVICE_EVENT_OPEN_
 void DeviceController::openSettings() { dispatch(BC2_DEVICE_EVENT_OPEN_SETTINGS); }
 void DeviceController::confirm() { dispatch(BC2_DEVICE_EVENT_CONFIRM); }
 
+void DeviceController::handleButton(bc2_button_t button, bc2_button_action_t action) {
+    bc2_button_event_t buttonEvent{button, action, nowMs()};
+    bc2_device_event deviceEvent;
+    if (bc2_device_flow_event_from_button(machine_.state, &buttonEvent, &deviceEvent) != 0) {
+        dispatch(deviceEvent);
+    }
+}
+
 quint64 DeviceController::nowMs() { return static_cast<quint64>(QDateTime::currentMSecsSinceEpoch()); }
 
 void DeviceController::dispatch(bc2_device_event event) {

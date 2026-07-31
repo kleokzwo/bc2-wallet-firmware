@@ -2,6 +2,9 @@
 #define BC2_SIMULATOR_MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QVector>
+
+#include "pagerouter.h"
 
 class DeviceController;
 class ElectrumClient;
@@ -16,17 +19,36 @@ class QCheckBox;
 class QProgressBar;
 class QTimer;
 class QTableWidget;
+class QFrame;
+class ThemeManager;
+class QResizeEvent;
+class QCloseEvent;
+class TransactionPage;
+class Bc2Button;
+class AppSettings;
 
 class MainWindow final : public QMainWindow {
     Q_OBJECT
 public:
     explicit MainWindow(QWidget *parent = nullptr);
+    ~MainWindow() override;
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
 
 private slots:
     void showDashboard();
     void showReceive();
     void showWatchOnly();
     void showNetwork();
+    void showTransaction();
+    void showHistory();
+    void showSettings();
+    void showAbout();
+    void showRecovery();
+    void showBackup();
+    void showFactoryReset();
     void showLockScreen();
     void submitSimulatorPin();
     void lockDevice();
@@ -43,6 +65,7 @@ private slots:
     void handleSyncProgress(int completed, int total, const QString &message);
     void handleSyncFinished(bool success, const QString &message);
     void refreshWatchOnlyView();
+    void toggleTheme();
 
 private:
     QWidget *buildShell();
@@ -51,11 +74,20 @@ private:
     QWidget *buildWatchOnlyPage();
     QWidget *buildNetworkPage();
     QWidget *buildLockPage();
+    void openTransactionReview();
+    void navigateTo(PageRouter::Page page);
+    void updateResponsiveLayout();
+    void updateNavigationState(PageRouter::Page page);
     void updateAddress();
     void updateDashboardNetwork(const QString &status, bool connected);
     static QString formatBc2(qint64 satoshis);
 
     QStackedWidget *pages_ = nullptr;
+    QFrame *sidebar_ = nullptr;
+    PageRouter *router_ = nullptr;
+    ThemeManager *themeManager_ = nullptr;
+    AppSettings *appSettings_ = nullptr;
+    QPushButton *themeButton_ = nullptr;
     QLabel *addressLabel_ = nullptr;
     QLabel *pathLabel_ = nullptr;
     QLabel *statusLabel_ = nullptr;
@@ -82,6 +114,8 @@ private:
     ElectrumClient *electrum_ = nullptr;
     WatchOnlyModel *watchModel_ = nullptr;
     WatchOnlySync *watchSync_ = nullptr;
+    TransactionPage *transactionPage_ = nullptr;
+    QVector<Bc2Button *> navigationButtons_;
     QString currentAddress_;
     unsigned int addressIndex_ = 0U;
 };

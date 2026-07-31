@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 
 project(
     bc2_cold_wallet
-    VERSION 0.9.0
+    VERSION 0.17.0
     LANGUAGES C CXX
 )
 
@@ -22,6 +22,8 @@ add_library(
     firmware/platform/bc2_device_state.c
     firmware/platform/bc2_hal.c
     firmware/platform/bc2_device_ui.c
+    firmware/platform/bc2_device_flow.c
+    firmware/platform/bc2_device_service.c
     firmware/protocol/bc2_usb_protocol.c
     firmware/wallet/bc2_address.c
     firmware/wallet/bc2_bip32.c
@@ -80,7 +82,7 @@ endif()
 
 enable_testing()
 
-foreach(test_name crypto encoding bip39 bip32 address sign wallet device_state psbt hal usb_protocol)
+foreach(test_name crypto encoding bip39 bip32 address sign wallet device_state device_flow device_service psbt hal usb_protocol)
     add_executable(test_${test_name} tests/test_${test_name}.c)
     target_link_libraries(test_${test_name} PRIVATE bc2_wallet_core)
 
@@ -105,3 +107,12 @@ endforeach()
 if(BC2_BUILD_SIMULATOR)
     add_subdirectory(simulator)
 endif()
+
+# Desktop release packaging
+set(CPACK_PACKAGE_NAME "BC2-Cold-Wallet")
+set(CPACK_PACKAGE_VENDOR "BC2")
+set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
+set(CPACK_PACKAGE_FILE_NAME "bc2-cold-wallet-${PROJECT_VERSION}-${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+set(CPACK_PACKAGE_CHECKSUM SHA256)
+include(CPack)

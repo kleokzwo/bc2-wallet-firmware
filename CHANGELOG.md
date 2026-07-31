@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.17.3 – Windows CI Generator Hotfix
+
+- Windows-Runner verbindlich auf `windows-2022` gesetzt.
+- MSVC-x64-Buildumgebung wird ausdrücklich mit `ilammy/msvc-dev-cmd` aktiviert.
+- Windows verwendet Ninja statt des fragilen Visual-Studio-CMake-Generators.
+- Qt MSVC 2022 und OpenSSL aus vcpkg bleiben konsistent auf x64 ausgerichtet.
+- Versionsnummer und CI-Dokumentation auf 0.17.3 aktualisiert.
+
 ## v0.17.2 – Sprint 9 CI Hotfix 2
 
 - Windows OpenSSL-Erkennung auf vcpkg/CMake-Toolchain umgestellt.

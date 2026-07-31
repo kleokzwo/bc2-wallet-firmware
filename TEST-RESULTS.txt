@@ -1,4 +1,4 @@
-BC2 Cold Wallet v0.17.2 – Test Results
+BC2 Cold Wallet v0.17.3 – Test Results
 
 Host configuration: PASSED
 C17 wallet core build: PASSED

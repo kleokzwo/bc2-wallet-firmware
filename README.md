@@ -1,6 +1,6 @@
 # BC2 Cold Wallet
 
-## Version 0.17.2
+## Version 0.17.3
 
 Die aktuelle Version schließt Sprint 7 als sichere Waveshare-Hardware-Bring-up-Basis ab. Der ESP32-S3 besitzt jetzt einen getesteten BC2-USB-Transport für Geräteinformationen und Zustandsabfragen; unbekannte Display- und Button-Pins bleiben bewusst gesperrt.
 

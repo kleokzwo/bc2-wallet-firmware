@@ -99,7 +99,7 @@ SettingsPage::SettingsPage(QWidget *parent) : QWidget(parent) {
 AboutPage::AboutPage(QWidget *parent) : QWidget(parent) {
     auto *layout = pageLayout(this, QStringLiteral("Über BC2 Cold Wallet"),
                               QStringLiteral("Open-Source BC2-only Hardware-Wallet."));
-    layout->addWidget(informationCard(QStringLiteral("Version 0.17.0"),
+    layout->addWidget(informationCard(QStringLiteral("Version 0.17.1"),
         QStringLiteral("Desktop-Simulator: Qt 6 · Wallet-Core: C17 · Zielhardware: Waveshare ESP32-S3 1.54\" E-Paper AIoT Development Board · Firmware: ESP-IDF.")));
     layout->addWidget(informationCard(QStringLiteral("Sicherheitsmodell"),
         QStringLiteral("Seed und private Schlüssel bleiben auf der Hardware. Empfangsadressen und Transaktionen müssen vollständig auf dem Gerät geprüft und bestätigt werden.")));

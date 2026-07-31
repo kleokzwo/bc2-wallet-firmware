@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.17.1 – Desktop CI Hotfix
+
+- Windows-Build von gemischter MinGW-Konfiguration auf eine konsistente MSVC-2022-Toolchain umgestellt.
+- OpenSSL wird auf Windows installiert und über `OPENSSL_ROOT_DIR` eindeutig gefunden.
+- Linux, Windows und macOS besitzen getrennte, KISS-konforme CI-Jobs.
+- macOS verwendet den expliziten Homebrew-Pfad für OpenSSL 3.
+- Checkout-Action auf die Node-24-kompatible Hauptversion aktualisiert.
+- Keine Wallet- oder Sicherheitslogik verändert.
+
 ## 0.16.0
 
 - Added central KISS-oriented desktop settings storage.

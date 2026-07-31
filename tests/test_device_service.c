@@ -85,7 +85,7 @@ int main(void) {
     assert(bc2_usb_parse(usb.response, usb.response_size, &response) == BC2_USB_PARSE_OK);
     assert(response.command == (uint8_t)(BC2_USB_CMD_GET_INFO | 0x80U));
     assert(response.payload_length > 0U);
-    assert(strstr((const char *)response.payload, "0.17.0") != NULL);
+    assert(strstr((const char *)response.payload, "0.17.1") != NULL);
 
     usb.request_size = bc2_usb_encode(BC2_USB_CMD_GET_STATE, 9U, NULL, 0U,
                                       usb.request, sizeof(usb.request));

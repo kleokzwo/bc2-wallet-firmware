@@ -9,50 +9,31 @@ on:
 permissions:
   contents: read
 
+env:
+  QT_VERSION: "6.8.3"
+
 jobs:
-  build:
-    name: ${{ matrix.name }}
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - name: Linux
-            os: ubuntu-24.04
-            generator: TGZ
-          - name: Windows
-            os: windows-2025
-            generator: ZIP
-          - name: macOS
-            os: macos-15
-            generator: DragNDrop
-
-    runs-on: ${{ matrix.os }}
-
+  linux:
+    name: Linux
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
-          version: "6.8.3"
+          version: ${{ env.QT_VERSION }}
           cache: true
 
-      - name: Install Linux dependencies
-        if: runner.os == 'Linux'
+      - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y ninja-build libssl-dev
 
-      - name: Install macOS dependencies
-        if: runner.os == 'macOS'
-        run: brew install ninja openssl@3
-
       - name: Configure
-        shell: bash
         run: >-
           cmake -S . -B build-desktop -G Ninja
           -DBC2_BUILD_SIMULATOR=ON
           -DCMAKE_BUILD_TYPE=Release
-          -DCPACK_GENERATOR=${{ matrix.generator }}
-          ${{ runner.os == 'macOS' && '-DOPENSSL_ROOT_DIR=$(brew --prefix openssl@3)' || '' }}
+          -DCPACK_GENERATOR=TGZ
 
       - name: Build
         run: cmake --build build-desktop --parallel
@@ -66,10 +47,100 @@ jobs:
       - name: Upload package
         uses: actions/upload-artifact@v4
         with:
-          name: bc2-cold-wallet-${{ matrix.name }}
+          name: bc2-cold-wallet-Linux
+          path: |
+            build-desktop/*.tar.gz
+            build-desktop/*.sha256
+          if-no-files-found: error
+
+  windows:
+    name: Windows
+    runs-on: windows-2025
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install Qt for MSVC
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ env.QT_VERSION }}
+          arch: win64_msvc2022_64
+          cache: true
+
+      - name: Install OpenSSL
+        shell: pwsh
+        run: choco install openssl --no-progress --yes
+
+      - name: Configure
+        shell: pwsh
+        run: |
+          $openSslRoot = "C:/Program Files/OpenSSL-Win64"
+          if (-not (Test-Path $openSslRoot)) {
+              throw "OpenSSL was not found at $openSslRoot"
+          }
+
+          cmake -S . -B build-desktop `
+            -G "Visual Studio 17 2022" `
+            -A x64 `
+            -DBC2_BUILD_SIMULATOR=ON `
+            -DOPENSSL_ROOT_DIR="$openSslRoot" `
+            -DCPACK_GENERATOR=ZIP
+
+      - name: Build
+        run: cmake --build build-desktop --config Release --parallel
+
+      - name: Test
+        run: ctest --test-dir build-desktop -C Release --output-on-failure
+
+      - name: Package
+        run: cmake --build build-desktop --config Release --target package
+
+      - name: Upload package
+        uses: actions/upload-artifact@v4
+        with:
+          name: bc2-cold-wallet-Windows
           path: |
             build-desktop/*.zip
-            build-desktop/*.tar.gz
+            build-desktop/*.sha256
+          if-no-files-found: error
+
+  macos:
+    name: macOS
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ env.QT_VERSION }}
+          cache: true
+
+      - name: Install dependencies
+        run: brew install ninja openssl@3
+
+      - name: Configure
+        run: |
+          cmake -S . -B build-desktop -G Ninja \
+            -DBC2_BUILD_SIMULATOR=ON \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET=13.0 \
+            -DOPENSSL_ROOT_DIR="$(brew --prefix openssl@3)" \
+            -DCPACK_GENERATOR=DragNDrop
+
+      - name: Build
+        run: cmake --build build-desktop --parallel
+
+      - name: Test
+        run: ctest --test-dir build-desktop --output-on-failure
+
+      - name: Package
+        run: cmake --build build-desktop --target package
+
+      - name: Upload package
+        uses: actions/upload-artifact@v4
+        with:
+          name: bc2-cold-wallet-macOS
+          path: |
             build-desktop/*.dmg
             build-desktop/*.sha256
           if-no-files-found: error

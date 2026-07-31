@@ -11,7 +11,7 @@
 extern "C" {
 #endif
 
-#define BC2_DEVICE_FIRMWARE_VERSION "0.17.0"
+#define BC2_DEVICE_FIRMWARE_VERSION "0.17.1"
 #define BC2_DEVICE_INFO_MAX 160U
 
 typedef struct {

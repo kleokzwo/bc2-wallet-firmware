@@ -1,20 +1,15 @@
-BC2 Cold Wallet v0.17.0 – Test Results
-Date: 2026-07-31
+BC2 Cold Wallet v0.17.1 – Test Results
 
-Host configuration: PASS
-C17 wallet core build: PASS
-CLI build: PASS
-Compiler warnings as errors: PASS
-CTest: 13/13 PASS
+Local host validation:
+- CMake configure: PASSED
+- C17 wallet core build: PASSED
+- CLI build: PASSED
+- Compiler warnings as errors: PASSED
+- CTest: 13/13 PASSED
 
-Desktop release infrastructure:
-- Linux native build script: added
-- Windows native build script: added
-- Linux/Windows/macOS CI workflow: added
-- CMake/CPack packaging: configured
-- Qt runtime deployment: configured
+Desktop CI hotfix:
+- Windows workflow uses one consistent MSVC 2022 toolchain with Qt MSVC and OpenSSL-Win64.
+- Linux and macOS use explicit native OpenSSL development paths.
+- Native GUI packages must be confirmed by the corresponding GitHub-hosted runners.
 
-Environment limitation:
-The current container does not provide Qt 6 development files, so the Qt GUI binary and platform packages could not be compiled here. Native CI jobs are included to compile and package the GUI on Linux, Windows and macOS.
-
-ESP-IDF/hardware build: intentionally not part of this sprint.
+No wallet, cryptography, signing, seed, network, HAL, or hardware behavior changed.

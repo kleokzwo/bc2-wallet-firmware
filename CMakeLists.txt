@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 
 project(
     bc2_cold_wallet
-    VERSION 0.17.3
+    VERSION 0.17.4
     LANGUAGES C CXX
 )
 
@@ -47,6 +47,7 @@ target_compile_definitions(
     PRIVATE
         _POSIX_C_SOURCE=200809L
         BC2_BIP39_WORDLIST_PATH="${CMAKE_CURRENT_SOURCE_DIR}/third_party/bip39/english.txt"
+        OPENSSL_SUPPRESS_DEPRECATED
 )
 
 if(MSVC)

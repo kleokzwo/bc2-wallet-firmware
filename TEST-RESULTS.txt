@@ -1,15 +1,17 @@
-BC2 Cold Wallet v0.17.3 – Test Results
+BC2 Cold Wallet v0.17.4 – Test Results
 
-Host configuration: PASSED
-C17 wallet core build: PASSED
-CLI build: PASSED
-Host tests: 13/13 PASSED
+Local Linux host validation
+- CMake configure: PASS
+- C17 wallet core build with warnings as errors: PASS
+- CLI build: PASS
+- Tests: 13/13 PASS
 
-Desktop CI correction:
-- Windows uses OpenSSL through vcpkg and the vcpkg CMake toolchain.
-- macOS exports the Homebrew OpenSSL prefix.
-- Linux installs native OpenSSL, Ninja and OpenGL development dependencies.
-- All jobs print diagnostic logs after failures.
+Windows CI correction
+- Replaced POSIX-only strtok_r usage with bc2_strtok compatibility wrapper.
+- Replaced strcpy usage with checked bc2_copy_string.
+- Kept MSVC /W4 /WX enabled.
+- Suppressed only OpenSSL's deprecation attributes for the existing tested EC API.
+- Native Windows confirmation requires a new GitHub Actions run.
 
-Native Qt package status:
-The Windows, Linux and macOS GUI packages require a new GitHub Actions run on their native hosted runners. They cannot be truthfully marked as passed until that run completes.
+Qt desktop GUI
+- Not built locally because Qt 6 development packages are unavailable in this environment.

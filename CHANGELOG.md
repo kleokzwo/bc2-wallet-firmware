@@ -1,12 +1,13 @@
 # Changelog
 
-## v0.17.3 – Windows CI Generator Hotfix
+## v0.17.4 – Windows C17 Portability Hotfix
 
-- Windows-Runner verbindlich auf `windows-2022` gesetzt.
-- MSVC-x64-Buildumgebung wird ausdrücklich mit `ilammy/msvc-dev-cmd` aktiviert.
-- Windows verwendet Ninja statt des fragilen Visual-Studio-CMake-Generators.
-- Qt MSVC 2022 und OpenSSL aus vcpkg bleiben konsistent auf x64 ausgerichtet.
-- Versionsnummer und CI-Dokumentation auf 0.17.3 aktualisiert.
+- Gemeinsame KISS-Kompatibilitätsschicht `bc2_compat.h` ergänzt.
+- POSIX-`strtok_r` wird unter MSVC sicher auf `strtok_s` abgebildet.
+- Unsichere `strcpy`-Aufrufe durch eine geprüfte, größenbegrenzte Kopierfunktion ersetzt.
+- OpenSSL-3-Deprecation-Attribute für den bestehenden, getesteten EC-Code zentral unterdrückt; `/W4 /WX` bleibt für den C17-Core aktiv.
+- Keine Wallet-Funktion, Ableitung, Signaturausgabe oder Sicherheitsgrenze verändert.
+- Linux-Host-Build und 13/13 Tests erfolgreich.
 
 ## v0.17.2 – Sprint 9 CI Hotfix 2
 

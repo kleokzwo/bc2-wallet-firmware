@@ -60,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent)
       electrum_(new ElectrumClient(this)),
       watchModel_(new WatchOnlyModel(this)),
       watchSync_(new WatchOnlySync(electrum_, watchModel_, this)) {
-    setWindowTitle(QStringLiteral("BC2 Cold Wallet — Simulator 0.17.3"));
+    setWindowTitle(QStringLiteral("BC2 Cold Wallet — Simulator 0.17.4"));
     resize(1180, 800);
     setMinimumSize(DesignTokens::WindowMinimumWidth, DesignTokens::WindowMinimumHeight);
     appSettings_ = new AppSettings;

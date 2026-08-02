@@ -8,6 +8,7 @@ constexpr const char *kElectrumPortKey = "network/electrumPort";
 constexpr const char *kElectrumSslKey = "network/electrumSsl";
 constexpr const char *kLightThemeKey = "appearance/lightTheme";
 constexpr const char *kWindowGeometryKey = "window/geometry";
+constexpr const char *kReceiveGapLimitKey = "receive/gapLimit";
 constexpr const char *kDefaultElectrumHost = "infra1.bitcoin-ii.org";
 constexpr int kDefaultElectrumPort = 50009;
 }
@@ -48,4 +49,23 @@ void AppSettings::setLightThemeEnabled(bool enabled) {
 
 void AppSettings::setWindowGeometry(const QByteArray &geometry) {
     settings_->setValue(kWindowGeometryKey, geometry);
+}
+
+
+int AppSettings::receiveGapLimit() const {
+    return settings_->value(kReceiveGapLimitKey, 20).toInt();
+}
+
+QString AppSettings::receiveLabel(unsigned int index) const {
+    return settings_->value(QStringLiteral("receive/labels/%1").arg(index)).toString();
+}
+
+void AppSettings::setReceiveGapLimit(int gapLimit) {
+    settings_->setValue(kReceiveGapLimitKey, gapLimit);
+}
+
+void AppSettings::setReceiveLabel(unsigned int index, const QString &label) {
+    const QString key = QStringLiteral("receive/labels/%1").arg(index);
+    if (label.trimmed().isEmpty()) settings_->remove(key);
+    else settings_->setValue(key, label.trimmed());
 }

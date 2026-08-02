@@ -1,10 +1,14 @@
 #include "bc2qrwidget.h"
 
+#include "../receiveqrcode.h"
+
 #include <QPainter>
+#include <algorithm>
+#include <memory>
 
 Bc2QrWidget::Bc2QrWidget(QWidget *parent) : QWidget(parent) {
-    setMinimumSize(180, 180);
-    setAccessibleName(QStringLiteral("QR-Code-Vorschau"));
+    setMinimumSize(220, 220);
+    setAccessibleName(QStringLiteral("Scanbarer Empfangs-QR-Code"));
 }
 
 void Bc2QrWidget::setPayload(const QString &payload) {
@@ -18,12 +22,31 @@ QString Bc2QrWidget::payload() const { return payload_; }
 void Bc2QrWidget::paintEvent(QPaintEvent *event) {
     Q_UNUSED(event)
     QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing);
     painter.fillRect(rect(), Qt::white);
-    painter.setPen(Qt::black);
-    painter.drawRect(rect().adjusted(0, 0, -1, -1));
-    painter.drawText(rect().adjusted(18, 18, -18, -18), Qt::AlignCenter | Qt::TextWordWrap,
-                     payload_.isEmpty()
-                         ? QStringLiteral("QR-Code")
-                         : QStringLiteral("QR-Rendering wird mit der finalen Receive-Seite aktiviert."));
+    if (payload_.isEmpty()) return;
+
+    try {
+        const ReceiveQrCode qr(payload_.toStdString());
+        constexpr int quietZone = 4;
+        const int modules = qr.size() + quietZone * 2;
+        const int scale = std::max(1, std::min(width(), height()) / modules);
+        const int renderedSize = modules * scale;
+        const int left = (width() - renderedSize) / 2;
+        const int top = (height() - renderedSize) / 2;
+        painter.setPen(Qt::NoPen);
+        painter.setBrush(Qt::black);
+        for (int y = 0; y < qr.size(); ++y) {
+            for (int x = 0; x < qr.size(); ++x) {
+                if (qr.module(x, y)) {
+                    painter.drawRect(left + (x + quietZone) * scale,
+                                     top + (y + quietZone) * scale,
+                                     scale, scale);
+                }
+            }
+        }
+    } catch (const std::exception &) {
+        painter.setPen(Qt::black);
+        painter.drawText(rect().adjusted(16, 16, -16, -16), Qt::AlignCenter | Qt::TextWordWrap,
+                         QStringLiteral("QR-Code konnte nicht erstellt werden."));
+    }
 }

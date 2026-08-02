@@ -1,5 +1,6 @@
-#!/usr/bin/env sh
-set -eu
-cmake -S . -B build -DBC2_BUILD_SIMULATOR=OFF -DCMAKE_BUILD_TYPE=Release
-cmake --build build --parallel
-ctest --test-dir build --output-on-failure
+#!/usr/bin/env bash
+set -euo pipefail
+root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cmake -S "$root" -B "$root/build" -DCMAKE_BUILD_TYPE=Release -DBC2_BUILD_SIMULATOR=OFF
+cmake --build "$root/build" --parallel
+ctest --test-dir "$root/build" --output-on-failure

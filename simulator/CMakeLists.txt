@@ -54,6 +54,7 @@ target_link_libraries(
         Qt6::Widgets
         Qt6::Network
         bc2_wallet_core
+        bc2_receive_qr
 )
 
 target_compile_features(bc2-wallet-simulator PRIVATE cxx_std_17)

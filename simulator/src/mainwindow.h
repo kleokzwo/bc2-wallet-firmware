@@ -17,6 +17,7 @@ class QSpinBox;
 class QStackedWidget;
 class QCheckBox;
 class QProgressBar;
+class Bc2QrWidget;
 class QTimer;
 class QTableWidget;
 class QFrame;
@@ -58,6 +59,8 @@ private slots:
     void confirmAddress();
     void copyAddress();
     void openAddressInExplorer();
+    void saveAddressLabel();
+    void updateGapLimit(int gapLimit);
     void connectElectrum();
     void startWatchOnlySync();
     void handleNetworkState(const QString &status, bool connected);
@@ -94,6 +97,10 @@ private:
     QLabel *addressLabel_ = nullptr;
     QLabel *pathLabel_ = nullptr;
     QLabel *statusLabel_ = nullptr;
+    Bc2QrWidget *receiveQr_ = nullptr;
+    QLineEdit *addressLabelEdit_ = nullptr;
+    QSpinBox *gapLimitSpin_ = nullptr;
+    QLabel *gapLimitStatusLabel_ = nullptr;
     QLabel *dashboardNetworkLabel_ = nullptr;
     QLabel *dashboardBalanceLabel_ = nullptr;
     QLabel *networkStatusLabel_ = nullptr;

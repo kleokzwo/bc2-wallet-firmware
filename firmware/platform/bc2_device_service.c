@@ -14,11 +14,12 @@ static size_t build_info_payload(const bc2_device_identity_t *identity,
 
     const int written = snprintf(output,
                                  output_capacity,
-                                 "BC2 Cold Wallet %s\n%s\n%ux%u",
+                                 "BC2 Cold Wallet %s\n%s\n%ux%u\nrevision=%u",
                                  BC2_DEVICE_FIRMWARE_VERSION,
                                  identity->board_name != NULL ? identity->board_name : "Unknown board",
                                  (unsigned int)identity->display_width,
-                                 (unsigned int)identity->display_height);
+                                 (unsigned int)identity->display_height,
+                                 (unsigned int)identity->board_revision);
     if (written < 0 || (size_t)written >= output_capacity) return 0U;
     return (size_t)written;
 }
@@ -45,6 +46,12 @@ static size_t build_response(const bc2_usb_message_t *request,
             payload[0] = (uint8_t)machine->state;
             payload_size = 1U;
             break;
+        case BC2_USB_CMD_GET_CAPABILITIES:
+            if (identity == NULL) return 0U;
+            payload[0] = identity->capabilities;
+            payload[1] = identity->board_revision;
+            payload_size = 2U;
+            break;
         default:
             return 0U;
     }
@@ -57,20 +64,39 @@ static size_t build_response(const bc2_usb_message_t *request,
                           output_capacity);
 }
 
-bc2_hal_result_t bc2_device_service_process_usb(const bc2_hal_t *hal,
+void bc2_device_service_init(bc2_device_service_t *service) {
+    if (service != NULL) bc2_usb_stream_init(&service->usb_stream);
+}
+
+bc2_hal_result_t bc2_device_service_process_usb(bc2_device_service_t *service,
+                                                const bc2_hal_t *hal,
                                                 const bc2_device_machine *machine,
                                                 const bc2_device_identity_t *identity) {
-    uint8_t request_buffer[BC2_HAL_USB_MAX_MESSAGE];
+    uint8_t receive_buffer[BC2_HAL_USB_MAX_MESSAGE];
+    uint8_t request_buffer[BC2_USB_FRAME_MAX];
     uint8_t response_buffer[BC2_HAL_USB_MAX_MESSAGE];
+    size_t receive_size = 0U;
     size_t request_size = 0U;
     bc2_usb_message_t request;
 
+    if (service == NULL) return BC2_HAL_ERROR_ARGUMENT;
+
     const bc2_hal_result_t receive_result = bc2_hal_usb_receive(hal,
-                                                               request_buffer,
-                                                               sizeof(request_buffer),
-                                                               &request_size);
-    if (receive_result != BC2_HAL_OK) return receive_result;
-    if (request_size == 0U) return BC2_HAL_ERROR_NOT_FOUND;
+                                                               receive_buffer,
+                                                               sizeof(receive_buffer),
+                                                               &receive_size);
+    if (receive_result != BC2_HAL_OK && receive_result != BC2_HAL_ERROR_NOT_FOUND)
+        return receive_result;
+    if (receive_size > 0U &&
+        bc2_usb_stream_push(&service->usb_stream, receive_buffer, receive_size) == 0)
+        return BC2_HAL_ERROR_LIMIT;
+
+    const int next_result = bc2_usb_stream_next(&service->usb_stream,
+                                                request_buffer,
+                                                sizeof(request_buffer),
+                                                &request_size);
+    if (next_result == 0) return BC2_HAL_ERROR_NOT_FOUND;
+    if (next_result < 0) return BC2_HAL_ERROR_IO;
     if (bc2_usb_parse(request_buffer, request_size, &request) != BC2_USB_PARSE_OK)
         return BC2_HAL_ERROR_IO;
 

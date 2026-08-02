@@ -9,6 +9,7 @@
 #include "watchonlymodel.h"
 #include "watchonlysync.h"
 #include "components/bc2button.h"
+#include "components/bc2qrwidget.h"
 #include "pages/walletpages.h"
 
 extern "C" {
@@ -62,7 +63,7 @@ MainWindow::MainWindow(QWidget *parent)
       electrum_(new ElectrumClient(this)),
       watchModel_(new WatchOnlyModel(this)),
       watchSync_(new WatchOnlySync(electrum_, watchModel_, this)) {
-    setWindowTitle(QStringLiteral("BC2 Cold Wallet — Simulator 0.18.0"));
+    setWindowTitle(QStringLiteral("BC2 Cold Wallet — Simulator 0.22.0"));
     resize(1180, 800);
     setMinimumSize(DesignTokens::WindowMinimumWidth, DesignTokens::WindowMinimumHeight);
     appSettings_ = new AppSettings;
@@ -292,6 +293,12 @@ void MainWindow::refreshDeviceState() {
 }
 
 void MainWindow::generateNextAddress() {
+    const unsigned int gapLimit = static_cast<unsigned int>(gapLimitSpin_ != nullptr ? gapLimitSpin_->value() : 20);
+    if (addressIndex_ + 1U >= gapLimit) {
+        restyle(gapLimitStatusLabel_, QStringLiteral("error"));
+        gapLimitStatusLabel_->setText(QStringLiteral("Gap-Limit erreicht. Ohne erkannte Nutzung wird keine weitere Adresse erzeugt."));
+        return;
+    }
     ++addressIndex_;
     updateAddress();
 }
@@ -313,6 +320,22 @@ void MainWindow::openAddressInExplorer() {
     if (!currentAddress_.isEmpty()) {
         QDesktopServices::openUrl(QUrl(QStringLiteral("%1/address/%2")
                                           .arg(QString::fromLatin1(kExplorerBaseUrl), currentAddress_)));
+    }
+}
+
+void MainWindow::saveAddressLabel() {
+    if (appSettings_ == nullptr || addressLabelEdit_ == nullptr) return;
+    appSettings_->setReceiveLabel(addressIndex_, addressLabelEdit_->text());
+    statusLabel_->setText(addressLabelEdit_->text().trimmed().isEmpty()
+        ? QStringLiteral("Adresslabel entfernt · Adresse weiterhin am Gerät prüfen")
+        : QStringLiteral("Adresslabel gespeichert · Adresse weiterhin am Gerät prüfen"));
+}
+
+void MainWindow::updateGapLimit(int gapLimit) {
+    if (appSettings_ != nullptr) appSettings_->setReceiveGapLimit(gapLimit);
+    if (gapLimitStatusLabel_ != nullptr) {
+        restyle(gapLimitStatusLabel_, QStringLiteral("muted"));
+        gapLimitStatusLabel_->setText(QStringLiteral("Aktueller Empfangsbereich: Index 0 bis %1").arg(gapLimit - 1));
     }
 }
 
@@ -434,12 +457,16 @@ void MainWindow::updateAddress() {
     if (status == BC2_WALLET_OK) {
         currentAddress_ = QString::fromLatin1(result.address);
         addressLabel_->setText(currentAddress_);
+        if (receiveQr_ != nullptr) receiveQr_->setPayload(currentAddress_);
+        if (addressLabelEdit_ != nullptr && appSettings_ != nullptr) addressLabelEdit_->setText(appSettings_->receiveLabel(addressIndex_));
         pathLabel_->setText(QStringLiteral("Ableitungspfad: %1").arg(QString::fromLatin1(result.path)));
         restyle(statusLabel_, QStringLiteral("muted"));
         statusLabel_->setText(QStringLiteral("Noch nicht bestätigt"));
         confirmButton_->setEnabled(true);
+        if (gapLimitStatusLabel_ != nullptr && gapLimitSpin_ != nullptr) updateGapLimit(gapLimitSpin_->value());
     } else {
         currentAddress_.clear();
+        if (receiveQr_ != nullptr) receiveQr_->setPayload(QString());
         addressLabel_->setText(QStringLiteral("Adressgenerierung fehlgeschlagen"));
         pathLabel_->setText(QString::fromUtf8(bc2_wallet_status_message(status)));
         statusLabel_->clear();

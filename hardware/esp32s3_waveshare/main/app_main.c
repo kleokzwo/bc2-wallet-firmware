@@ -56,14 +56,24 @@ static void process_button(const bc2_hal_t *hal,
         render_current_state(hal, machine);
 }
 
-static void process_usb(const bc2_hal_t *hal,
+static void process_usb(bc2_device_service_t *service,
+                        const bc2_hal_t *hal,
                         const bc2_device_machine *machine) {
+    uint8_t capabilities = BC2_DEVICE_CAP_USB |
+                           BC2_DEVICE_CAP_STORAGE |
+                           BC2_DEVICE_CAP_RANDOM;
+    if (bc2_waveshare_display_ready()) capabilities |= BC2_DEVICE_CAP_DISPLAY;
+    if (bc2_waveshare_buttons_ready()) capabilities |= BC2_DEVICE_CAP_BUTTONS;
+
     const bc2_device_identity_t identity = {
         BC2_BOARD_NAME,
         BC2_BOARD_DISPLAY_WIDTH,
         BC2_BOARD_DISPLAY_HEIGHT,
+        (uint8_t)bc2_waveshare_board_revision(),
+        capabilities,
     };
-    const bc2_hal_result_t result = bc2_device_service_process_usb(hal,
+    const bc2_hal_result_t result = bc2_device_service_process_usb(service,
+                                                                   hal,
                                                                    machine,
                                                                    &identity);
     if (result != BC2_HAL_OK &&
@@ -80,6 +90,7 @@ static bool random_self_test(const bc2_hal_t *hal) {
 void app_main(void) {
     bc2_hal_t hal = {0};
     bc2_device_machine machine;
+    bc2_device_service_t device_service;
 
     ESP_ERROR_CHECK(bc2_waveshare_bsp_init(&hal));
     if (!bc2_hal_is_complete(&hal)) {
@@ -88,6 +99,7 @@ void app_main(void) {
     }
 
     bc2_device_machine_init(&machine, 1, bc2_hal_now_ms(&hal));
+    bc2_device_service_init(&device_service);
     render_current_state(&hal, &machine);
 
     const bc2_device_event boot_result = random_self_test(&hal)
@@ -105,7 +117,7 @@ void app_main(void) {
              bc2_waveshare_buttons_ready() ? "ready" : "safety-gated");
 
     for (;;) {
-        process_usb(&hal, &machine);
+        process_usb(&device_service, &hal, &machine);
         process_button(&hal, &machine);
         if (bc2_device_machine_tick(&machine, bc2_hal_now_ms(&hal)) != 0)
             render_current_state(&hal, &machine);

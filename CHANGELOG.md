@@ -1,4 +1,47 @@
+## 0.22.0
+
+- Korrigiert die E-Paper-BUSY-Wartefunktion für FreeRTOS-Konfigurationen mit 100-Hz-Tick.
+- Verwendet `esp_timer_get_time()` für echte Timeout-Messung statt eines hochgezählten Schleifenzählers.
+- Erzwingt während BUSY mindestens einen echten Scheduler-Tick und verhindert dadurch falsche 15-Sekunden-Timeouts nach nur etwa 30 ms.
+- Firmware-, Desktop- und Geräteprotokollversion auf 0.22.0 erhöht.
+
+## 0.21.4
+
+- Offiziellen Waveshare-V2-E-Paper-BSP portiert
+- Richtige V2-Pins inklusive EPD-Power GPIO 6 aktiviert
+- Offizielle Vollrefresh-LUT und Refresh-Sequenz integriert
+- BC2-Anzeige bleibt über die bestehende HAL entkoppelt
+
 # Changelog
+
+## 0.21.4
+
+- korrigierte BUSY-Polarität für das Waveshare ESP32-S3-ePaper-1.54 V2 (aktiv HIGH)
+- echter zweiphasiger Refresh-Nachweis: BUSY muss HIGH werden und wieder LOW werden
+- Vollrefresh-Steuerbyte auf `0xF7` und Border-Waveform auf `0x05` umgestellt
+- detaillierte Refresh-Diagnose und belastbare Fehlermeldungen ergänzt
+- V2-GPIO-Profil, BOOT-Taste, USB, NVS und RNG aus v0.21.2 beibehalten
+- Firmware- und Projektversion auf 0.21.4 erhöht
+
+## 0.20.0 - 2026-07-31
+
+### Added
+- Neues C17-Modul für Transaktionsplanung und unsigned PSBT-Erzeugung.
+- BC2-Mainnet-Adressprüfung für SegWit v0 und P2PKH.
+- Deterministische Coin Selection aus synchronisierten Watch-only-UTXOs.
+- Gebühren-, Dust- und Wechselgeldberechnung.
+- Send-Maske mit Empfänger, Betrag, Gebührenrate, Vorschau und PSBT-Export.
+- End-to-End-Test über Erzeugung und bestehenden PSBT-Parser.
+- Verbindlicher Sprint-11-Plan und Abschlussbericht.
+
+### Changed
+- Transaktionsseite von einer reinen PSBT-Prüfung zu einer Send-Vorbereitung erweitert.
+- Versionsnummer auf 0.20.0 erhöht.
+
+### Security
+- PSBTs werden ausschließlich unsigned erzeugt.
+- Kein Seed, kein Private Key, keine Signierung und kein Broadcast im Desktop.
+- Hardwarebestätigung bleibt bis zur physischen Hardware deaktiviert.
 
 ## 0.18.0 - 2026-07-31
 
@@ -167,3 +210,10 @@
 
 ### Unchanged
 - Keine Änderungen an Wallet-Core, Kryptografie, Seed, PIN, Signing oder Hardware-Wire-up.
+
+## v0.22.0
+
+- Replaced the custom E-paper implementation with the original Waveshare V2 `epaper_driver_bsp` and `board_power_bsp` sources from the hardware-confirmed LVGL9 demo.
+- Added a small BC2 display adapter; wallet and device logic no longer knows SPI, LUT, BUSY, or panel commands.
+- Uses the same startup and partial-refresh path that visibly worked on the physical ESP32-S3-ePaper-1.54.
+- Retains USB, NVS, RNG, device state, and BOOT-button integration.

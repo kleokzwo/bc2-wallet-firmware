@@ -1,24 +1,14 @@
-BC2 Cold Wallet v0.18.0
-Date: 2026-07-31
+BC2 Cold Wallet v0.22.0
 
-Host core build: PASSED
-Compiler: GCC 14.2.0
-OpenSSL: 3.5.5
+Host build: successful
+Host tests: 16/16 passed
 
-CTest results: 13/13 PASSED
-- crypto
-- encoding
-- bip39
-- bip32
-- address
-- sign
-- wallet
-- device_state
-- device_flow
-- device_service
-- psbt
-- hal
-- usb_protocol
+Hardware hotfix:
+- BUSY timeout uses esp_timer_get_time() for real elapsed time.
+- BUSY polling waits at least one FreeRTOS scheduler tick.
+- Fix addresses false 15-second timeouts that occurred after roughly 30 ms at 100 Hz tick rate.
 
-Qt simulator build: NOT EXECUTED
-Reason: Qt 6 development package is not installed in this execution environment.
+Not executed in this environment:
+- ESP-IDF hardware build
+- Physical Waveshare display refresh
+- Qt 6 simulator build

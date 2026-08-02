@@ -6,6 +6,7 @@
 #include "watchonlymodel.h"
 #include "designtokens.h"
 #include "components/bc2button.h"
+#include "components/bc2qrwidget.h"
 #include "components/bc2card.h"
 #include "components/bc2header.h"
 #include "pagerouter.h"
@@ -140,9 +141,9 @@ QWidget *MainWindow::buildShell() {
     router_->registerPage(PageRouter::Page::Receive, buildReceivePage());
     router_->registerPage(PageRouter::Page::WatchOnly, buildWatchOnlyPage());
     router_->registerPage(PageRouter::Page::Network, buildNetworkPage());
-    transactionPage_ = new TransactionPage;
+    transactionPage_ = new TransactionPage(watchModel_);
     connect(transactionPage_, &TransactionPage::reviewRequested, this, &MainWindow::openTransactionReview);
-    router_->registerPage(PageRouter::Page::Transaction, transactionPage_);
+        router_->registerPage(PageRouter::Page::Transaction, transactionPage_);
     historyPage_ = new HistoryPage;
     router_->registerPage(PageRouter::Page::History, historyPage_);
     router_->registerPage(PageRouter::Page::Settings, new SettingsPage);
@@ -215,10 +216,22 @@ QWidget *MainWindow::buildReceivePage() {
     auto *layout = new QVBoxLayout(page);
     layout->setContentsMargins(DesignTokens::PageMarginWide, 36, DesignTokens::PageMarginWide, 36);
     layout->setSpacing(16);
-    layout->addWidget(new Bc2Header(QStringLiteral("Empfangsadresse"), QStringLiteral("Die Adresse muss später auf dem E-Paper-Gerät vollständig angezeigt und bestätigt werden.")));
+    layout->addWidget(new Bc2Header(QStringLiteral("Empfangen"),
+        QStringLiteral("Neue BC2-Empfangsadresse anzeigen, beschriften und später auf der Hardware verifizieren.")));
+
+    auto *content = new QHBoxLayout;
+    auto *qrCard = new Bc2Card;
+    auto *qrLayout = new QVBoxLayout(qrCard);
+    qrLayout->setContentsMargins(24, 24, 24, 24);
+    receiveQr_ = new Bc2QrWidget;
+    qrLayout->addWidget(receiveQr_, 0, Qt::AlignCenter);
+    qrLayout->addWidget(muted(QStringLiteral("Der QR-Code enthält ausschließlich die öffentliche BC2-Adresse.")));
+    content->addWidget(qrCard, 0);
+
     auto *addressCard = new Bc2Card;
     auto *address = new QVBoxLayout(addressCard);
     address->setContentsMargins(24, 24, 24, 24);
+    address->addWidget(sectionTitle(QStringLiteral("Empfangsadresse")));
     addressLabel_ = new QLabel;
     addressLabel_->setObjectName(QStringLiteral("address"));
     addressLabel_->setWordWrap(true);
@@ -228,9 +241,20 @@ QWidget *MainWindow::buildReceivePage() {
     statusLabel_ = muted(QStringLiteral("Noch nicht bestätigt"));
     address->addWidget(pathLabel_);
     address->addWidget(statusLabel_);
-    layout->addWidget(addressCard);
+
+    address->addWidget(sectionTitle(QStringLiteral("Adresslabel")));
+    addressLabelEdit_ = new QLineEdit;
+    addressLabelEdit_->setMaxLength(80);
+    addressLabelEdit_->setPlaceholderText(QStringLiteral("z. B. Rechnung Juli"));
+    address->addWidget(addressLabelEdit_);
+    auto *saveLabel = new Bc2Button(QStringLiteral("Label speichern"));
+    connect(saveLabel, &QPushButton::clicked, this, &MainWindow::saveAddressLabel);
+    address->addWidget(saveLabel, 0, Qt::AlignLeft);
+    content->addWidget(addressCard, 1);
+    layout->addLayout(content);
+
     auto *actions = new QHBoxLayout;
-    confirmButton_ = new QPushButton(QStringLiteral("Auf Gerät bestätigen"));
+    confirmButton_ = new QPushButton(QStringLiteral("Auf Gerät verifizieren"));
     connect(confirmButton_, &QPushButton::clicked, this, &MainWindow::confirmAddress);
     actions->addWidget(confirmButton_);
     auto *copy = new Bc2Button(QStringLiteral("Adresse kopieren"));
@@ -240,9 +264,25 @@ QWidget *MainWindow::buildReceivePage() {
     connect(explorer, &QPushButton::clicked, this, &MainWindow::openAddressInExplorer);
     actions->addWidget(explorer);
     layout->addLayout(actions);
-    auto *next = new Bc2Button(QStringLiteral("Nächste Testadresse"));
+
+    auto *gapCard = new Bc2Card;
+    auto *gapLayout = new QHBoxLayout(gapCard);
+    gapLayout->setContentsMargins(24, 18, 24, 18);
+    gapLayout->addWidget(new QLabel(QStringLiteral("Gap-Limit")));
+    gapLimitSpin_ = new QSpinBox;
+    gapLimitSpin_->setRange(5, 100);
+    gapLimitSpin_->setValue(appSettings_->receiveGapLimit());
+    gapLayout->addWidget(gapLimitSpin_);
+    gapLimitStatusLabel_ = muted(QString());
+    gapLayout->addWidget(gapLimitStatusLabel_, 1);
+    auto *next = new Bc2Button(QStringLiteral("Nächste Empfangsadresse"));
     connect(next, &QPushButton::clicked, this, &MainWindow::generateNextAddress);
-    layout->addWidget(next, 0, Qt::AlignLeft);
+    gapLayout->addWidget(next);
+    connect(gapLimitSpin_, qOverload<int>(&QSpinBox::valueChanged), this, &MainWindow::updateGapLimit);
+    layout->addWidget(gapCard);
+
+    layout->addWidget(new Bc2StatusBar(QStringLiteral(
+        "Watch-only: Keine Seeds, keine privaten Schlüssel und keine Signierung im Desktop.")));
     layout->addStretch();
     updateAddress();
     return page;

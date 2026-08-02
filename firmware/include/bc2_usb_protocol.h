@@ -15,6 +15,7 @@ typedef enum {
     BC2_USB_CMD_PING = 0x01,
     BC2_USB_CMD_GET_INFO = 0x02,
     BC2_USB_CMD_GET_STATE = 0x03,
+    BC2_USB_CMD_GET_CAPABILITIES = 0x04,
     BC2_USB_CMD_DISPLAY_TEST = 0x10,
     BC2_USB_CMD_BUTTON_TEST = 0x11
 } bc2_usb_command_t;

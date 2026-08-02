@@ -1,8 +1,59 @@
 # BC2 Cold Wallet
 
-## Version 0.18.0
+## Version 0.22.0
 
-Sprint v0.18.0 konzentriert den Desktop-Simulator auf eine praktisch nutzbare Watch-only-Wallet. Die bestehende Electrum-Synchronisation wurde um robuste Verbindungssteuerung, Blockhöhe, automatische Aktualisierung, getrennte Kontostände und eine echte Transaktionsübersicht ergänzt.
+Sprint v0.22.0 integriert den nachweislich funktionierenden offiziellen Waveshare-V2-E-Paper-Unterbau in die BC2-Firmware. Die BC2-Anwendung bleibt über die bestehende HAL vom Boardtreiber getrennt.
+
+## Neu in v0.22.0
+
+- BUSY-Pin aktiv HIGH
+- echte Refresh-Zustandsprüfung
+- Vollrefresh mit Update-Control `0xF7`
+- Diagnosezeiten für BUSY-Aktivierung und Freigabe
+- keine falsche Erfolgsmeldung nach 10–20 ms
+
+## Hardware bauen und flashen
+
+```bash
+source ~/esp/esp-idf/export.sh
+./scripts/build-hardware.sh
+cd hardware/esp32s3_waveshare
+idf.py -p /dev/ttyACM0 flash monitor
+```
+
+Nach `Calling app_main()` werden unter anderem folgende Zeilen erwartet:
+
+```text
+Waveshare V2 e-paper initialized: BUSY=21 RST=11 DC=13 CS=12 CLK=10 MOSI=8
+Starting full refresh (5000 bytes)
+BUSY before activation: 0
+BUSY entered active HIGH state after ... ms
+BUSY released after ... ms
+Full refresh completed
+```
+
+Sprint v0.20.0 ergänzt die erste vollständige Send-Vorbereitung: Empfänger, Betrag und Gebührenrate werden geprüft, synchronisierte Watch-only-UTXOs ausgewählt und als unsigned PSBT exportiert. Es findet keine Signierung und kein Broadcast statt.
+
+## Neu in v0.20.0
+
+- BC2-Mainnet-Adressprüfung für SegWit v0 und P2PKH
+- deterministische Coin Selection aus synchronisierten Watch-only-UTXOs
+- Gebührenberechnung über frei wählbare sat/vB-Rate
+- Dust- und Wechselgeldbehandlung
+- unsigned PSBT-v0-Erzeugung inklusive `witness_utxo`
+- Send-Maske für Empfänger, Betrag und Gebührenrate
+- Vorschau von Eingängen, Betrag, Gebühr, Wechselgeld und geschätzten vBytes
+- Export als binäre `.psbt`-Datei
+- vorhandener PSBT-Prüfdialog bleibt verfügbar
+- neuer End-to-End-Transaktionstest
+- 15/15 Host-Tests erfolgreich
+
+## Weiterhin enthalten aus v0.19.0
+
+- scanbarer lokaler Receive-QR-Code
+- Empfangsadresse, Copy, Explorer und lokale Labels
+- konfigurierbares Gap-Limit
+- vorbereitete Geräteverifikation
 
 ## Neu in v0.18.0
 
@@ -121,7 +172,7 @@ build\simulator\Release\bc2-wallet-simulator.exe
 4. „Jetzt synchronisieren“ drücken.
 5. Der Simulator fragt für 10 Empfangs- und 5 Wechseladressen Kontostand, Verlauf und UTXOs ab.
 
-Diese Version verwendet noch einen festen, veröffentlichten Testvektor. Der spätere Import eines echten Watch-only-Kontokontexts muss ohne Seed und ohne private Schlüssel erfolgen.
+Die aktuelle Entwicklungsversion verwendet noch einen festen, veröffentlichten Testvektor. Der spätere Import eines echten Watch-only-Kontokontexts muss ohne Seed und ohne private Schlüssel erfolgen.
 
 ## Dokumentation
 
@@ -191,3 +242,15 @@ Unter Linux kann der Desktop-Build mit `./scripts/build-desktop-linux.sh` gestar
 ### Windows executable name
 
 The packaged Windows application is named `BC2-Cold-Wallet.exe`. The hyphenated file name is intentional: Qt's deployment helper must receive the executable path as one argument during CPack packaging.
+
+## Hardware-Probe v0.22.0
+
+Eine microSD-Karte wird nicht benötigt. Nach dem Flashen kann das Gerät ausschließlich mit öffentlichen Diagnosebefehlen geprüft werden:
+
+```bash
+python -m pip install pyserial
+python tools/bc2_device_probe.py --list
+python tools/bc2_device_probe.py --port /dev/ttyACM0
+```
+
+Unter Windows ist der Port typischerweise `COM3`, `COM4` oder ähnlich. Das Probeprogramm sendet keine Seeds, privaten Schlüssel oder PINs.

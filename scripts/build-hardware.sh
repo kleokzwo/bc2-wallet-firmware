@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+project="$root/hardware/esp32s3_waveshare"
 if ! command -v idf.py >/dev/null 2>&1; then
-  echo "ESP-IDF fehlt. Waveshare verlangt ESP-IDF 5.5.0 oder neuer." >&2
-  echo "Danach: source /opt/esp/idf/export.sh (Pfad ggf. anpassen)." >&2
-  exit 2
+  echo "ESP-IDF ist nicht aktiv. Zuerst export.sh aus der ESP-IDF-Installation laden." >&2
+  exit 1
 fi
-idf.py --version
-cd "$ROOT/hardware/esp32s3_waveshare"
-idf.py set-target esp32s3
-idf.py build
+idf.py -C "$project" set-target esp32s3
+idf.py -C "$project" build

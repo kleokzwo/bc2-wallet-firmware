@@ -7,13 +7,25 @@
 
 class QLabel;
 class QTableWidget;
+class QLineEdit;
+class QDoubleSpinBox;
+class QSpinBox;
 
 class TransactionPage final : public QWidget {
     Q_OBJECT
 public:
-    explicit TransactionPage(QWidget *parent = nullptr);
+    explicit TransactionPage(WatchOnlyModel *model, QWidget *parent = nullptr);
 signals:
     void reviewRequested();
+private slots:
+    void createDraft();
+    void openExistingPsbt();
+private:
+    WatchOnlyModel *model_ = nullptr;
+    QLineEdit *recipientEdit_ = nullptr;
+    QDoubleSpinBox *amountSpin_ = nullptr;
+    QSpinBox *feeRateSpin_ = nullptr;
+    QLabel *previewLabel_ = nullptr;
 };
 
 class HistoryPage final : public QWidget {

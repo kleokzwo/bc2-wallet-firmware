@@ -28,6 +28,7 @@ class TransactionPage;
 class HistoryPage;
 class Bc2Button;
 class AppSettings;
+class HardwareWalletClient;
 
 class MainWindow final : public QMainWindow {
     Q_OBJECT
@@ -125,6 +126,7 @@ private:
     QPushButton *unlockButton_ = nullptr;
     QPushButton *lockButton_ = nullptr;
     DeviceController *device_ = nullptr;
+    HardwareWalletClient *hardwareWallet_ = nullptr;
     ElectrumClient *electrum_ = nullptr;
     WatchOnlyModel *watchModel_ = nullptr;
     WatchOnlySync *watchSync_ = nullptr;

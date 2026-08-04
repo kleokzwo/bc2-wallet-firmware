@@ -18,6 +18,13 @@ typedef enum {
 
 bc2_hal_result_t bc2_device_ui_render(const bc2_hal_t *hal, bc2_device_screen_t screen,
                                       const char *primary_text, const char *secondary_text);
+bc2_hal_result_t bc2_device_ui_render_pin(const bc2_hal_t *hal,
+                                          unsigned int selected_key,
+                                          unsigned int digit_count);
+bc2_hal_result_t bc2_device_ui_render_pin_prompt(const bc2_hal_t *hal,
+                                                 const char *title,
+                                                 unsigned int selected_key,
+                                                 unsigned int digit_count);
 
 #ifdef __cplusplus
 }

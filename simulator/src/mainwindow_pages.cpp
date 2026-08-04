@@ -9,6 +9,7 @@
 #include "components/bc2qrwidget.h"
 #include "components/bc2card.h"
 #include "components/bc2header.h"
+#include "components/bc2statusbar.h"
 #include "pagerouter.h"
 #include "pages/walletpages.h"
 
@@ -217,7 +218,7 @@ QWidget *MainWindow::buildReceivePage() {
     layout->setContentsMargins(DesignTokens::PageMarginWide, 36, DesignTokens::PageMarginWide, 36);
     layout->setSpacing(16);
     layout->addWidget(new Bc2Header(QStringLiteral("Empfangen"),
-        QStringLiteral("Neue BC2-Empfangsadresse anzeigen, beschriften und später auf der Hardware verifizieren.")));
+        QStringLiteral("Neue BC2-Empfangsadresse anzeigen, beschriften und direkt auf der Hardware verifizieren.")));
 
     auto *content = new QHBoxLayout;
     auto *qrCard = new Bc2Card;
@@ -398,4 +399,3 @@ QWidget *MainWindow::buildLockPage() {
     layout->addStretch();
     return page;
 }
-

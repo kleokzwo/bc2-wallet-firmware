@@ -28,6 +28,7 @@ jobs:
         uses: jurplel/install-qt-action@v4
         with:
           version: ${{ env.QT_VERSION }}
+          modules: qtserialport
           cache: true
 
       - name: Configure
@@ -74,6 +75,7 @@ jobs:
         with:
           version: ${{ env.QT_VERSION }}
           arch: win64_msvc2022_64
+          modules: qtserialport
           cache: true
 
       - name: Install OpenSSL with vcpkg
@@ -146,6 +148,7 @@ jobs:
         uses: jurplel/install-qt-action@v4
         with:
           version: ${{ env.QT_VERSION }}
+          modules: qtserialport
           cache: true
 
       - name: Configure

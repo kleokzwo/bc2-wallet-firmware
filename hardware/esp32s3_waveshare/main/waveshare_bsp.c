@@ -7,6 +7,7 @@
 #include "esp_log.h"
 #include "esp_random.h"
 #include "esp_timer.h"
+#include "freertos/FreeRTOS.h"
 #include "nvs.h"
 #include "nvs_flash.h"
 
@@ -14,7 +15,8 @@
 
 #define BC2_USB_RX_BUFFER_SIZE 4096U
 #define BC2_USB_TX_BUFFER_SIZE 4096U
-#define BC2_USB_IO_TIMEOUT_TICKS 0U
+#define BC2_USB_RX_TIMEOUT_TICKS 0U
+#define BC2_USB_TX_TIMEOUT_TICKS pdMS_TO_TICKS(20U)
 
 static const char *TAG = "bc2_bsp";
 
@@ -135,7 +137,7 @@ static bc2_hal_result_t usb_send(void *context,
 
     const int written = usb_serial_jtag_write_bytes(data,
                                                     data_size,
-                                                    BC2_USB_IO_TIMEOUT_TICKS);
+                                                    BC2_USB_TX_TIMEOUT_TICKS);
     return written == (int)data_size ? BC2_HAL_OK : BC2_HAL_ERROR_IO;
 }
 
@@ -150,7 +152,7 @@ static bc2_hal_result_t usb_receive(void *context,
 
     const int received = usb_serial_jtag_read_bytes(output,
                                                     output_capacity,
-                                                    BC2_USB_IO_TIMEOUT_TICKS);
+                                                    BC2_USB_RX_TIMEOUT_TICKS);
     if (received < 0) return BC2_HAL_ERROR_IO;
 
     *output_size = (size_t)received;

@@ -1,4 +1,5 @@
 #include "bc2_psbt.h"
+#include "bc2_network.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,6 +13,6 @@ int main(void){
  memcpy(psbt+p,"psbt\xff",5);p+=5;psbt[p++]=1;psbt[p++]=0;psbt[p++]=(unsigned char)t;memcpy(psbt+p,tx,t);p+=t;psbt[p++]=0;
  psbt[p++]=1;psbt[p++]=1;psbt[p++]=31;p=put_u64(psbt,p,100000);psbt[p++]=22;memcpy(psbt+p,ext,22);p+=22;psbt[p++]=0;psbt[p++]=0;psbt[p++]=0;
  bc2_owned_script own={.length=22,.is_change=1};memcpy(own.bytes,chg,22);bc2_psbt_summary s;
- CHECK(bc2_psbt_review(psbt,p,&own,1,"bc2",&s)==BC2_PSBT_OK);CHECK(s.input_count==1);CHECK(s.output_count==2);CHECK(s.total_input_amount==100000);CHECK(s.total_output_amount==99000);CHECK(s.fee_amount==1000);CHECK(s.external_output_amount==70000);CHECK(s.change_amount==29000);CHECK(s.outputs[1].change==1);CHECK(s.outputs[0].address[0]!='\0');CHECK(s.change_verified==1);
- psbt[p-3]=0xff;CHECK(bc2_psbt_review(psbt,p,&own,1,"bc2",&s)!=BC2_PSBT_OK);
+ CHECK(bc2_psbt_review(psbt,p,&own,1,bc2_network_mainnet()->bech32_hrp,&s)==BC2_PSBT_OK);CHECK(s.input_count==1);CHECK(s.output_count==2);CHECK(s.total_input_amount==100000);CHECK(s.total_output_amount==99000);CHECK(s.fee_amount==1000);CHECK(s.external_output_amount==70000);CHECK(s.change_amount==29000);CHECK(s.outputs[1].change==1);CHECK(s.outputs[0].address[0]!='\0');CHECK(s.change_verified==1);
+ psbt[p-3]=0xff;CHECK(bc2_psbt_review(psbt,p,&own,1,bc2_network_mainnet()->bech32_hrp,&s)!=BC2_PSBT_OK);
  CHECK(bc2_psbt_inspect((const unsigned char*)"bad",3,&s)==BC2_PSBT_TRUNCATED);return EXIT_SUCCESS;}

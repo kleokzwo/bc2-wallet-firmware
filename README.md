@@ -1,6 +1,159 @@
 # BC2 Cold Wallet
 
-## Version 0.22.0
+## Version 0.29.7
+
+Hotfix: PIN- und Bestätigungstasten funktionieren wieder zuverlässig, weil
+der USB-Empfang den einzigen Firmware-Task nicht mehr blockiert. Die physische
+Eingabe wird in jedem Loop vor USB verarbeitet. Ein bestätigtes oder
+abgelehntes Ergebnis bleibt auf dem Gerät gespeichert und
+wird bei wiederholten USB-Abfragen erneut geliefert. Erst eine neue, vollständig
+validierte Transaktionsanfrage ersetzt das vorherige Ergebnis.
+
+Die erste USB-Antwort bedeutet nur, dass das Gerät die Transaktionsprüfung
+angenommen hat. Erfolg wird erst nach Geräte-PIN, vollständiger Anzeige und
+physischer Bestätigung mit beiden Tasten gemeldet. Die einzelne BOOT-Taste
+lehnt die Transaktion ab. Ein USB-Verbindungsabbruch bleibt ein eigener,
+sicherer Fehlerzustand. Während einer laufenden Prüfung wird keine zweite
+Transaktionsanfrage angenommen. Langsame E-Paper-Aktualisierungen können die
+Abfrage verzögern, aber weder Tastendrücke dauerhaft verdrängen noch die
+abschließende Entscheidung vernichten.
+
+Sicherheitsgrenze: Es wird weiterhin nicht signiert und nichts gesendet.
+v0.29.7 überträgt weiterhin nur die vom Desktop geprüfte Zusammenfassung;
+die spätere Signaturstufe darf erst beginnen, wenn die Hardware die vollständige
+PSBT selbst verarbeitet und ihre eigene Wallet-Policy besitzt.
+
+## Version 0.28.0
+
+v0.28.0 verbindet die lokal geprüfte PSBT-Transaktionsansicht mit der echten
+Waveshare-Hardware. Eine Transaktion mit genau einem externen BC2-Empfänger kann
+aus dem PSBT-Dialog an das Gerät übertragen werden. Das Gerät validiert das
+begrenzte Nachrichtenformat, verlangt den Geräte-PIN erneut und zeigt Empfänger,
+Betrag, Gebühr und verifiziertes Wechselgeld vor der physischen Bestätigung an.
+
+Sicherheitsgrenze: Diese Version erzeugt keine Signatur und sendet keinen
+Private Key, Seed oder PIN über USB. Die Hardware erhält in v0.28.0 eine vom
+Desktop geprüfte Zusammenfassung, noch nicht die vollständige PSBT. Daher darf
+die Bestätigung nicht als Freigabe für eine spätere Signierung verwendet werden.
+Mehrere externe Empfänger sowie unvollständige Gebühren- oder
+Wechselgeldinformationen werden abgelehnt.
+
+Für den gefahrlosen Hardwaretest liegt unter `test-data/` die deterministische,
+unsigned Datei `bc2-safe-test-transaction.psbt`. Sie enthält ausschließlich
+erfundene Daten, kein Wechselgeld und keine privaten Schlüssel. Die erwarteten
+Beträge stehen in `test-data/README.md`.
+
+## Version 0.27.2
+
+v0.27.2 verbindet den Empfangen-Flow des Qt-Simulators direkt mit der
+hardwarebestätigten USB-Schnittstelle. Der Simulator erkennt das BC2-Gerät
+automatisch und überträgt die angezeigte öffentliche Adresse. Die Hardware
+validiert die Adresse und fordert anschließend den Geräte-PIN an. Serielle
+Monitore müssen vor der Verwendung geschlossen werden.
+
+Der Desktop-Build benötigt zusätzlich das Qt-6-Modul SerialPort.
+
+## Verifizierter Stand v0.27.2
+
+- Desktop-Build auf Kali Linux erfolgreich.
+- 20 Hosttests vorhanden; der zuvor fest codierte v0.27.0-Vergleich verwendet
+  jetzt die zentrale Firmware-Version.
+- Automatische Erkennung ueber `/dev/ttyACM0` auf echter Hardware bestaetigt.
+- Ablauf Desktop -> USB -> Geraete-PIN -> Adressanzeige -> physische Bestaetigung
+  auf dem Waveshare-Board bestaetigt.
+- Der Display-Refresh wurde verbessert. Das E-Paper bleibt bauartbedingt langsam;
+  sichtbares Rest-Ghosting muss bei jeder neuen Firmware weiterhin auf echter
+  Hardware geprueft werden.
+
+Diese Version ist weiterhin Entwicklungssoftware. Keine echten Seeds oder
+Guthaben verwenden; Secure Boot, Flash Encryption, Security Review und der
+vollstaendige Signaturablauf fehlen noch.
+
+## Version 0.26.0
+
+v0.26.0 verbindet erstmals eine echte BC2-Mainnet-Empfangsadresse mit der
+Hardware-PIN-Freigabe. Das Desktop-Hilfsprogramm uebertraegt nur die oeffentliche
+Adresse; Seed, privater Schluessel und PIN werden niemals ueber USB gesendet.
+
+Hardwaretest nach dem Entsperren:
+
+```bash
+python tools/bc2_device_probe.py --port /dev/ttyACM0 \
+  --receive-address bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4
+```
+
+Unter Windows beispielsweise `--port COM5` verwenden. Danach fordert das
+Geraet den sechsstelligen PIN erneut an und zeigt die vollstaendige Adresse.
+Die Beispieladresse dient ausschliesslich dem Test und darf nicht fuer echte
+Zahlungen verwendet werden.
+
+Unterstuetzt wird in diesem Sprint BC2 Mainnet Native SegWit (P2WPKH, `bc1q`).
+Andere Netzwerke, fehlerhafte Pruefsummen und Grossschreibung werden abgelehnt.
+
+## Version 0.25.2
+
+Hotfix v0.25.2 verhindert einen Task-Watchdog-Reset waehrend der
+PIN-Ableitung. PBKDF2-HMAC-SHA-256 bleibt bei 100.000 Runden, gibt auf dem
+ESP32-S3 aber regelmaessig Rechenzeit an FreeRTOS zurueck.
+
+Hotfix v0.25.1 behebt den auf echter Hardware festgestellten Stackueberlauf
+des ESP-IDF-Main-Tasks. Die BC2-Anwendung verwendet jetzt einen eigenen
+FreeRTOS-Task mit 16 KiB Stack. Die Funktionen aus v0.25.0 bleiben unveraendert.
+
+Sprint v0.25.0 ersetzt den fest eingebauten Test-PIN durch die erste persistente
+Geräte-PIN-Grundlage auf echter Hardware.
+
+## Neu in v0.25.0
+
+- Benutzer legt beim ersten Entsperren einen sechsstelligen PIN an und wiederholt ihn.
+- Kein Klartext-PIN und kein fester Entwicklungs-PIN in der Firmware.
+- PBKDF2-HMAC-SHA-256 mit 100.000 Runden und 128-Bit-Zufallssalt.
+- Fehlversuche werden in NVS gespeichert; ab dem dritten Fehler steigt die Wartezeit.
+- Nach zehn Fehlversuchen gilt eine Stunde Sperrzeit, auch nach einem Neustart erneut.
+- Zentrale Policy: Geräte-PIN fuer Entsperren, Empfangsadressen und Transaktionen;
+  separater Root-PIN fuer das spaetere Erstellen neuer Wallets.
+
+Die Bedienung bleibt: oben/rechts, unten/links, beide Tasten/bestaetigen und `[<]`/loeschen.
+
+## Hardware-Bedienung
+
+1. Auf dem Sperrbildschirm beide Tasten gemeinsam drücken.
+2. Mit PWR nach rechts oder mit BOOT nach links navigieren.
+3. Beide Tasten gemeinsam drücken, um die markierte Ziffer zu übernehmen.
+4. `[<]` markieren und beide Tasten drücken, um die letzte Ziffer zu löschen.
+
+## Sicherheitsgrenze v0.25.0
+
+Die PIN-Speicherung und Rate-Limits sind implementiert. Die eigentlichen Receive-,
+PSBT- und Wallet-Erstellungsablaeufe werden in den folgenden Sprints an die zentrale
+Freigabe-Policy angebunden. Der Root-PIN ist daher bewusst noch nicht eingerichtet.
+Vor einem produktiven Einsatz fehlen weiterhin Security Review, Flash Encryption,
+Secure Boot und der vollstaendige Seed-/Signaturablauf.
+
+Die stabilen Waveshare-Displaykomponenten, Refresh-Sequenzen, BUSY-Behandlung und E-Paper-Pins wurden nicht verändert. Nur das bestehende Board-Eingabemodul wurde um die offiziell dokumentierte PWR/BAT_KEY-Leitung auf GPIO 18 erweitert.
+
+## Danach: verbindliche PIN-Freigaben
+
+- Transaktionen benötigen die Geräte-PIN und die physische Gerätebestätigung.
+- Neu erzeugte Empfangsadressen benötigen die Geräte-PIN, bevor sie freigegeben werden.
+- Das Erstellen einer neuen Wallet benötigt die Root-PIN.
+
+Die zentrale Regel ist implementiert; die jeweiligen Funktionsablaeufe werden in den
+folgenden Sprints damit verbunden.
+
+## Grundlage aus v0.23.0
+
+## Neu in v0.23.0
+
+- professioneller BC2-Sperrbildschirm mit Statusleiste, Schloss, USB- und Batterieanzeige
+- zentrale BC2-Theme- und Zeichenfunktionen oberhalb des Waveshare-Treibers
+- Navigation Controller für entprellte Kurz- und Langdruck-Ereignisse
+- kurzer BOOT-Druck startet den Entsperrablauf
+- langer BOOT-Druck sperrt einen entsperrten Gerätezustand
+- Full- und Partial-Refresh werden anhand des bestehenden Frame-Flags ausgewählt
+- zusätzlicher Host-Test für die Navigation
+
+## Grundlage aus v0.22.0
 
 Sprint v0.22.0 integriert den nachweislich funktionierenden offiziellen Waveshare-V2-E-Paper-Unterbau in die BC2-Firmware. Die BC2-Anwendung bleibt über die bestehende HAL vom Boardtreiber getrennt.
 

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 
 project(
     bc2_cold_wallet
-    VERSION 0.22.0
+    VERSION 0.29.7
     LANGUAGES C CXX
 )
 
@@ -20,10 +20,14 @@ add_library(
     firmware/encoding/bc2_encoding.c
     firmware/platform/bc2_secure.c
     firmware/platform/bc2_device_state.c
+    firmware/platform/bc2_navigation.c
+    firmware/platform/bc2_pin_entry.c
+    firmware/platform/bc2_pin_security.c
     firmware/platform/bc2_hal.c
     firmware/platform/bc2_device_ui.c
     firmware/platform/bc2_device_flow.c
     firmware/platform/bc2_device_service.c
+    firmware/platform/bc2_receive_request.c
     firmware/protocol/bc2_usb_protocol.c
     firmware/protocol/bc2_usb_stream.c
     firmware/wallet/bc2_address.c
@@ -85,7 +89,7 @@ endif()
 
 enable_testing()
 
-foreach(test_name crypto encoding bip39 bip32 address sign wallet device_state device_flow device_service psbt transaction hal usb_protocol usb_stream)
+foreach(test_name crypto encoding bip39 bip32 address sign wallet device_state device_flow device_service receive_request navigation pin_entry pin_security psbt psbt_fixture transaction hal usb_protocol usb_stream)
     add_executable(test_${test_name} tests/test_${test_name}.c)
     target_link_libraries(test_${test_name} PRIVATE bc2_wallet_core)
 
@@ -106,6 +110,8 @@ foreach(test_name crypto encoding bip39 bip32 address sign wallet device_state d
 
     add_test(NAME ${test_name} COMMAND test_${test_name})
 endforeach()
+
+target_compile_definitions(test_psbt_fixture PRIVATE BC2_SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
 
 
 add_library(bc2_receive_qr simulator/src/receiveqrcode.cpp)

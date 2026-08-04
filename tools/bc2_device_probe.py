@@ -25,6 +25,7 @@ CMD_PING = 0x01
 CMD_GET_INFO = 0x02
 CMD_GET_STATE = 0x03
 CMD_GET_CAPABILITIES = 0x04
+CMD_REVIEW_RECEIVE_ADDRESS = 0x20
 RESPONSE_FLAG = 0x80
 
 
@@ -76,6 +77,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="BC2 hardware USB probe")
     parser.add_argument("--port", help="serial port, for example COM5 or /dev/ttyACM0")
     parser.add_argument("--list", action="store_true", help="list serial ports and exit")
+    parser.add_argument("--receive-address", help="BC2 mainnet address to verify on the device")
     args = parser.parse_args()
 
     ports = available_ports()
@@ -94,6 +96,10 @@ def main() -> int:
         info = request(port, CMD_GET_INFO, 2).decode("utf-8", errors="replace")
         state = request(port, CMD_GET_STATE, 3)
         capabilities = request(port, CMD_GET_CAPABILITIES, 4)
+        queued = None
+        if args.receive_address:
+            queued = request(port, CMD_REVIEW_RECEIVE_ADDRESS, 5,
+                             args.receive_address.encode("ascii"))
 
     print("BC2-Gerät antwortet.")
     print(f"Ping: {ping.decode('ascii', errors='replace')}")
@@ -107,6 +113,12 @@ def main() -> int:
             (0x08, "Display"), (0x10, "Tasten")) if flags & bit]
         print(f"Fähigkeiten: {', '.join(names) if names else 'keine'}")
         print(f"Board-Revision: {revision or 'noch nicht konfiguriert'}")
+    if queued == b"\x01":
+        print("Empfangsadresse uebertragen. Bitte am Geraet mit PIN freigeben.")
+    elif queued == b"\x00":
+        raise RuntimeError("ungueltige BC2-Mainnet-Adresse")
+    elif queued == b"\x02":
+        raise RuntimeError("Geraet muss entsperrt und im Dashboard sein")
     return 0
 
 

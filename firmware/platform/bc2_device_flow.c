@@ -33,6 +33,13 @@ int bc2_device_flow_event_from_button(bc2_device_state state,
                                       bc2_device_event *device_event) {
     if (!pressed(button_event) || device_event == NULL) return 0;
 
+    if (button_event->action == BC2_BUTTON_LONG_PRESSED &&
+        button_event->button == BC2_BUTTON_CONFIRM &&
+        bc2_device_machine_is_unlocked(&(bc2_device_machine){.state = state})) {
+        *device_event = BC2_DEVICE_EVENT_LOCK;
+        return 1;
+    }
+
     switch (state) {
         case BC2_DEVICE_LOCKED:
             if (button_event->button == BC2_BUTTON_CONFIRM) {
@@ -41,16 +48,13 @@ int bc2_device_flow_event_from_button(bc2_device_state state,
             }
             break;
         case BC2_DEVICE_UNLOCKING:
-            if (button_event->button == BC2_BUTTON_BACK) {
+            if (button_event->button == BC2_BUTTON_BACK ||
+                button_event->button == BC2_BUTTON_LEFT) {
                 *device_event = BC2_DEVICE_EVENT_CANCEL;
                 return 1;
             }
             break;
         case BC2_DEVICE_DASHBOARD:
-            if (button_event->button == BC2_BUTTON_LEFT) {
-                *device_event = BC2_DEVICE_EVENT_OPEN_RECEIVE;
-                return 1;
-            }
             if (button_event->button == BC2_BUTTON_RIGHT) {
                 *device_event = BC2_DEVICE_EVENT_OPEN_SETTINGS;
                 return 1;
@@ -67,7 +71,8 @@ int bc2_device_flow_event_from_button(bc2_device_state state,
                 *device_event = BC2_DEVICE_EVENT_CONFIRM;
                 return 1;
             }
-            if (button_event->button == BC2_BUTTON_BACK) {
+            if (button_event->button == BC2_BUTTON_BACK ||
+                button_event->button == BC2_BUTTON_LEFT) {
                 *device_event = BC2_DEVICE_EVENT_CANCEL;
                 return 1;
             }

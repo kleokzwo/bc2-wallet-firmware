@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "appsettings.h"
 #include "devicecontroller.h"
+#include "hardwarewalletclient.h"
 #include "electrumclient.h"
 #include "epaperwidget.h"
 #include "psbtinspectordialog.h"
@@ -60,10 +61,11 @@ void restyle(QLabel *label, const QString &objectName) {
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
       device_(new DeviceController(this)),
+      hardwareWallet_(new HardwareWalletClient(this)),
       electrum_(new ElectrumClient(this)),
       watchModel_(new WatchOnlyModel(this)),
       watchSync_(new WatchOnlySync(electrum_, watchModel_, this)) {
-    setWindowTitle(QStringLiteral("BC2 Cold Wallet — Simulator 0.22.0"));
+    setWindowTitle(QStringLiteral("BC2 Cold Wallet — Simulator 0.29.7"));
     resize(1180, 800);
     setMinimumSize(DesignTokens::WindowMinimumWidth, DesignTokens::WindowMinimumHeight);
     appSettings_ = new AppSettings;
@@ -305,10 +307,16 @@ void MainWindow::generateNextAddress() {
 
 void MainWindow::confirmAddress() {
     if (!device_->isUnlocked()) { showLockScreen(); return; }
-    device_->confirm();
-    restyle(statusLabel_, QStringLiteral("success"));
-    statusLabel_->setText(QStringLiteral("Bestätigt · Simulatoraktion, keine Hardware-Freigabe"));
+    if (currentAddress_.isEmpty() || hardwareWallet_ == nullptr) return;
     confirmButton_->setEnabled(false);
+    statusLabel_->setText(QStringLiteral("BC2-Gerät wird gesucht …"));
+    QApplication::processEvents();
+    const HardwareWalletClient::Result result = hardwareWallet_->reviewReceiveAddress(currentAddress_);
+    restyle(statusLabel_, result.accepted ? QStringLiteral("success") : QStringLiteral("error"));
+    statusLabel_->setText(result.portName.isEmpty()
+        ? result.message
+        : QStringLiteral("%1 · %2").arg(result.portName, result.message));
+    confirmButton_->setEnabled(!result.accepted);
 }
 
 void MainWindow::copyAddress() {

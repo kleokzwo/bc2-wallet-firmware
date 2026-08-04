@@ -22,13 +22,13 @@ Der verbindliche KISS-Weg ist deshalb:
 - Ninja
 - C/C++-Compiler
 - OpenSSL 3 Development Files
-- Qt 6.4 oder neuer mit Widgets und Network
+- Qt 6.4 oder neuer mit Widgets, Network und SerialPort
 
 Ubuntu/Debian:
 
 ```bash
 sudo apt update
-sudo apt install cmake ninja-build build-essential libssl-dev qt6-base-dev
+sudo apt install cmake ninja-build build-essential libssl-dev qt6-base-dev qt6-serialport-dev
 ```
 
 ## Linux lokal bauen

@@ -1,4 +1,4 @@
-find_package(Qt6 6.4 REQUIRED COMPONENTS Widgets Network)
+find_package(Qt6 6.4 REQUIRED COMPONENTS Widgets Network SerialPort)
 
 qt_standard_project_setup()
 
@@ -18,6 +18,8 @@ qt_add_executable(bc2-wallet-simulator
     src/pagerouter.h
     src/devicecontroller.cpp
     src/devicecontroller.h
+    src/hardwarewalletclient.cpp
+    src/hardwarewalletclient.h
     src/electrumclient.cpp
     src/electrumclient.h
     src/watchonlymodel.cpp
@@ -53,6 +55,7 @@ target_link_libraries(
     PRIVATE
         Qt6::Widgets
         Qt6::Network
+        Qt6::SerialPort
         bc2_wallet_core
         bc2_receive_qr
 )

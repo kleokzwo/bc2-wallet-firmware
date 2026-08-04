@@ -12,8 +12,24 @@
 extern "C" {
 #endif
 
-#define BC2_DEVICE_FIRMWARE_VERSION "0.22.0"
+#define BC2_DEVICE_FIRMWARE_VERSION "0.29.7"
 #define BC2_DEVICE_INFO_MAX 192U
+#define BC2_DEVICE_RECEIVE_ADDRESS_MAX 96U
+#define BC2_DEVICE_TRANSACTION_ADDRESS_MAX 96U
+
+typedef struct {
+    uint64_t recipient_amount;
+    uint64_t change_amount;
+    uint64_t fee_amount;
+    char recipient_address[BC2_DEVICE_TRANSACTION_ADDRESS_MAX];
+} bc2_device_transaction_review_t;
+
+typedef enum {
+    BC2_DEVICE_REVIEW_PENDING = 0,
+    BC2_DEVICE_REVIEW_APPROVED = 1,
+    BC2_DEVICE_REVIEW_REJECTED = 2,
+    BC2_DEVICE_REVIEW_NONE = 3
+} bc2_device_review_result_t;
 
 typedef enum {
     BC2_DEVICE_CAP_USB = 1U << 0,
@@ -33,6 +49,12 @@ typedef struct {
 
 typedef struct {
     bc2_usb_stream_t usb_stream;
+    char pending_receive_address[BC2_DEVICE_RECEIVE_ADDRESS_MAX];
+    int receive_address_pending;
+    bc2_device_transaction_review_t pending_transaction;
+    int transaction_pending;
+    int transaction_review_active;
+    bc2_device_review_result_t transaction_result;
 } bc2_device_service_t;
 
 void bc2_device_service_init(bc2_device_service_t *service);
@@ -41,6 +63,13 @@ bc2_hal_result_t bc2_device_service_process_usb(bc2_device_service_t *service,
                                                 const bc2_hal_t *hal,
                                                 const bc2_device_machine *machine,
                                                 const bc2_device_identity_t *identity);
+int bc2_device_service_take_receive_address(bc2_device_service_t *service,
+                                            char *output,
+                                            size_t output_capacity);
+int bc2_device_service_take_transaction(bc2_device_service_t *service,
+                                        bc2_device_transaction_review_t *output);
+void bc2_device_service_complete_transaction(bc2_device_service_t *service,
+                                             int approved);
 
 #ifdef __cplusplus
 }

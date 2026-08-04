@@ -1,3 +1,3 @@
 cmake_minimum_required(VERSION 3.16)
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
-project(bc2_wallet_hardware_v0220)
+project(bc2_wallet_hardware_v0297)

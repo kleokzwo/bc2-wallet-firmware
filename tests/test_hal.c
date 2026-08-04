@@ -84,6 +84,10 @@ int main(void) {
     assert(strcmp(fake.frame.body, "bc21qtestaddress") == 0);
     assert(fake.frame.require_full_refresh);
 
+    assert(bc2_device_ui_render_pin(&hal, 9U, 3U) == BC2_HAL_OK);
+    assert(strcmp(fake.frame.title, "PIN EINGEBEN") == 0);
+    assert(strcmp(fake.frame.body, "9:3") == 0);
+
     uint8_t random[4] = {0};
     assert(bc2_hal_random(&hal, random, sizeof(random)) == BC2_HAL_OK);
     assert(random[0] == 1U && random[3] == 4U);

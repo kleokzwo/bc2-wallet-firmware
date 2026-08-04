@@ -36,16 +36,24 @@ int main(void) {
     assert(bc2_device_machine_dispatch(&machine, BC2_DEVICE_EVENT_UNLOCK_SUCCESS, 3U));
     assert(machine.state == BC2_DEVICE_DASHBOARD);
 
-    button.button = BC2_BUTTON_LEFT;
+    button.action = BC2_BUTTON_LONG_PRESSED;
     assert(bc2_device_flow_event_from_button(machine.state, &button, &device_event));
-    assert(device_event == BC2_DEVICE_EVENT_OPEN_RECEIVE);
-    assert(bc2_device_machine_dispatch(&machine, device_event, 4U));
+    assert(device_event == BC2_DEVICE_EVENT_LOCK);
+    button.action = BC2_BUTTON_PRESSED;
+
+    button.button = BC2_BUTTON_LEFT;
+    assert(!bc2_device_flow_event_from_button(machine.state, &button, &device_event));
+    assert(bc2_device_machine_dispatch(&machine, BC2_DEVICE_EVENT_OPEN_RECEIVE, 4U));
 
     assert(bc2_device_flow_render(&hal, &machine, &view) == BC2_HAL_OK);
     assert(strcmp(display.frame.title, "ADRESSE PRUEFEN") == 0);
     assert(strcmp(display.frame.body, "bc21qexample") == 0);
 
     button.button = BC2_BUTTON_BACK;
+    assert(bc2_device_flow_event_from_button(machine.state, &button, &device_event));
+    assert(device_event == BC2_DEVICE_EVENT_CANCEL);
+
+    button.button = BC2_BUTTON_LEFT;
     assert(bc2_device_flow_event_from_button(machine.state, &button, &device_event));
     assert(device_event == BC2_DEVICE_EVENT_CANCEL);
 

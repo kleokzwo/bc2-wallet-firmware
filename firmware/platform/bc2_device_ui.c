@@ -23,8 +23,8 @@ bc2_hal_result_t bc2_device_ui_render(const bc2_hal_t *hal, bc2_device_screen_t 
             break;
         case BC2_DEVICE_SCREEN_LOCKED:
             copy_text(frame.title, sizeof(frame.title), "GERAET GESPERRT");
-            copy_text(frame.body, sizeof(frame.body), primary_text);
-            copy_text(frame.footer, sizeof(frame.footer), "Bestaetigen: Entsperren");
+            copy_text(frame.body, sizeof(frame.body), "USB VERBUNDEN  V0.29.7");
+            copy_text(frame.footer, sizeof(frame.footer), "BEIDE: ENTSPERREN");
             break;
         case BC2_DEVICE_SCREEN_DASHBOARD:
             copy_text(frame.title, sizeof(frame.title), "BC2 DASHBOARD");
@@ -52,5 +52,23 @@ bc2_hal_result_t bc2_device_ui_render(const bc2_hal_t *hal, bc2_device_screen_t 
         default:
             return BC2_HAL_ERROR_ARGUMENT;
     }
+    return bc2_hal_present(hal, &frame);
+}
+
+bc2_hal_result_t bc2_device_ui_render_pin(const bc2_hal_t *hal,
+                                          unsigned int selected_key,
+                                          unsigned int digit_count) {
+    return bc2_device_ui_render_pin_prompt(hal, "PIN EINGEBEN", selected_key, digit_count);
+}
+
+bc2_hal_result_t bc2_device_ui_render_pin_prompt(const bc2_hal_t *hal,
+                                                 const char *title,
+                                                 unsigned int selected_key,
+                                                 unsigned int digit_count) {
+    bc2_display_frame_t frame;
+    memset(&frame, 0, sizeof(frame));
+    copy_text(frame.title, sizeof(frame.title), title);
+    (void)snprintf(frame.body, sizeof(frame.body), "%u:%u", selected_key, digit_count);
+    copy_text(frame.footer, sizeof(frame.footer), "BEIDE: AUSWAEHLEN");
     return bc2_hal_present(hal, &frame);
 }

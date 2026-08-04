@@ -1,3 +1,148 @@
+## 0.29.7
+
+- USB-Empfang auf dem ESP32-S3 ist wieder nichtblockierend; die Firmware wartet
+  nicht mehr bis zu 250 ms pro Loop, wenn keine Daten vorliegen.
+- Hardwaretasten werden vor jeder USB-Verarbeitung abgefragt, damit PIN- und
+  Bestätigungsdrücke auch bei laufenden Desktop-Abfragen zuverlässig ankommen.
+- Nur das tatsächliche USB-Senden besitzt eine kurze, auf 20 ms begrenzte
+  Schreibfrist.
+- Regressionstest schützt die Priorität der physischen Eingabe und den
+  nichtblockierenden USB-Empfang.
+- Hardware löscht `APPROVED` oder `REJECTED` nicht mehr beim bloßen Erstellen
+  einer USB-Antwort. Das Endergebnis bleibt bis zur nächsten gültigen
+  Transaktionsanfrage wiederholbar abrufbar.
+- USB-Senden auf dem ESP32-S3 besitzt eine kurze begrenzte Schreibfrist.
+- Der Simulator verwirft vor einer neuen Abfrage keine verspäteten Frames mehr
+  und fragt während blockierender E-Paper-Aktualisierungen weiter ab.
+- Regressionstest belegt, dass eine bestätigte Entscheidung bei mehrfacher
+  Ergebnisabfrage erhalten bleibt.
+- `ZAHLUNG FREIGEBEN` verwendet zuverlässig das PIN-Layout.
+
+## 0.29.3
+
+- Falsches, fest codiertes PSBT-Adresspräfix `bc2` entfernt.
+- Der Simulator verwendet jetzt dieselbe zentrale BC2-Mainnet-Konfiguration
+  (`bc`) wie Wallet-Core und Hardware.
+- Die mitgelieferte Test-PSBT muss im Regressionstest eine Adresse erzeugen,
+  die auch die echte Hardwarevalidierung akzeptiert.
+- Lebenszyklus der Hardwareprüfung korrigiert: eine entnommene Anfrage bleibt
+  bis zur physischen Entscheidung ausdrücklich aktiv.
+- Verhindert, dass Warteschlangenstatus und tatsächlicher Prüfstatus
+  miteinander verwechselt werden.
+- Abgeschlossene, noch nicht abgeholte Ergebnisse blockieren keine neue Prüfung.
+- Zweitanfragen während PIN-Eingabe oder Transaktionsanzeige liefern jetzt
+  ausdrücklich „Prüfung läuft“ statt einer allgemeinen Ablehnung.
+- Regressionstest für PIN-/Prüfphase und direkt folgende neue Prüfung ergänzt.
+
+## 0.29.1
+
+- Festhängenden Prüfstatus nach abgeschlossener oder unterbrochener Prüfung behoben.
+- Direkt aufeinanderfolgende Hardwareprüfungen funktionieren wieder; während
+  einer tatsächlich aktiven Prüfung bleibt eine zweite Anfrage gesperrt.
+- Verbindlichen Ergebnisabruf für die Hardware-Transaktionsprüfung ergänzt.
+- Simulator meldet Erfolg erst nach der physischen Bestätigung auf dem Gerät.
+- BOOT-Taste lehnt eine angezeigte Transaktion ausdrücklich ab.
+- Geräteablehnung, USB-Verbindungsverlust und 120-Sekunden-Timeout werden
+  eindeutig unterschieden.
+- Parallele Transaktionsprüfungen werden während einer offenen Entscheidung
+  abgelehnt.
+- C17-Geräteservice- und Geräteflow-Tests um Ergebniszustände und Abbruch ergänzt.
+- Keine Signierung, kein Broadcast und keine Änderung am Waveshare-BSP.
+
+## 0.28.0
+
+- Neuen USB-Befehl `REVIEW_TRANSACTION` mit begrenztem, versioniertem Format ergänzt.
+- Gerät validiert BC2-Empfänger, Beträge, Überläufe sowie bestätigte Gebühren-
+  und Wechselgeldkennzeichen.
+- PSBT-Dialog bietet die Hardwareprüfung nur für vollständig geprüfte
+  Transaktionen mit genau einem externen Empfänger an.
+- Erneute Geräte-PIN-Freigabe und physische Transaktionsbestätigung ergänzt.
+- Empfänger, Betrag, Gebühr und Wechselgeld werden vollständig auf dem E-Paper angezeigt.
+- Keine Signierung, kein Broadcast und keine Übertragung von Seed, Private Key oder PIN.
+- Geräte-Service-Test um gültige und abgelehnte Transaktionsanfragen erweitert.
+- Offizieller Waveshare-Treiber und BSP unverändert belassen.
+
+## 0.27.2
+
+- Verbessert die E-Paper-Reinigung beim Wechsel zwischen Dashboard, PIN und Adresspruefung.
+- Neue Ansichten erzwingen einen Full-Refresh und setzen danach eine neue Partial-Basis.
+- Nach hoechstens 12 Partial-Updates erfolgt vorsorglich ein Full-Refresh.
+- Offizieller Waveshare-Treiber und BSP bleiben unveraendert.
+- Der Geraeteservice-Test verwendet die zentrale Firmware-Version statt eines
+  fest codierten alten Versionsstrings.
+- Hinweis: Vollrefreshes sind bauartbedingt langsam; verbleibendes Ghosting ist
+  auf echter Hardware zu bewerten und nicht pauschal als vollstaendig geloest markiert.
+
+## 0.27.1
+
+- Macht die automatische USB-Erkennung unter Linux robuster.
+- Prüft typische USB-Seriell-Ports zuerst und wiederholt den Geräte-Ping.
+- Zeigt an, ob ein Anschluss belegt, nicht zugreifbar oder ohne Antwort ist.
+
+## 0.27.0
+
+- Desktop-Simulator erkennt das BC2-Gerät automatisch über USB-Serial.
+- Der Empfangen-Button überträgt die aktuell angezeigte Adresse direkt an die Hardware.
+- Hardware-Ablehnungen und fehlende bzw. belegte serielle Anschlüsse werden verständlich angezeigt.
+- Die Hardware bleibt alleinige Instanz für Adressvalidierung, Gerätezustand und PIN-Freigabe.
+- Manuelle Eingabe von COM- oder `/dev/ttyACM`-Anschlüssen entfällt.
+
+## 0.26.0
+
+- Fuegt den USB-Befehl `REVIEW_RECEIVE_ADDRESS` hinzu.
+- Nimmt Empfangsadressen nur im entsperrten Dashboard an.
+- Validiert BC2-Mainnet-Bech32-P2WPKH inklusive Pruefsumme auf dem Geraet.
+- Fordert fuer jede Empfangsadressen-Pruefung erneut den Geraete-PIN an.
+- Zeigt die vollstaendige Adresse ohne abgeschnittene Zeichen auf dem E-Paper.
+- Lehnt Testnet-, fehlerhafte und gemischt/gross geschriebene Adressen ab.
+- Erweitert das USB-Hilfsprogramm um `--receive-address`.
+- Belaesst Waveshare-BSP, E-Paper-Herstellertreiber und Power-BSP unveraendert.
+
+## 0.25.2
+
+- Verhindert IDLE0-Watchdog-Resets waehrend PBKDF2-HMAC-SHA-256.
+- Behaelt das kompatible PBKDF2-Ergebnis und 100.000 KDF-Runden bei.
+- Gibt dem ESP32-S3-Scheduler waehrend der Ableitung regelmaessig Zeit.
+- Waveshare-BSP und Displaytreiber bleiben unveraendert.
+
+## 0.25.1
+
+- ESP32-S3-Stackueberlauf beim Start behoben.
+- BC2-Anwendung laeuft in einem eigenen FreeRTOS-Task mit 16 KiB Stack.
+- Waveshare-BSP und Displaytreiber bleiben unveraendert.
+
+## 0.25.0
+
+- Festen Entwicklungstest-PIN `2468` aus der Hardware-App entfernt.
+- Sechsstellige PIN-Anlage mit Wiederholung beim ersten Start hinzugefuegt.
+- Gesalzenen PBKDF2-HMAC-SHA-256-PIN-Verifier mit 100.000 Runden implementiert.
+- Persistente Fehlversuchszaehlung und progressive Sperrzeiten hinzugefuegt.
+- Geräte-/Root-PIN-Autorisierungsregeln zentral definiert.
+- PIN-Anzeige auf sechs Stellen erweitert.
+- Neuen Security-Test hinzugefuegt und bestehende PIN-Tests aktualisiert.
+- Versionsnummer auf 0.25.0 erhoeht.
+- Originalen Waveshare-BSP und beide Herstellerkomponenten unveraendert gelassen.
+
+## 0.24.0
+
+- Zwei-Tasten-Navigation für PWR/BAT_KEY (GPIO 18) und BOOT (GPIO 0) ergänzt.
+- Gleichzeitiges Drücken beider Tasten als eindeutige Bestätigung implementiert.
+- Taschenrechnerartige PIN-Ansicht mit Ziffern, verdeckter Eingabe und `[<]`-Löschtaste ergänzt.
+- Plattformunabhängigen C17-PIN-Controller und Tests hinzugefügt.
+- Test-PIN `2468` für den nicht produktiven Hardware-UI-Test übernommen.
+- Versionsnummer auf 0.24.0 erhöht.
+- Displaytreiber, Refresh-Sequenzen und BUSY-Behandlung unverändert gelassen.
+
+## 0.23.0
+
+- Neues Hardware-UI für den Sperrbildschirm mit BC2-Branding, Statusleiste, Schloss-, USB- und Batteriesymbol.
+- KISS-konformen Navigation Controller für Kurz- und Langdruck ergänzt.
+- Langer Druck sperrt einen entsperrten Gerätezustand; kurzer Druck bleibt die Bestätigung.
+- Bestehendes Full-Refresh-Flag mit dem offiziellen Waveshare-Anzeigepfad verbunden.
+- Navigation durch einen eigenständigen Host-Test abgesichert.
+- Firmware-, Desktop- und Geräteprotokollversion auf 0.23.0 erhöht.
+- Originalen Waveshare-BSP, GPIO-Mapping und BUSY-Handling unverändert gelassen.
+
 ## 0.22.0
 
 - Korrigiert die E-Paper-BUSY-Wartefunktion für FreeRTOS-Konfigurationen mit 100-Hz-Tick.

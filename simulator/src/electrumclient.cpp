@@ -105,7 +105,7 @@ void ElectrumClient::sendVersionRequest() {
         return;
     }
     sendRequest(QStringLiteral("server.version"),
-                QJsonArray{QStringLiteral("BC2-Cold-Wallet-Simulator/0.22.0"),
+                QJsonArray{QStringLiteral("BC2-Cold-Wallet-Simulator/0.29.7"),
                            QJsonArray{QStringLiteral("1.4"), QStringLiteral("1.4.2")}});
     versionRequestSent_ = true;
 }

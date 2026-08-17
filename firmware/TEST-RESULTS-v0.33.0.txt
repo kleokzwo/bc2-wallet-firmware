@@ -1,0 +1,8 @@
+BC2 Cold Wallet Firmware v0.33.0
+=================================
+Host/core build: PASS
+CTest: 21/21 PASS
+
+Hardware-only wallet storage code uses ESP32-S3 eFuse/HMAC and therefore
+requires the user's ESP-IDF/Waveshare hardware build environment for the
+final target compile and on-device test.

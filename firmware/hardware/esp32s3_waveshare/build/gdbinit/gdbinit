@@ -1,0 +1,2 @@
+source /home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/gdbinit/symbols
+source /home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/gdbinit/connect

@@ -1,0 +1,22 @@
+idf_component_register(
+    SRCS "app_main.c" "waveshare_bsp.c" "bc2_display_adapter.cpp" "bc2_button_adapter.c"
+         "bc2_hw_wallet.c" "bc2_bip39_words.c"
+         "../../../firmware/platform/bc2_hal.c"
+         "../../../firmware/platform/bc2_device_ui.c"
+         "../../../firmware/platform/bc2_device_state.c"
+         "../../../firmware/platform/bc2_navigation.c"
+         "../../../firmware/platform/bc2_pin_entry.c"
+         "../../../firmware/platform/bc2_pin_security.c"
+         "../../../firmware/platform/bc2_device_flow.c"
+         "../../../firmware/platform/bc2_device_service.c"
+         "../../../firmware/platform/bc2_receive_request.c"
+         "../../../firmware/crypto/bc2_crypto.c"
+         "../../../firmware/encoding/bc2_encoding.c"
+         "../../../firmware/wallet/bc2_bip32.c"
+         "../../../firmware/wallet/bc2_address.c"
+         "../../../firmware/wallet/bc2_network.c"
+         "../../../firmware/protocol/bc2_usb_protocol.c"
+         "../../../firmware/protocol/bc2_usb_stream.c"
+    INCLUDE_DIRS "." "../../../firmware/include"
+    REQUIRES esp_timer esp_system nvs_flash driver esp_driver_usb_serial_jtag mbedtls efuse esp_hw_support epaper_driver_bsp board_power_bsp
+)

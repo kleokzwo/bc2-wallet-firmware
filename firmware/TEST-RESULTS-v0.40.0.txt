@@ -1,0 +1,54 @@
+cmake rc=0
+build rc=0
+ctest rc=0
+Internal ctest changing into directory: /mnt/data/bc2-firmware-v0.41.0/build-core
+Test project /mnt/data/bc2-firmware-v0.41.0/build-core
+      Start  1: crypto
+ 1/21 Test  #1: crypto ...........................   Passed    0.01 sec
+      Start  2: encoding
+ 2/21 Test  #2: encoding .........................   Passed    0.00 sec
+      Start  3: bip39
+ 3/21 Test  #3: bip39 ............................   Passed    0.00 sec
+      Start  4: bip32
+ 4/21 Test  #4: bip32 ............................   Passed    0.00 sec
+      Start  5: address
+ 5/21 Test  #5: address ..........................   Passed    0.00 sec
+      Start  6: sign
+ 6/21 Test  #6: sign .............................   Passed    0.01 sec
+      Start  7: wallet
+ 7/21 Test  #7: wallet ...........................   Passed    0.01 sec
+      Start  8: device_state
+ 8/21 Test  #8: device_state .....................   Passed    0.00 sec
+      Start  9: device_flow
+ 9/21 Test  #9: device_flow ......................   Passed    0.00 sec
+      Start 10: device_service
+10/21 Test #10: device_service ...................   Passed    0.00 sec
+      Start 11: receive_request
+11/21 Test #11: receive_request ..................   Passed    0.00 sec
+      Start 12: navigation
+12/21 Test #12: navigation .......................   Passed    0.00 sec
+      Start 13: pin_entry
+13/21 Test #13: pin_entry ........................   Passed    0.00 sec
+      Start 14: pin_security
+14/21 Test #14: pin_security .....................   Passed    0.10 sec
+      Start 15: psbt
+15/21 Test #15: psbt .............................   Passed    0.00 sec
+      Start 16: psbt_fixture
+16/21 Test #16: psbt_fixture .....................   Passed    0.00 sec
+      Start 17: transaction
+17/21 Test #17: transaction ......................   Passed    0.00 sec
+      Start 18: hal
+18/21 Test #18: hal ..............................   Passed    0.00 sec
+      Start 19: usb_protocol
+19/21 Test #19: usb_protocol .....................   Passed    0.00 sec
+      Start 20: usb_stream
+20/21 Test #20: usb_stream .......................   Passed    0.00 sec
+      Start 21: receive_qr
+21/21 Test #21: receive_qr .......................   Passed    0.00 sec
+
+[0;32m100% tests passed[0;0m, 0 tests failed[0;0m out of 21
+
+Total Test time (real) =   0.16 sec
+
+audits={'desktop_lock_cmd': True, 'firmware_lock_cmd': True, 'logout_button': True, 'mbedtls_rng': True, 'receive_tech_status': True}
+ESP-IDF target build must be run on the development machine before flashing.

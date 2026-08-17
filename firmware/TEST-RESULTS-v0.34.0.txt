@@ -1,0 +1,12 @@
+BC2 Cold Wallet Firmware v0.35.0
+=================================
+Host/core build: PASS
+CTest: 21/21 PASS
+
+New host-tested protocol behavior:
+- BEGIN_RECEIVE_ADDRESS
+- GET_RECEIVE_RESULT
+- terminal address only after APPROVED
+
+Hardware-specific ESP_PLATFORM mbedTLS/secp256k1 code requires final ESP-IDF
+target compilation on the Waveshare development environment.

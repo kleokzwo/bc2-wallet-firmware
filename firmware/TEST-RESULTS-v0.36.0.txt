@@ -1,0 +1,6 @@
+BC2 Firmware v0.36.0
+Host core build: PASS
+Host CTest: 21/21 PASS
+ESP32 app_main.c syntax check with ESP-IDF API stubs: PASS
+bc2_hw_wallet.c syntax check with ESP-IDF/mbedTLS API stubs: PASS
+Full ESP-IDF target build was not available in the build container and must be run before flashing.

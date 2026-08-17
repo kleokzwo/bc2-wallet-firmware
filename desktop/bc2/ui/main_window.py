@@ -5,8 +5,8 @@ from io import BytesIO
 
 import qrcode
 
-from PySide6.QtCore import QSettings, QTimer, Qt, Signal, Slot
-from PySide6.QtGui import QDoubleValidator, QPixmap, QGuiApplication
+from PySide6.QtCore import QSettings, QTimer, Qt, Signal, Slot, QSize
+from PySide6.QtGui import QDoubleValidator, QPixmap, QGuiApplication, QIcon
 from PySide6.QtWidgets import (
     QButtonGroup,
     QDialog,
@@ -95,6 +95,9 @@ class MainWindow(QMainWindow):
 
     def _asset(self, name: str) -> Path:
         return Path(__file__).resolve().parents[2] / "assets" / name
+    
+    def _icon_path(self, name: str) -> str:
+        return str(self._asset(f"icons/{name}.svg"))
 
     def _build_ui(self) -> None:
         root = QWidget()
@@ -142,21 +145,23 @@ class MainWindow(QMainWindow):
         layout.addSpacing(34)
 
         nav_items = [
-            ("dashboard", "▦", "Dashboard"),
-            ("receive", "↓", "Empfangen"),
-            ("send", "↗", "Senden"),
-            ("transactions", "☷", "Transaktionen"),
-            ("device", "▣", "Gerät"),
-            ("settings", "⚙", "Einstellungen"),
-            ("about", "ⓘ", "Über"),
+            ("dashboard", "layout-dashboard", "DASHBOARD"),
+            ("receive", "arrow-down-to-line", "EMPFANGEN"),
+            ("send", "send", "SENDEN"),
+            ("transactions", "list", "TRANSAKTIONEN"),
+            ("device", "usb", "GERÄT"),
+            ("settings", "settings", "EINSTELLUNGEN"),
+            ("about", "circle-help", "ÜBER"),
         ]
 
         group = QButtonGroup(self)
         group.setExclusive(True)
 
-        for key, icon, label in nav_items:
-            btn = QPushButton(f"{icon}    {label}")
+        for key, icon_name, label in nav_items:
+            btn = QPushButton(label)
             btn.setObjectName("NavButton")
+            btn.setIcon(QIcon(self._icon_path(f"nav-{icon_name}")))
+            btn.setIconSize(QSize(19, 19))
             btn.setCheckable(True)
             btn.setCursor(Qt.PointingHandCursor)
             btn.setMinimumHeight(52)
@@ -342,158 +347,124 @@ class MainWindow(QMainWindow):
         return page
 
     def _build_dashboard_page(self) -> QWidget:
-        page, outer = self._page_shell(
-            "Dashboard",
-            "Übersicht über deine BC2 Wallet und den aktuellen Gerätestatus.",
-        )
+        page = QWidget()
+        page.setObjectName("Page")
 
-        cards = QHBoxLayout()
-        cards.setSpacing(16)
+        outer = QVBoxLayout(page)
+        outer.setContentsMargins(42, 34, 42, 34)
+        outer.setSpacing(24)
 
-        device_card = self._card()
-        dl = QVBoxLayout(device_card)
-        dl.setContentsMargins(20, 18, 20, 18)
-        dl.setSpacing(9)
-        t = QLabel("Gerät")
-        t.setObjectName("CardTitle")
-        self._dash_device_state = QLabel("Suche nach Hardware Wallet …")
-        self._dash_device_state.setObjectName("StrongMuted")
-        self._dash_device_name = QLabel("—")
-        self._dash_device_name.setObjectName("SmallMuted")
-        manage = QPushButton("Gerät verwalten  →")
-        manage.setObjectName("SoftGreenButton")
-        manage.clicked.connect(lambda: self._navigate("device"))
-        dl.addWidget(t)
-        dl.addWidget(self._dash_device_state)
-        dl.addWidget(self._dash_device_name)
-        dl.addStretch()
-        dl.addWidget(manage)
+        header = QHBoxLayout()
+        title_box = QVBoxLayout()
+        title_box.setSpacing(4)
 
-        wallet_card = self._card()
-        wl = QVBoxLayout(wallet_card)
-        wl.setContentsMargins(20, 18, 20, 18)
-        wl.setSpacing(10)
-        title = QLabel("Wallet Status")
-        title.setObjectName("CardTitle")
-        wl.addWidget(title)
-        wl.addWidget(self._info_pair("Modus", "Hardware Wallet"))
-        wl.addWidget(self._info_pair("Wallet", "Seed sicher auf Hardware eingerichtet"))
-        sync_row = QHBoxLayout()
-        sync_row.addWidget(QLabel("Synchronisierung"))
-        sync_row.addStretch()
-        self._dash_sync = QLabel("noch nicht gestartet")
-        self._dash_sync.setObjectName("ValueLabel")
-        sync_row.addWidget(self._dash_sync)
-        wl.addLayout(sync_row)
-        wl.addStretch()
+        title = QLabel("DASHBOARD")
+        title.setObjectName("PageTitle")
+        subtitle = QLabel("Deine BC2 Wallet auf einen Blick.")
+        subtitle.setObjectName("PageSubtitle")
 
-        network_card = self._card()
-        nl = QVBoxLayout(network_card)
-        nl.setContentsMargins(20, 18, 20, 18)
-        nl.setSpacing(10)
-        nt = QLabel("Netzwerk")
-        nt.setObjectName("CardTitle")
-        self._dash_server = QLabel(self._electrum_server())
-        self._dash_server.setObjectName("ValueLabel")
-        self._dash_network = QLabel("Nicht verbunden")
-        self._dash_network.setObjectName("StatusNeutral")
-        nl.addWidget(nt)
-        nl.addWidget(QLabel("Electrum Server"))
-        nl.addWidget(self._dash_server)
-        nl.addWidget(QLabel("Verbindung"))
-        nl.addWidget(self._dash_network)
-        nl.addStretch()
+        title_box.addWidget(title)
+        title_box.addWidget(subtitle)
+        header.addLayout(title_box, 1)
 
-        cards.addWidget(device_card, 1)
-        cards.addWidget(wallet_card, 1)
-        cards.addWidget(network_card, 1)
-        outer.addLayout(cards)
+        status_box = QHBoxLayout()
+        status_box.setSpacing(8)
 
-        balance = self._card()
-        bl = QHBoxLayout(balance)
-        bl.setContentsMargins(22, 20, 22, 20)
-        bl.setSpacing(30)
+        self._dash_device_icon = QPushButton()
+        self._dash_device_icon.setObjectName("TopStatusIcon")
+        self._dash_device_icon.setToolTip("Hardware Wallet nicht verbunden")
+        self._dash_device_icon.setIcon(QIcon(self._icon_path("usb-gray")))
 
-        left = QHBoxLayout()
-        left.setSpacing(42)
+        self._dash_network_icon = QPushButton()
+        self._dash_network_icon.setObjectName("TopStatusIcon")
+        self._dash_network_icon.setToolTip("Netzwerk nicht verbunden")
+        self._dash_network_icon.setIcon(QIcon(self._icon_path("globe-gray")))
 
-        confirmed = QVBoxLayout()
-        confirmed.setSpacing(4)
-        bt = QLabel("Bestätigtes Guthaben")
-        bt.setObjectName("CardTitle")
+        self._dash_sync_icon = QPushButton()
+        self._dash_sync_icon.setObjectName("TopStatusIcon")
+        self._dash_sync_icon.setToolTip("Wallet noch nicht synchronisiert")
+        self._dash_sync_icon.setIcon(QIcon(self._icon_path("sync-gray")))
+
+        for status in (self._dash_device_icon, self._dash_network_icon, self._dash_sync_icon):
+            status.setFlat(True)
+            status.setCursor(Qt.ArrowCursor)
+            status.setFocusPolicy(Qt.NoFocus)
+            status.setFixedSize(30, 30)
+            status.setIconSize(QSize(21, 21))
+            status_box.addWidget(status)
+
+        header.addLayout(status_box)
+        outer.addLayout(header)
+
+        balance = QFrame()
+        balance.setObjectName("DashboardBalanceSection")
+        bl = QVBoxLayout(balance)
+        bl.setContentsMargins(0, 20, 0, 24)
+        bl.setSpacing(5)
+
+        label = QLabel("Aktuelles Guthaben")
+        label.setObjectName("DashboardBalanceLabel")
         self._dash_confirmed_balance = QLabel("0.00000000 BC2")
-        self._dash_confirmed_balance.setObjectName("Balance")
-        confirmed_note = QLabel("Blockchain bestätigt")
-        confirmed_note.setObjectName("SmallMuted")
-        confirmed.addWidget(bt)
-        confirmed.addWidget(self._dash_confirmed_balance)
-        confirmed.addWidget(confirmed_note)
-        confirmed.addStretch()
+        self._dash_confirmed_balance.setObjectName("DashboardMainBalance")
+        note = QLabel("Blockchain bestätigt")
+        note.setObjectName("DashboardBalanceNote")
 
-        pending = QVBoxLayout()
-        pending.setSpacing(4)
-        pt = QLabel("Unbestätigt")
-        pt.setObjectName("CardTitle")
+        bl.addWidget(label)
+        bl.addWidget(self._dash_confirmed_balance)
+        bl.addWidget(note)
+        bl.addSpacing(18)
+
+        pending_row = QHBoxLayout()
+        pending_label = QLabel("Unbestätigt")
+        pending_label.setObjectName("DashboardPendingLabel")
         self._dash_unconfirmed_balance = QLabel("0.00000000 BC2")
-        self._dash_unconfirmed_balance.setObjectName("PendingBalance")
+        self._dash_unconfirmed_balance.setObjectName("DashboardPendingBalance")
+        pending_row.addWidget(pending_label)
+        pending_row.addWidget(self._dash_unconfirmed_balance)
+        pending_row.addStretch()
+        bl.addLayout(pending_row)
+
         self._dash_unconfirmed_note = QLabel("Keine ausstehenden Transaktionen")
-        self._dash_unconfirmed_note.setObjectName("SmallMuted")
-        pending.addWidget(pt)
-        pending.addWidget(self._dash_unconfirmed_balance)
-        pending.addWidget(self._dash_unconfirmed_note)
-        pending.addStretch()
+        self._dash_unconfirmed_note.setObjectName("DashboardBalanceNote")
+        bl.addWidget(self._dash_unconfirmed_note)
 
-        left.addLayout(confirmed)
-        left.addLayout(pending)
-        left.addStretch()
-
-        right = QVBoxLayout()
-        right.setSpacing(10)
-        rt = QLabel("Schnellzugriff")
-        rt.setObjectName("CardTitle")
-        receive = QPushButton("↓   Empfangen")
-        receive.setObjectName("SoftGreenButton")
-        receive.clicked.connect(lambda: self._navigate("receive"))
-        send = QPushButton("↗   Senden")
-        send.setObjectName("SoftBlueButton")
-        send.clicked.connect(lambda: self._navigate("send"))
-        device = QPushButton("▣   Gerät prüfen")
-        device.setObjectName("SoftButton")
-        device.clicked.connect(lambda: self._navigate("device"))
-        right.addWidget(rt)
-        right.addWidget(receive)
-        right.addWidget(send)
-        right.addWidget(device)
-        right.addStretch()
-
-        bl.addLayout(left, 2)
-        bl.addLayout(right, 1)
         outer.addWidget(balance)
 
-        tx = self._card()
-        tl = QVBoxLayout(tx)
-        tl.setContentsMargins(22, 18, 22, 18)
-        tx_title = QLabel("Letzte Transaktionen")
-        tx_title.setObjectName("CardTitle")
-        empty = QLabel("Keine Transaktionen vorhanden\nDeine Transaktionen werden später hier angezeigt.")
-        empty.setObjectName("EmptyState")
-        empty.setAlignment(Qt.AlignCenter)
-        all_btn = QPushButton("Alle Transaktionen anzeigen")
-        all_btn.setObjectName("OutlineButton")
-        all_btn.clicked.connect(lambda: self._navigate("transactions"))
-        tl.addWidget(tx_title)
-        tl.addStretch()
-        tl.addWidget(empty)
-        tl.addWidget(all_btn, alignment=Qt.AlignHCenter)
-        tl.addStretch()
-        outer.addWidget(tx, 1)
+        divider = QFrame()
+        divider.setObjectName("DashboardDivider")
+        divider.setFrameShape(QFrame.HLine)
+        outer.addWidget(divider)
 
-        outer.addWidget(self._safety_banner())
+        tx_head = QHBoxLayout()
+        tx_title = QLabel("Letzte Transaktionen")
+        tx_title.setObjectName("DashboardSectionTitle")
+        all_btn = QPushButton("Alle anzeigen")
+        all_btn.setObjectName("DashboardTextButton")
+        all_btn.clicked.connect(lambda: self._navigate("transactions"))
+        tx_head.addWidget(tx_title)
+        tx_head.addStretch()
+        tx_head.addWidget(all_btn)
+        outer.addLayout(tx_head)
+
+        empty = QLabel("Noch keine Transaktionen vorhanden.")
+        empty.setObjectName("DashboardEmptyText")
+        outer.addWidget(empty)
+        outer.addStretch()
+
+        # Hidden compatibility labels keep all existing device/sync logic intact.
+        self._dash_device_state = QLabel("Nicht verbunden")
+        self._dash_device_name = QLabel("—")
+        self._dash_server = QLabel(self._electrum_server())
+        self._dash_network = QLabel("Nicht verbunden")
+        self._dash_sync = QLabel("noch nicht gestartet")
+        for hidden in (self._dash_device_state, self._dash_device_name, self._dash_server, self._dash_network, self._dash_sync):
+            hidden.setVisible(False)
+
         return page
 
     def _build_receive_page(self) -> QWidget:
         page, outer = self._page_shell(
-            "Empfangen",
+            "EMPFANGEN",
             "Eine neue BC2 Empfangsadresse wird erst nach Bestätigung auf der Hardware angezeigt.",
         )
 
@@ -554,7 +525,7 @@ class MainWindow(QMainWindow):
 
     def _build_send_page(self) -> QWidget:
         page, outer = self._page_shell(
-            "Senden",
+            "SENDEN",
             "Transaktionen werden auf dem Desktop vorbereitet und müssen auf der Hardware geprüft werden.",
         )
 
@@ -599,7 +570,7 @@ class MainWindow(QMainWindow):
 
     def _build_transactions_page(self) -> QWidget:
         page, outer = self._page_shell(
-            "Transaktionen",
+            "TRANSAKTIONEN",
             "Hier erscheinen deine BC2 Transaktionen nach der Wallet-Synchronisierung.",
         )
 
@@ -627,7 +598,7 @@ class MainWindow(QMainWindow):
 
     def _build_device_page(self) -> QWidget:
         page, outer = self._page_shell(
-            "Hardware Wallet",
+            "HARDWARE WALLET",
             "Verbindung und Eigenschaften deiner BC2 Hardware Wallet.",
         )
 
@@ -716,7 +687,7 @@ class MainWindow(QMainWindow):
 
     def _build_settings_page(self) -> QWidget:
         page, outer = self._page_shell(
-            "Einstellungen",
+            "EINSTELLUNGEN",
             "Nur Einstellungen, die wirklich nötig sind.",
         )
 
@@ -772,7 +743,7 @@ class MainWindow(QMainWindow):
 
     def _build_about_page(self) -> QWidget:
         page, outer = self._page_shell(
-            "Über",
+            "ÜBER",
             "Informationen über die BC2 Cold Wallet.",
         )
 
@@ -1224,6 +1195,7 @@ class MainWindow(QMainWindow):
         self._sidebar_ready.setText("●  Suche Gerät …")
         self._sidebar_ready.setObjectName("SidebarSearching")
         self._refresh_status_styles()
+        self._refresh_dashboard_status()
 
     @Slot(object)
     def _on_scan_finished(self, result: DiscoveryResult) -> None:
@@ -1354,6 +1326,7 @@ class MainWindow(QMainWindow):
             QTimer.singleShot(2000, self._retry_setup_scan)
 
         self._refresh_status_styles()
+        self._refresh_dashboard_status()
 
     def _known_receive_addresses(self) -> list[str]:
         raw = self._settings.value("wallet/receive_addresses", [])
@@ -1380,6 +1353,7 @@ class MainWindow(QMainWindow):
     def _on_balance_sync_started(self) -> None:
         self._dash_sync.setText("Synchronisiere …")
         self._dash_network.setText("Verbinde …")
+        self._refresh_dashboard_status()
 
     @staticmethod
     def _format_bc2(sats: int) -> str:
@@ -1396,12 +1370,14 @@ class MainWindow(QMainWindow):
         )
         self._dash_sync.setText(f"Aktuell · {result.addresses} Adresse(n)")
         self._dash_network.setText("Verbunden")
+        self._refresh_dashboard_status()
 
     @Slot(str)
     def _on_balance_sync_failed(self, message: str) -> None:
         self._dash_sync.setText("Sync fehlgeschlagen")
         self._dash_network.setText("Nicht verbunden")
         self._dash_network.setToolTip(message)
+        self._refresh_dashboard_status()
 
     def _retry_setup_scan(self) -> None:
         if (
@@ -1409,6 +1385,40 @@ class MainWindow(QMainWindow):
             and self._stack.currentWidget() is self._pages.get("setup")
         ):
             self._device_service.scan()
+
+    def _refresh_dashboard_status(self) -> None:
+        if not hasattr(self, "_dash_device_icon"):
+            return
+
+        # Simple rule:
+        # green = OK / connected / synchronized
+        # gray  = not connected / not synchronized
+        device_ok = self._device is not None
+        network_ok = hasattr(self, "_dash_network") and self._dash_network.text() == "Verbunden"
+
+        sync_text = self._dash_sync.text() if hasattr(self, "_dash_sync") else ""
+        sync_ok = sync_text.startswith("Aktuell")
+
+        self._dash_device_icon.setIcon(
+            QIcon(self._icon_path("usb-green" if device_ok else "usb-gray"))
+        )
+        self._dash_device_icon.setToolTip(
+            "Hardware Wallet verbunden" if device_ok else "Hardware Wallet nicht verbunden"
+        )
+
+        self._dash_network_icon.setIcon(
+            QIcon(self._icon_path("globe-green" if network_ok else "globe-gray"))
+        )
+        self._dash_network_icon.setToolTip(
+            "BC2 Netzwerk verbunden" if network_ok else "BC2 Netzwerk nicht verbunden"
+        )
+
+        self._dash_sync_icon.setIcon(
+            QIcon(self._icon_path("sync-green" if sync_ok else "sync-gray"))
+        )
+        self._dash_sync_icon.setToolTip(
+            "Wallet synchronisiert" if sync_ok else "Wallet noch nicht synchronisiert"
+        )
 
     def _refresh_status_styles(self) -> None:
         for w in (
@@ -1467,6 +1477,7 @@ class MainWindow(QMainWindow):
                 border-radius: 12px;
                 text-align: left;
                 padding: 0 16px;
+                icon-size: 19px;
                 background: transparent;
                 color: {MUTED};
                 font-size: 15px;
@@ -1502,9 +1513,9 @@ class MainWindow(QMainWindow):
                 font-weight: 700;
             }}
             QLabel#PageTitle {{
-                color: {TEXT};
+                color: {BALANCE};
                 font-size: 30px;
-                font-weight: 800;
+                font-weight: 600;
             }}
             QLabel#PageSubtitle {{
                 color: {MUTED};
@@ -1783,5 +1794,68 @@ class MainWindow(QMainWindow):
             QLabel#SafetyText {{
                 color: {MUTED};
                 font-size: 12px;
+            }}
+            QFrame#DashboardBalanceSection {{
+                background: transparent;
+                border: none;
+            }}
+            QLabel#DashboardBalanceLabel {{
+                color: {MUTED};
+                font-size: 14px;
+                font-weight: 500;
+            }}
+            QLabel#DashboardMainBalance {{
+                color: {TEXT};
+                font-size: 42px;
+                font-weight: 500;
+            }}
+            QLabel#DashboardBalanceNote {{
+                color: {MUTED};
+                font-size: 12px;
+                font-weight: 400;
+            }}
+            QLabel#DashboardPendingLabel {{
+                color: {MUTED};
+                font-size: 13px;
+                font-weight: 500;
+            }}
+            QLabel#DashboardPendingBalance {{
+                color: {BALANCE};
+                font-size: 20px;
+                font-weight: 500;
+            }}
+            QFrame#DashboardDivider {{
+                color: {BORDER};
+                background: {BORDER};
+                max-height: 1px;
+                border: none;
+            }}
+            QLabel#DashboardSectionTitle {{
+                color: {TEXT};
+                font-size: 18px;
+                font-weight: 600;
+            }}
+            QLabel#DashboardEmptyText {{
+                color: {MUTED};
+                font-size: 13px;
+                padding: 8px 0;
+            }}
+            QPushButton#DashboardTextButton {{
+                color: {ORANGE_DARK};
+                background: transparent;
+                border: none;
+                padding: 6px 0;
+                font-size: 13px;
+                font-weight: 600;
+            }}
+            QPushButton#TopStatusIcon {{
+                background: transparent;
+                border: none;
+                padding: 0;
+                margin: 0;
+            }}
+            QPushButton#TopStatusIcon:hover {{
+                background: transparent;
+                border: none;
             }}
         """)

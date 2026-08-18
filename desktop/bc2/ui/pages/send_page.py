@@ -14,7 +14,9 @@ from PySide6.QtWidgets import (
 
 
 class SendPage(QWidget):
-    send_requested = Signal(str, float)
+    # Important: keep amount as text so Decimal can parse it exactly.
+    send_requested = Signal(str, str)
+    review_requested = Signal()
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -72,7 +74,6 @@ class SendPage(QWidget):
         validator = QDoubleValidator(0.0, 999999999.0, 8, self)
         validator.setNotation(QDoubleValidator.StandardNotation)
         self._amount_input.setValidator(validator)
-
         layout.addWidget(self._amount_input)
 
         self._error = QLabel("")
@@ -85,10 +86,136 @@ class SendPage(QWidget):
         self._next_button.clicked.connect(self._submit)
         layout.addWidget(self._next_button, alignment=Qt.AlignLeft)
 
+        self._preview = QFrame()
+        self._preview.setObjectName("ResultPanel")
+        self._preview.setVisible(False)
+
+        preview_layout = QVBoxLayout(self._preview)
+        preview_layout.setContentsMargins(18, 16, 18, 16)
+        preview_layout.setSpacing(6)
+
+        preview_title = QLabel("Transaktionsentwurf")
+        preview_title.setObjectName("CardTitle")
+
+        self._preview_text = QLabel("")
+        self._preview_text.setObjectName("BodyText")
+        self._preview_text.setWordWrap(True)
+        self._preview_text.setTextInteractionFlags(Qt.TextSelectableByMouse)
+
+        preview_layout.addWidget(preview_title)
+        preview_layout.addWidget(self._preview_text)
+
+        self._review_button = QPushButton("Auf Hardware prüfen")
+        self._review_button.setObjectName("PrimaryButton")
+        self._review_button.clicked.connect(self.review_requested)
+        preview_layout.addWidget(
+            self._review_button,
+            alignment=Qt.AlignLeft,
+        )
+
+        self._review_status = QLabel("")
+        self._review_status.setObjectName("SmallMuted")
+        self._review_status.setWordWrap(True)
+        preview_layout.addWidget(self._review_status)
+
+        layout.addWidget(self._preview)
         layout.addStretch()
 
         outer.addWidget(card, 1)
         outer.addWidget(self._safety_banner())
+
+    def _submit(self) -> None:
+        self._error.setText("")
+        self._preview.setVisible(False)
+
+        address = self._address_input.text().strip()
+        amount_text = self._amount_input.text().strip().replace(",", ".")
+
+        if not address:
+            self._error.setText("Bitte eine Empfängeradresse eingeben.")
+            return
+
+        if len(address) < 20:
+            self._error.setText("Die Empfängeradresse ist zu kurz.")
+            return
+
+        if not amount_text:
+            self._error.setText("Bitte einen Betrag eingeben.")
+            return
+
+        # Do not convert to float here. Send the exact string to SendService.
+        self.send_requested.emit(address, amount_text)
+
+    def show_hardware_required(self) -> None:
+        self.show_prepare_failed(
+            "Hardware Wallet nicht verbunden. "
+            "Senden ist ohne Hardware-Bestätigung nicht möglich."
+        )
+
+    def show_preparing(self) -> None:
+        self._error.setText("")
+        self._preview.setVisible(False)
+        self._next_button.setEnabled(False)
+        self._next_button.setText("UTXOs werden geladen …")
+
+    def show_plan(self, plan) -> None:
+        self._error.setText("")
+        self._next_button.setEnabled(True)
+        self._next_button.setText("Neu berechnen")
+        self._review_button.setEnabled(True)
+        self._review_button.setText("Auf Hardware prüfen")
+        self._review_status.setText("")
+
+        self._preview_text.setText(
+            f"Empfänger: {plan.recipient}\n"
+            f"Betrag: {plan.amount / 100_000_000:.8f} BC2\n"
+            f"Netzwerkgebühr: {plan.fee / 100_000_000:.8f} BC2 "
+            f"({plan.fee_rate} sat/vB)\n"
+            f"Wechselgeld: {plan.change / 100_000_000:.8f} BC2\n"
+            f"Eingänge: {plan.input_count} · geschätzt {plan.estimated_vbytes} vB\n\n"
+            "Noch nicht signiert und noch nicht gesendet."
+        )
+        self._preview.setVisible(True)
+
+    def show_review_started(self) -> None:
+        self._error.setText("")
+        self._review_button.setEnabled(False)
+        self._review_button.setText("Warte auf Hardware …")
+        self._review_status.setText(
+            "Transaktionsentwurf wird an die Hardware übertragen."
+        )
+
+    def show_review_progress(self, message: str) -> None:
+        self._review_status.setText(message)
+
+    def show_review_result(self, approved: bool) -> None:
+        self._review_button.setEnabled(True)
+        if approved:
+            self._review_button.setText("✓ Auf Hardware bestätigt")
+            self._review_status.setText(
+                "Transaktion wurde auf der Hardware bestätigt. "
+                "Noch nicht signiert und noch nicht gesendet."
+            )
+        else:
+            self._review_button.setText("Erneut auf Hardware prüfen")
+            self._review_status.setText(
+                "Transaktion wurde auf der Hardware abgelehnt."
+            )
+
+    def show_review_failed(self, message: str) -> None:
+        self._review_button.setEnabled(True)
+        self._review_button.setText("Auf Hardware prüfen")
+        self._review_status.setText("")
+        self._error.setText(message)
+
+    def show_prepare_failed(self, message: str) -> None:
+        self._next_button.setEnabled(True)
+        self._next_button.setText("Weiter")
+        self._preview.setVisible(False)
+        self._error.setText(message)
+
+    def clear_error(self) -> None:
+        self._error.setText("")
 
     def _form_label(self, text: str) -> QLabel:
         label = QLabel(text)
@@ -153,38 +280,3 @@ class SendPage(QWidget):
         row.addWidget(icon)
         row.addLayout(text, 1)
         return banner
-
-    def _submit(self) -> None:
-        self._error.setText("")
-
-        address = self._address_input.text().strip()
-        amount_text = self._amount_input.text().strip().replace(",", ".")
-
-        if not address:
-            self._error.setText("Bitte eine Empfängeradresse eingeben.")
-            return
-
-        if len(address) < 20:
-            self._error.setText("Die Empfängeradresse ist zu kurz.")
-            return
-
-        try:
-            amount = float(amount_text)
-        except ValueError:
-            self._error.setText("Bitte einen gültigen Betrag eingeben.")
-            return
-
-        if amount <= 0:
-            self._error.setText("Der Betrag muss größer als 0 sein.")
-            return
-
-        self.send_requested.emit(address, amount)
-
-    def show_hardware_required(self) -> None:
-        self._error.setText(
-            "Hardware Wallet nicht verbunden. "
-            "Senden ist ohne Hardware-Bestätigung nicht möglich."
-        )
-
-    def clear_error(self) -> None:
-        self._error.setText("")

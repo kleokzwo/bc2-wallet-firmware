@@ -56,3 +56,26 @@ def submit_recovery_mnemonic(port_name: str, mnemonic: str) -> bool:
 def lock_wallet(port_name: str) -> bool:
     with serial.Serial(port_name, baudrate=DeviceDiscovery.BAUD_RATE, timeout=.1, write_timeout=2.0) as port:
         return BC2DeviceClient(port).lock_wallet()
+
+
+def review_transaction(port_name: str, recipient: str,
+                       amount: int, change: int, fee: int) -> int:
+    with serial.Serial(
+        port_name,
+        baudrate=DeviceDiscovery.BAUD_RATE,
+        timeout=.1,
+        write_timeout=2.0,
+    ) as port:
+        return BC2DeviceClient(port).review_transaction(
+            recipient, amount, change, fee
+        )
+
+
+def get_transaction_result(port_name: str) -> int:
+    with serial.Serial(
+        port_name,
+        baudrate=DeviceDiscovery.BAUD_RATE,
+        timeout=.1,
+        write_timeout=2.0,
+    ) as port:
+        return BC2DeviceClient(port).get_transaction_result()

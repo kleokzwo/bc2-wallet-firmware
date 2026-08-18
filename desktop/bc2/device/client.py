@@ -17,11 +17,11 @@ class BC2DeviceClient:
         must also match protocol version, response command, sequence and payload
         bounds before it is accepted.
         """
-        deadline = time.monotonic() + timeout
+        deadline = None if timeout is None else time.monotonic() + timeout
         buf = bytearray()
         expected_response = expected_command | RESPONSE_FLAG
 
-        while time.monotonic() < deadline:
+        while deadline is None or time.monotonic() < deadline:
             chunk = self._port.read(256)
             if chunk:
                 buf.extend(chunk)
@@ -130,3 +130,38 @@ class BC2DeviceClient:
         address = payload[2:].decode("ascii", errors="strict")
         return status, address
 
+
+
+    def review_transaction(self, recipient: str, amount: int,
+                           change: int, fee: int):
+        raw_address = recipient.encode("ascii", errors="strict")
+        if not raw_address or len(raw_address) > 95:
+            raise ValueError("invalid transaction recipient address length")
+        if amount <= 0 or change < 0 or fee < 0:
+            raise ValueError("invalid transaction amounts")
+
+        payload = (
+            bytes((1, 1, 1))
+            + int(amount).to_bytes(8, "little", signed=False)
+            + int(change).to_bytes(8, "little", signed=False)
+            + int(fee).to_bytes(8, "little", signed=False)
+            + bytes((len(raw_address),))
+            + raw_address
+        )
+        response = self.request(
+            CMD_REVIEW_TRANSACTION,
+            payload,
+            timeout=None,
+        )
+        if len(response) != 1:
+            raise ProtocolError("invalid transaction-review response")
+        return response[0]
+
+    def get_transaction_result(self):
+        response = self.request(
+            CMD_GET_TRANSACTION_RESULT,
+            timeout=None,
+        )
+        if len(response) != 1:
+            raise ProtocolError("invalid transaction-result response")
+        return response[0]

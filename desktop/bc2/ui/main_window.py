@@ -28,6 +28,7 @@ from bc2.device.model import DeviceInfo
 from bc2.services.device_service import DeviceService
 from bc2.services.receive_service import ReceiveService
 from bc2.services.electrum_service import ElectrumService, BalanceResult, address_to_scriptpubkey
+from bc2.services.send_service import SendService
 from bc2.ui.recovery_dialog import RecoveryDialog
 from bc2.ui.pages.dashboard_page import DashboardPage
 from bc2.ui.pages.receiver_page import ReceivePage
@@ -68,6 +69,7 @@ class MainWindow(QMainWindow):
         self._settings = QSettings("BC2", "ColdWallet")
         self._device: DeviceInfo | None = None
         self._setup_in_progress = False
+        self._current_send_plan = None
 
         self._device_service = DeviceService(self)
         self._device_service.scan_started.connect(self._on_scan_started)
@@ -83,6 +85,16 @@ class MainWindow(QMainWindow):
         self._electrum_service.started.connect(self._on_balance_sync_started)
         self._electrum_service.finished.connect(self._on_balance_sync_finished)
         self._electrum_service.failed.connect(self._on_balance_sync_failed)
+
+        self._send_service = SendService(self)
+        self._send_service.started.connect(self._on_send_prepare_started)
+        self._send_service.finished.connect(self._on_send_plan_ready)
+        self._send_service.failed.connect(self._on_send_prepare_failed)
+        self._send_service.review_started.connect(self._on_send_review_started)
+        self._send_service.review_progress.connect(self._on_send_review_progress)
+        self._send_service.review_finished.connect(self._on_send_review_finished)
+        self._send_service.review_failed.connect(self._on_send_review_failed)
+
         self._balance_timer = QTimer(self)
         self._balance_timer.setInterval(30000)
         self._balance_timer.timeout.connect(self._sync_balance)
@@ -223,6 +235,9 @@ class MainWindow(QMainWindow):
         self._send_page = SendPage()
         self._send_page.send_requested.connect(
             self._prepare_send
+        )
+        self._send_page.review_requested.connect(
+            self._review_send_plan
         )
 
         self._transaction_page = TransactionPage()
@@ -521,21 +536,96 @@ class MainWindow(QMainWindow):
         self._receive_page.show_failed(message)
 
 
-    @Slot(str, float)
-    def _prepare_send(self, address: str, amount: float) -> None:
+    @Slot(str, str)
+    def _prepare_send(self, address: str, amount_text: str) -> None:
+        self._current_send_plan = None
+
         if self._device is None:
             self._send_page.show_hardware_required()
             return
 
-        self._send_page.clear_error()
+        if not self._device.wallet_ready:
+            self._send_page.show_prepare_failed(
+                "Wallet noch nicht eingerichtet."
+            )
+            return
 
-        QMessageBox.information(
-            self,
-            "Noch nicht signieren",
-            "Die Eingaben sind gültig und die Hardware Wallet ist verbunden.\n\n"
-            "Die eigentliche Transaktion wird erst freigeschaltet, wenn der sichere "
-            "Transaktions- und Signierfluss in Firmware und Desktop vollständig implementiert ist.",
+        if not self._device.unlocked:
+            self._send_page.show_prepare_failed(
+                "Wallet ist gesperrt. Bitte zuerst mit der 4-stelligen PIN entsperren."
+            )
+            return
+
+        try:
+            address_to_scriptpubkey(address)
+        except Exception as exc:
+            self._send_page.show_prepare_failed(
+                f"Empfängeradresse ungültig: {exc}"
+            )
+            return
+
+        addresses = self._known_receive_addresses()
+        if not addresses:
+            self._send_page.show_prepare_failed(
+                "Keine eigenen Wallet-Adressen gespeichert. "
+                "Erzeuge zuerst unter Empfangen eine bestätigte Adresse."
+            )
+            return
+
+        self._send_service.prepare(
+            self._electrum_server(),
+            addresses,
+            address,
+            amount_text,
         )
+
+    @Slot()
+    def _on_send_prepare_started(self) -> None:
+        self._send_page.show_preparing()
+
+    @Slot(object)
+    def _on_send_plan_ready(self, plan) -> None:
+        self._current_send_plan = plan
+        self._send_page.show_plan(plan)
+
+    @Slot(str)
+    def _on_send_prepare_failed(self, message: str) -> None:
+        self._send_page.show_prepare_failed(message)
+
+    @Slot()
+    def _review_send_plan(self) -> None:
+        if self._device is None:
+            self._send_page.show_review_failed(
+                "Hardware Wallet nicht verbunden."
+            )
+            return
+
+        if self._current_send_plan is None:
+            self._send_page.show_review_failed(
+                "Bitte zuerst den Transaktionsentwurf berechnen."
+            )
+            return
+
+        self._send_service.review(
+            self._device.port,
+            self._current_send_plan,
+        )
+
+    @Slot()
+    def _on_send_review_started(self) -> None:
+        self._send_page.show_review_started()
+
+    @Slot(str)
+    def _on_send_review_progress(self, message: str) -> None:
+        self._send_page.show_review_progress(message)
+
+    @Slot(bool)
+    def _on_send_review_finished(self, approved: bool) -> None:
+        self._send_page.show_review_result(approved)
+
+    @Slot(str)
+    def _on_send_review_failed(self, message: str) -> None:
+        self._send_page.show_review_failed(message)
 
     @Slot()
     def _factory_reset_device(self) -> None:

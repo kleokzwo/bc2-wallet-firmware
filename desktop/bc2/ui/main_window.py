@@ -1,12 +1,8 @@
 from __future__ import annotations
 
 from pathlib import Path
-from io import BytesIO
-
-import qrcode
-
 from PySide6.QtCore import QSettings, QTimer, Qt, Signal, Slot, QSize
-from PySide6.QtGui import QDoubleValidator, QPixmap, QGuiApplication, QIcon
+from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import (
     QButtonGroup,
     QDialog,
@@ -33,6 +29,13 @@ from bc2.services.device_service import DeviceService
 from bc2.services.receive_service import ReceiveService
 from bc2.services.electrum_service import ElectrumService, BalanceResult, address_to_scriptpubkey
 from bc2.ui.recovery_dialog import RecoveryDialog
+from bc2.ui.pages.dashboard_page import DashboardPage
+from bc2.ui.pages.receiver_page import ReceivePage
+from bc2.ui.pages.send_page import SendPage
+from bc2.ui.pages.transaction_page import TransactionPage
+from bc2.ui.pages.device_page import DevicePage
+from bc2.ui.pages.settings_page import SettingsPage
+from bc2.ui.pages.about_page import AboutPage
 
 
 APP_VERSION = "0.42.1"
@@ -204,15 +207,52 @@ class MainWindow(QMainWindow):
         self._stack = QStackedWidget()
         self._stack.setObjectName("PageStack")
 
+        self._dashboard_page = DashboardPage(
+            icon_path=self._icon_path,
+            electrum_server=self._electrum_server(),
+        )
+        self._dashboard_page.show_transactions_requested.connect(
+            lambda: self._navigate("transactions")
+        )
+
+        self._receive_page = ReceivePage()
+        self._receive_page.request_receive_requested.connect(
+            self._request_receive
+        )
+
+        self._send_page = SendPage()
+        self._send_page.send_requested.connect(
+            self._prepare_send
+        )
+
+        self._transaction_page = TransactionPage()
+
+        self._device_page = DevicePage(asset_path=self._asset)
+        self._device_page.scan_requested.connect(
+            self._device_service.scan
+        )
+
+        self._settings_page = SettingsPage(
+            electrum_server=self._electrum_server()
+        )
+        self._settings_page.save_requested.connect(
+            self._save_settings
+        )
+
+        self._about_page = AboutPage(
+            app_version=APP_VERSION,
+            asset_path=self._asset,
+        )
+
         builders = {
             "setup": self._build_setup_page,
-            "dashboard": self._build_dashboard_page,
-            "receive": self._build_receive_page,
-            "send": self._build_send_page,
-            "transactions": self._build_transactions_page,
-            "device": self._build_device_page,
-            "settings": self._build_settings_page,
-            "about": self._build_about_page,
+            "dashboard": lambda: self._dashboard_page,
+            "receive": lambda: self._receive_page,
+            "send": lambda: self._send_page,
+            "transactions": lambda: self._transaction_page,
+            "device": lambda: self._device_page,
+            "settings": lambda: self._settings_page,
+            "about": lambda: self._about_page,
         }
 
         for key, builder in builders.items():
@@ -222,53 +262,6 @@ class MainWindow(QMainWindow):
 
         layout.addWidget(self._stack)
         return host
-
-    def _page_shell(self, title: str, subtitle: str) -> tuple[QWidget, QVBoxLayout]:
-        page = QWidget()
-        page.setObjectName("Page")
-        outer = QVBoxLayout(page)
-        outer.setContentsMargins(42, 34, 42, 34)
-        outer.setSpacing(22)
-
-        head = QHBoxLayout()
-        texts = QVBoxLayout()
-        texts.setSpacing(5)
-
-        title_label = QLabel(title)
-        title_label.setObjectName("PageTitle")
-        subtitle_label = QLabel(subtitle)
-        subtitle_label.setObjectName("PageSubtitle")
-        subtitle_label.setWordWrap(True)
-
-        texts.addWidget(title_label)
-        texts.addWidget(subtitle_label)
-        head.addLayout(texts, 1)
-        head.addWidget(self._security_badge())
-
-        outer.addLayout(head)
-        return page, outer
-
-    def _security_badge(self) -> QWidget:
-        frame = QFrame()
-        frame.setObjectName("SecurityBadge")
-        frame.setFixedWidth(250)
-        row = QHBoxLayout(frame)
-        row.setContentsMargins(14, 11, 14, 11)
-        icon = QLabel("✓")
-        icon.setObjectName("SecurityIcon")
-        icon.setAlignment(Qt.AlignCenter)
-        icon.setFixedSize(34, 34)
-        text = QVBoxLayout()
-        text.setSpacing(0)
-        a = QLabel("Sicher & Offline")
-        a.setObjectName("SecurityPrimary")
-        b = QLabel("Schlüssel bleiben auf Hardware")
-        b.setObjectName("SecuritySecondary")
-        text.addWidget(a)
-        text.addWidget(b)
-        row.addWidget(icon)
-        row.addLayout(text, 1)
-        return frame
 
     def _card(self) -> QFrame:
         frame = QFrame()
@@ -345,506 +338,6 @@ class MainWindow(QMainWindow):
 
         outer.addStretch()
         return page
-
-    def _build_dashboard_page(self) -> QWidget:
-        page = QWidget()
-        page.setObjectName("Page")
-
-        outer = QVBoxLayout(page)
-        outer.setContentsMargins(42, 34, 42, 34)
-        outer.setSpacing(24)
-
-        header = QHBoxLayout()
-        title_box = QVBoxLayout()
-        title_box.setSpacing(4)
-
-        title = QLabel("DASHBOARD")
-        title.setObjectName("PageTitle")
-        subtitle = QLabel("Deine BC2 Wallet auf einen Blick.")
-        subtitle.setObjectName("PageSubtitle")
-
-        title_box.addWidget(title)
-        title_box.addWidget(subtitle)
-        header.addLayout(title_box, 1)
-
-        status_box = QHBoxLayout()
-        status_box.setSpacing(8)
-
-        self._dash_device_icon = QPushButton()
-        self._dash_device_icon.setObjectName("TopStatusIcon")
-        self._dash_device_icon.setToolTip("Hardware Wallet nicht verbunden")
-        self._dash_device_icon.setIcon(QIcon(self._icon_path("usb-gray")))
-
-        self._dash_network_icon = QPushButton()
-        self._dash_network_icon.setObjectName("TopStatusIcon")
-        self._dash_network_icon.setToolTip("Netzwerk nicht verbunden")
-        self._dash_network_icon.setIcon(QIcon(self._icon_path("globe-gray")))
-
-        self._dash_sync_icon = QPushButton()
-        self._dash_sync_icon.setObjectName("TopStatusIcon")
-        self._dash_sync_icon.setToolTip("Wallet noch nicht synchronisiert")
-        self._dash_sync_icon.setIcon(QIcon(self._icon_path("sync-gray")))
-
-        for status in (self._dash_device_icon, self._dash_network_icon, self._dash_sync_icon):
-            status.setFlat(True)
-            status.setCursor(Qt.ArrowCursor)
-            status.setFocusPolicy(Qt.NoFocus)
-            status.setFixedSize(30, 30)
-            status.setIconSize(QSize(21, 21))
-            status_box.addWidget(status)
-
-        header.addLayout(status_box)
-        outer.addLayout(header)
-
-        balance = QFrame()
-        balance.setObjectName("DashboardBalanceSection")
-        bl = QVBoxLayout(balance)
-        bl.setContentsMargins(0, 20, 0, 24)
-        bl.setSpacing(5)
-
-        label = QLabel("Aktuelles Guthaben")
-        label.setObjectName("DashboardBalanceLabel")
-        self._dash_confirmed_balance = QLabel("0.00000000 BC2")
-        self._dash_confirmed_balance.setObjectName("DashboardMainBalance")
-        note = QLabel("Blockchain bestätigt")
-        note.setObjectName("DashboardBalanceNote")
-
-        bl.addWidget(label)
-        bl.addWidget(self._dash_confirmed_balance)
-        bl.addWidget(note)
-        bl.addSpacing(18)
-
-        pending_row = QHBoxLayout()
-        pending_label = QLabel("Unbestätigt")
-        pending_label.setObjectName("DashboardPendingLabel")
-        self._dash_unconfirmed_balance = QLabel("0.00000000 BC2")
-        self._dash_unconfirmed_balance.setObjectName("DashboardPendingBalance")
-        pending_row.addWidget(pending_label)
-        pending_row.addWidget(self._dash_unconfirmed_balance)
-        pending_row.addStretch()
-        bl.addLayout(pending_row)
-
-        self._dash_unconfirmed_note = QLabel("Keine ausstehenden Transaktionen")
-        self._dash_unconfirmed_note.setObjectName("DashboardBalanceNote")
-        bl.addWidget(self._dash_unconfirmed_note)
-
-        outer.addWidget(balance)
-
-        divider = QFrame()
-        divider.setObjectName("DashboardDivider")
-        divider.setFrameShape(QFrame.HLine)
-        outer.addWidget(divider)
-
-        tx_head = QHBoxLayout()
-        tx_title = QLabel("Letzte Transaktionen")
-        tx_title.setObjectName("DashboardSectionTitle")
-        all_btn = QPushButton("Alle anzeigen")
-        all_btn.setObjectName("DashboardTextButton")
-        all_btn.clicked.connect(lambda: self._navigate("transactions"))
-        tx_head.addWidget(tx_title)
-        tx_head.addStretch()
-        tx_head.addWidget(all_btn)
-        outer.addLayout(tx_head)
-
-        empty = QLabel("Noch keine Transaktionen vorhanden.")
-        empty.setObjectName("DashboardEmptyText")
-        outer.addWidget(empty)
-        outer.addStretch()
-
-        # Hidden compatibility labels keep all existing device/sync logic intact.
-        self._dash_device_state = QLabel("Nicht verbunden")
-        self._dash_device_name = QLabel("—")
-        self._dash_server = QLabel(self._electrum_server())
-        self._dash_network = QLabel("Nicht verbunden")
-        self._dash_sync = QLabel("noch nicht gestartet")
-        for hidden in (self._dash_device_state, self._dash_device_name, self._dash_server, self._dash_network, self._dash_sync):
-            hidden.setVisible(False)
-
-        return page
-
-    def _build_receive_page(self) -> QWidget:
-        page, outer = self._page_shell(
-            "EMPFANGEN",
-            "Eine neue BC2 Empfangsadresse wird erst nach Bestätigung auf der Hardware angezeigt.",
-        )
-
-        card = self._card()
-        layout = QVBoxLayout(card)
-        layout.setContentsMargins(28, 26, 28, 26)
-        layout.setSpacing(16)
-
-        title = QLabel("BC2 empfangen")
-        title.setObjectName("SectionTitle")
-        self._receive_state = QLabel(
-            "Verbinde deine Hardware Wallet, um eine Empfangsadresse anzufordern."
-        )
-        self._receive_state.setObjectName("BodyText")
-        self._receive_state.setWordWrap(True)
-
-        self._receive_button = QPushButton("Empfangsadresse anfordern")
-        self._receive_button.setObjectName("PrimaryButton")
-        self._receive_button.clicked.connect(self._request_receive)
-
-        self._receive_result = QFrame()
-        self._receive_result.setObjectName("ResultPanel")
-        rr = QVBoxLayout(self._receive_result)
-        rr.setContentsMargins(18, 16, 18, 16)
-        self._receive_result_title = QLabel("Noch keine Adresse")
-        self._receive_result_title.setObjectName("CardTitle")
-        self._receive_result_text = QLabel(
-            "Aus Sicherheitsgründen zeigt der Desktop keine erfundene Adresse an."
-        )
-        self._receive_result_text.setObjectName("SmallMuted")
-        self._receive_result_text.setWordWrap(True)
-
-        self._receive_qr = QLabel()
-        self._receive_qr.setObjectName("ReceiveQr")
-        self._receive_qr.setAlignment(Qt.AlignCenter)
-        self._receive_qr.setFixedSize(220, 220)
-        self._receive_qr.setVisible(False)
-
-        self._receive_copy_button = QPushButton("Adresse kopieren")
-        self._receive_copy_button.setObjectName("OutlineButton")
-        self._receive_copy_button.setVisible(False)
-        self._receive_copy_button.clicked.connect(self._copy_receive_address)
-
-        rr.addWidget(self._receive_result_title)
-        rr.addWidget(self._receive_qr, alignment=Qt.AlignLeft)
-        rr.addWidget(self._receive_result_text)
-        rr.addWidget(self._receive_copy_button, alignment=Qt.AlignLeft)
-
-        layout.addWidget(title)
-        layout.addWidget(self._receive_state)
-        layout.addWidget(self._receive_button, alignment=Qt.AlignLeft)
-        layout.addWidget(self._receive_result)
-        layout.addStretch()
-
-        outer.addWidget(card, 1)
-        outer.addWidget(self._safety_banner())
-        return page
-
-    def _build_send_page(self) -> QWidget:
-        page, outer = self._page_shell(
-            "SENDEN",
-            "Transaktionen werden auf dem Desktop vorbereitet und müssen auf der Hardware geprüft werden.",
-        )
-
-        card = self._card()
-        layout = QVBoxLayout(card)
-        layout.setContentsMargins(28, 26, 28, 26)
-        layout.setSpacing(12)
-
-        title = QLabel("BC2 senden")
-        title.setObjectName("SectionTitle")
-        layout.addWidget(title)
-
-        layout.addWidget(self._form_label("Empfängeradresse"))
-        self._send_address = QLineEdit()
-        self._send_address.setPlaceholderText("BC2-Adresse eingeben")
-        self._send_address.setObjectName("Input")
-        layout.addWidget(self._send_address)
-
-        layout.addWidget(self._form_label("Betrag"))
-        self._send_amount = QLineEdit()
-        self._send_amount.setPlaceholderText("0.00000000")
-        validator = QDoubleValidator(0.0, 999999999.0, 8, self)
-        validator.setNotation(QDoubleValidator.StandardNotation)
-        self._send_amount.setValidator(validator)
-        self._send_amount.setObjectName("Input")
-        layout.addWidget(self._send_amount)
-
-        self._send_error = QLabel("")
-        self._send_error.setObjectName("ErrorText")
-        self._send_error.setWordWrap(True)
-        layout.addWidget(self._send_error)
-
-        next_btn = QPushButton("Weiter")
-        next_btn.setObjectName("PrimaryButton")
-        next_btn.clicked.connect(self._prepare_send)
-        layout.addWidget(next_btn, alignment=Qt.AlignLeft)
-        layout.addStretch()
-
-        outer.addWidget(card, 1)
-        outer.addWidget(self._safety_banner())
-        return page
-
-    def _build_transactions_page(self) -> QWidget:
-        page, outer = self._page_shell(
-            "TRANSAKTIONEN",
-            "Hier erscheinen deine BC2 Transaktionen nach der Wallet-Synchronisierung.",
-        )
-
-        card = self._card()
-        layout = QVBoxLayout(card)
-        layout.setContentsMargins(24, 22, 24, 22)
-
-        title = QLabel("Transaktionsverlauf")
-        title.setObjectName("SectionTitle")
-        empty = QLabel(
-            "Keine Transaktionen vorhanden\n\n"
-            "Die Blockchain-Synchronisierung wird in einem folgenden Sprint an diese Seite angebunden."
-        )
-        empty.setObjectName("EmptyState")
-        empty.setAlignment(Qt.AlignCenter)
-        empty.setWordWrap(True)
-
-        layout.addWidget(title)
-        layout.addStretch()
-        layout.addWidget(empty)
-        layout.addStretch()
-
-        outer.addWidget(card, 1)
-        return page
-
-    def _build_device_page(self) -> QWidget:
-        page, outer = self._page_shell(
-            "HARDWARE WALLET",
-            "Verbindung und Eigenschaften deiner BC2 Hardware Wallet.",
-        )
-
-        card = self._card()
-        layout = QVBoxLayout(card)
-        layout.setContentsMargins(26, 24, 26, 24)
-        layout.setSpacing(20)
-
-        header = QHBoxLayout()
-        self._device_status_icon = QLabel("…")
-        self._device_status_icon.setAlignment(Qt.AlignCenter)
-        self._device_status_icon.setFixedSize(40, 40)
-        self._device_status_icon.setObjectName("StatusIconScanning")
-
-        hs = QVBoxLayout()
-        self._device_status = QLabel("Suche nach BC2 Hardware Wallet …")
-        self._device_status.setObjectName("SectionTitle")
-        self._device_detail = QLabel("Serielle Geräte werden geprüft.")
-        self._device_detail.setObjectName("SmallMuted")
-        hs.addWidget(self._device_status)
-        hs.addWidget(self._device_detail)
-
-        self._device_badge = QLabel("Suche …")
-        self._device_badge.setObjectName("ConnectionBadgeScanning")
-        self._device_badge.setAlignment(Qt.AlignCenter)
-        self._device_badge.setFixedSize(150, 36)
-
-        header.addWidget(self._device_status_icon)
-        header.addLayout(hs, 1)
-        header.addWidget(self._device_badge)
-        layout.addLayout(header)
-
-        body = QHBoxLayout()
-        body.setSpacing(28)
-
-        visual = QFrame()
-        visual.setObjectName("DeviceVisual")
-        visual.setFixedSize(220, 285)
-        vl = QVBoxLayout(visual)
-        vl.setContentsMargins(18, 18, 18, 18)
-        self._device_photo = QLabel()
-        self._device_photo.setAlignment(Qt.AlignCenter)
-        pix = QPixmap(str(self._asset("bc2-device.png")))
-        if not pix.isNull():
-            self._device_photo.setPixmap(
-                pix.scaled(185, 245, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-            )
-        vl.addWidget(self._device_photo, 1)
-
-        details = QFrame()
-        details.setObjectName("DetailsPanel")
-        dl = QVBoxLayout(details)
-        dl.setContentsMargins(0, 0, 0, 0)
-        dl.setSpacing(0)
-
-        self._device_values: dict[str, QLabel] = {}
-        for key in (
-            "Gerät",
-            "Hardware",
-            "Display",
-            "Revision",
-            "Port",
-            "Gerätestatus",
-            "Fähigkeiten",
-            "Board-Revision",
-        ):
-            dl.addWidget(self._detail_row(key))
-
-        body.addWidget(visual)
-        body.addWidget(details, 1)
-        layout.addLayout(body, 1)
-
-        self._scan_button = QPushButton("↻   Erneut suchen")
-        self._scan_button.setObjectName("PrimaryButton")
-        self._scan_button.clicked.connect(self._device_service.scan)
-        layout.addWidget(self._scan_button, alignment=Qt.AlignHCenter)
-
-        self._factory_reset_button = QPushButton("Gerät zurücksetzen (nach Stabilisierung)")
-        self._factory_reset_button.setObjectName("DangerButton")
-        self._factory_reset_button.setEnabled(False)
-        layout.addWidget(self._factory_reset_button, alignment=Qt.AlignHCenter)
-
-        outer.addWidget(card, 1)
-        outer.addWidget(self._safety_banner())
-        return page
-
-    def _build_settings_page(self) -> QWidget:
-        page, outer = self._page_shell(
-            "EINSTELLUNGEN",
-            "Nur Einstellungen, die wirklich nötig sind.",
-        )
-
-        card = self._card()
-        layout = QVBoxLayout(card)
-        layout.setContentsMargins(28, 26, 28, 26)
-        layout.setSpacing(12)
-
-        title = QLabel("Netzwerk")
-        title.setObjectName("SectionTitle")
-        layout.addWidget(title)
-
-        layout.addWidget(self._form_label("Electrum Server"))
-        self._server_input = QLineEdit(self._electrum_server())
-        self._server_input.setObjectName("Input")
-        self._server_input.setPlaceholderText("host:port")
-        layout.addWidget(self._server_input)
-
-        note = QLabel(
-            "SSL wird für den BC2 Electrum-Zugriff verwendet. "
-            "Bestätigte Empfangsadressen werden automatisch synchronisiert."
-        )
-        note.setObjectName("SmallMuted")
-        note.setWordWrap(True)
-        layout.addWidget(note)
-
-        layout.addSpacing(8)
-        layout.addWidget(self._form_label("Vorhandene Empfangsadresse für Sync hinzufügen (optional)"))
-        self._sync_address_input = QLineEdit()
-        self._sync_address_input.setObjectName("Input")
-        self._sync_address_input.setPlaceholderText("bc1q…")
-        layout.addWidget(self._sync_address_input)
-        old_note = QLabel(
-            "Nur für Adressen nötig, die vor v0.42.0 erzeugt wurden. "
-            "Neue Empfangsadressen werden automatisch gespeichert."
-        )
-        old_note.setObjectName("SmallMuted")
-        old_note.setWordWrap(True)
-        layout.addWidget(old_note)
-
-        save = QPushButton("Einstellungen speichern")
-        save.setObjectName("PrimaryButton")
-        save.clicked.connect(self._save_settings)
-        layout.addWidget(save, alignment=Qt.AlignLeft)
-
-        self._settings_message = QLabel("")
-        self._settings_message.setObjectName("SuccessText")
-        layout.addWidget(self._settings_message)
-        layout.addStretch()
-
-        outer.addWidget(card, 1)
-        return page
-
-    def _build_about_page(self) -> QWidget:
-        page, outer = self._page_shell(
-            "ÜBER",
-            "Informationen über die BC2 Cold Wallet.",
-        )
-
-        card = self._card()
-        layout = QVBoxLayout(card)
-        layout.setContentsMargins(28, 26, 28, 26)
-        layout.setSpacing(10)
-
-        logo = QLabel()
-        logo.setAlignment(Qt.AlignCenter)
-        pix = QPixmap(str(self._asset("bc2-logo.png")))
-        if not pix.isNull():
-            logo.setPixmap(pix.scaled(130, 130, Qt.KeepAspectRatio, Qt.SmoothTransformation))
-
-        name = QLabel("BC2 Cold Wallet")
-        name.setObjectName("AboutTitle")
-        name.setAlignment(Qt.AlignCenter)
-        version = QLabel(f"Desktop-Version {APP_VERSION}")
-        version.setObjectName("SmallMuted")
-        version.setAlignment(Qt.AlignCenter)
-
-        text = QLabel(
-            "Eine einfache Cold-Wallet-Anwendung für Bitcoin II (BC2).\n\n"
-            "Sicherheitsprinzip: Seed und private Schlüssel verlassen die Hardware niemals. "
-            "Sicherheitskritische Aktionen werden auf dem Gerät geprüft und bestätigt."
-        )
-        text.setObjectName("BodyText")
-        text.setAlignment(Qt.AlignCenter)
-        text.setWordWrap(True)
-
-        layout.addStretch()
-        layout.addWidget(logo)
-        layout.addWidget(name)
-        layout.addWidget(version)
-        layout.addSpacing(12)
-        layout.addWidget(text)
-        layout.addStretch()
-
-        outer.addWidget(card, 1)
-        return page
-
-    def _info_pair(self, key: str, value: str) -> QWidget:
-        row = QWidget()
-        lay = QHBoxLayout(row)
-        lay.setContentsMargins(0, 0, 0, 0)
-        k = QLabel(key)
-        k.setObjectName("SmallMuted")
-        v = QLabel(value)
-        v.setObjectName("ValueLabel")
-        lay.addWidget(k)
-        lay.addStretch()
-        lay.addWidget(v)
-        return row
-
-    def _form_label(self, text: str) -> QLabel:
-        label = QLabel(text)
-        label.setObjectName("FormLabel")
-        return label
-
-    def _detail_row(self, key: str) -> QWidget:
-        row = QFrame()
-        row.setObjectName("DetailRow")
-        row.setMinimumHeight(42)
-        lay = QHBoxLayout(row)
-        lay.setContentsMargins(8, 0, 8, 0)
-
-        label = QLabel(key)
-        label.setObjectName("DetailLabel")
-        label.setFixedWidth(145)
-        value = QLabel("—")
-        value.setObjectName("DetailValue")
-        value.setTextInteractionFlags(Qt.TextSelectableByMouse)
-        value.setWordWrap(True)
-        self._device_values[key] = value
-
-        lay.addWidget(label)
-        lay.addWidget(value, 1)
-        return row
-
-    def _safety_banner(self) -> QWidget:
-        banner = QFrame()
-        banner.setObjectName("SafetyBanner")
-        row = QHBoxLayout(banner)
-        row.setContentsMargins(18, 13, 18, 13)
-        icon = QLabel("●")
-        icon.setObjectName("SafetyIcon")
-        icon.setFixedWidth(24)
-        text = QVBoxLayout()
-        title = QLabel("Sicherheit zuerst")
-        title.setObjectName("SafetyTitle")
-        detail = QLabel(
-            "PIN, Seed und private Schlüssel bleiben ausschließlich auf der Hardware. "
-            "Die Geräte-PIN besteht aus genau 4 Ziffern."
-        )
-        detail.setObjectName("SafetyText")
-        detail.setWordWrap(True)
-        text.addWidget(title)
-        text.addWidget(detail)
-        row.addWidget(icon)
-        row.addLayout(text, 1)
-        return banner
 
     def _navigate(self, key: str) -> None:
         page = self._pages[key]
@@ -939,39 +432,23 @@ class MainWindow(QMainWindow):
             )
         QTimer.singleShot(1200, self._device_service.scan)
 
-    @Slot()
-    def _save_settings(self) -> None:
-        value = self._server_input.text().strip()
-        if ":" not in value or value.startswith(":") or value.endswith(":"):
-            self._settings_message.setObjectName("ErrorText")
-            self._settings_message.setText("Bitte einen Server im Format host:port eingeben.")
-            self._repolish(self._settings_message)
-            return
 
-        host, port = value.rsplit(":", 1)
-        if not host.strip() or not port.isdigit() or not (1 <= int(port) <= 65535):
-            self._settings_message.setObjectName("ErrorText")
-            self._settings_message.setText("Bitte einen gültigen Host und Port eingeben.")
-            self._repolish(self._settings_message)
-            return
-
-        address = self._sync_address_input.text().strip()
+    @Slot(str, str)
+    def _save_settings(self, value: str, address: str) -> None:
         if address:
             try:
                 address_to_scriptpubkey(address)
             except Exception as exc:
-                self._settings_message.setObjectName("ErrorText")
-                self._settings_message.setText(f"Adresse ungültig: {exc}")
-                self._repolish(self._settings_message)
+                self._settings_page.show_error(
+                    f"Adresse ungültig: {exc}"
+                )
                 return
+
             self._remember_receive_address(address)
-            self._sync_address_input.clear()
 
         self._settings.setValue("electrum/server", value)
-        self._dash_server.setText(value)
-        self._settings_message.setObjectName("SuccessText")
-        self._settings_message.setText("✓ Gespeichert")
-        self._repolish(self._settings_message)
+        self._dashboard_page.set_server(value)
+        self._settings_page.show_saved()
         QTimer.singleShot(150, self._sync_balance)
 
 
@@ -1007,155 +484,50 @@ class MainWindow(QMainWindow):
         self._recovery_wallet_button.setEnabled(False)
         QTimer.singleShot(250, self._device_service.scan)
 
+
     @Slot()
     def _request_receive(self) -> None:
         if self._device is None:
-            self._receive_result_title.setText("Hardware Wallet erforderlich")
-            self._receive_result_text.setText(
-                "Schließe zuerst deine BC2 Hardware Wallet an."
-            )
-            self._receive_copy_button.setVisible(False)
+            self._receive_page.show_hardware_required()
             return
 
         if not self._device.wallet_ready:
-            self._receive_result_title.setText("Wallet noch nicht eingerichtet")
-            self._receive_result_text.setText("Richte zuerst deine Wallet vollständig auf der Hardware ein.")
-            self._receive_copy_button.setVisible(False)
+            self._receive_page.show_wallet_not_ready()
             return
+
         if not self._device.unlocked:
-            self._receive_result_title.setText("Wallet ist gesperrt")
-            self._receive_result_text.setText("Entsperre zuerst die Hardware Wallet mit deiner 4-stelligen PIN.")
-            self._receive_copy_button.setVisible(False)
+            self._receive_page.show_wallet_locked()
             return
 
         self._receive_service.request(self._device.port)
 
     @Slot()
     def _on_receive_started(self) -> None:
-        self._receive_button.setEnabled(False)
-        self._receive_button.setText("Warte auf Hardware …")
-        self._set_receive_qr(None)
-        self._receive_result_title.setText("Bestätigung auf Hardware erforderlich")
-        self._receive_result_text.setText(
-            "Die Empfangsadresse wird ausschließlich auf der Hardware erzeugt."
-        )
-        self._receive_copy_button.setVisible(False)
+        self._receive_page.show_request_started()
 
     @Slot(str)
     def _on_receive_progress(self, message: str) -> None:
-        self._receive_result_title.setText("Adresse auf Hardware prüfen")
-        self._receive_result_text.setText(message)
-
-    def _set_receive_qr(self, address: str | None) -> None:
-        self._receive_qr.clear()
-        self._receive_qr.setVisible(False)
-
-        if not address:
-            return
-
-        qr = qrcode.QRCode(
-            version=None,
-            error_correction=qrcode.constants.ERROR_CORRECT_M,
-            box_size=7,
-            border=3,
-        )
-        qr.add_data(address)
-        qr.make(fit=True)
-
-        image = qr.make_image(fill_color="black", back_color="white")
-        buffer = BytesIO()
-        image.save(buffer, format="PNG")
-
-        pixmap = QPixmap()
-        if pixmap.loadFromData(buffer.getvalue(), "PNG"):
-            self._receive_qr.setPixmap(
-                pixmap.scaled(
-                    210,
-                    210,
-                    Qt.KeepAspectRatio,
-                    Qt.SmoothTransformation,
-                )
-            )
-            self._receive_qr.setVisible(True)
+        self._receive_page.show_progress(message)
 
     @Slot(int, object)
     def _on_receive_finished(self, status: int, address) -> None:
-        self._receive_button.setEnabled(True)
-        self._receive_button.setText("Neue Empfangsadresse anfordern")
-
-        if status == 1 and address:
-            self._receive_result_title.setText("Empfangsadresse bestätigt")
-            self._set_receive_qr(str(address))
-            self._receive_result_text.setText(f"Adresse: {address}")
-            self._receive_result_text.setTextInteractionFlags(
-                Qt.TextSelectableByMouse
-            )
-            self._receive_copy_button.setVisible(True)
-            self._receive_state.setText(
-                "Diese Adresse wurde auf deiner BC2 Hardware Wallet geprüft und bestätigt."
-            )
-            self._remember_receive_address(str(address))
+        confirmed_address = self._receive_page.show_finished(status, address)
+        if confirmed_address:
+            self._remember_receive_address(confirmed_address)
             QTimer.singleShot(100, self._sync_balance)
-            return
-
-        self._set_receive_qr(None)
-        self._receive_result_title.setText("Adresse nicht freigegeben")
-        self._receive_result_text.setText(
-            "Die Hardware Wallet hat die Adresse abgelehnt oder konnte sie nicht sicher erzeugen. "
-            "Bei einem technischen Ableitungsfehler wird jetzt eine genauere Meldung ausgegeben."
-        )
-        self._receive_copy_button.setVisible(False)
 
     @Slot(str)
     def _on_receive_failed(self, message: str) -> None:
-        self._receive_button.setEnabled(True)
-        self._receive_button.setText("Empfangsadresse anfordern")
-        self._set_receive_qr(None)
-        self._receive_result_title.setText("Empfangen nicht möglich")
-        self._receive_result_text.setText(message)
-        self._receive_copy_button.setVisible(False)
+        self._receive_page.show_failed(message)
 
-    @Slot()
-    def _copy_receive_address(self) -> None:
-        address = self._receive_result_text.text().strip()
-        if address.startswith("Adresse:"):
-            address = address.split(":", 1)[1].strip()
-        if address:
-            QGuiApplication.clipboard().setText(address)
-            self._receive_copy_button.setText("✓ Kopiert")
-            QTimer.singleShot(
-                1400,
-                lambda: self._receive_copy_button.setText("Adresse kopieren"),
-            )
 
-    @Slot()
-    def _prepare_send(self) -> None:
-        self._send_error.setText("")
-        address = self._send_address.text().strip()
-        amount_text = self._send_amount.text().strip().replace(",", ".")
-
-        if not address:
-            self._send_error.setText("Bitte eine Empfängeradresse eingeben.")
-            return
-        if len(address) < 20:
-            self._send_error.setText("Die Empfängeradresse ist zu kurz.")
-            return
-
-        try:
-            amount = float(amount_text)
-        except ValueError:
-            self._send_error.setText("Bitte einen gültigen Betrag eingeben.")
-            return
-
-        if amount <= 0:
-            self._send_error.setText("Der Betrag muss größer als 0 sein.")
-            return
-
+    @Slot(str, float)
+    def _prepare_send(self, address: str, amount: float) -> None:
         if self._device is None:
-            self._send_error.setText(
-                "Hardware Wallet nicht verbunden. Senden ist ohne Hardware-Bestätigung nicht möglich."
-            )
+            self._send_page.show_hardware_required()
             return
+
+        self._send_page.clear_error()
 
         QMessageBox.information(
             self,
@@ -1184,72 +556,32 @@ class MainWindow(QMainWindow):
             self._setup_status_text.setText(
                 "Die App prüft die USB-Verbindung automatisch."
             )
-        self._scan_button.setEnabled(False)
-        self._scan_button.setText("Suche …")
-        self._device_status.setText("Suche nach BC2 Hardware Wallet …")
-        self._device_detail.setText("Serielle Geräte werden sicher geprüft.")
-        self._device_status_icon.setText("…")
-        self._device_status_icon.setObjectName("StatusIconScanning")
-        self._device_badge.setText("Suche …")
-        self._device_badge.setObjectName("ConnectionBadgeScanning")
+        self._device_page.show_scanning()
         self._sidebar_ready.setText("●  Suche Gerät …")
         self._sidebar_ready.setObjectName("SidebarSearching")
         self._refresh_status_styles()
-        self._refresh_dashboard_status()
 
     @Slot(object)
     def _on_scan_finished(self, result: DiscoveryResult) -> None:
-        self._scan_button.setEnabled(True)
         if hasattr(self, "_setup_scan_button"):
             self._setup_scan_button.setEnabled(True)
             self._setup_scan_button.setText("↻   Erneut suchen")
-        self._scan_button.setText("↻   Erneut suchen")
 
         if result.device is None:
-            self._factory_reset_button.setEnabled(False)
             self._device = None
-            self._device_status.setText("Hardware Wallet nicht verbunden")
-            self._device_detail.setText("Schließe die BC2 Hardware Wallet per USB an und suche erneut.")
-            self._device_status_icon.setText("!")
-            self._device_status_icon.setObjectName("StatusIconOffline")
-            self._device_badge.setText("Nicht verbunden")
-            self._device_badge.setObjectName("ConnectionBadgeOffline")
+            self._device_page.show_offline()
             self._sidebar_ready.setText("●  Gerät offline")
             self._sidebar_ready.setObjectName("SidebarOffline")
-            self._dash_device_state.setText("Nicht verbunden")
-            self._dash_device_name.setText("—")
-            self._receive_state.setText("Hardware Wallet nicht verbunden.")
-            for value in self._device_values.values():
-                value.setText("—")
+            self._dashboard_page.set_device(False)
+            self._receive_page.set_device_connected(False)
         else:
-            self._factory_reset_button.setEnabled(False)
             self._device = result.device
             d = result.device
-            self._device_status.setText("BC2 Hardware Wallet verbunden")
-            self._device_detail.setText("Das Gerät antwortet korrekt auf das BC2 USB-Protokoll.")
-            self._device_status_icon.setText("✓")
-            self._device_status_icon.setObjectName("StatusIconConnected")
-            self._device_badge.setText("✓  Verbindung aktiv")
-            self._device_badge.setObjectName("ConnectionBadgeConnected")
+            self._device_page.show_connected(d)
             self._sidebar_ready.setText("●  Bereit")
             self._sidebar_ready.setObjectName("SidebarReady")
-            self._dash_device_state.setText("Verbunden")
-            self._dash_device_name.setText(f"{d.device_name}\n{d.hardware_name}")
-            self._receive_state.setText(
-                "Hardware Wallet verbunden. Empfangsadresse muss auf dem Gerät bestätigt werden."
-            )
-            values = {
-                "Gerät": d.device_name,
-                "Hardware": d.hardware_name,
-                "Display": d.display_name,
-                "Revision": d.firmware_revision,
-                "Port": d.port,
-                "Gerätestatus": "unbekannt" if d.state is None else str(d.state),
-                "Fähigkeiten": d.capabilities_text,
-                "Board-Revision": str(d.board_revision),
-            }
-            for key, value in values.items():
-                self._device_values[key].setText(value)
+            self._dashboard_page.set_device(True)
+            self._receive_page.set_device_connected(True)
 
             if d.state == 9:
                 self._sidebar.setVisible(False)
@@ -1309,7 +641,7 @@ class MainWindow(QMainWindow):
 
         if result.device is None:
             self._balance_timer.stop()
-            self._dash_network.setText("Nicht verbunden")
+            self._dashboard_page.set_network_state("Nicht verbunden")
 
         if result.device is None and self._stack.currentWidget() is self._pages["setup"]:
             self._sidebar.setVisible(False)
@@ -1326,7 +658,6 @@ class MainWindow(QMainWindow):
             QTimer.singleShot(2000, self._retry_setup_scan)
 
         self._refresh_status_styles()
-        self._refresh_dashboard_status()
 
     def _known_receive_addresses(self) -> list[str]:
         raw = self._settings.value("wallet/receive_addresses", [])
@@ -1345,15 +676,14 @@ class MainWindow(QMainWindow):
             return
         addresses = self._known_receive_addresses()
         if not addresses:
-            self._dash_sync.setText("Keine Adresse bekannt")
+            self._dashboard_page.set_sync_state("Keine Adresse bekannt")
             return
         self._electrum_service.sync(self._electrum_server(), addresses)
 
     @Slot()
     def _on_balance_sync_started(self) -> None:
-        self._dash_sync.setText("Synchronisiere …")
-        self._dash_network.setText("Verbinde …")
-        self._refresh_dashboard_status()
+        self._dashboard_page.set_sync_state("Synchronisiere …")
+        self._dashboard_page.set_network_state("Verbinde …")
 
     @staticmethod
     def _format_bc2(sats: int) -> str:
@@ -1361,23 +691,18 @@ class MainWindow(QMainWindow):
 
     @Slot(object)
     def _on_balance_sync_finished(self, result: BalanceResult) -> None:
-        self._dash_confirmed_balance.setText(self._format_bc2(result.confirmed))
-        self._dash_unconfirmed_balance.setText(self._format_bc2(result.unconfirmed))
-        self._dash_unconfirmed_note.setText(
-            "Wartet auf Blockchain-Bestätigung"
-            if result.unconfirmed else
-            "Keine ausstehenden Transaktionen"
+        self._dashboard_page.set_balance(
+            self._format_bc2(result.confirmed),
+            self._format_bc2(result.unconfirmed),
+            bool(result.unconfirmed),
         )
-        self._dash_sync.setText(f"Aktuell · {result.addresses} Adresse(n)")
-        self._dash_network.setText("Verbunden")
-        self._refresh_dashboard_status()
+        self._dashboard_page.set_sync_state(f"Aktuell · {result.addresses} Adresse(n)")
+        self._dashboard_page.set_network_state("Verbunden")
 
     @Slot(str)
     def _on_balance_sync_failed(self, message: str) -> None:
-        self._dash_sync.setText("Sync fehlgeschlagen")
-        self._dash_network.setText("Nicht verbunden")
-        self._dash_network.setToolTip(message)
-        self._refresh_dashboard_status()
+        self._dashboard_page.set_sync_state("Sync fehlgeschlagen")
+        self._dashboard_page.set_network_state("Nicht verbunden", tooltip=message)
 
     def _retry_setup_scan(self) -> None:
         if (
@@ -1386,47 +711,8 @@ class MainWindow(QMainWindow):
         ):
             self._device_service.scan()
 
-    def _refresh_dashboard_status(self) -> None:
-        if not hasattr(self, "_dash_device_icon"):
-            return
-
-        # Simple rule:
-        # green = OK / connected / synchronized
-        # gray  = not connected / not synchronized
-        device_ok = self._device is not None
-        network_ok = hasattr(self, "_dash_network") and self._dash_network.text() == "Verbunden"
-
-        sync_text = self._dash_sync.text() if hasattr(self, "_dash_sync") else ""
-        sync_ok = sync_text.startswith("Aktuell")
-
-        self._dash_device_icon.setIcon(
-            QIcon(self._icon_path("usb-green" if device_ok else "usb-gray"))
-        )
-        self._dash_device_icon.setToolTip(
-            "Hardware Wallet verbunden" if device_ok else "Hardware Wallet nicht verbunden"
-        )
-
-        self._dash_network_icon.setIcon(
-            QIcon(self._icon_path("globe-green" if network_ok else "globe-gray"))
-        )
-        self._dash_network_icon.setToolTip(
-            "BC2 Netzwerk verbunden" if network_ok else "BC2 Netzwerk nicht verbunden"
-        )
-
-        self._dash_sync_icon.setIcon(
-            QIcon(self._icon_path("sync-green" if sync_ok else "sync-gray"))
-        )
-        self._dash_sync_icon.setToolTip(
-            "Wallet synchronisiert" if sync_ok else "Wallet noch nicht synchronisiert"
-        )
-
     def _refresh_status_styles(self) -> None:
-        for w in (
-            self._device_status_icon,
-            self._device_badge,
-            self._sidebar_ready,
-        ):
-            self._repolish(w)
+        self._repolish(self._sidebar_ready)
 
     @staticmethod
     def _repolish(widget: QWidget) -> None:

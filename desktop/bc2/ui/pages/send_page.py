@@ -13,15 +13,32 @@ from PySide6.QtWidgets import (
 )
 
 
+GREEN = "#2EAD4A"
+ORANGE = "#F7931A"
+TEXT = "#1E2025"
+MUTED = "#6D7078"
+BORDER = "#D8DBE0"
+SURFACE = "#FFFFFF"
+
+
 class SendPage(QWidget):
-    # Important: keep amount as text so Decimal can parse it exactly.
     send_requested = Signal(str, str)
     review_requested = Signal()
+    sign_requested = Signal()
+    broadcast_requested = Signal()
+    reset_requested = Signal()
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setObjectName("Page")
+
+        self._mode = "prepare"
+        self._step_nodes: list[QLabel] = []
+        self._step_lines: list[QFrame] = []
+        self._step_labels: list[QLabel] = []
+
         self._build_ui()
+        self._set_progress(completed=0, current=0)
 
     def _build_ui(self) -> None:
         outer = QVBoxLayout(self)
@@ -36,7 +53,7 @@ class SendPage(QWidget):
         title_label.setObjectName("PageTitle")
 
         subtitle_label = QLabel(
-            "Transaktionen werden auf dem Desktop vorbereitet und müssen auf der Hardware geprüft werden."
+            "Transaktion vorbereiten, auf der Hardware prüfen, signieren und anschließend senden."
         )
         subtitle_label.setObjectName("PageSubtitle")
         subtitle_label.setWordWrap(True)
@@ -52,11 +69,14 @@ class SendPage(QWidget):
 
         layout = QVBoxLayout(card)
         layout.setContentsMargins(28, 26, 28, 26)
-        layout.setSpacing(12)
+        layout.setSpacing(14)
 
         title = QLabel("BC2 senden")
         title.setObjectName("SectionTitle")
         layout.addWidget(title)
+
+        layout.addWidget(self._build_progress())
+        layout.addSpacing(4)
 
         layout.addWidget(self._form_label("Empfängeradresse"))
 
@@ -81,18 +101,13 @@ class SendPage(QWidget):
         self._error.setWordWrap(True)
         layout.addWidget(self._error)
 
-        self._next_button = QPushButton("Weiter")
-        self._next_button.setObjectName("PrimaryButton")
-        self._next_button.clicked.connect(self._submit)
-        layout.addWidget(self._next_button, alignment=Qt.AlignLeft)
-
         self._preview = QFrame()
         self._preview.setObjectName("ResultPanel")
         self._preview.setVisible(False)
 
         preview_layout = QVBoxLayout(self._preview)
         preview_layout.setContentsMargins(18, 16, 18, 16)
-        preview_layout.setSpacing(6)
+        preview_layout.setSpacing(7)
 
         preview_title = QLabel("Transaktionsentwurf")
         preview_title.setObjectName("CardTitle")
@@ -102,31 +117,133 @@ class SendPage(QWidget):
         self._preview_text.setWordWrap(True)
         self._preview_text.setTextInteractionFlags(Qt.TextSelectableByMouse)
 
+        self._status = QLabel("")
+        self._status.setObjectName("SmallMuted")
+        self._status.setWordWrap(True)
+        self._status.setTextInteractionFlags(Qt.TextSelectableByMouse)
+
         preview_layout.addWidget(preview_title)
         preview_layout.addWidget(self._preview_text)
-
-        self._review_button = QPushButton("Auf Hardware prüfen")
-        self._review_button.setObjectName("PrimaryButton")
-        self._review_button.clicked.connect(self.review_requested)
-        preview_layout.addWidget(
-            self._review_button,
-            alignment=Qt.AlignLeft,
-        )
-
-        self._review_status = QLabel("")
-        self._review_status.setObjectName("SmallMuted")
-        self._review_status.setWordWrap(True)
-        preview_layout.addWidget(self._review_status)
+        preview_layout.addWidget(self._status)
 
         layout.addWidget(self._preview)
+
+        actions = QHBoxLayout()
+
+        self._change_button = QPushButton("Ändern")
+        self._change_button.setObjectName("OutlineButton")
+        self._change_button.setVisible(False)
+        self._change_button.clicked.connect(self._reset)
+
+        self._action_button = QPushButton("Weiter")
+        self._action_button.setObjectName("PrimaryButton")
+        self._action_button.clicked.connect(self._run_action)
+
+        actions.addWidget(self._change_button)
+        actions.addStretch()
+        actions.addWidget(self._action_button)
+
+        layout.addLayout(actions)
         layout.addStretch()
 
         outer.addWidget(card, 1)
         outer.addWidget(self._safety_banner())
 
+    def _build_progress(self) -> QWidget:
+        container = QWidget()
+        layout = QVBoxLayout(container)
+        layout.setContentsMargins(0, 4, 0, 8)
+        layout.setSpacing(7)
+
+        row = QHBoxLayout()
+        row.setSpacing(0)
+
+        labels = ("Entwurf", "Prüfen", "Signieren", "Senden")
+
+        for index, label_text in enumerate(labels):
+            node = QLabel(str(index + 1))
+            node.setAlignment(Qt.AlignCenter)
+            node.setFixedSize(30, 30)
+
+            self._step_nodes.append(node)
+            row.addWidget(node)
+
+            if index < len(labels) - 1:
+                line = QFrame()
+                line.setFixedHeight(2)
+                line.setMinimumWidth(65)
+                self._step_lines.append(line)
+                row.addWidget(line, 1)
+
+        label_row = QHBoxLayout()
+        label_row.setSpacing(0)
+
+        for label_text in labels:
+            label = QLabel(label_text)
+            label.setAlignment(Qt.AlignCenter)
+            label.setMinimumWidth(74)
+            self._step_labels.append(label)
+            label_row.addWidget(label, 1)
+
+        layout.addLayout(row)
+        layout.addLayout(label_row)
+        return container
+
+    def _set_progress(self, completed: int, current: int | None) -> None:
+        for index, node in enumerate(self._step_nodes):
+            if index < completed:
+                node.setText("✓")
+                node.setStyleSheet(
+                    f"background:{GREEN}; color:white; border:none;"
+                    "border-radius:15px; font-weight:800;"
+                )
+            elif current is not None and index == current:
+                node.setText(str(index + 1))
+                node.setStyleSheet(
+                    f"background:{ORANGE}; color:white; border:none;"
+                    "border-radius:15px; font-weight:800;"
+                )
+            else:
+                node.setText(str(index + 1))
+                node.setStyleSheet(
+                    f"background:{SURFACE}; color:{MUTED};"
+                    f"border:2px solid {BORDER}; border-radius:15px;"
+                    "font-weight:700;"
+                )
+
+        for index, line in enumerate(self._step_lines):
+            line.setStyleSheet(
+                f"background:{GREEN if index < completed else BORDER};"
+                "border:none;"
+            )
+
+        for index, label in enumerate(self._step_labels):
+            if index < completed:
+                color = GREEN
+                weight = 700
+            elif current is not None and index == current:
+                color = ORANGE
+                weight = 700
+            else:
+                color = MUTED
+                weight = 500
+
+            label.setStyleSheet(
+                f"color:{color}; font-size:12px; font-weight:{weight};"
+            )
+
+    def _run_action(self) -> None:
+        if self._mode == "prepare":
+            self._submit()
+        elif self._mode == "review":
+            self.review_requested.emit()
+        elif self._mode == "sign":
+            self.sign_requested.emit()
+        elif self._mode == "broadcast":
+            self.broadcast_requested.emit()
+
     def _submit(self) -> None:
         self._error.setText("")
-        self._preview.setVisible(False)
 
         address = self._address_input.text().strip()
         amount_text = self._amount_input.text().strip().replace(",", ".")
@@ -143,8 +260,20 @@ class SendPage(QWidget):
             self._error.setText("Bitte einen Betrag eingeben.")
             return
 
-        # Do not convert to float here. Send the exact string to SendService.
         self.send_requested.emit(address, amount_text)
+
+    def _reset(self) -> None:
+        self._mode = "prepare"
+        self._error.setText("")
+        self._preview.setVisible(False)
+        self._status.setText("")
+        self._address_input.setEnabled(True)
+        self._amount_input.setEnabled(True)
+        self._change_button.setVisible(False)
+        self._action_button.setEnabled(True)
+        self._action_button.setText("Weiter")
+        self._set_progress(completed=0, current=0)
+        self.reset_requested.emit()
 
     def show_hardware_required(self) -> None:
         self.show_prepare_failed(
@@ -154,17 +283,15 @@ class SendPage(QWidget):
 
     def show_preparing(self) -> None:
         self._error.setText("")
-        self._preview.setVisible(False)
-        self._next_button.setEnabled(False)
-        self._next_button.setText("UTXOs werden geladen …")
+        self._action_button.setEnabled(False)
+        self._action_button.setText("Entwurf wird berechnet …")
 
     def show_plan(self, plan) -> None:
+        self._mode = "review"
         self._error.setText("")
-        self._next_button.setEnabled(True)
-        self._next_button.setText("Neu berechnen")
-        self._review_button.setEnabled(True)
-        self._review_button.setText("Auf Hardware prüfen")
-        self._review_status.setText("")
+        self._address_input.setEnabled(False)
+        self._amount_input.setEnabled(False)
+        self._change_button.setVisible(True)
 
         self._preview_text.setText(
             f"Empfänger: {plan.recipient}\n"
@@ -172,47 +299,114 @@ class SendPage(QWidget):
             f"Netzwerkgebühr: {plan.fee / 100_000_000:.8f} BC2 "
             f"({plan.fee_rate} sat/vB)\n"
             f"Wechselgeld: {plan.change / 100_000_000:.8f} BC2\n"
-            f"Eingänge: {plan.input_count} · geschätzt {plan.estimated_vbytes} vB\n\n"
-            "Noch nicht signiert und noch nicht gesendet."
+            f"Eingänge: {plan.input_count} · geschätzt {plan.estimated_vbytes} vB"
+        )
+
+        self._status.setText(
+            "Entwurf erstellt. Als Nächstes auf der Hardware prüfen."
         )
         self._preview.setVisible(True)
 
+        self._action_button.setEnabled(True)
+        self._action_button.setText("Auf Hardware prüfen")
+        self._set_progress(completed=1, current=1)
+
     def show_review_started(self) -> None:
         self._error.setText("")
-        self._review_button.setEnabled(False)
-        self._review_button.setText("Warte auf Hardware …")
-        self._review_status.setText(
-            "Transaktionsentwurf wird an die Hardware übertragen."
+        self._action_button.setEnabled(False)
+        self._action_button.setText("Warte auf Hardware …")
+        self._status.setText(
+            "PIN auf der Hardware eingeben und Transaktion dort prüfen."
         )
 
     def show_review_progress(self, message: str) -> None:
-        self._review_status.setText(message)
+        self._status.setText(message)
 
     def show_review_result(self, approved: bool) -> None:
-        self._review_button.setEnabled(True)
         if approved:
-            self._review_button.setText("✓ Auf Hardware bestätigt")
-            self._review_status.setText(
-                "Transaktion wurde auf der Hardware bestätigt. "
-                "Noch nicht signiert und noch nicht gesendet."
+            self._mode = "sign"
+            self._action_button.setEnabled(True)
+            self._action_button.setText("Auf Hardware signieren")
+            self._status.setText(
+                "✓ Auf der Hardware bestätigt. "
+                "Als Nächstes wird die bestätigte Transaktion signiert."
             )
+            self._set_progress(completed=2, current=2)
         else:
-            self._review_button.setText("Erneut auf Hardware prüfen")
-            self._review_status.setText(
-                "Transaktion wurde auf der Hardware abgelehnt."
-            )
+            self._mode = "review"
+            self._action_button.setEnabled(True)
+            self._action_button.setText("Erneut auf Hardware prüfen")
+            self._status.setText("Transaktion wurde auf der Hardware abgelehnt.")
+            self._set_progress(completed=1, current=1)
 
     def show_review_failed(self, message: str) -> None:
-        self._review_button.setEnabled(True)
-        self._review_button.setText("Auf Hardware prüfen")
-        self._review_status.setText("")
+        self._mode = "review"
+        self._action_button.setEnabled(True)
+        self._action_button.setText("Auf Hardware prüfen")
         self._error.setText(message)
+        self._set_progress(completed=1, current=1)
+
+    def show_sign_started(self) -> None:
+        self._error.setText("")
+        self._action_button.setEnabled(False)
+        self._action_button.setText("Hardware signiert …")
+        self._status.setText(
+            "Die privaten Schlüssel bleiben ausschließlich auf der Hardware."
+        )
+
+    def show_sign_progress(self, message: str) -> None:
+        self._status.setText(message)
+
+    def show_signed(self, signed) -> None:
+        self._mode = "broadcast"
+        self._action_button.setEnabled(True)
+        self._action_button.setText("Transaktion senden")
+        self._status.setText(
+            f"✓ Auf Hardware signiert.\n"
+            f"TXID: {signed.txid}\n"
+            "Die Transaktion wurde noch nicht ins Netzwerk gesendet."
+        )
+        self._set_progress(completed=3, current=3)
+
+    def show_sign_failed(self, message: str) -> None:
+        self._mode = "sign"
+        self._action_button.setEnabled(True)
+        self._action_button.setText("Auf Hardware signieren")
+        self._error.setText(message)
+        self._set_progress(completed=2, current=2)
+
+    def show_broadcast_started(self) -> None:
+        self._error.setText("")
+        self._action_button.setEnabled(False)
+        self._action_button.setText("Wird gesendet …")
+        self._status.setText(
+            "Die signierte Transaktion wird an den BC2 Electrum-Server übertragen."
+        )
+
+    def show_broadcast_success(self, txid: str) -> None:
+        self._mode = "done"
+        self._action_button.setEnabled(False)
+        self._action_button.setText("✓ Gesendet")
+        self._change_button.setVisible(False)
+        self._status.setText(
+            f"✓ Transaktion erfolgreich ins Netzwerk gesendet.\n"
+            f"TXID: {txid}"
+        )
+        self._set_progress(completed=4, current=None)
+
+    def show_broadcast_failed(self, message: str) -> None:
+        self._mode = "broadcast"
+        self._action_button.setEnabled(True)
+        self._action_button.setText("Erneut senden")
+        self._error.setText(message)
+        self._set_progress(completed=3, current=3)
 
     def show_prepare_failed(self, message: str) -> None:
-        self._next_button.setEnabled(True)
-        self._next_button.setText("Weiter")
-        self._preview.setVisible(False)
+        self._mode = "prepare"
+        self._action_button.setEnabled(True)
+        self._action_button.setText("Weiter")
         self._error.setText(message)
+        self._set_progress(completed=0, current=0)
 
     def clear_error(self) -> None:
         self._error.setText("")

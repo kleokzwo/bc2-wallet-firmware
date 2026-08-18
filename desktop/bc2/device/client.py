@@ -165,3 +165,19 @@ class BC2DeviceClient:
         if len(response) != 1:
             raise ProtocolError("invalid transaction-result response")
         return response[0]
+
+    def sign_transaction_single(self,plan):
+        if plan.input_count!=1:raise ValueError("Sprint 3 unterstützt genau einen Transaktions-Input.")
+        u=plan.utxos[0];a=u.address.encode("ascii");tx=bytes.fromhex(u.tx_hash)
+        payload=bytes((1,))+tx[::-1]+int(u.tx_pos).to_bytes(4,"little")+int(u.value).to_bytes(8,"little")+bytes((len(a),))+a
+        r=self.request(CMD_SIGN_TRANSACTION,payload,timeout=None)
+        if len(r)!=1:raise ProtocolError("invalid sign response")
+        return r[0]
+    def get_sign_result(self):
+        r=self.request(CMD_GET_SIGN_RESULT,timeout=None)
+        if not r:raise ProtocolError("invalid sign result")
+        if r[0]!=1:return r[0],None,None
+        if len(r)<35:raise ProtocolError("truncated sign result")
+        n=r[34]
+        if n==0 or len(r)!=35+n:raise ProtocolError("bad signature length")
+        return 1,bytes(r[1:34]),bytes(r[35:])

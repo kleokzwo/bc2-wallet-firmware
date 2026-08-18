@@ -126,6 +126,50 @@ def fetch_utxos(server, addresses, timeout=8.0):
                         ))
     return utxos
 
+
+def broadcast_transaction(server: str, raw_transaction_hex: str, timeout=15.0) -> str:
+    if ":" not in server:
+        raise ValueError("Electrum Server muss host:port sein.")
+
+    raw_transaction_hex = raw_transaction_hex.strip().lower()
+    if not raw_transaction_hex:
+        raise ValueError("Keine signierte Transaktion vorhanden.")
+
+    try:
+        bytes.fromhex(raw_transaction_hex)
+    except ValueError as exc:
+        raise ValueError("Die signierte Transaktion ist kein gültiger Hex-String.") from exc
+
+    host, port_text = server.rsplit(":", 1)
+    port = int(port_text)
+
+    ctx = ssl.create_default_context()
+
+    with socket.create_connection((host, port), timeout=timeout) as raw:
+        with ctx.wrap_socket(raw, server_hostname=host) as sock:
+            sock.settimeout(timeout)
+
+            with sock.makefile("rwb") as file:
+                _rpc(
+                    file,
+                    1,
+                    "server.version",
+                    ["BC2 Cold Wallet", "1.4"],
+                )
+                txid = _rpc(
+                    file,
+                    2,
+                    "blockchain.transaction.broadcast",
+                    [raw_transaction_hex],
+                )
+
+    if not isinstance(txid, str) or len(txid) != 64:
+        raise RuntimeError(
+            f"Electrum hat eine unerwartete Broadcast-Antwort geliefert: {txid!r}"
+        )
+
+    return txid.lower()
+
 class _Worker(QObject):
     finished=Signal(object); failed=Signal(str)
     def __init__(self,server,addresses): super().__init__(); self.s=server; self.a=addresses

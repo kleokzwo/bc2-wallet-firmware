@@ -29,6 +29,7 @@ from bc2.services.device_service import DeviceService
 from bc2.services.receive_service import ReceiveService
 from bc2.services.electrum_service import ElectrumService, BalanceResult, address_to_scriptpubkey
 from bc2.services.send_service import SendService
+from bc2.services.transaction_service import TransactionService
 from bc2.ui.recovery_dialog import RecoveryDialog
 from bc2.ui.pages.dashboard_page import DashboardPage
 from bc2.ui.pages.receiver_page import ReceivePage
@@ -70,6 +71,8 @@ class MainWindow(QMainWindow):
         self._device: DeviceInfo | None = None
         self._setup_in_progress = False
         self._current_send_plan = None
+        self._current_signed_transaction = None
+        self._transaction_entries = []
 
         self._device_service = DeviceService(self)
         self._device_service.scan_started.connect(self._on_scan_started)
@@ -86,6 +89,17 @@ class MainWindow(QMainWindow):
         self._electrum_service.finished.connect(self._on_balance_sync_finished)
         self._electrum_service.failed.connect(self._on_balance_sync_failed)
 
+        self._transaction_service = TransactionService(self)
+        self._transaction_service.started.connect(
+            self._on_transaction_sync_started
+        )
+        self._transaction_service.finished.connect(
+            self._on_transaction_sync_finished
+        )
+        self._transaction_service.failed.connect(
+            self._on_transaction_sync_failed
+        )
+
         self._send_service = SendService(self)
         self._send_service.started.connect(self._on_send_prepare_started)
         self._send_service.finished.connect(self._on_send_plan_ready)
@@ -94,6 +108,13 @@ class MainWindow(QMainWindow):
         self._send_service.review_progress.connect(self._on_send_review_progress)
         self._send_service.review_finished.connect(self._on_send_review_finished)
         self._send_service.review_failed.connect(self._on_send_review_failed)
+        self._send_service.sign_started.connect(self._on_send_sign_started)
+        self._send_service.sign_progress.connect(self._on_send_sign_progress)
+        self._send_service.sign_finished.connect(self._on_send_sign_finished)
+        self._send_service.sign_failed.connect(self._on_send_sign_failed)
+        self._send_service.broadcast_started.connect(self._on_send_broadcast_started)
+        self._send_service.broadcast_finished.connect(self._on_send_broadcast_finished)
+        self._send_service.broadcast_failed.connect(self._on_send_broadcast_failed)
 
         self._balance_timer = QTimer(self)
         self._balance_timer.setInterval(30000)
@@ -239,6 +260,9 @@ class MainWindow(QMainWindow):
         self._send_page.review_requested.connect(
             self._review_send_plan
         )
+        self._send_page.sign_requested.connect(self._sign_send_plan)
+        self._send_page.broadcast_requested.connect(self._broadcast_signed_transaction)
+        self._send_page.reset_requested.connect(self._reset_send_flow)
 
         self._transaction_page = TransactionPage()
 
@@ -357,8 +381,12 @@ class MainWindow(QMainWindow):
     def _navigate(self, key: str) -> None:
         page = self._pages[key]
         self._stack.setCurrentWidget(page)
+
         if key in self._nav_buttons:
             self._nav_buttons[key].setChecked(True)
+
+        if key == "transactions":
+            QTimer.singleShot(0, self._sync_transactions)
 
     def _electrum_server(self) -> str:
         return str(self._settings.value("electrum/server", DEFAULT_ELECTRUM))
@@ -539,6 +567,7 @@ class MainWindow(QMainWindow):
     @Slot(str, str)
     def _prepare_send(self, address: str, amount_text: str) -> None:
         self._current_send_plan = None
+        self._current_signed_transaction = None
 
         if self._device is None:
             self._send_page.show_hardware_required()
@@ -626,6 +655,74 @@ class MainWindow(QMainWindow):
     @Slot(str)
     def _on_send_review_failed(self, message: str) -> None:
         self._send_page.show_review_failed(message)
+
+    @Slot()
+    def _sign_send_plan(self) -> None:
+        if self._device is None:
+            self._send_page.show_sign_failed(
+                "Hardware Wallet nicht verbunden."
+            )
+            return
+
+        if self._current_send_plan is None:
+            self._send_page.show_sign_failed(
+                "Bitte zuerst einen Transaktionsentwurf erstellen."
+            )
+            return
+
+        self._send_service.sign(
+            self._device.port,
+            self._current_send_plan,
+        )
+
+    @Slot()
+    def _on_send_sign_started(self) -> None:
+        self._send_page.show_sign_started()
+
+    @Slot(str)
+    def _on_send_sign_progress(self, message: str) -> None:
+        self._send_page.show_sign_progress(message)
+
+    @Slot(object)
+    def _on_send_sign_finished(self, signed) -> None:
+        self._current_signed_transaction = signed
+        self._send_page.show_signed(signed)
+
+    @Slot(str)
+    def _on_send_sign_failed(self, message: str) -> None:
+        self._send_page.show_sign_failed(message)
+
+    @Slot()
+    def _broadcast_signed_transaction(self) -> None:
+        if self._current_signed_transaction is None:
+            self._send_page.show_broadcast_failed(
+                "Keine signierte Transaktion vorhanden."
+            )
+            return
+
+        self._send_service.broadcast(
+            self._electrum_server(),
+            self._current_signed_transaction,
+        )
+
+    @Slot()
+    def _on_send_broadcast_started(self) -> None:
+        self._send_page.show_broadcast_started()
+
+    @Slot(str)
+    def _on_send_broadcast_finished(self, txid: str) -> None:
+        self._send_page.show_broadcast_success(txid)
+        QTimer.singleShot(500, self._sync_balance)
+        QTimer.singleShot(700, self._sync_transactions)
+
+    @Slot(str)
+    def _on_send_broadcast_failed(self, message: str) -> None:
+        self._send_page.show_broadcast_failed(message)
+
+    @Slot()
+    def _reset_send_flow(self) -> None:
+        self._current_send_plan = None
+        self._current_signed_transaction = None
 
     @Slot()
     def _factory_reset_device(self) -> None:
@@ -788,11 +885,52 @@ class MainWindow(QMainWindow):
         )
         self._dashboard_page.set_sync_state(f"Aktuell · {result.addresses} Adresse(n)")
         self._dashboard_page.set_network_state("Verbunden")
+        QTimer.singleShot(0, self._sync_transactions)
 
     @Slot(str)
     def _on_balance_sync_failed(self, message: str) -> None:
         self._dashboard_page.set_sync_state("Sync fehlgeschlagen")
         self._dashboard_page.set_network_state("Nicht verbunden", tooltip=message)
+
+    def _sync_transactions(self) -> None:
+        if self._device is None or not self._device.unlocked:
+            return
+
+        addresses = self._known_receive_addresses()
+
+        if not addresses:
+            self._transaction_entries = []
+            self._transaction_page.show_transactions([])
+
+            if hasattr(self._dashboard_page, "set_transactions"):
+                self._dashboard_page.set_transactions([])
+
+            return
+
+        self._transaction_service.sync(
+            self._electrum_server(),
+            addresses,
+        )
+
+    @Slot()
+    def _on_transaction_sync_started(self) -> None:
+        self._transaction_page.show_loading()
+
+    @Slot(object)
+    def _on_transaction_sync_finished(self, entries) -> None:
+        self._transaction_entries = list(entries)
+        self._transaction_page.show_transactions(
+            self._transaction_entries
+        )
+
+        if hasattr(self._dashboard_page, "set_transactions"):
+            self._dashboard_page.set_transactions(
+                self._transaction_entries
+            )
+
+    @Slot(str)
+    def _on_transaction_sync_failed(self, message: str) -> None:
+        self._transaction_page.show_error(message)
 
     def _retry_setup_scan(self) -> None:
         if (

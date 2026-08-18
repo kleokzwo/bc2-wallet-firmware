@@ -657,6 +657,14 @@ static void process_transaction_request(bc2_device_service_t *service,
     render_pin(hal, pin_entry, pin_session->mode);
 }
 
+static void process_sign_request(bc2_device_service_t*s,const bc2_hal_t*h,const bc2_device_machine*m){
+ bc2_device_sign_request_t r;uint8_t pub[33]={0},sig[80]={0};size_t n=0;if(!s||!h||!m||m->state!=BC2_DEVICE_DASHBOARD)return;
+ memset(&r,0,sizeof r);if(!bc2_device_service_take_sign_request(s,&r))return;
+ int ok=bc2_hw_wallet_sign_single_p2wpkh(h,r.input_address,r.prev_txid_le,r.prev_output_index,r.input_amount,0xfffffffdU,
+ s->reviewed_transaction.recipient_address,s->reviewed_transaction.recipient_amount,s->reviewed_transaction.change_amount,0U,pub,sig,sizeof sig,&n);
+ bc2_device_service_complete_sign(s,ok,pub,sig,n);memset(&r,0,sizeof r);memset(pub,0,sizeof pub);memset(sig,0,sizeof sig);
+}
+
 static void process_lock_request(bc2_device_service_t *service,
                                  bc2_device_machine *machine,
                                  const bc2_hal_t *hal,
@@ -806,6 +814,7 @@ static void bc2_application_task(void *argument) {
         process_unlock_request(&device_service, &machine, &hal, &pin_entry, &pin_session);
         process_receive_request(&device_service, &hal, &machine, &pin_entry, &pin_session);
         process_transaction_request(&device_service, &hal, &machine, &pin_entry, &pin_session);
+        process_sign_request(&device_service, &hal, &machine);
         if (bc2_device_machine_tick(&machine, bc2_hal_now_ms(&hal)) != 0) {
             if (machine.state != BC2_DEVICE_TRANSACTION_REVIEW)
                 bc2_device_service_complete_transaction(&device_service, 0);

@@ -8,6 +8,9 @@
 
 #define BC2_USB_RESPONSE_FLAG 0x80U
 #define BC2_TRANSACTION_PAYLOAD_FIXED_SIZE 28U
+#define BC2_SIGN_PAYLOAD_FIXED_SIZE 46U
+
+static uint32_t read_u32_le(const uint8_t*b){return (uint32_t)b[0]|((uint32_t)b[1]<<8U)|((uint32_t)b[2]<<16U)|((uint32_t)b[3]<<24U);}
 
 static uint64_t read_u64_le(const uint8_t *bytes) {
     uint64_t value = 0U;
@@ -41,10 +44,23 @@ static int queue_transaction(bc2_device_service_t *service,
         memset(&service->pending_transaction, 0, sizeof(service->pending_transaction));
         return 0;
     }
+    service->reviewed_transaction = service->pending_transaction;
     service->transaction_pending = 1;
     service->transaction_review_active = 1;
     service->transaction_result = BC2_DEVICE_REVIEW_PENDING;
     return 1;
+}
+
+static int queue_sign_request(bc2_device_service_t*s,const uint8_t*p,size_t n){
+ size_t al;uint64_t total;if(!s||!p||n<BC2_SIGN_PAYLOAD_FIXED_SIZE||s->sign_pending||s->transaction_result!=BC2_DEVICE_REVIEW_APPROVED||p[0]!=1U)return 0;
+ al=p[45];if(al==0||al>=BC2_DEVICE_TRANSACTION_ADDRESS_MAX||n!=BC2_SIGN_PAYLOAD_FIXED_SIZE+al)return 0;
+ memset(&s->pending_sign,0,sizeof s->pending_sign);memcpy(s->pending_sign.prev_txid_le,p+1,32);s->pending_sign.prev_output_index=read_u32_le(p+33);
+ s->pending_sign.input_amount=read_u64_le(p+37);memcpy(s->pending_sign.input_address,p+46,al);s->pending_sign.input_address[al]='\0';
+ total=s->reviewed_transaction.recipient_amount;if(UINT64_MAX-total<s->reviewed_transaction.change_amount)return 0;total+=s->reviewed_transaction.change_amount;
+ if (UINT64_MAX - total < s->reviewed_transaction.fee_amount) return 0;
+ total += s->reviewed_transaction.fee_amount;
+ if(s->pending_sign.input_amount!=total||!bc2_receive_address_is_valid(s->pending_sign.input_address)){memset(&s->pending_sign,0,sizeof s->pending_sign);return 0;}
+ s->sign_pending=1;s->sign_status=0;s->sign_signature_length=0;memset(s->sign_public_key,0,sizeof s->sign_public_key);memset(s->sign_signature,0,sizeof s->sign_signature);return 1;
 }
 
 static size_t build_info_payload(const bc2_device_identity_t *identity,
@@ -229,6 +245,21 @@ case BC2_USB_CMD_GET_RECEIVE_RESULT: {
             if (queue_transaction(service, request->payload, request->payload_length))
                 payload[0] = 1U;
             break;
+        case BC2_USB_CMD_SIGN_TRANSACTION:
+            payload[0]=0;payload_size=1;
+            if(!service||!machine||machine->state!=BC2_DEVICE_DASHBOARD){payload[0]=2;break;}
+            if(service->transaction_result!=BC2_DEVICE_REVIEW_APPROVED){payload[0]=3;break;}
+            if(service->sign_pending){payload[0]=4;break;}
+            if(queue_sign_request(service,request->payload,request->payload_length))payload[0]=1;
+            break;
+        case BC2_USB_CMD_GET_SIGN_RESULT:
+            if (!service || request->payload_length != 0U) return 0U;
+            payload[0] = service->sign_status;
+            payload_size = 1U;
+            if(service->sign_status==1U){if(service->sign_signature_length==0U||35U+service->sign_signature_length>sizeof(payload))return 0U;
+              memcpy(payload+1,service->sign_public_key,33);payload[34]=(uint8_t)service->sign_signature_length;
+              memcpy(payload+35,service->sign_signature,service->sign_signature_length);payload_size=35U+service->sign_signature_length;}
+            break;
         case BC2_USB_CMD_GET_TRANSACTION_RESULT:
             if (service == NULL || request->payload_length != 0U) return 0U;
             payload[0] = (uint8_t)service->transaction_result;
@@ -364,9 +395,17 @@ void bc2_device_service_complete_transaction(bc2_device_service_t *service,
         service->transaction_result != BC2_DEVICE_REVIEW_PENDING) return;
     service->transaction_pending = 0;
     service->transaction_review_active = 0;
-    service->transaction_result = approved
-        ? BC2_DEVICE_REVIEW_APPROVED
-        : BC2_DEVICE_REVIEW_REJECTED;
+    service->transaction_result = approved ? BC2_DEVICE_REVIEW_APPROVED : BC2_DEVICE_REVIEW_REJECTED;
+    if(!approved)memset(&service->reviewed_transaction,0,sizeof service->reviewed_transaction);
+}
+
+int bc2_device_service_take_sign_request(bc2_device_service_t*s,bc2_device_sign_request_t*o){if(!s||!o||!s->sign_pending)return 0;*o=s->pending_sign;s->sign_pending=0;return 1;}
+void bc2_device_service_complete_sign(bc2_device_service_t*s,int ok,const uint8_t pub[33],const uint8_t*sig,size_t n){
+ if (!s) return;
+ memset(s->sign_public_key, 0, sizeof s->sign_public_key);
+ memset(s->sign_signature, 0, sizeof s->sign_signature);
+ s->sign_signature_length = 0U;
+ if(!ok||!pub||!sig||n==0||n>sizeof s->sign_signature){s->sign_status=2;return;}memcpy(s->sign_public_key,pub,33);memcpy(s->sign_signature,sig,n);s->sign_signature_length=n;s->sign_status=1;
 }
 
 int bc2_device_service_take_create_wallet(bc2_device_service_t *service) {

@@ -79,3 +79,8 @@ def get_transaction_result(port_name: str) -> int:
         write_timeout=2.0,
     ) as port:
         return BC2DeviceClient(port).get_transaction_result()
+
+def sign_transaction_single(port_name,plan):
+    with serial.Serial(port_name,baudrate=DeviceDiscovery.BAUD_RATE,timeout=.1,write_timeout=2.0) as port:return BC2DeviceClient(port).sign_transaction_single(plan)
+def get_sign_result(port_name):
+    with serial.Serial(port_name,baudrate=DeviceDiscovery.BAUD_RATE,timeout=.1,write_timeout=2.0) as port:return BC2DeviceClient(port).get_sign_result()

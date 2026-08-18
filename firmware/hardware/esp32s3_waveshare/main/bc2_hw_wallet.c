@@ -5,6 +5,8 @@
 #include "bc2_bip32.h"
 #include "bc2_crypto.h"
 #include "bc2_network.h"
+#include "bc2_sign.h"
+#include "bc2_transaction.h"
 
 #include "esp_efuse.h"
 #include "esp_hmac.h"
@@ -456,6 +458,179 @@ cleanup:
     secure_zero(mnemonic, sizeof(mnemonic));
     secure_zero(path, sizeof(path));
     if (!ok) address[0] = '\0';
+    return ok;
+}
+
+
+bool bc2_hw_wallet_sign_single_p2wpkh(
+    const bc2_hal_t *hal,
+    const char *input_address,
+    const uint8_t prev_txid_le[32],
+    uint32_t prev_output_index,
+    uint64_t input_amount,
+    uint32_t sequence,
+    const char *recipient_address,
+    uint64_t recipient_amount,
+    uint64_t change_amount,
+    uint32_t lock_time,
+    uint8_t public_key[33],
+    uint8_t *signature,
+    size_t signature_capacity,
+    size_t *signature_length)
+{
+    uint8_t entropy[32] = {0};
+    uint8_t seed[64] = {0};
+    uint8_t pubkey_hash[20] = {0};
+    uint8_t digest[32] = {0};
+    uint8_t recipient_script[128] = {0};
+    uint8_t change_script[128] = {0};
+
+    size_t entropy_size = 0U;
+    size_t recipient_script_length = 0U;
+    size_t change_script_length = 0U;
+
+    bc2_xprv master = {0};
+    bc2_xprv node = {0};
+
+    char mnemonic[256] = {0};
+    char path[96] = {0};
+    char derived_address[96] = {0};
+    char salt[] = "mnemonic";
+
+    uint32_t receive_count = 0U;
+    const bc2_network *network = bc2_network_mainnet();
+    bool ok = false;
+
+    if (hal == NULL ||
+        input_address == NULL ||
+        prev_txid_le == NULL ||
+        recipient_address == NULL ||
+        recipient_amount == 0U ||
+        public_key == NULL ||
+        signature == NULL ||
+        signature_length == NULL ||
+        network == NULL ||
+        bc2_hw_wallet_status(hal) != BC2_HW_WALLET_READY) {
+        return false;
+    }
+
+    *signature_length = 0U;
+    memset(public_key, 0, 33U);
+
+    if (!bc2_hw_wallet_receive_index(hal, &receive_count) ||
+        receive_count == 0U ||
+        !decrypt_entropy_any(hal, entropy, &entropy_size) ||
+        !entropy_to_mnemonic_any(
+            entropy,
+            entropy_size,
+            mnemonic,
+            sizeof(mnemonic)) ||
+        !bc2_pbkdf2_hmac_sha512(
+            (const uint8_t *)mnemonic,
+            strlen(mnemonic),
+            (const uint8_t *)salt,
+            strlen(salt),
+            2048U,
+            seed,
+            sizeof(seed)) ||
+        !bc2_bip32_master(seed, sizeof(seed), &master)) {
+        goto cleanup;
+    }
+
+    for (uint32_t index = 0U; index < receive_count; ++index) {
+        secure_zero(&node, sizeof(node));
+        memset(derived_address, 0, sizeof(derived_address));
+        memset(public_key, 0, 33U);
+
+        const int written = snprintf(
+            path,
+            sizeof(path),
+            "m/84'/%u'/0'/0/%u",
+            (unsigned int)network->coin_type,
+            (unsigned int)index);
+
+        if (written < 0 ||
+            (size_t)written >= sizeof(path) ||
+            !bc2_bip32_derive_path(&master, path, &node) ||
+            !bc2_secp256k1_public(node.key, public_key) ||
+            !bc2_address_p2wpkh(
+                public_key,
+                network->bech32_hrp,
+                derived_address,
+                sizeof(derived_address))) {
+            goto cleanup;
+        }
+
+        if (strcmp(derived_address, input_address) != 0) {
+            continue;
+        }
+
+        if (!bc2_hash160(public_key, 33U, pubkey_hash) ||
+            bc2_address_to_script(
+                recipient_address,
+                network,
+                recipient_script,
+                sizeof(recipient_script),
+                &recipient_script_length) != BC2_TX_OK ||
+            bc2_address_to_script(
+                input_address,
+                network,
+                change_script,
+                sizeof(change_script),
+                &change_script_length) != BC2_TX_OK ||
+            change_script_length != 22U ||
+            change_script[0] != 0x00U ||
+            change_script[1] != 0x14U ||
+            !bc2_p2wpkh_sighash_all_single(
+                prev_txid_le,
+                prev_output_index,
+                input_amount,
+                pubkey_hash,
+                sequence,
+                recipient_script,
+                recipient_script_length,
+                recipient_amount,
+                change_amount > 0U ? change_script : NULL,
+                change_amount > 0U ? change_script_length : 0U,
+                change_amount,
+                lock_time,
+                digest) ||
+            !bc2_ecdsa_sign_der(
+                node.key,
+                digest,
+                signature,
+                signature_capacity,
+                signature_length)) {
+            goto cleanup;
+        }
+
+        ok = true;
+        break;
+    }
+
+cleanup:
+    secure_zero(entropy, sizeof(entropy));
+    secure_zero(seed, sizeof(seed));
+    secure_zero(&master, sizeof(master));
+    secure_zero(&node, sizeof(node));
+    secure_zero(mnemonic, sizeof(mnemonic));
+    secure_zero(path, sizeof(path));
+    secure_zero(derived_address, sizeof(derived_address));
+    secure_zero(pubkey_hash, sizeof(pubkey_hash));
+    secure_zero(digest, sizeof(digest));
+    secure_zero(recipient_script, sizeof(recipient_script));
+    secure_zero(change_script, sizeof(change_script));
+
+    if (!ok) {
+        memset(public_key, 0, 33U);
+
+        if (signature_capacity > 0U) {
+            memset(signature, 0, signature_capacity);
+        }
+
+        *signature_length = 0U;
+    }
+
     return ok;
 }
 

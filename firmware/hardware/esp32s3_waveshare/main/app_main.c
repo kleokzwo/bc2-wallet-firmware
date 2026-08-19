@@ -1,3 +1,4 @@
+#include "bc2_radio_policy.h"
 #include "bc2_device_flow.h"
 #include "bc2_button_adapter.h"
 #include "bc2_device_service.h"
@@ -19,7 +20,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define BC2_DEVICE_LOOP_DELAY_MS 50U
+#define BC2_DEVICE_LOOP_DELAY_MS 10U
 #define BC2_APPLICATION_TASK_STACK_SIZE 16384U
 #define BC2_APPLICATION_TASK_PRIORITY 5U
 static const char *TAG = "bc2";
@@ -825,6 +826,7 @@ static void bc2_application_task(void *argument) {
 }
 
 void app_main(void) {
+    bc2_radio_policy_assert_disabled();
     const BaseType_t created = xTaskCreate(bc2_application_task,
                                            "bc2_application",
                                            BC2_APPLICATION_TASK_STACK_SIZE,

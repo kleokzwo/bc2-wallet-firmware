@@ -1,0 +1,3415 @@
+
+---
+events:
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineSystem.cmake:12 (find_program)"
+      - "CMakeLists.txt:3 (project)"
+    mode: "program"
+    variable: "CMAKE_UNAME"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "uname"
+    candidate_directories:
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
+      - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
+      - "/home/kzwo/.pyenv/shims/"
+      - "/home/kzwo/.pyenv/bin/"
+      - "/home/kzwo/.npm-global/bin/"
+      - "/home/kzwo/.local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/local/games/"
+      - "/usr/games/"
+      - "/snap/bin/"
+      - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
+    searched_directories:
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/uname"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/uname"
+      - "/home/kzwo/esp/esp-idf/components/app_update/uname"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/uname"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/uname"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/uname"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/uname"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/uname"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/uname"
+      - "/home/kzwo/esp/esp-idf/tools/uname"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/uname"
+      - "/home/kzwo/.pyenv/shims/uname"
+      - "/home/kzwo/.pyenv/bin/uname"
+      - "/home/kzwo/.npm-global/bin/uname"
+      - "/home/kzwo/.local/bin/uname"
+      - "/usr/local/sbin/uname"
+      - "/usr/sbin/uname"
+      - "/sbin/uname"
+      - "/usr/local/bin/uname"
+    found: "/usr/bin/uname"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineSystem.cmake:212 (message)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      The system is: Linux - 7.0.12+kali-amd64 - x86_64
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeNinjaFindMake.cmake:5 (find_program)"
+      - "CMakeLists.txt:3 (project)"
+    mode: "program"
+    variable: "CMAKE_MAKE_PROGRAM"
+    description: "Program used to build from build.ninja files."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ninja-build"
+      - "ninja"
+      - "samu"
+    candidate_directories:
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
+      - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
+      - "/home/kzwo/.pyenv/shims/"
+      - "/home/kzwo/.pyenv/bin/"
+      - "/home/kzwo/.npm-global/bin/"
+      - "/home/kzwo/.local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/local/games/"
+      - "/usr/games/"
+      - "/snap/bin/"
+      - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
+    searched_directories:
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/ninja-build"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/ninja"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/samu"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/ninja-build"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/ninja"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/samu"
+      - "/home/kzwo/esp/esp-idf/components/app_update/ninja-build"
+      - "/home/kzwo/esp/esp-idf/components/app_update/ninja"
+      - "/home/kzwo/esp/esp-idf/components/app_update/samu"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/ninja-build"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/ninja"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/samu"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/ninja-build"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/ninja"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/samu"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/ninja-build"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/ninja"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/samu"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/ninja-build"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/ninja"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/samu"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/ninja-build"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/ninja"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/samu"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/ninja-build"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/ninja"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/samu"
+      - "/home/kzwo/esp/esp-idf/tools/ninja-build"
+      - "/home/kzwo/esp/esp-idf/tools/ninja"
+      - "/home/kzwo/esp/esp-idf/tools/samu"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/ninja-build"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/ninja"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/samu"
+      - "/home/kzwo/.pyenv/shims/ninja-build"
+      - "/home/kzwo/.pyenv/shims/ninja"
+      - "/home/kzwo/.pyenv/shims/samu"
+      - "/home/kzwo/.pyenv/bin/ninja-build"
+      - "/home/kzwo/.pyenv/bin/ninja"
+      - "/home/kzwo/.pyenv/bin/samu"
+      - "/home/kzwo/.npm-global/bin/ninja-build"
+      - "/home/kzwo/.npm-global/bin/ninja"
+      - "/home/kzwo/.npm-global/bin/samu"
+      - "/home/kzwo/.local/bin/ninja-build"
+      - "/home/kzwo/.local/bin/ninja"
+      - "/home/kzwo/.local/bin/samu"
+      - "/usr/local/sbin/ninja-build"
+      - "/usr/local/sbin/ninja"
+      - "/usr/local/sbin/samu"
+      - "/usr/sbin/ninja-build"
+      - "/usr/sbin/ninja"
+      - "/usr/sbin/samu"
+      - "/sbin/ninja-build"
+      - "/sbin/ninja"
+      - "/sbin/samu"
+      - "/usr/local/bin/ninja-build"
+      - "/usr/local/bin/ninja"
+      - "/usr/local/bin/samu"
+      - "/usr/bin/ninja-build"
+    found: "/usr/bin/ninja"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCompiler.cmake:73 (find_program)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:64 (_cmake_find_compiler)"
+      - "CMakeLists.txt:3 (project)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER"
+    description: "C compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "cc"
+      - "gcc"
+      - "cl"
+      - "bcc"
+      - "xlc"
+      - "icx"
+      - "clang"
+    candidate_directories:
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
+      - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
+      - "/home/kzwo/.pyenv/shims/"
+      - "/home/kzwo/.pyenv/bin/"
+      - "/home/kzwo/.npm-global/bin/"
+      - "/home/kzwo/.local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/local/games/"
+      - "/usr/games/"
+      - "/snap/bin/"
+      - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
+    searched_directories:
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/cc"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/cc"
+      - "/home/kzwo/esp/esp-idf/components/app_update/cc"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/cc"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/cc"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/cc"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/cc"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/cc"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/cc"
+      - "/home/kzwo/esp/esp-idf/tools/cc"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/cc"
+      - "/home/kzwo/.pyenv/shims/cc"
+      - "/home/kzwo/.pyenv/bin/cc"
+      - "/home/kzwo/.npm-global/bin/cc"
+      - "/home/kzwo/.local/bin/cc"
+      - "/usr/local/sbin/cc"
+      - "/usr/sbin/cc"
+      - "/sbin/cc"
+      - "/usr/local/bin/cc"
+    found: "/usr/bin/cc"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:468 (find_file)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:506 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCCompilerId.c.in"
+    candidate_directories:
+      - "/usr/share/cmake-4.3/Modules/"
+    found: "/usr/share/cmake-4.3/Modules/CMakeCCompilerId.c.in"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /usr/bin/cc 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+      
+      The C compiler identification is GNU, found in:
+        /home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/build/CMakeFiles/4.3.4/CompilerIdC/a.out
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:3 (project)"
+    mode: "program"
+    variable: "CMAKE_AR"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ar"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
+      - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
+      - "/home/kzwo/.pyenv/shims/"
+      - "/home/kzwo/.pyenv/bin/"
+      - "/home/kzwo/.npm-global/bin/"
+      - "/home/kzwo/.local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/local/games/"
+      - "/usr/games/"
+      - "/snap/bin/"
+      - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
+    found: "/usr/bin/ar"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:3 (project)"
+    mode: "program"
+    variable: "CMAKE_RANLIB"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ranlib"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
+      - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
+      - "/home/kzwo/.pyenv/shims/"
+      - "/home/kzwo/.pyenv/bin/"
+      - "/home/kzwo/.npm-global/bin/"
+      - "/home/kzwo/.local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/local/games/"
+      - "/usr/games/"
+      - "/snap/bin/"
+      - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
+    found: "/usr/bin/ranlib"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:3 (project)"
+    mode: "program"
+    variable: "CMAKE_STRIP"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "strip"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
+      - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
+      - "/home/kzwo/.pyenv/shims/"
+      - "/home/kzwo/.pyenv/bin/"
+      - "/home/kzwo/.npm-global/bin/"
+      - "/home/kzwo/.local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/local/games/"
+      - "/usr/games/"
+      - "/snap/bin/"
+      - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
+    found: "/usr/bin/strip"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:3 (project)"
+    mode: "program"
+    variable: "CMAKE_LINKER"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ld"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
+      - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
+      - "/home/kzwo/.pyenv/shims/"
+      - "/home/kzwo/.pyenv/bin/"
+      - "/home/kzwo/.npm-global/bin/"
+      - "/home/kzwo/.local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/local/games/"
+      - "/usr/games/"
+      - "/snap/bin/"
+      - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
+    found: "/usr/bin/ld"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:3 (project)"
+    mode: "program"
+    variable: "CMAKE_NM"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "nm"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
+      - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
+      - "/home/kzwo/.pyenv/shims/"
+      - "/home/kzwo/.pyenv/bin/"
+      - "/home/kzwo/.npm-global/bin/"
+      - "/home/kzwo/.local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/local/games/"
+      - "/usr/games/"
+      - "/snap/bin/"
+      - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
+    found: "/usr/bin/nm"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:3 (project)"
+    mode: "program"
+    variable: "CMAKE_OBJDUMP"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "objdump"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
+      - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
+      - "/home/kzwo/.pyenv/shims/"
+      - "/home/kzwo/.pyenv/bin/"
+      - "/home/kzwo/.npm-global/bin/"
+      - "/home/kzwo/.local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/local/games/"
+      - "/usr/games/"
+      - "/snap/bin/"
+      - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
+    found: "/usr/bin/objdump"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:3 (project)"
+    mode: "program"
+    variable: "CMAKE_OBJCOPY"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "objcopy"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
+      - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
+      - "/home/kzwo/.pyenv/shims/"
+      - "/home/kzwo/.pyenv/bin/"
+      - "/home/kzwo/.npm-global/bin/"
+      - "/home/kzwo/.local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/local/games/"
+      - "/usr/games/"
+      - "/snap/bin/"
+      - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
+    found: "/usr/bin/objcopy"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:3 (project)"
+    mode: "program"
+    variable: "CMAKE_READELF"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "readelf"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
+      - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
+      - "/home/kzwo/.pyenv/shims/"
+      - "/home/kzwo/.pyenv/bin/"
+      - "/home/kzwo/.npm-global/bin/"
+      - "/home/kzwo/.local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/local/games/"
+      - "/usr/games/"
+      - "/snap/bin/"
+      - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
+    found: "/usr/bin/readelf"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:3 (project)"
+    mode: "program"
+    variable: "CMAKE_DLLTOOL"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "dlltool"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
+      - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
+      - "/home/kzwo/.pyenv/shims/"
+      - "/home/kzwo/.pyenv/bin/"
+      - "/home/kzwo/.npm-global/bin/"
+      - "/home/kzwo/.local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/local/games/"
+      - "/usr/games/"
+      - "/snap/bin/"
+      - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
+    searched_directories:
+      - "/usr/bin/dlltool"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/dlltool"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/dlltool"
+      - "/home/kzwo/esp/esp-idf/components/app_update/dlltool"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/dlltool"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/dlltool"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/dlltool"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/dlltool"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/dlltool"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/dlltool"
+      - "/home/kzwo/esp/esp-idf/tools/dlltool"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/dlltool"
+      - "/home/kzwo/.pyenv/shims/dlltool"
+      - "/home/kzwo/.pyenv/bin/dlltool"
+      - "/home/kzwo/.npm-global/bin/dlltool"
+      - "/home/kzwo/.local/bin/dlltool"
+      - "/usr/local/sbin/dlltool"
+      - "/usr/sbin/dlltool"
+      - "/sbin/dlltool"
+      - "/usr/local/bin/dlltool"
+      - "/bin/dlltool"
+      - "/usr/local/games/dlltool"
+      - "/usr/games/dlltool"
+      - "/snap/bin/dlltool"
+      - "/home/kzwo/go/bin/dlltool"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/dlltool"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:3 (project)"
+    mode: "program"
+    variable: "CMAKE_ADDR2LINE"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "addr2line"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
+      - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
+      - "/home/kzwo/.pyenv/shims/"
+      - "/home/kzwo/.pyenv/bin/"
+      - "/home/kzwo/.npm-global/bin/"
+      - "/home/kzwo/.local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/local/games/"
+      - "/usr/games/"
+      - "/snap/bin/"
+      - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
+    found: "/usr/bin/addr2line"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:3 (project)"
+    mode: "program"
+    variable: "CMAKE_TAPI"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "tapi"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
+      - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
+      - "/home/kzwo/.pyenv/shims/"
+      - "/home/kzwo/.pyenv/bin/"
+      - "/home/kzwo/.npm-global/bin/"
+      - "/home/kzwo/.local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/local/games/"
+      - "/usr/games/"
+      - "/snap/bin/"
+      - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
+    searched_directories:
+      - "/usr/bin/tapi"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/tapi"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/tapi"
+      - "/home/kzwo/esp/esp-idf/components/app_update/tapi"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/tapi"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/tapi"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/tapi"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/tapi"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/tapi"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/tapi"
+      - "/home/kzwo/esp/esp-idf/tools/tapi"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/tapi"
+      - "/home/kzwo/.pyenv/shims/tapi"
+      - "/home/kzwo/.pyenv/bin/tapi"
+      - "/home/kzwo/.npm-global/bin/tapi"
+      - "/home/kzwo/.local/bin/tapi"
+      - "/usr/local/sbin/tapi"
+      - "/usr/sbin/tapi"
+      - "/sbin/tapi"
+      - "/usr/local/bin/tapi"
+      - "/bin/tapi"
+      - "/usr/local/games/tapi"
+      - "/usr/games/tapi"
+      - "/snap/bin/tapi"
+      - "/home/kzwo/go/bin/tapi"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/tapi"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
+      - "CMakeLists.txt:3 (project)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER_AR"
+    description: "A wrapper around 'ar' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gcc-ar-15.3"
+      - "gcc-ar-15"
+      - "gcc-ar15"
+      - "gcc-ar"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
+      - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
+      - "/home/kzwo/.pyenv/shims/"
+      - "/home/kzwo/.pyenv/bin/"
+      - "/home/kzwo/.npm-global/bin/"
+      - "/home/kzwo/.local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/local/games/"
+      - "/usr/games/"
+      - "/snap/bin/"
+      - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
+    searched_directories:
+      - "/usr/bin/gcc-ar-15.3"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/gcc-ar-15.3"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/gcc-ar-15.3"
+      - "/home/kzwo/esp/esp-idf/components/app_update/gcc-ar-15.3"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/gcc-ar-15.3"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/gcc-ar-15.3"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/gcc-ar-15.3"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/gcc-ar-15.3"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/gcc-ar-15.3"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/gcc-ar-15.3"
+      - "/home/kzwo/esp/esp-idf/tools/gcc-ar-15.3"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/gcc-ar-15.3"
+      - "/home/kzwo/.pyenv/shims/gcc-ar-15.3"
+      - "/home/kzwo/.pyenv/bin/gcc-ar-15.3"
+      - "/home/kzwo/.npm-global/bin/gcc-ar-15.3"
+      - "/home/kzwo/.local/bin/gcc-ar-15.3"
+      - "/usr/local/sbin/gcc-ar-15.3"
+      - "/usr/sbin/gcc-ar-15.3"
+      - "/sbin/gcc-ar-15.3"
+      - "/usr/local/bin/gcc-ar-15.3"
+      - "/bin/gcc-ar-15.3"
+      - "/usr/local/games/gcc-ar-15.3"
+      - "/usr/games/gcc-ar-15.3"
+      - "/snap/bin/gcc-ar-15.3"
+      - "/home/kzwo/go/bin/gcc-ar-15.3"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/gcc-ar-15.3"
+    found: "/usr/bin/gcc-ar-15"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCCompiler.cmake:201 (include)"
+      - "CMakeLists.txt:3 (project)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER_RANLIB"
+    description: "A wrapper around 'ranlib' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gcc-ranlib-15.3"
+      - "gcc-ranlib-15"
+      - "gcc-ranlib15"
+      - "gcc-ranlib"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
+      - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
+      - "/home/kzwo/.pyenv/shims/"
+      - "/home/kzwo/.pyenv/bin/"
+      - "/home/kzwo/.npm-global/bin/"
+      - "/home/kzwo/.local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/local/games/"
+      - "/usr/games/"
+      - "/snap/bin/"
+      - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
+    searched_directories:
+      - "/usr/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/gcc-ranlib-15.3"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/gcc-ranlib-15.3"
+      - "/home/kzwo/esp/esp-idf/components/app_update/gcc-ranlib-15.3"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/esp/esp-idf/tools/gcc-ranlib-15.3"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/.pyenv/shims/gcc-ranlib-15.3"
+      - "/home/kzwo/.pyenv/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/.npm-global/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/.local/bin/gcc-ranlib-15.3"
+      - "/usr/local/sbin/gcc-ranlib-15.3"
+      - "/usr/sbin/gcc-ranlib-15.3"
+      - "/sbin/gcc-ranlib-15.3"
+      - "/usr/local/bin/gcc-ranlib-15.3"
+      - "/bin/gcc-ranlib-15.3"
+      - "/usr/local/games/gcc-ranlib-15.3"
+      - "/usr/games/gcc-ranlib-15.3"
+      - "/snap/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/go/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/gcc-ranlib-15.3"
+    found: "/usr/bin/gcc-ranlib-15"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCompiler.cmake:54 (find_program)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCXXCompiler.cmake:69 (_cmake_find_compiler)"
+      - "CMakeLists.txt:3 (project)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER"
+    description: "CXX compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "c++"
+      - "CC"
+      - "g++"
+      - "aCC"
+      - "cl"
+      - "bcc"
+      - "xlC"
+      - "icpx"
+      - "icx"
+      - "clang++"
+    candidate_directories:
+      - "/usr/bin/"
+    found: "/usr/bin/c++"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:468 (find_file)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:506 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCXXCompilerId.cpp.in"
+    candidate_directories:
+      - "/usr/share/cmake-4.3/Modules/"
+    found: "/usr/share/cmake-4.3/Modules/CMakeCXXCompilerId.cpp.in"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /usr/bin/c++ 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+      
+      The CXX compiler identification is GNU, found in:
+        /home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/build/CMakeFiles/4.3.4/CompilerIdCXX/a.out
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/Compiler/GNU-FindBinUtils.cmake:18 (find_program)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
+      - "CMakeLists.txt:3 (project)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER_AR"
+    description: "A wrapper around 'ar' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gcc-ar-15.3"
+      - "gcc-ar-15"
+      - "gcc-ar15"
+      - "gcc-ar"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
+      - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
+      - "/home/kzwo/.pyenv/shims/"
+      - "/home/kzwo/.pyenv/bin/"
+      - "/home/kzwo/.npm-global/bin/"
+      - "/home/kzwo/.local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/local/games/"
+      - "/usr/games/"
+      - "/snap/bin/"
+      - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
+    searched_directories:
+      - "/usr/bin/gcc-ar-15.3"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/gcc-ar-15.3"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/gcc-ar-15.3"
+      - "/home/kzwo/esp/esp-idf/components/app_update/gcc-ar-15.3"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/gcc-ar-15.3"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/gcc-ar-15.3"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/gcc-ar-15.3"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/gcc-ar-15.3"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/gcc-ar-15.3"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/gcc-ar-15.3"
+      - "/home/kzwo/esp/esp-idf/tools/gcc-ar-15.3"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/gcc-ar-15.3"
+      - "/home/kzwo/.pyenv/shims/gcc-ar-15.3"
+      - "/home/kzwo/.pyenv/bin/gcc-ar-15.3"
+      - "/home/kzwo/.npm-global/bin/gcc-ar-15.3"
+      - "/home/kzwo/.local/bin/gcc-ar-15.3"
+      - "/usr/local/sbin/gcc-ar-15.3"
+      - "/usr/sbin/gcc-ar-15.3"
+      - "/sbin/gcc-ar-15.3"
+      - "/usr/local/bin/gcc-ar-15.3"
+      - "/bin/gcc-ar-15.3"
+      - "/usr/local/games/gcc-ar-15.3"
+      - "/usr/games/gcc-ar-15.3"
+      - "/snap/bin/gcc-ar-15.3"
+      - "/home/kzwo/go/bin/gcc-ar-15.3"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/gcc-ar-15.3"
+    found: "/usr/bin/gcc-ar-15"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/Compiler/GNU-FindBinUtils.cmake:30 (find_program)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCXXCompiler.cmake:207 (include)"
+      - "CMakeLists.txt:3 (project)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER_RANLIB"
+    description: "A wrapper around 'ranlib' adding the appropriate '--plugin' option for the GCC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gcc-ranlib-15.3"
+      - "gcc-ranlib-15"
+      - "gcc-ranlib15"
+      - "gcc-ranlib"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
+      - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
+      - "/home/kzwo/.pyenv/shims/"
+      - "/home/kzwo/.pyenv/bin/"
+      - "/home/kzwo/.npm-global/bin/"
+      - "/home/kzwo/.local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/local/games/"
+      - "/usr/games/"
+      - "/snap/bin/"
+      - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
+    searched_directories:
+      - "/usr/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/gcc-ranlib-15.3"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/gcc-ranlib-15.3"
+      - "/home/kzwo/esp/esp-idf/components/app_update/gcc-ranlib-15.3"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/esp/esp-idf/tools/gcc-ranlib-15.3"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/.pyenv/shims/gcc-ranlib-15.3"
+      - "/home/kzwo/.pyenv/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/.npm-global/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/.local/bin/gcc-ranlib-15.3"
+      - "/usr/local/sbin/gcc-ranlib-15.3"
+      - "/usr/sbin/gcc-ranlib-15.3"
+      - "/sbin/gcc-ranlib-15.3"
+      - "/usr/local/bin/gcc-ranlib-15.3"
+      - "/bin/gcc-ranlib-15.3"
+      - "/usr/local/games/gcc-ranlib-15.3"
+      - "/usr/games/gcc-ranlib-15.3"
+      - "/snap/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/go/bin/gcc-ranlib-15.3"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/gcc-ranlib-15.3"
+    found: "/usr/bin/gcc-ranlib-15"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "/usr/share/cmake-4.3/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/build/CMakeFiles/CMakeScratch/TryCompile-rIFYVz"
+      binary: "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/build/CMakeFiles/CMakeScratch/TryCompile-rIFYVz"
+    cmakeVariables:
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/build/CMakeFiles/CMakeScratch/TryCompile-rIFYVz'
+        
+        Run Build Command(s): /usr/bin/ninja -v cmTC_eff0c
+        [1/2] /usr/bin/cc   -v -o CMakeFiles/cmTC_eff0c.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-4.3/Modules/CMakeCCompilerABI.c
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/cc
+        OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-linux-gnu
+        Configured with: ../src/configure -v --with-pkgversion='Debian 15.3.0-2' --with-bugurl=file:///usr/share/doc/gcc-15/README.Bugs --enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2,rust,cobol,algol68 --prefix=/usr --with-gcc-major-version-only --program-suffix=-15 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/reproducible-path/gcc-15-15.3.0/debian/tmp-nvptx/usr,amdgcn-amdhsa=/build/reproducible-path/gcc-15-15.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=3
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 15.3.0 (Debian 15.3.0-2) 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_eff0c.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_eff0c.dir/'
+         /usr/libexec/gcc/x86_64-linux-gnu/15/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-4.3/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_eff0c.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -o /tmp/ccaMAhuJ.s
+        GNU C23 (Debian 15.3.0-2) version 15.3.0 (x86_64-linux-gnu)
+        	compiled by GNU C version 15.3.0, GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.3.1, isl version isl-0.28-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "/usr/local/include/x86_64-linux-gnu"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/15/include-fixed/x86_64-linux-gnu"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/15/include-fixed"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/15/../../../../x86_64-linux-gnu/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /usr/lib/gcc/x86_64-linux-gnu/15/include
+         /usr/local/include
+         /usr/include/x86_64-linux-gnu
+         /usr/include
+        End of search list.
+        Compiler executable checksum: b6cbcb982f51d87dc2c3eabf15401276
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_eff0c.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_eff0c.dir/'
+         /usr/bin/x86_64-linux-gnu-as -v --64 -o CMakeFiles/cmTC_eff0c.dir/CMakeCCompilerABI.c.o /tmp/ccaMAhuJ.s
+        GNU assembler version 2.47 (x86_64-linux-gnu) using BFD version (GNU Binutils for Debian) 2.47
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/15/:/usr/libexec/gcc/x86_64-linux-gnu/15/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/15/:/usr/lib/gcc/x86_64-linux-gnu/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/15/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_eff0c.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_eff0c.dir/CMakeCCompilerABI.c.'
+        [2/2] : && /usr/bin/cc  -v -Wl,-v CMakeFiles/cmTC_eff0c.dir/CMakeCCompilerABI.c.o -o cmTC_eff0c   && :
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/cc
+        COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/15/lto-wrapper
+        OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-linux-gnu
+        Configured with: ../src/configure -v --with-pkgversion='Debian 15.3.0-2' --with-bugurl=file:///usr/share/doc/gcc-15/README.Bugs --enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2,rust,cobol,algol68 --prefix=/usr --with-gcc-major-version-only --program-suffix=-15 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/reproducible-path/gcc-15-15.3.0/debian/tmp-nvptx/usr,amdgcn-amdhsa=/build/reproducible-path/gcc-15-15.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=3
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 15.3.0 (Debian 15.3.0-2) 
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/15/:/usr/libexec/gcc/x86_64-linux-gnu/15/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/15/:/usr/lib/gcc/x86_64-linux-gnu/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/15/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_eff0c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_eff0c.'
+         /usr/libexec/gcc/x86_64-linux-gnu/15/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/15/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/15/lto-wrapper -plugin-opt=-fresolution=/tmp/cc9dMZAT.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_eff0c /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/15/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/15 -L/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/15/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/15/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_eff0c.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/15/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crtn.o
+        collect2 version 15.3.0
+        /usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/15/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/15/lto-wrapper -plugin-opt=-fresolution=/tmp/cc9dMZAT.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_eff0c /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/15/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/15 -L/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/15/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/15/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_eff0c.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/15/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crtn.o
+        GNU ld (GNU Binutils for Debian) 2.47
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_eff0c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_eff0c.'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
+      - "/usr/share/cmake-4.3/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/usr/lib/gcc/x86_64-linux-gnu/15/include]
+          add: [/usr/local/include]
+          add: [/usr/include/x86_64-linux-gnu]
+          add: [/usr/include]
+        end of search list found
+        collapse include dir [/usr/lib/gcc/x86_64-linux-gnu/15/include] ==> [/usr/lib/gcc/x86_64-linux-gnu/15/include]
+        collapse include dir [/usr/local/include] ==> [/usr/local/include]
+        collapse include dir [/usr/include/x86_64-linux-gnu] ==> [/usr/include/x86_64-linux-gnu]
+        collapse include dir [/usr/include] ==> [/usr/include]
+        implicit include dirs: [/usr/lib/gcc/x86_64-linux-gnu/15/include;/usr/local/include;/usr/include/x86_64-linux-gnu;/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
+      - "/usr/share/cmake-4.3/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
+        ignore line: [Change Dir: '/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/build/CMakeFiles/CMakeScratch/TryCompile-rIFYVz']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/bin/ninja -v cmTC_eff0c]
+        ignore line: [[1/2] /usr/bin/cc   -v -o CMakeFiles/cmTC_eff0c.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-4.3/Modules/CMakeCCompilerABI.c]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/cc]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-linux-gnu]
+        ignore line: [Configured with: ../src/configure -v --with-pkgversion='Debian 15.3.0-2' --with-bugurl=file:///usr/share/doc/gcc-15/README.Bugs --enable-languages=c ada c++ go d fortran objc obj-c++ m2 rust cobol algol68 --prefix=/usr --with-gcc-major-version-only --program-suffix=-15 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/reproducible-path/gcc-15-15.3.0/debian/tmp-nvptx/usr amdgcn-amdhsa=/build/reproducible-path/gcc-15-15.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=3]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 15.3.0 (Debian 15.3.0-2) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_eff0c.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_eff0c.dir/']
+        ignore line: [ /usr/libexec/gcc/x86_64-linux-gnu/15/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/share/cmake-4.3/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_eff0c.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -o /tmp/ccaMAhuJ.s]
+        ignore line: [GNU C23 (Debian 15.3.0-2) version 15.3.0 (x86_64-linux-gnu)]
+        ignore line: [	compiled by GNU C version 15.3.0  GMP version 6.3.0  MPFR version 4.2.2  MPC version 1.3.1  isl version isl-0.28-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "/usr/local/include/x86_64-linux-gnu"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/15/include-fixed/x86_64-linux-gnu"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/15/include-fixed"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/15/../../../../x86_64-linux-gnu/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/15/include]
+        ignore line: [ /usr/local/include]
+        ignore line: [ /usr/include/x86_64-linux-gnu]
+        ignore line: [ /usr/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: b6cbcb982f51d87dc2c3eabf15401276]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_eff0c.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_eff0c.dir/']
+        ignore line: [ /usr/bin/x86_64-linux-gnu-as -v --64 -o CMakeFiles/cmTC_eff0c.dir/CMakeCCompilerABI.c.o /tmp/ccaMAhuJ.s]
+        ignore line: [GNU assembler version 2.47 (x86_64-linux-gnu) using BFD version (GNU Binutils for Debian) 2.47]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/15/:/usr/libexec/gcc/x86_64-linux-gnu/15/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/15/:/usr/lib/gcc/x86_64-linux-gnu/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/15/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_eff0c.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_eff0c.dir/CMakeCCompilerABI.c.']
+        ignore line: [[2/2] : && /usr/bin/cc  -v -Wl -v CMakeFiles/cmTC_eff0c.dir/CMakeCCompilerABI.c.o -o cmTC_eff0c   && :]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/cc]
+        ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/15/lto-wrapper]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-linux-gnu]
+        ignore line: [Configured with: ../src/configure -v --with-pkgversion='Debian 15.3.0-2' --with-bugurl=file:///usr/share/doc/gcc-15/README.Bugs --enable-languages=c ada c++ go d fortran objc obj-c++ m2 rust cobol algol68 --prefix=/usr --with-gcc-major-version-only --program-suffix=-15 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/reproducible-path/gcc-15-15.3.0/debian/tmp-nvptx/usr amdgcn-amdhsa=/build/reproducible-path/gcc-15-15.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=3]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 15.3.0 (Debian 15.3.0-2) ]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/15/:/usr/libexec/gcc/x86_64-linux-gnu/15/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/15/:/usr/lib/gcc/x86_64-linux-gnu/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/15/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_eff0c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_eff0c.']
+        link line: [ /usr/libexec/gcc/x86_64-linux-gnu/15/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/15/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/15/lto-wrapper -plugin-opt=-fresolution=/tmp/cc9dMZAT.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_eff0c /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/15/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/15 -L/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/15/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/15/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_eff0c.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/15/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crtn.o]
+          arg [/usr/libexec/gcc/x86_64-linux-gnu/15/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/usr/libexec/gcc/x86_64-linux-gnu/15/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/15/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/cc9dMZAT.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [--build-id] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_eff0c] ==> ignore
+          arg [/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/Scrt1.o]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crti.o]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/15/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/15/crtbeginS.o]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/15] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/15]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/15/../../../../lib] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/15/../../../../lib]
+          arg [-L/lib/x86_64-linux-gnu] ==> dir [/lib/x86_64-linux-gnu]
+          arg [-L/lib/../lib] ==> dir [/lib/../lib]
+          arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
+          arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/15/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/15/../../..]
+          arg [-L/lib] ==> dir [/lib]
+          arg [-L/usr/lib] ==> dir [/usr/lib]
+          arg [-v] ==> ignore
+          arg [CMakeFiles/cmTC_eff0c.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [-lgcc] ==> lib [gcc]
+          arg [--push-state] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--pop-state] ==> ignore
+          arg [-lc] ==> lib [c]
+          arg [-lgcc] ==> lib [gcc]
+          arg [--push-state] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--pop-state] ==> ignore
+          arg [/usr/lib/gcc/x86_64-linux-gnu/15/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/15/crtendS.o]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crtn.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [collect2 version 15.3.0]
+        ignore line: [/usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/15/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/15/lto-wrapper -plugin-opt=-fresolution=/tmp/cc9dMZAT.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_eff0c /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/15/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/15 -L/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/15/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/15/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_eff0c.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/15/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crtn.o]
+        linker tool for 'C': /usr/bin/ld
+        collapse obj [/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/Scrt1.o] ==> [/usr/lib/x86_64-linux-gnu/Scrt1.o]
+        collapse obj [/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crti.o] ==> [/usr/lib/x86_64-linux-gnu/crti.o]
+        collapse obj [/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crtn.o] ==> [/usr/lib/x86_64-linux-gnu/crtn.o]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/15] ==> [/usr/lib/gcc/x86_64-linux-gnu/15]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/15/../../../../lib] ==> [/usr/lib]
+        collapse library dir [/lib/x86_64-linux-gnu] ==> [/lib/x86_64-linux-gnu]
+        collapse library dir [/lib/../lib] ==> [/lib]
+        collapse library dir [/usr/lib/x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
+        collapse library dir [/usr/lib/../lib] ==> [/usr/lib]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/15/../../..] ==> [/usr/lib]
+        collapse library dir [/lib] ==> [/lib]
+        collapse library dir [/usr/lib] ==> [/usr/lib]
+        implicit libs: [gcc;gcc_s;c;gcc;gcc_s]
+        implicit objs: [/usr/lib/x86_64-linux-gnu/Scrt1.o;/usr/lib/x86_64-linux-gnu/crti.o;/usr/lib/gcc/x86_64-linux-gnu/15/crtbeginS.o;/usr/lib/gcc/x86_64-linux-gnu/15/crtendS.o;/usr/lib/x86_64-linux-gnu/crtn.o]
+        implicit dirs: [/usr/lib/gcc/x86_64-linux-gnu/15;/usr/lib/x86_64-linux-gnu;/usr/lib;/lib/x86_64-linux-gnu;/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/Internal/CMakeDetermineLinkerId.cmake:38 (message)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:299 (cmake_determine_linker_id)"
+      - "/usr/share/cmake-4.3/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Running the C compiler's linker: "/usr/bin/ld" "-v"
+      GNU ld (GNU Binutils for Debian) 2.47
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "/usr/share/cmake-4.3/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/build/CMakeFiles/CMakeScratch/TryCompile-1njONc"
+      binary: "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/build/CMakeFiles/CMakeScratch/TryCompile-1njONc"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_CXX_STDLIB_MODULES_JSON: ""
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/build/CMakeFiles/CMakeScratch/TryCompile-1njONc'
+        
+        Run Build Command(s): /usr/bin/ninja -v cmTC_1b687
+        [1/2] /usr/bin/c++   -v -o CMakeFiles/cmTC_1b687.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-4.3/Modules/CMakeCXXCompilerABI.cpp
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/c++
+        OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-linux-gnu
+        Configured with: ../src/configure -v --with-pkgversion='Debian 15.3.0-2' --with-bugurl=file:///usr/share/doc/gcc-15/README.Bugs --enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2,rust,cobol,algol68 --prefix=/usr --with-gcc-major-version-only --program-suffix=-15 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/reproducible-path/gcc-15-15.3.0/debian/tmp-nvptx/usr,amdgcn-amdhsa=/build/reproducible-path/gcc-15-15.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=3
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 15.3.0 (Debian 15.3.0-2) 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_1b687.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_1b687.dir/'
+         /usr/libexec/gcc/x86_64-linux-gnu/15/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/share/cmake-4.3/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_1b687.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -o /tmp/ccyYbXjF.s
+        GNU C++17 (Debian 15.3.0-2) version 15.3.0 (x86_64-linux-gnu)
+        	compiled by GNU C version 15.3.0, GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.3.1, isl version isl-0.28-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring duplicate directory "/usr/include/x86_64-linux-gnu/c++/15"
+        ignoring nonexistent directory "/usr/local/include/x86_64-linux-gnu"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/15/include-fixed/x86_64-linux-gnu"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/15/include-fixed"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/15/../../../../x86_64-linux-gnu/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /usr/include/c++/15
+         /usr/include/x86_64-linux-gnu/c++/15
+         /usr/include/c++/15/backward
+         /usr/lib/gcc/x86_64-linux-gnu/15/include
+         /usr/local/include
+         /usr/include/x86_64-linux-gnu
+         /usr/include
+        End of search list.
+        Compiler executable checksum: b7682911ce88ba83c74cfab2092de6a4
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_1b687.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_1b687.dir/'
+         /usr/bin/x86_64-linux-gnu-as -v --64 -o CMakeFiles/cmTC_1b687.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccyYbXjF.s
+        GNU assembler version 2.47 (x86_64-linux-gnu) using BFD version (GNU Binutils for Debian) 2.47
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/15/:/usr/libexec/gcc/x86_64-linux-gnu/15/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/15/:/usr/lib/gcc/x86_64-linux-gnu/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/15/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_1b687.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_1b687.dir/CMakeCXXCompilerABI.cpp.'
+        [2/2] : && /usr/bin/c++  -v -Wl,-v CMakeFiles/cmTC_1b687.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_1b687   && :
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/c++
+        COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/15/lto-wrapper
+        OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-linux-gnu
+        Configured with: ../src/configure -v --with-pkgversion='Debian 15.3.0-2' --with-bugurl=file:///usr/share/doc/gcc-15/README.Bugs --enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2,rust,cobol,algol68 --prefix=/usr --with-gcc-major-version-only --program-suffix=-15 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/reproducible-path/gcc-15-15.3.0/debian/tmp-nvptx/usr,amdgcn-amdhsa=/build/reproducible-path/gcc-15-15.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=3
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 15.3.0 (Debian 15.3.0-2) 
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/15/:/usr/libexec/gcc/x86_64-linux-gnu/15/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/15/:/usr/lib/gcc/x86_64-linux-gnu/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/15/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_1b687' '-foffload-options=-l_GCC_stdc++' '-foffload-options=-l_GCC_m' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_1b687.'
+         /usr/libexec/gcc/x86_64-linux-gnu/15/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/15/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/15/lto-wrapper -plugin-opt=-fresolution=/tmp/ccvQFECv.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_1b687 /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/15/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/15 -L/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/15/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/15/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_1b687.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/15/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crtn.o
+        collect2 version 15.3.0
+        /usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/15/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/15/lto-wrapper -plugin-opt=-fresolution=/tmp/ccvQFECv.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_1b687 /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/15/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/15 -L/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/15/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/15/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_1b687.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/15/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crtn.o
+        GNU ld (GNU Binutils for Debian) 2.47
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_1b687' '-foffload-options=-l_GCC_stdc++' '-foffload-options=-l_GCC_m' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_1b687.'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
+      - "/usr/share/cmake-4.3/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/usr/include/c++/15]
+          add: [/usr/include/x86_64-linux-gnu/c++/15]
+          add: [/usr/include/c++/15/backward]
+          add: [/usr/lib/gcc/x86_64-linux-gnu/15/include]
+          add: [/usr/local/include]
+          add: [/usr/include/x86_64-linux-gnu]
+          add: [/usr/include]
+        end of search list found
+        collapse include dir [/usr/include/c++/15] ==> [/usr/include/c++/15]
+        collapse include dir [/usr/include/x86_64-linux-gnu/c++/15] ==> [/usr/include/x86_64-linux-gnu/c++/15]
+        collapse include dir [/usr/include/c++/15/backward] ==> [/usr/include/c++/15/backward]
+        collapse include dir [/usr/lib/gcc/x86_64-linux-gnu/15/include] ==> [/usr/lib/gcc/x86_64-linux-gnu/15/include]
+        collapse include dir [/usr/local/include] ==> [/usr/local/include]
+        collapse include dir [/usr/include/x86_64-linux-gnu] ==> [/usr/include/x86_64-linux-gnu]
+        collapse include dir [/usr/include] ==> [/usr/include]
+        implicit include dirs: [/usr/include/c++/15;/usr/include/x86_64-linux-gnu/c++/15;/usr/include/c++/15/backward;/usr/lib/gcc/x86_64-linux-gnu/15/include;/usr/local/include;/usr/include/x86_64-linux-gnu;/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
+      - "/usr/share/cmake-4.3/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
+        ignore line: [Change Dir: '/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/build/CMakeFiles/CMakeScratch/TryCompile-1njONc']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/bin/ninja -v cmTC_1b687]
+        ignore line: [[1/2] /usr/bin/c++   -v -o CMakeFiles/cmTC_1b687.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-4.3/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/c++]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-linux-gnu]
+        ignore line: [Configured with: ../src/configure -v --with-pkgversion='Debian 15.3.0-2' --with-bugurl=file:///usr/share/doc/gcc-15/README.Bugs --enable-languages=c ada c++ go d fortran objc obj-c++ m2 rust cobol algol68 --prefix=/usr --with-gcc-major-version-only --program-suffix=-15 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/reproducible-path/gcc-15-15.3.0/debian/tmp-nvptx/usr amdgcn-amdhsa=/build/reproducible-path/gcc-15-15.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=3]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 15.3.0 (Debian 15.3.0-2) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_1b687.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_1b687.dir/']
+        ignore line: [ /usr/libexec/gcc/x86_64-linux-gnu/15/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/share/cmake-4.3/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_1b687.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -o /tmp/ccyYbXjF.s]
+        ignore line: [GNU C++17 (Debian 15.3.0-2) version 15.3.0 (x86_64-linux-gnu)]
+        ignore line: [	compiled by GNU C version 15.3.0  GMP version 6.3.0  MPFR version 4.2.2  MPC version 1.3.1  isl version isl-0.28-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring duplicate directory "/usr/include/x86_64-linux-gnu/c++/15"]
+        ignore line: [ignoring nonexistent directory "/usr/local/include/x86_64-linux-gnu"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/15/include-fixed/x86_64-linux-gnu"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/15/include-fixed"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/15/../../../../x86_64-linux-gnu/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /usr/include/c++/15]
+        ignore line: [ /usr/include/x86_64-linux-gnu/c++/15]
+        ignore line: [ /usr/include/c++/15/backward]
+        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/15/include]
+        ignore line: [ /usr/local/include]
+        ignore line: [ /usr/include/x86_64-linux-gnu]
+        ignore line: [ /usr/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: b7682911ce88ba83c74cfab2092de6a4]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_1b687.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_1b687.dir/']
+        ignore line: [ /usr/bin/x86_64-linux-gnu-as -v --64 -o CMakeFiles/cmTC_1b687.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccyYbXjF.s]
+        ignore line: [GNU assembler version 2.47 (x86_64-linux-gnu) using BFD version (GNU Binutils for Debian) 2.47]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/15/:/usr/libexec/gcc/x86_64-linux-gnu/15/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/15/:/usr/lib/gcc/x86_64-linux-gnu/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/15/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_1b687.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_1b687.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [[2/2] : && /usr/bin/c++  -v -Wl -v CMakeFiles/cmTC_1b687.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_1b687   && :]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/c++]
+        ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/15/lto-wrapper]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-linux-gnu]
+        ignore line: [Configured with: ../src/configure -v --with-pkgversion='Debian 15.3.0-2' --with-bugurl=file:///usr/share/doc/gcc-15/README.Bugs --enable-languages=c ada c++ go d fortran objc obj-c++ m2 rust cobol algol68 --prefix=/usr --with-gcc-major-version-only --program-suffix=-15 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/reproducible-path/gcc-15-15.3.0/debian/tmp-nvptx/usr amdgcn-amdhsa=/build/reproducible-path/gcc-15-15.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=3]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 15.3.0 (Debian 15.3.0-2) ]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/15/:/usr/libexec/gcc/x86_64-linux-gnu/15/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/15/:/usr/lib/gcc/x86_64-linux-gnu/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/15/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/15/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_1b687' '-foffload-options=-l_GCC_stdc++' '-foffload-options=-l_GCC_m' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_1b687.']
+        link line: [ /usr/libexec/gcc/x86_64-linux-gnu/15/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/15/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/15/lto-wrapper -plugin-opt=-fresolution=/tmp/ccvQFECv.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_1b687 /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/15/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/15 -L/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/15/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/15/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_1b687.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/15/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crtn.o]
+          arg [/usr/libexec/gcc/x86_64-linux-gnu/15/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/usr/libexec/gcc/x86_64-linux-gnu/15/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/15/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccvQFECv.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [--build-id] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_1b687] ==> ignore
+          arg [/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/Scrt1.o]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crti.o]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/15/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/15/crtbeginS.o]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/15] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/15]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/15/../../../../lib] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/15/../../../../lib]
+          arg [-L/lib/x86_64-linux-gnu] ==> dir [/lib/x86_64-linux-gnu]
+          arg [-L/lib/../lib] ==> dir [/lib/../lib]
+          arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
+          arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/15/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/15/../../..]
+          arg [-L/lib] ==> dir [/lib]
+          arg [-L/usr/lib] ==> dir [/usr/lib]
+          arg [-v] ==> ignore
+          arg [CMakeFiles/cmTC_1b687.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [-lstdc++] ==> lib [stdc++]
+          arg [-lm] ==> lib [m]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/15/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/15/crtendS.o]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crtn.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [collect2 version 15.3.0]
+        ignore line: [/usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/15/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/15/lto-wrapper -plugin-opt=-fresolution=/tmp/ccvQFECv.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_1b687 /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/15/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/15 -L/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/15/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/15/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_1b687.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/15/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crtn.o]
+        linker tool for 'CXX': /usr/bin/ld
+        collapse obj [/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/Scrt1.o] ==> [/usr/lib/x86_64-linux-gnu/Scrt1.o]
+        collapse obj [/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crti.o] ==> [/usr/lib/x86_64-linux-gnu/crti.o]
+        collapse obj [/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crtn.o] ==> [/usr/lib/x86_64-linux-gnu/crtn.o]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/15] ==> [/usr/lib/gcc/x86_64-linux-gnu/15]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/15/../../../../lib] ==> [/usr/lib]
+        collapse library dir [/lib/x86_64-linux-gnu] ==> [/lib/x86_64-linux-gnu]
+        collapse library dir [/lib/../lib] ==> [/lib]
+        collapse library dir [/usr/lib/x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
+        collapse library dir [/usr/lib/../lib] ==> [/usr/lib]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/15/../../..] ==> [/usr/lib]
+        collapse library dir [/lib] ==> [/lib]
+        collapse library dir [/usr/lib] ==> [/usr/lib]
+        implicit libs: [stdc++;m;gcc_s;gcc;c;gcc_s;gcc]
+        implicit objs: [/usr/lib/x86_64-linux-gnu/Scrt1.o;/usr/lib/x86_64-linux-gnu/crti.o;/usr/lib/gcc/x86_64-linux-gnu/15/crtbeginS.o;/usr/lib/gcc/x86_64-linux-gnu/15/crtendS.o;/usr/lib/x86_64-linux-gnu/crtn.o]
+        implicit dirs: [/usr/lib/gcc/x86_64-linux-gnu/15;/usr/lib/x86_64-linux-gnu;/usr/lib;/lib/x86_64-linux-gnu;/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/Internal/CMakeDetermineLinkerId.cmake:38 (message)"
+      - "/usr/share/cmake-4.3/Modules/CMakeDetermineCompilerABI.cmake:299 (cmake_determine_linker_id)"
+      - "/usr/share/cmake-4.3/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Running the CXX compiler's linker: "/usr/bin/ld" "-v"
+      GNU ld (GNU Binutils for Debian) 2.47
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/FindPkgConfig.cmake:517 (find_program)"
+      - "/usr/share/cmake-4.3/Modules/FindOpenSSL.cmake:295 (find_package)"
+      - "CMakeLists.txt:15 (find_package)"
+    mode: "program"
+    variable: "PKG_CONFIG_EXECUTABLE"
+    description: "pkg-config executable"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "pkg-config"
+      - "pkgconf"
+    candidate_directories:
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
+      - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
+      - "/home/kzwo/.pyenv/shims/"
+      - "/home/kzwo/.pyenv/bin/"
+      - "/home/kzwo/.npm-global/bin/"
+      - "/home/kzwo/.local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/local/games/"
+      - "/usr/games/"
+      - "/snap/bin/"
+      - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
+      - "/usr/local/bin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/"
+      - "/usr/bin/"
+      - "/usr/sbin/"
+      - "/usr/"
+      - "/bin/"
+      - "/sbin/"
+      - "/usr/X11R6/bin/"
+      - "/usr/X11R6/sbin/"
+      - "/usr/X11R6/"
+      - "/usr/pkg/bin/"
+      - "/usr/pkg/sbin/"
+      - "/usr/pkg/"
+      - "/opt/bin/"
+      - "/opt/sbin/"
+      - "/opt/"
+    searched_directories:
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/pkg-config"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/pkgconf"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/pkg-config"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/pkgconf"
+      - "/home/kzwo/esp/esp-idf/components/app_update/pkg-config"
+      - "/home/kzwo/esp/esp-idf/components/app_update/pkgconf"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/pkg-config"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/pkgconf"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/pkg-config"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/pkgconf"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/pkg-config"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/pkgconf"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/pkg-config"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/pkgconf"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/pkg-config"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/pkgconf"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/pkg-config"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/pkgconf"
+      - "/home/kzwo/esp/esp-idf/tools/pkg-config"
+      - "/home/kzwo/esp/esp-idf/tools/pkgconf"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/pkg-config"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/pkgconf"
+      - "/home/kzwo/.pyenv/shims/pkg-config"
+      - "/home/kzwo/.pyenv/shims/pkgconf"
+      - "/home/kzwo/.pyenv/bin/pkg-config"
+      - "/home/kzwo/.pyenv/bin/pkgconf"
+      - "/home/kzwo/.npm-global/bin/pkg-config"
+      - "/home/kzwo/.npm-global/bin/pkgconf"
+      - "/home/kzwo/.local/bin/pkg-config"
+      - "/home/kzwo/.local/bin/pkgconf"
+      - "/usr/local/sbin/pkg-config"
+      - "/usr/local/sbin/pkgconf"
+      - "/usr/sbin/pkg-config"
+      - "/usr/sbin/pkgconf"
+      - "/sbin/pkg-config"
+      - "/sbin/pkgconf"
+      - "/usr/local/bin/pkg-config"
+      - "/usr/local/bin/pkgconf"
+    found: "/usr/bin/pkg-config"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/usr"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/FindPkgConfig.cmake:761 (find_library)"
+      - "/usr/share/cmake-4.3/Modules/FindPkgConfig.cmake:811 (_pkg_find_libs)"
+      - "/usr/share/cmake-4.3/Modules/FindPkgConfig.cmake:1149 (_pkg_recalculate)"
+      - "/usr/share/cmake-4.3/Modules/FindPkgConfig.cmake:1166 (_pkg_check_modules_internal)"
+      - "/usr/share/cmake-4.3/Modules/FindOpenSSL.cmake:297 (pkg_check_modules)"
+      - "CMakeLists.txt:15 (find_package)"
+    mode: "library"
+    variable: "pkgcfg_lib__OPENSSL_ssl"
+    description: "Path to a library."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ssl"
+    candidate_directories:
+      - "/usr/lib/x86_64-linux-gnu/"
+    found: "/usr/lib/x86_64-linux-gnu/libssl.so"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/usr"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+      CMAKE_SYSTEM_LIBRARY_PATH:
+        - "/usr/lib/X11"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/FindPkgConfig.cmake:761 (find_library)"
+      - "/usr/share/cmake-4.3/Modules/FindPkgConfig.cmake:811 (_pkg_find_libs)"
+      - "/usr/share/cmake-4.3/Modules/FindPkgConfig.cmake:1149 (_pkg_recalculate)"
+      - "/usr/share/cmake-4.3/Modules/FindPkgConfig.cmake:1166 (_pkg_check_modules_internal)"
+      - "/usr/share/cmake-4.3/Modules/FindOpenSSL.cmake:297 (pkg_check_modules)"
+      - "CMakeLists.txt:15 (find_package)"
+    mode: "library"
+    variable: "pkgcfg_lib__OPENSSL_crypto"
+    description: "Path to a library."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "crypto"
+    candidate_directories:
+      - "/usr/lib/x86_64-linux-gnu/"
+    found: "/usr/lib/x86_64-linux-gnu/libcrypto.so"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/usr"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+      CMAKE_SYSTEM_LIBRARY_PATH:
+        - "/usr/lib/X11"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/FindOpenSSL.cmake:370 (find_path)"
+      - "CMakeLists.txt:15 (find_package)"
+    mode: "path"
+    variable: "OPENSSL_INCLUDE_DIR"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "openssl/ssl.h"
+    candidate_directories:
+      - "/usr/include/include/"
+      - "/usr/include/"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/include/"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/include/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/include/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/include/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/include/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/include/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/include/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/include/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/include/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
+      - "/home/kzwo/esp/esp-idf/tools/include/"
+      - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/include/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
+      - "/home/kzwo/.pyenv/shims/include/"
+      - "/home/kzwo/.pyenv/shims/"
+      - "/home/kzwo/.pyenv/bin/include/"
+      - "/home/kzwo/.pyenv/bin/"
+      - "/home/kzwo/.npm-global/bin/include/"
+      - "/home/kzwo/.npm-global/bin/"
+      - "/home/kzwo/.local/bin/include/"
+      - "/home/kzwo/.local/bin/"
+      - "/usr/local/sbin/include/"
+      - "/usr/local/sbin/"
+      - "/usr/sbin/include/"
+      - "/usr/sbin/"
+      - "/sbin/include/"
+      - "/sbin/"
+      - "/usr/local/bin/include/"
+      - "/usr/local/bin/"
+      - "/usr/bin/include/"
+      - "/usr/bin/"
+      - "/bin/include/"
+      - "/bin/"
+      - "/usr/local/games/include/"
+      - "/usr/local/games/"
+      - "/usr/games/include/"
+      - "/usr/games/"
+      - "/snap/bin/include/"
+      - "/snap/bin/"
+      - "/home/kzwo/go/bin/include/"
+      - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/include/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
+      - "/usr/local/include/x86_64-linux-gnu/include/"
+      - "/usr/local/include/x86_64-linux-gnu/"
+      - "/usr/local/include/include/"
+      - "/usr/local/include/"
+      - "/usr/local/include/"
+      - "/usr/local/"
+      - "/usr/include/x86_64-linux-gnu/include/"
+      - "/usr/include/x86_64-linux-gnu/"
+      - "/usr/include/include/"
+      - "/usr/include/"
+      - "/usr/include/"
+      - "/usr/"
+      - "/include/x86_64-linux-gnu/include/"
+      - "/include/x86_64-linux-gnu/"
+      - "/include/include/"
+      - "/include/"
+      - "/usr/X11R6/include/x86_64-linux-gnu/include/"
+      - "/usr/X11R6/include/x86_64-linux-gnu/"
+      - "/usr/X11R6/include/include/"
+      - "/usr/X11R6/include/"
+      - "/usr/X11R6/include/"
+      - "/usr/X11R6/"
+      - "/usr/pkg/include/x86_64-linux-gnu/include/"
+      - "/usr/pkg/include/x86_64-linux-gnu/"
+      - "/usr/pkg/include/include/"
+      - "/usr/pkg/include/"
+      - "/usr/pkg/include/"
+      - "/usr/pkg/"
+      - "/opt/include/x86_64-linux-gnu/include/"
+      - "/opt/include/x86_64-linux-gnu/"
+      - "/opt/include/include/"
+      - "/opt/include/"
+      - "/opt/include/"
+      - "/opt/"
+      - "/usr/include/X11/include/"
+      - "/usr/include/X11/"
+    searched_directories:
+      - "/usr/include/include/openssl/ssl.h"
+    found: "/usr/include/"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/usr"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+      CMAKE_SYSTEM_INCLUDE_PATH:
+        - "/usr/include/X11"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/FindOpenSSL.cmake:628 (find_library)"
+      - "CMakeLists.txt:15 (find_package)"
+    mode: "library"
+    variable: "OPENSSL_SSL_LIBRARY"
+    description: "Path to a library."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ssl"
+      - "ssleay32"
+      - "ssleay32MD"
+    candidate_directories:
+      - "/usr/lib/x86_64-linux-gnu/lib/"
+      - "/usr/lib/x86_64-linux-gnu/lib64/"
+      - "/usr/lib/x86_64-linux-gnu/"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/lib/"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/lib64/"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/lib/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/lib64/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/lib/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/lib64/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/lib/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/lib64/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/lib/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/lib64/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/lib/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/lib64/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/lib/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/lib64/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/lib/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/lib64/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/lib/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/lib64/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
+      - "/home/kzwo/esp/esp-idf/tools/lib/"
+      - "/home/kzwo/esp/esp-idf/tools/lib64/"
+      - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/lib/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/lib64/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
+      - "/home/kzwo/.pyenv/shims/lib/"
+      - "/home/kzwo/.pyenv/shims/lib64/"
+      - "/home/kzwo/.pyenv/shims/"
+      - "/home/kzwo/.pyenv/bin/lib/"
+      - "/home/kzwo/.pyenv/bin/lib64/"
+      - "/home/kzwo/.pyenv/bin/"
+      - "/home/kzwo/.npm-global/bin/lib/"
+      - "/home/kzwo/.npm-global/bin/lib64/"
+      - "/home/kzwo/.npm-global/bin/"
+      - "/home/kzwo/.local/bin/lib/"
+      - "/home/kzwo/.local/bin/lib64/"
+      - "/home/kzwo/.local/bin/"
+      - "/usr/local/sbin/lib/"
+      - "/usr/local/sbin/lib64/"
+      - "/usr/local/sbin/"
+      - "/usr/sbin/lib/"
+      - "/usr/sbin/lib64/"
+      - "/usr/sbin/"
+      - "/sbin/lib/"
+      - "/sbin/lib64/"
+      - "/sbin/"
+      - "/usr/local/bin/lib/"
+      - "/usr/local/bin/lib64/"
+      - "/usr/local/bin/"
+      - "/usr/bin/lib/"
+      - "/usr/bin/lib64/"
+      - "/usr/bin/"
+      - "/bin/lib/"
+      - "/bin/lib64/"
+      - "/bin/"
+      - "/usr/local/games/lib/"
+      - "/usr/local/games/lib64/"
+      - "/usr/local/games/"
+      - "/usr/games/lib/"
+      - "/usr/games/lib64/"
+      - "/usr/games/"
+      - "/snap/bin/lib/"
+      - "/snap/bin/lib64/"
+      - "/snap/bin/"
+      - "/home/kzwo/go/bin/lib/"
+      - "/home/kzwo/go/bin/lib64/"
+      - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/lib/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/lib64/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
+      - "/usr/local/lib/x86_64-linux-gnu/lib/"
+      - "/usr/local/lib/x86_64-linux-gnu/lib64/"
+      - "/usr/local/lib/x86_64-linux-gnu/"
+      - "/usr/local/lib/lib/"
+      - "/usr/local/lib/lib64/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib64/"
+      - "/usr/local/"
+      - "/usr/lib/x86_64-linux-gnu/lib/"
+      - "/usr/lib/x86_64-linux-gnu/lib64/"
+      - "/usr/lib/x86_64-linux-gnu/"
+      - "/usr/lib/lib/"
+      - "/usr/lib/lib64/"
+      - "/usr/lib/"
+      - "/usr/lib/"
+      - "/usr/lib64/"
+      - "/usr/"
+      - "/lib/x86_64-linux-gnu/lib/"
+      - "/lib/x86_64-linux-gnu/lib64/"
+      - "/lib/x86_64-linux-gnu/"
+      - "/lib/lib/"
+      - "/lib/lib64/"
+      - "/lib/"
+      - "/usr/X11R6/lib/x86_64-linux-gnu/lib/"
+      - "/usr/X11R6/lib/x86_64-linux-gnu/lib64/"
+      - "/usr/X11R6/lib/x86_64-linux-gnu/"
+      - "/usr/X11R6/lib/lib/"
+      - "/usr/X11R6/lib/lib64/"
+      - "/usr/X11R6/lib/"
+      - "/usr/X11R6/lib/"
+      - "/usr/X11R6/lib64/"
+      - "/usr/X11R6/"
+      - "/usr/pkg/lib/x86_64-linux-gnu/lib/"
+      - "/usr/pkg/lib/x86_64-linux-gnu/lib64/"
+      - "/usr/pkg/lib/x86_64-linux-gnu/"
+      - "/usr/pkg/lib/lib/"
+      - "/usr/pkg/lib/lib64/"
+      - "/usr/pkg/lib/"
+      - "/usr/pkg/lib/"
+      - "/usr/pkg/lib64/"
+      - "/usr/pkg/"
+      - "/opt/lib/x86_64-linux-gnu/lib/"
+      - "/opt/lib/x86_64-linux-gnu/lib64/"
+      - "/opt/lib/x86_64-linux-gnu/"
+      - "/opt/lib/lib/"
+      - "/opt/lib/lib64/"
+      - "/opt/lib/"
+      - "/opt/lib/"
+      - "/opt/lib64/"
+      - "/opt/"
+      - "/usr/lib/X11/lib/"
+      - "/usr/lib/X11/lib64/"
+      - "/usr/lib/X11/"
+    searched_directories:
+      - "/usr/lib/x86_64-linux-gnu/lib/"
+      - "/usr/lib/x86_64-linux-gnu/lib/"
+      - "/usr/lib/x86_64-linux-gnu/lib/"
+      - "/usr/lib/x86_64-linux-gnu/lib64/"
+      - "/usr/lib/x86_64-linux-gnu/lib64/"
+      - "/usr/lib/x86_64-linux-gnu/lib64/"
+    found: "/usr/lib/x86_64-linux-gnu/libssl.so"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/usr"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+      CMAKE_SYSTEM_LIBRARY_PATH:
+        - "/usr/lib/X11"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.3/Modules/FindOpenSSL.cmake:642 (find_library)"
+      - "CMakeLists.txt:15 (find_package)"
+    mode: "library"
+    variable: "OPENSSL_CRYPTO_LIBRARY"
+    description: "Path to a library."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "crypto"
+    candidate_directories:
+      - "/usr/lib/x86_64-linux-gnu/lib/"
+      - "/usr/lib/x86_64-linux-gnu/lib64/"
+      - "/usr/lib/x86_64-linux-gnu/"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/lib/"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/lib64/"
+      - "/home/kzwo/esp/esp-idf/components/espcoredump/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/lib/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/lib64/"
+      - "/home/kzwo/esp/esp-idf/components/partition_table/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/lib/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/lib64/"
+      - "/home/kzwo/esp/esp-idf/components/app_update/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/lib/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/lib64/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/lib/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/lib64/"
+      - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/lib/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/lib64/"
+      - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/lib/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/lib64/"
+      - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/lib/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/lib64/"
+      - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/lib/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/lib64/"
+      - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
+      - "/home/kzwo/esp/esp-idf/tools/lib/"
+      - "/home/kzwo/esp/esp-idf/tools/lib64/"
+      - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/lib/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/lib64/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
+      - "/home/kzwo/.pyenv/shims/lib/"
+      - "/home/kzwo/.pyenv/shims/lib64/"
+      - "/home/kzwo/.pyenv/shims/"
+      - "/home/kzwo/.pyenv/bin/lib/"
+      - "/home/kzwo/.pyenv/bin/lib64/"
+      - "/home/kzwo/.pyenv/bin/"
+      - "/home/kzwo/.npm-global/bin/lib/"
+      - "/home/kzwo/.npm-global/bin/lib64/"
+      - "/home/kzwo/.npm-global/bin/"
+      - "/home/kzwo/.local/bin/lib/"
+      - "/home/kzwo/.local/bin/lib64/"
+      - "/home/kzwo/.local/bin/"
+      - "/usr/local/sbin/lib/"
+      - "/usr/local/sbin/lib64/"
+      - "/usr/local/sbin/"
+      - "/usr/sbin/lib/"
+      - "/usr/sbin/lib64/"
+      - "/usr/sbin/"
+      - "/sbin/lib/"
+      - "/sbin/lib64/"
+      - "/sbin/"
+      - "/usr/local/bin/lib/"
+      - "/usr/local/bin/lib64/"
+      - "/usr/local/bin/"
+      - "/usr/bin/lib/"
+      - "/usr/bin/lib64/"
+      - "/usr/bin/"
+      - "/bin/lib/"
+      - "/bin/lib64/"
+      - "/bin/"
+      - "/usr/local/games/lib/"
+      - "/usr/local/games/lib64/"
+      - "/usr/local/games/"
+      - "/usr/games/lib/"
+      - "/usr/games/lib64/"
+      - "/usr/games/"
+      - "/snap/bin/lib/"
+      - "/snap/bin/lib64/"
+      - "/snap/bin/"
+      - "/home/kzwo/go/bin/lib/"
+      - "/home/kzwo/go/bin/lib64/"
+      - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/lib/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/lib64/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
+      - "/usr/local/lib/x86_64-linux-gnu/lib/"
+      - "/usr/local/lib/x86_64-linux-gnu/lib64/"
+      - "/usr/local/lib/x86_64-linux-gnu/"
+      - "/usr/local/lib/lib/"
+      - "/usr/local/lib/lib64/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib/"
+      - "/usr/local/lib64/"
+      - "/usr/local/"
+      - "/usr/lib/x86_64-linux-gnu/lib/"
+      - "/usr/lib/x86_64-linux-gnu/lib64/"
+      - "/usr/lib/x86_64-linux-gnu/"
+      - "/usr/lib/lib/"
+      - "/usr/lib/lib64/"
+      - "/usr/lib/"
+      - "/usr/lib/"
+      - "/usr/lib64/"
+      - "/usr/"
+      - "/lib/x86_64-linux-gnu/lib/"
+      - "/lib/x86_64-linux-gnu/lib64/"
+      - "/lib/x86_64-linux-gnu/"
+      - "/lib/lib/"
+      - "/lib/lib64/"
+      - "/lib/"
+      - "/usr/X11R6/lib/x86_64-linux-gnu/lib/"
+      - "/usr/X11R6/lib/x86_64-linux-gnu/lib64/"
+      - "/usr/X11R6/lib/x86_64-linux-gnu/"
+      - "/usr/X11R6/lib/lib/"
+      - "/usr/X11R6/lib/lib64/"
+      - "/usr/X11R6/lib/"
+      - "/usr/X11R6/lib/"
+      - "/usr/X11R6/lib64/"
+      - "/usr/X11R6/"
+      - "/usr/pkg/lib/x86_64-linux-gnu/lib/"
+      - "/usr/pkg/lib/x86_64-linux-gnu/lib64/"
+      - "/usr/pkg/lib/x86_64-linux-gnu/"
+      - "/usr/pkg/lib/lib/"
+      - "/usr/pkg/lib/lib64/"
+      - "/usr/pkg/lib/"
+      - "/usr/pkg/lib/"
+      - "/usr/pkg/lib64/"
+      - "/usr/pkg/"
+      - "/opt/lib/x86_64-linux-gnu/lib/"
+      - "/opt/lib/x86_64-linux-gnu/lib64/"
+      - "/opt/lib/x86_64-linux-gnu/"
+      - "/opt/lib/lib/"
+      - "/opt/lib/lib64/"
+      - "/opt/lib/"
+      - "/opt/lib/"
+      - "/opt/lib64/"
+      - "/opt/"
+      - "/usr/lib/X11/lib/"
+      - "/usr/lib/X11/lib64/"
+      - "/usr/lib/X11/"
+    searched_directories:
+      - "/usr/lib/x86_64-linux-gnu/lib/"
+      - "/usr/lib/x86_64-linux-gnu/lib64/"
+    found: "/usr/lib/x86_64-linux-gnu/libcrypto.so"
+    search_context:
+      ENV{PATH}:
+        - "/home/kzwo/esp/esp-idf/components/espcoredump"
+        - "/home/kzwo/esp/esp-idf/components/partition_table"
+        - "/home/kzwo/esp/esp-idf/components/app_update"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin"
+        - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/riscv32-esp-elf/esp-14.2.0_20251107/riscv32-esp-elf/bin"
+        - "/home/kzwo/.espressif/tools/esp32ulp-elf/2.38_20240113/esp32ulp-elf/bin"
+        - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
+        - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
+        - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
+        - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.local/bin"
+        - "/usr/local/sbin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/local/games"
+        - "/usr/games"
+        - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/usr"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+      CMAKE_SYSTEM_LIBRARY_PATH:
+        - "/usr/lib/X11"
+...

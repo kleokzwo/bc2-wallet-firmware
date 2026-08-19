@@ -61,6 +61,9 @@ static bc2_hal_result_t button_poll(void *context,
     event->button = BC2_BUTTON_CONFIRM;
     event->action = level == 0 ? BC2_BUTTON_PRESSED : BC2_BUTTON_RELEASED;
     event->timestamp_ms = now;
+    ESP_LOGI(TAG, "PERF button action=%s timestamp=%llums debounce=35ms",
+             level == 0 ? "pressed" : "released",
+             (unsigned long long)now);
     return BC2_HAL_OK;
 }
 

@@ -1,5 +1,5 @@
 idf_component_register(
-    SRCS "app_main.c" "waveshare_bsp.c" "bc2_display_adapter.cpp" "bc2_button_adapter.c"
+    SRCS "bc2_radio_policy.c" "app_main.c" "waveshare_bsp.c" "bc2_display_adapter.cpp" "bc2_button_adapter.c"
          "bc2_hw_wallet.c" "bc2_bip39_words.c"
          "../../../firmware/platform/bc2_hal.c"
          "../../../firmware/platform/bc2_device_ui.c"

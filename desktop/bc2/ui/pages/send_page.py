@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from PySide6.QtCore import Qt, Signal
-from PySide6.QtGui import QDoubleValidator
+from PySide6.QtGui import QDoubleValidator, QPainter, QPen, QPixmap
 from PySide6.QtWidgets import (
     QFrame,
     QHBoxLayout,
@@ -19,6 +19,7 @@ TEXT = "#1E2025"
 MUTED = "#6D7078"
 BORDER = "#D8DBE0"
 SURFACE = "#FFFFFF"
+PURPLE = "#8E159D"
 
 
 class SendPage(QWidget):
@@ -43,11 +44,146 @@ class SendPage(QWidget):
     def _build_ui(self) -> None:
         outer = QVBoxLayout(self)
         outer.setContentsMargins(42, 34, 42, 34)
-        outer.setSpacing(22)
+        outer.setSpacing(24)
+
+        self.setStyleSheet("""
+            QLabel#PageTitle {
+                color: #8E159D;
+                font-size: 30px;
+                font-weight: 500;
+            }
+            QLabel#PageSubtitle {
+                color: #626775;
+                font-size: 15px;
+                font-weight: 400;
+            }
+            QLabel#SectionIcon {
+                color: #8E159D;
+                font-size: 22px;
+                font-weight: 500;
+                background: transparent;
+                border: none;
+            }
+            QLabel#SectionTitle {
+                color: #8E159D;
+                font-size: 20px;
+                font-weight: 600;
+            }
+            QLabel#FormLabel {
+                color: #1E2025;
+                font-size: 15px;
+                font-weight: 600;
+            }
+            QLabel#BodyText {
+                color: #626775;
+                font-size: 15px;
+                font-weight: 400;
+            }
+            QLabel#CardTitle {
+                color: #8E159D;
+                font-size: 18px;
+                font-weight: 600;
+            }
+            QLabel#SmallMuted {
+                color: #626775;
+                font-size: 14px;
+                font-weight: 400;
+            }
+            QLabel#ErrorText {
+                color: #C43D3D;
+                font-size: 14px;
+                font-weight: 500;
+            }
+            QLineEdit#Input {
+                background: white;
+                color: #1E2025;
+                border: 1px solid #C9CDD5;
+                border-radius: 10px;
+                padding: 11px 14px;
+                font-size: 15px;
+                font-weight: 400;
+                min-height: 24px;
+            }
+            QLineEdit#Input:focus {
+                border: 1px solid #8E159D;
+            }
+            QLineEdit#Input:disabled {
+                background: #F2F3F5;
+                color: #7B7F87;
+            }
+            QPushButton#PrimaryButton {
+                background: #8E159D;
+                color: white;
+                border: none;
+                border-radius: 10px;
+                padding: 11px 18px;
+                font-size: 15px;
+                font-weight: 600;
+            }
+            QPushButton#PrimaryButton:hover {
+                background: #781185;
+            }
+            QPushButton#PrimaryButton:pressed {
+                background: #691073;
+            }
+            QPushButton#PrimaryButton:disabled {
+                background: #D8D8DC;
+                color: white;
+            }
+            QPushButton#OutlineButton {
+                background: transparent;
+                color: #8E159D;
+                border: 1px solid #8E159D;
+                border-radius: 10px;
+                padding: 10px 16px;
+                font-size: 15px;
+                font-weight: 600;
+            }
+            QPushButton#OutlineButton:hover {
+                background: rgba(142, 21, 157, 0.06);
+            }
+            QFrame#SecurityBadge,
+            QFrame#SafetyBanner,
+            QFrame#ResultPanel {
+                background: transparent;
+                border: none;
+            }
+            QFrame#SendDivider {
+                background: #D9DCE3;
+                border: none;
+                min-height: 1px;
+                max-height: 1px;
+            }
+            QLabel#SendSecurityIcon,
+            QLabel#SendSafetyIcon {
+                background: transparent;
+                border: none;
+            }
+            QLabel#SecurityPrimary {
+                color: #8E159D;
+                font-size: 15px;
+                font-weight: 600;
+            }
+            QLabel#SecuritySecondary {
+                color: #626775;
+                font-size: 13px;
+                font-weight: 400;
+            }
+            QLabel#SafetyTitle {
+                color: #8E159D;
+                font-size: 15px;
+                font-weight: 600;
+            }
+            QLabel#SafetyText {
+                color: #626775;
+                font-size: 14px;
+                font-weight: 400;
+            }
+        """)
 
         head = QHBoxLayout()
         texts = QVBoxLayout()
-        texts.setSpacing(5)
+        texts.setSpacing(6)
 
         title_label = QLabel("SENDEN")
         title_label.setObjectName("PageTitle")
@@ -61,22 +197,32 @@ class SendPage(QWidget):
         texts.addWidget(title_label)
         texts.addWidget(subtitle_label)
         head.addLayout(texts, 1)
-        head.addWidget(self._security_badge())
+        head.addWidget(self._security_badge(), alignment=Qt.AlignTop)
         outer.addLayout(head)
 
-        card = QFrame()
-        card.setObjectName("Card")
+        # Open content area – no enclosing card.
+        content = QWidget()
+        layout = QVBoxLayout(content)
+        layout.setContentsMargins(0, 18, 0, 0)
+        layout.setSpacing(16)
 
-        layout = QVBoxLayout(card)
-        layout.setContentsMargins(28, 26, 28, 26)
-        layout.setSpacing(14)
+        section_head = QHBoxLayout()
+        section_head.setSpacing(10)
+
+        section_icon = QLabel("↗")
+        section_icon.setObjectName("SectionIcon")
+        section_icon.setFixedWidth(18)
 
         title = QLabel("BC2 senden")
         title.setObjectName("SectionTitle")
-        layout.addWidget(title)
+
+        section_head.addWidget(section_icon)
+        section_head.addWidget(title)
+        section_head.addStretch()
+        layout.addLayout(section_head)
 
         layout.addWidget(self._build_progress())
-        layout.addSpacing(4)
+        layout.addSpacing(6)
 
         layout.addWidget(self._form_label("Empfängeradresse"))
 
@@ -101,16 +247,28 @@ class SendPage(QWidget):
         self._error.setWordWrap(True)
         layout.addWidget(self._error)
 
+        # Preview/result becomes its own open section.
         self._preview = QFrame()
         self._preview.setObjectName("ResultPanel")
         self._preview.setVisible(False)
 
         preview_layout = QVBoxLayout(self._preview)
-        preview_layout.setContentsMargins(18, 16, 18, 16)
-        preview_layout.setSpacing(7)
+        preview_layout.setContentsMargins(0, 0, 0, 0)
+        preview_layout.setSpacing(8)
+
+        preview_title_row = QHBoxLayout()
+        preview_title_row.setSpacing(10)
+
+        preview_icon = QLabel("≡")
+        preview_icon.setObjectName("SectionIcon")
+        preview_icon.setFixedWidth(18)
 
         preview_title = QLabel("Transaktionsentwurf")
         preview_title.setObjectName("CardTitle")
+
+        preview_title_row.addWidget(preview_icon)
+        preview_title_row.addWidget(preview_title)
+        preview_title_row.addStretch()
 
         self._preview_text = QLabel("")
         self._preview_text.setObjectName("BodyText")
@@ -122,10 +280,17 @@ class SendPage(QWidget):
         self._status.setWordWrap(True)
         self._status.setTextInteractionFlags(Qt.TextSelectableByMouse)
 
-        preview_layout.addWidget(preview_title)
+        preview_layout.addLayout(preview_title_row)
         preview_layout.addWidget(self._preview_text)
         preview_layout.addWidget(self._status)
 
+        preview_divider = QFrame()
+        preview_divider.setObjectName("SendDivider")
+        preview_divider.setFrameShape(QFrame.HLine)
+
+        layout.addSpacing(8)
+        layout.addWidget(preview_divider)
+        layout.addSpacing(2)
         layout.addWidget(self._preview)
 
         actions = QHBoxLayout()
@@ -146,47 +311,67 @@ class SendPage(QWidget):
         layout.addLayout(actions)
         layout.addStretch()
 
-        outer.addWidget(card, 1)
+        outer.addWidget(content, 1)
+
+        footer_divider = QFrame()
+        footer_divider.setObjectName("SendDivider")
+        footer_divider.setFrameShape(QFrame.HLine)
+        outer.addWidget(footer_divider)
         outer.addWidget(self._safety_banner())
 
     def _build_progress(self) -> QWidget:
         container = QWidget()
-        layout = QVBoxLayout(container)
+        layout = QHBoxLayout(container)
         layout.setContentsMargins(0, 4, 0, 8)
-        layout.setSpacing(7)
-
-        row = QHBoxLayout()
-        row.setSpacing(0)
+        layout.setSpacing(0)
 
         labels = ("Entwurf", "Prüfen", "Signieren", "Senden")
 
         for index, label_text in enumerate(labels):
+            # Each node and its label share the same vertical column.
+            # This keeps the text exactly centered below the corresponding point.
+            step = QWidget()
+            step_layout = QVBoxLayout(step)
+            step_layout.setContentsMargins(0, 0, 0, 0)
+            step_layout.setSpacing(7)
+
             node = QLabel(str(index + 1))
             node.setAlignment(Qt.AlignCenter)
             node.setFixedSize(30, 30)
 
+            label = QLabel(label_text)
+            label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+            label.setFixedHeight(20)
+
             self._step_nodes.append(node)
-            row.addWidget(node)
+            self._step_labels.append(label)
+
+            node_row = QHBoxLayout()
+            node_row.setContentsMargins(0, 0, 0, 0)
+            node_row.addStretch()
+            node_row.addWidget(node)
+            node_row.addStretch()
+
+            step_layout.addLayout(node_row)
+            step_layout.addWidget(label)
+            layout.addWidget(step)
 
             if index < len(labels) - 1:
+                line_holder = QWidget()
+                line_layout = QVBoxLayout(line_holder)
+                line_layout.setContentsMargins(0, 14, 0, 0)
+                line_layout.setSpacing(0)
+
                 line = QFrame()
                 line.setFixedHeight(2)
                 line.setMinimumWidth(65)
+
                 self._step_lines.append(line)
-                row.addWidget(line, 1)
+                line_layout.addWidget(line)
+                line_layout.addStretch()
 
-        label_row = QHBoxLayout()
-        label_row.setSpacing(0)
+                layout.addWidget(line_holder, 1)
 
-        for label_text in labels:
-            label = QLabel(label_text)
-            label.setAlignment(Qt.AlignCenter)
-            label.setMinimumWidth(74)
-            self._step_labels.append(label)
-            label_row.addWidget(label, 1)
-
-        layout.addLayout(row)
-        layout.addLayout(label_row)
         return container
 
     def _set_progress(self, completed: int, current: int | None) -> None:
@@ -195,20 +380,20 @@ class SendPage(QWidget):
                 node.setText("✓")
                 node.setStyleSheet(
                     f"background:{GREEN}; color:white; border:none;"
-                    "border-radius:15px; font-weight:800;"
+                    "border-radius:15px; font-weight:600; font-size:13px;"
                 )
             elif current is not None and index == current:
                 node.setText(str(index + 1))
                 node.setStyleSheet(
-                    f"background:{ORANGE}; color:white; border:none;"
-                    "border-radius:15px; font-weight:800;"
+                    f"background:{PURPLE}; color:white; border:none;"
+                    "border-radius:15px; font-weight:600; font-size:13px;"
                 )
             else:
                 node.setText(str(index + 1))
                 node.setStyleSheet(
                     f"background:{SURFACE}; color:{MUTED};"
                     f"border:2px solid {BORDER}; border-radius:15px;"
-                    "font-weight:700;"
+                    "font-weight:600; font-size:13px;"
                 )
 
         for index, line in enumerate(self._step_lines):
@@ -220,16 +405,16 @@ class SendPage(QWidget):
         for index, label in enumerate(self._step_labels):
             if index < completed:
                 color = GREEN
-                weight = 700
+                weight = 600
             elif current is not None and index == current:
-                color = ORANGE
-                weight = 700
+                color = PURPLE
+                weight = 600
             else:
                 color = MUTED
                 weight = 500
 
             label.setStyleSheet(
-                f"color:{color}; font-size:12px; font-weight:{weight};"
+                f"color:{color}; font-size:13px; font-weight:{weight};"
             )
 
     def _run_action(self) -> None:
@@ -422,15 +607,17 @@ class SendPage(QWidget):
         frame.setFixedWidth(250)
 
         row = QHBoxLayout(frame)
-        row.setContentsMargins(14, 11, 14, 11)
+        row.setContentsMargins(0, 2, 0, 2)
+        row.setSpacing(11)
 
-        icon = QLabel("✓")
-        icon.setObjectName("SecurityIcon")
+        icon = QLabel()
+        icon.setObjectName("SendSecurityIcon")
         icon.setAlignment(Qt.AlignCenter)
         icon.setFixedSize(34, 34)
+        icon.setPixmap(self._hat_glasses_icon(30, "#23B55A"))
 
         text = QVBoxLayout()
-        text.setSpacing(0)
+        text.setSpacing(1)
 
         primary = QLabel("Sicher & Offline")
         primary.setObjectName("SecurityPrimary")
@@ -450,13 +637,17 @@ class SendPage(QWidget):
         banner.setObjectName("SafetyBanner")
 
         row = QHBoxLayout(banner)
-        row.setContentsMargins(18, 13, 18, 13)
+        row.setContentsMargins(0, 4, 0, 0)
+        row.setSpacing(12)
 
-        icon = QLabel("●")
-        icon.setObjectName("SafetyIcon")
-        icon.setFixedWidth(24)
+        icon = QLabel()
+        icon.setObjectName("SendSafetyIcon")
+        icon.setAlignment(Qt.AlignCenter)
+        icon.setFixedSize(34, 34)
+        icon.setPixmap(self._user_key_icon(30, "#8E159D"))
 
         text = QVBoxLayout()
+        text.setSpacing(2)
 
         title = QLabel("Sicherheit zuerst")
         title.setObjectName("SafetyTitle")
@@ -474,3 +665,67 @@ class SendPage(QWidget):
         row.addWidget(icon)
         row.addLayout(text, 1)
         return banner
+
+    def _hat_glasses_icon(self, size: int, color: str) -> QPixmap:
+        pixmap = QPixmap(size, size)
+        pixmap.fill(Qt.transparent)
+
+        painter = QPainter(pixmap)
+        painter.setRenderHint(QPainter.Antialiasing)
+        pen = QPen(color)
+        pen.setWidthF(max(1.8, size / 14))
+        pen.setCapStyle(Qt.RoundCap)
+        pen.setJoinStyle(Qt.RoundJoin)
+        painter.setPen(pen)
+
+        painter.drawLine(int(size * 0.18), int(size * 0.38), int(size * 0.82), int(size * 0.38))
+        painter.drawLine(int(size * 0.32), int(size * 0.34), int(size * 0.40), int(size * 0.20))
+        painter.drawLine(int(size * 0.40), int(size * 0.20), int(size * 0.60), int(size * 0.20))
+        painter.drawLine(int(size * 0.60), int(size * 0.20), int(size * 0.68), int(size * 0.34))
+
+        painter.drawEllipse(
+            int(size * 0.20), int(size * 0.50),
+            int(size * 0.25), int(size * 0.25)
+        )
+        painter.drawEllipse(
+            int(size * 0.55), int(size * 0.50),
+            int(size * 0.25), int(size * 0.25)
+        )
+        painter.drawLine(int(size * 0.45), int(size * 0.61), int(size * 0.55), int(size * 0.61))
+
+        painter.end()
+        return pixmap
+
+    def _user_key_icon(self, size: int, color: str) -> QPixmap:
+        pixmap = QPixmap(size, size)
+        pixmap.fill(Qt.transparent)
+
+        painter = QPainter(pixmap)
+        painter.setRenderHint(QPainter.Antialiasing)
+        pen = QPen(color)
+        pen.setWidthF(max(1.8, size / 14))
+        pen.setCapStyle(Qt.RoundCap)
+        pen.setJoinStyle(Qt.RoundJoin)
+        painter.setPen(pen)
+
+        painter.drawEllipse(
+            int(size * 0.18), int(size * 0.10),
+            int(size * 0.30), int(size * 0.30)
+        )
+        painter.drawArc(
+            int(size * 0.08), int(size * 0.38),
+            int(size * 0.52), int(size * 0.44),
+            20 * 16, 140 * 16
+        )
+
+        painter.drawEllipse(
+            int(size * 0.58), int(size * 0.52),
+            int(size * 0.18), int(size * 0.18)
+        )
+        painter.drawLine(int(size * 0.74), int(size * 0.61), int(size * 0.92), int(size * 0.61))
+        painter.drawLine(int(size * 0.85), int(size * 0.61), int(size * 0.85), int(size * 0.72))
+        painter.drawLine(int(size * 0.92), int(size * 0.61), int(size * 0.92), int(size * 0.68))
+
+        painter.end()
+        return pixmap
+

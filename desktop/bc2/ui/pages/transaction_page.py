@@ -160,8 +160,12 @@ class TransactionPage(QWidget):
         self._next_button.setStyleSheet(pagination_button_style)
 
     def show_loading(self) -> None:
-        self._clear_rows()
         self._sync_state.setText("Synchronisiere …")
+
+        if self._entries:
+            return
+
+        self._clear_rows()
         self._page_label.setText("Lade …")
         self._prev_button.setEnabled(False)
         self._next_button.setEnabled(False)
@@ -178,7 +182,44 @@ class TransactionPage(QWidget):
         self._rows.addStretch()
 
     def show_transactions(self, entries) -> None:
-        self._entries = list(entries)
+        new_entries = list(entries)
+
+        old_signature = tuple(
+            (
+                entry.txid,
+                entry.direction,
+                entry.amount,
+                entry.height,
+                entry.confirmed,
+            )
+            for entry in self._entries
+        )
+        new_signature = tuple(
+            (
+                entry.txid,
+                entry.direction,
+                entry.amount,
+                entry.height,
+                entry.confirmed,
+            )
+            for entry in new_entries
+        )
+
+        self._entries = new_entries
+
+        if new_signature == old_signature and self._entries:
+            total_pages = max(
+                1,
+                (len(self._entries) + self._page_size - 1) // self._page_size,
+            )
+            self._sync_state.setText(f"Aktuell · {len(self._entries)}")
+            self._page_label.setText(
+                f"Seite {self._page + 1} / {total_pages}"
+            )
+            self._prev_button.setEnabled(self._page > 0)
+            self._next_button.setEnabled(self._page + 1 < total_pages)
+            return
+
         self._page = 0
         self._render_page()
 

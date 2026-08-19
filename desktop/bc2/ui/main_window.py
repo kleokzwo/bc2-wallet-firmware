@@ -386,6 +386,10 @@ class MainWindow(QMainWindow):
             self._nav_buttons[key].setChecked(True)
 
         if key == "transactions":
+            if self._transaction_entries:
+                self._transaction_page.show_transactions(
+                    self._transaction_entries
+                )
             QTimer.singleShot(0, self._sync_transactions)
 
     def _electrum_server(self) -> str:
@@ -865,7 +869,12 @@ class MainWindow(QMainWindow):
         if not addresses:
             self._dashboard_page.set_sync_state("Keine Adresse bekannt")
             return
+
         self._electrum_service.sync(self._electrum_server(), addresses)
+        self._transaction_service.sync(
+            self._electrum_server(),
+            addresses,
+        )
 
     @Slot()
     def _on_balance_sync_started(self) -> None:
@@ -885,7 +894,6 @@ class MainWindow(QMainWindow):
         )
         self._dashboard_page.set_sync_state(f"Aktuell · {result.addresses} Adresse(n)")
         self._dashboard_page.set_network_state("Verbunden")
-        QTimer.singleShot(0, self._sync_transactions)
 
     @Slot(str)
     def _on_balance_sync_failed(self, message: str) -> None:
@@ -977,12 +985,12 @@ class MainWindow(QMainWindow):
                 border-right: 1px solid {BORDER};
             }}
             QLabel#BrandName {{
-                color: {TEXT};
+                color: {BALANCE};
                 font-size: 27px;
                 font-weight: 800;
             }}
             QLabel#BrandSubtitle {{
-                color: {ORANGE_DARK};
+                color: {TEXT};
                 font-size: 12px;
                 font-weight: 800;
             }}
@@ -997,13 +1005,13 @@ class MainWindow(QMainWindow):
                 font-size: 15px;
             }}
             QPushButton#NavButton:hover {{
-                background: #F0F1F3;
-                color: {TEXT};
+                background: #F6EFF8;
+                color: {BALANCE};
             }}
             QPushButton#NavButton:checked {{
-                background: {ORANGE_SOFT};
-                color: {ORANGE_DARK};
-                font-weight: 700;
+                background: #F6EFF8;
+                color: {BALANCE};
+                font-weight: 600;
             }}
             QFrame#SidebarStatus {{
                 background: {SURFACE};

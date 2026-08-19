@@ -43,6 +43,7 @@ class DashboardPage(QWidget):
         self._network_state = "Nicht verbunden"
         self._sync_state = "noch nicht gestartet"
         self._server = electrum_server
+        self._transaction_signature = None
 
         self._build_ui()
         self._refresh_status_icons()
@@ -154,9 +155,24 @@ class DashboardPage(QWidget):
         self.set_transactions([])
 
     def set_transactions(self, entries) -> None:
-        self._clear_transactions()
-
         entries = list(entries)[:5]
+
+        signature = tuple(
+            (
+                entry.txid,
+                entry.direction,
+                entry.amount,
+                entry.height,
+                entry.confirmed,
+            )
+            for entry in entries
+        )
+
+        if signature == self._transaction_signature:
+            return
+
+        self._transaction_signature = signature
+        self._clear_transactions()
 
         if not entries:
             empty = QLabel("Noch keine Transaktionen vorhanden.")

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from PySide6.QtCore import Qt, Signal
+from PySide6.QtGui import QPainter, QPen, QPixmap
 from PySide6.QtWidgets import (
     QFrame,
     QHBoxLayout,
@@ -24,12 +25,126 @@ class SettingsPage(QWidget):
     def _build_ui(self) -> None:
         outer = QVBoxLayout(self)
         outer.setContentsMargins(42, 34, 42, 34)
-        outer.setSpacing(22)
+        outer.setSpacing(24)
+
+        # Local UI styling only.
+        self.setStyleSheet("""
+            QLabel#PageTitle {
+                color: #8E159D;
+                font-size: 30px;
+                font-weight: 500;
+            }
+            QLabel#PageSubtitle {
+                color: #626775;
+                font-size: 15px;
+                font-weight: 400;
+            }
+            QLabel#SectionIcon {
+                color: #8E159D;
+                font-size: 22px;
+                font-weight: 500;
+                background: transparent;
+                border: none;
+            }
+            QLabel#SectionTitle {
+                color: #8E159D;
+                font-size: 20px;
+                font-weight: 600;
+            }
+            QLabel#FormLabel {
+                color: #1E2025;
+                font-size: 15px;
+                font-weight: 600;
+            }
+            QLabel#SmallMuted {
+                color: #626775;
+                font-size: 14px;
+                font-weight: 400;
+            }
+            QLabel#SuccessText {
+                color: #23B55A;
+                font-size: 14px;
+                font-weight: 600;
+            }
+            QLabel#ErrorText {
+                color: #C43D3D;
+                font-size: 14px;
+                font-weight: 500;
+            }
+            QLineEdit#Input {
+                background: white;
+                color: #1E2025;
+                border: 1px solid #C9CDD5;
+                border-radius: 10px;
+                padding: 11px 14px;
+                font-size: 15px;
+                font-weight: 400;
+                min-height: 24px;
+            }
+            QLineEdit#Input:focus {
+                border: 1px solid #8E159D;
+            }
+            QPushButton#PrimaryButton {
+                background: #8E159D;
+                color: white;
+                border: none;
+                border-radius: 10px;
+                padding: 11px 18px;
+                font-size: 15px;
+                font-weight: 600;
+            }
+            QPushButton#PrimaryButton:hover {
+                background: #781185;
+            }
+            QPushButton#PrimaryButton:pressed {
+                background: #691073;
+            }
+            QPushButton#PrimaryButton:disabled {
+                background: #D8D8DC;
+                color: white;
+            }
+            QFrame#SecurityBadge,
+            QFrame#SafetyBanner {
+                background: transparent;
+                border: none;
+            }
+            QFrame#SettingsDivider {
+                background: #D9DCE3;
+                border: none;
+                min-height: 1px;
+                max-height: 1px;
+            }
+            QLabel#SettingsSecurityIcon,
+            QLabel#SettingsSafetyIcon {
+                background: transparent;
+                border: none;
+            }
+            QLabel#SecurityPrimary {
+                color: #8E159D;
+                font-size: 15px;
+                font-weight: 600;
+            }
+            QLabel#SecuritySecondary {
+                color: #626775;
+                font-size: 13px;
+                font-weight: 400;
+            }
+            QLabel#SafetyTitle {
+                color: #8E159D;
+                font-size: 15px;
+                font-weight: 600;
+            }
+            QLabel#SafetyText {
+                color: #626775;
+                font-size: 14px;
+                font-weight: 400;
+            }
+        """)
 
         # Page header
         head = QHBoxLayout()
         texts = QVBoxLayout()
-        texts.setSpacing(5)
+        texts.setSpacing(6)
 
         title_label = QLabel("EINSTELLUNGEN")
         title_label.setObjectName("PageTitle")
@@ -43,21 +158,29 @@ class SettingsPage(QWidget):
         texts.addWidget(title_label)
         texts.addWidget(subtitle_label)
         head.addLayout(texts, 1)
-        head.addWidget(self._security_badge())
-
+        head.addWidget(self._security_badge(), alignment=Qt.AlignTop)
         outer.addLayout(head)
 
-        # Settings content
-        card = QFrame()
-        card.setObjectName("Card")
+        # Open settings content – no surrounding card.
+        content = QWidget()
+        layout = QVBoxLayout(content)
+        layout.setContentsMargins(0, 18, 0, 0)
+        layout.setSpacing(14)
 
-        layout = QVBoxLayout(card)
-        layout.setContentsMargins(28, 26, 28, 26)
-        layout.setSpacing(12)
+        network_head = QHBoxLayout()
+        network_head.setSpacing(10)
+
+        network_icon = QLabel("◎")
+        network_icon.setObjectName("SectionIcon")
+        network_icon.setFixedWidth(18)
 
         title = QLabel("Netzwerk")
         title.setObjectName("SectionTitle")
-        layout.addWidget(title)
+
+        network_head.addWidget(network_icon)
+        network_head.addWidget(title)
+        network_head.addStretch()
+        layout.addLayout(network_head)
 
         layout.addWidget(self._form_label("Electrum Server"))
 
@@ -74,7 +197,29 @@ class SettingsPage(QWidget):
         note.setWordWrap(True)
         layout.addWidget(note)
 
-        layout.addSpacing(8)
+        # Separate second settings section.
+        divider = QFrame()
+        divider.setObjectName("SettingsDivider")
+        divider.setFrameShape(QFrame.HLine)
+
+        layout.addSpacing(18)
+        layout.addWidget(divider)
+        layout.addSpacing(2)
+
+        sync_head = QHBoxLayout()
+        sync_head.setSpacing(10)
+
+        sync_icon = QLabel("↻")
+        sync_icon.setObjectName("SectionIcon")
+        sync_icon.setFixedWidth(18)
+
+        sync_title = QLabel("Empfangsadresse synchronisieren")
+        sync_title.setObjectName("SectionTitle")
+
+        sync_head.addWidget(sync_icon)
+        sync_head.addWidget(sync_title)
+        sync_head.addStretch()
+        layout.addLayout(sync_head)
 
         layout.addWidget(
             self._form_label(
@@ -105,8 +250,14 @@ class SettingsPage(QWidget):
         layout.addWidget(self._message)
 
         layout.addStretch()
+        outer.addWidget(content, 1)
 
-        outer.addWidget(card, 1)
+        # Footer separator and safety note.
+        footer_divider = QFrame()
+        footer_divider.setObjectName("SettingsDivider")
+        footer_divider.setFrameShape(QFrame.HLine)
+        outer.addWidget(footer_divider)
+        outer.addWidget(self._safety_banner())
 
     def _form_label(self, text: str) -> QLabel:
         label = QLabel(text)
@@ -119,15 +270,17 @@ class SettingsPage(QWidget):
         frame.setFixedWidth(250)
 
         row = QHBoxLayout(frame)
-        row.setContentsMargins(14, 11, 14, 11)
+        row.setContentsMargins(0, 2, 0, 2)
+        row.setSpacing(11)
 
-        icon = QLabel("✓")
-        icon.setObjectName("SecurityIcon")
+        icon = QLabel()
+        icon.setObjectName("SettingsSecurityIcon")
         icon.setAlignment(Qt.AlignCenter)
         icon.setFixedSize(34, 34)
+        icon.setPixmap(self._hat_glasses_icon(30, "#23B55A"))
 
         text = QVBoxLayout()
-        text.setSpacing(0)
+        text.setSpacing(1)
 
         primary = QLabel("Sicher & Offline")
         primary.setObjectName("SecurityPrimary")
@@ -142,6 +295,103 @@ class SettingsPage(QWidget):
         row.addLayout(text, 1)
 
         return frame
+
+    def _safety_banner(self) -> QWidget:
+        banner = QFrame()
+        banner.setObjectName("SafetyBanner")
+
+        row = QHBoxLayout(banner)
+        row.setContentsMargins(0, 4, 0, 0)
+        row.setSpacing(12)
+
+        icon = QLabel()
+        icon.setObjectName("SettingsSafetyIcon")
+        icon.setAlignment(Qt.AlignCenter)
+        icon.setFixedSize(34, 34)
+        icon.setPixmap(self._user_key_icon(30, "#8E159D"))
+
+        text = QVBoxLayout()
+        text.setSpacing(2)
+
+        title = QLabel("Sicherheit zuerst")
+        title.setObjectName("SafetyTitle")
+
+        detail = QLabel(
+            "PIN, Seed und private Schlüssel bleiben ausschließlich auf der Hardware. "
+            "Die Geräte-PIN besteht aus genau 4 Ziffern."
+        )
+        detail.setObjectName("SafetyText")
+        detail.setWordWrap(True)
+
+        text.addWidget(title)
+        text.addWidget(detail)
+
+        row.addWidget(icon)
+        row.addLayout(text, 1)
+        return banner
+
+    def _hat_glasses_icon(self, size: int, color: str) -> QPixmap:
+        pixmap = QPixmap(size, size)
+        pixmap.fill(Qt.transparent)
+
+        painter = QPainter(pixmap)
+        painter.setRenderHint(QPainter.Antialiasing)
+        pen = QPen(color)
+        pen.setWidthF(max(1.8, size / 14))
+        pen.setCapStyle(Qt.RoundCap)
+        pen.setJoinStyle(Qt.RoundJoin)
+        painter.setPen(pen)
+
+        painter.drawLine(int(size * 0.18), int(size * 0.38), int(size * 0.82), int(size * 0.38))
+        painter.drawLine(int(size * 0.32), int(size * 0.34), int(size * 0.40), int(size * 0.20))
+        painter.drawLine(int(size * 0.40), int(size * 0.20), int(size * 0.60), int(size * 0.20))
+        painter.drawLine(int(size * 0.60), int(size * 0.20), int(size * 0.68), int(size * 0.34))
+
+        painter.drawEllipse(
+            int(size * 0.20), int(size * 0.50),
+            int(size * 0.25), int(size * 0.25)
+        )
+        painter.drawEllipse(
+            int(size * 0.55), int(size * 0.50),
+            int(size * 0.25), int(size * 0.25)
+        )
+        painter.drawLine(int(size * 0.45), int(size * 0.61), int(size * 0.55), int(size * 0.61))
+
+        painter.end()
+        return pixmap
+
+    def _user_key_icon(self, size: int, color: str) -> QPixmap:
+        pixmap = QPixmap(size, size)
+        pixmap.fill(Qt.transparent)
+
+        painter = QPainter(pixmap)
+        painter.setRenderHint(QPainter.Antialiasing)
+        pen = QPen(color)
+        pen.setWidthF(max(1.8, size / 14))
+        pen.setCapStyle(Qt.RoundCap)
+        pen.setJoinStyle(Qt.RoundJoin)
+        painter.setPen(pen)
+
+        painter.drawEllipse(
+            int(size * 0.18), int(size * 0.10),
+            int(size * 0.30), int(size * 0.30)
+        )
+        painter.drawArc(
+            int(size * 0.08), int(size * 0.38),
+            int(size * 0.52), int(size * 0.44),
+            20 * 16, 140 * 16
+        )
+
+        painter.drawEllipse(
+            int(size * 0.58), int(size * 0.52),
+            int(size * 0.18), int(size * 0.18)
+        )
+        painter.drawLine(int(size * 0.74), int(size * 0.61), int(size * 0.92), int(size * 0.61))
+        painter.drawLine(int(size * 0.85), int(size * 0.61), int(size * 0.85), int(size * 0.72))
+        painter.drawLine(int(size * 0.92), int(size * 0.61), int(size * 0.92), int(size * 0.68))
+
+        painter.end()
+        return pixmap
 
     def _submit(self) -> None:
         value = self._server_input.text().strip()

@@ -5,7 +5,7 @@ from io import BytesIO
 import qrcode
 
 from PySide6.QtCore import Qt, Signal, QTimer
-from PySide6.QtGui import QGuiApplication, QPixmap
+from PySide6.QtGui import QGuiApplication, QPainter, QPen, QPixmap
 from PySide6.QtWidgets import (
     QFrame,
     QHBoxLayout,
@@ -27,12 +27,120 @@ class ReceivePage(QWidget):
     def _build_ui(self) -> None:
         outer = QVBoxLayout(self)
         outer.setContentsMargins(42, 34, 42, 34)
-        outer.setSpacing(22)
+        outer.setSpacing(24)
+
+        self.setStyleSheet("""
+            QLabel#PageTitle {
+                color: #8E159D;
+                font-size: 30px;
+                font-weight: 500;
+            }
+            QLabel#PageSubtitle {
+                color: #626775;
+                font-size: 15px;
+                font-weight: 400;
+            }
+            QLabel#SectionIcon {
+                color: #8E159D;
+                font-size: 22px;
+                font-weight: 500;
+                background: transparent;
+                border: none;
+            }
+            QLabel#SectionTitle {
+                color: #8E159D;
+                font-size: 20px;
+                font-weight: 600;
+            }
+            QLabel#BodyText {
+                color: #626775;
+                font-size: 15px;
+                font-weight: 400;
+            }
+            QLabel#CardTitle {
+                color: #8E159D;
+                font-size: 18px;
+                font-weight: 600;
+            }
+            QLabel#SmallMuted {
+                color: #626775;
+                font-size: 14px;
+                font-weight: 400;
+            }
+            QPushButton#PrimaryButton {
+                background: #8E159D;
+                color: white;
+                border: none;
+                border-radius: 10px;
+                padding: 11px 18px;
+                font-size: 15px;
+                font-weight: 600;
+            }
+            QPushButton#PrimaryButton:hover {
+                background: #781185;
+            }
+            QPushButton#PrimaryButton:pressed {
+                background: #691073;
+            }
+            QPushButton#PrimaryButton:disabled {
+                background: #D8D8DC;
+                color: white;
+            }
+            QPushButton#OutlineButton {
+                background: transparent;
+                color: #8E159D;
+                border: 1px solid #8E159D;
+                border-radius: 10px;
+                padding: 10px 16px;
+                font-size: 15px;
+                font-weight: 600;
+            }
+            QPushButton#OutlineButton:hover {
+                background: rgba(142, 21, 157, 0.06);
+            }
+            QFrame#SecurityBadge,
+            QFrame#SafetyBanner,
+            QFrame#ResultPanel {
+                background: transparent;
+                border: none;
+            }
+            QFrame#ReceiveDivider {
+                background: #D9DCE3;
+                border: none;
+                min-height: 1px;
+                max-height: 1px;
+            }
+            QLabel#ReceiveSecurityIcon,
+            QLabel#ReceiveSafetyIcon {
+                background: transparent;
+                border: none;
+            }
+            QLabel#SecurityPrimary {
+                color: #8E159D;
+                font-size: 15px;
+                font-weight: 600;
+            }
+            QLabel#SecuritySecondary {
+                color: #626775;
+                font-size: 13px;
+                font-weight: 400;
+            }
+            QLabel#SafetyTitle {
+                color: #8E159D;
+                font-size: 15px;
+                font-weight: 600;
+            }
+            QLabel#SafetyText {
+                color: #626775;
+                font-size: 14px;
+                font-weight: 400;
+            }
+        """)
 
         # Page header
         head = QHBoxLayout()
         texts = QVBoxLayout()
-        texts.setSpacing(5)
+        texts.setSpacing(6)
 
         title_label = QLabel("EMPFANGEN")
         title_label.setObjectName("PageTitle")
@@ -46,18 +154,28 @@ class ReceivePage(QWidget):
         texts.addWidget(title_label)
         texts.addWidget(subtitle_label)
         head.addLayout(texts, 1)
-        head.addWidget(self._security_badge())
+        head.addWidget(self._security_badge(), alignment=Qt.AlignTop)
         outer.addLayout(head)
 
-        # Receive content
-        card = QFrame()
-        card.setObjectName("Card")
-        layout = QVBoxLayout(card)
-        layout.setContentsMargins(28, 26, 28, 26)
-        layout.setSpacing(16)
+        # Open content, aligned with the page header.
+        content = QWidget()
+        layout = QVBoxLayout(content)
+        layout.setContentsMargins(0, 18, 0, 0)
+        layout.setSpacing(18)
+
+        section_head = QHBoxLayout()
+        section_head.setSpacing(10)
+
+        section_icon = QLabel("↓")
+        section_icon.setObjectName("SectionIcon")
+        section_icon.setFixedWidth(18)
 
         title = QLabel("BC2 empfangen")
         title.setObjectName("SectionTitle")
+
+        section_head.addWidget(section_icon)
+        section_head.addWidget(title)
+        section_head.addStretch()
 
         self._state = QLabel(
             "Verbinde deine Hardware Wallet, um eine Empfangsadresse anzufordern."
@@ -69,16 +187,42 @@ class ReceivePage(QWidget):
         self._request_button.setObjectName("PrimaryButton")
         self._request_button.clicked.connect(self.request_receive_requested)
 
+        layout.addLayout(section_head)
+        layout.addWidget(self._state)
+        layout.addWidget(self._request_button, alignment=Qt.AlignLeft)
+
+        # Divider between the action section and the result section.
+        divider = QFrame()
+        divider.setObjectName("ReceiveDivider")
+        divider.setFrameShape(QFrame.HLine)
+        layout.addSpacing(18)
+        layout.addWidget(divider)
+        layout.addSpacing(2)
+
+        # Result area – second distinct section, still without a box/card.
         self._result = QFrame()
         self._result.setObjectName("ResultPanel")
         rr = QVBoxLayout(self._result)
-        rr.setContentsMargins(18, 16, 18, 16)
+        rr.setContentsMargins(0, 0, 0, 0)
+        rr.setSpacing(10)
+
+        result_head = QHBoxLayout()
+        result_head.setSpacing(10)
+
+        result_icon = QLabel("⌁")
+        result_icon.setObjectName("SectionIcon")
+        result_icon.setFixedWidth(18)
 
         self._result_title = QLabel("Noch keine Adresse")
         self._result_title.setObjectName("CardTitle")
 
+        result_head.addWidget(result_icon)
+        result_head.addWidget(self._result_title)
+        result_head.addStretch()
+
         self._result_text = QLabel(
-            "Aus Sicherheitsgründen zeigt der Desktop keine erfundene Adresse an."
+            "Sobald du die Adresse auf der Hardware bestätigt hast, "
+            "erscheint sie hier zusammen mit QR-Code und Kopierfunktion."
         )
         self._result_text.setObjectName("SmallMuted")
         self._result_text.setWordWrap(True)
@@ -94,18 +238,21 @@ class ReceivePage(QWidget):
         self._copy_button.setVisible(False)
         self._copy_button.clicked.connect(self._copy_receive_address)
 
-        rr.addWidget(self._result_title)
+        rr.addLayout(result_head)
         rr.addWidget(self._qr, alignment=Qt.AlignLeft)
         rr.addWidget(self._result_text)
         rr.addWidget(self._copy_button, alignment=Qt.AlignLeft)
 
-        layout.addWidget(title)
-        layout.addWidget(self._state)
-        layout.addWidget(self._request_button, alignment=Qt.AlignLeft)
         layout.addWidget(self._result)
         layout.addStretch()
 
-        outer.addWidget(card, 1)
+        outer.addWidget(content, 1)
+
+        # Divider above the safety footer, matching the Dashboard language.
+        footer_divider = QFrame()
+        footer_divider.setObjectName("ReceiveDivider")
+        footer_divider.setFrameShape(QFrame.HLine)
+        outer.addWidget(footer_divider)
         outer.addWidget(self._safety_banner())
 
     def _security_badge(self) -> QWidget:
@@ -114,15 +261,17 @@ class ReceivePage(QWidget):
         frame.setFixedWidth(250)
 
         row = QHBoxLayout(frame)
-        row.setContentsMargins(14, 11, 14, 11)
+        row.setContentsMargins(0, 2, 0, 2)
+        row.setSpacing(11)
 
-        icon = QLabel("✓")
-        icon.setObjectName("SecurityIcon")
+        icon = QLabel()
+        icon.setObjectName("ReceiveSecurityIcon")
         icon.setAlignment(Qt.AlignCenter)
         icon.setFixedSize(34, 34)
+        icon.setPixmap(self._hat_glasses_icon(30, "#23B55A"))
 
         text = QVBoxLayout()
-        text.setSpacing(0)
+        text.setSpacing(1)
 
         primary = QLabel("Sicher & Offline")
         primary.setObjectName("SecurityPrimary")
@@ -142,13 +291,17 @@ class ReceivePage(QWidget):
         banner.setObjectName("SafetyBanner")
 
         row = QHBoxLayout(banner)
-        row.setContentsMargins(18, 13, 18, 13)
+        row.setContentsMargins(0, 4, 0, 0)
+        row.setSpacing(12)
 
-        icon = QLabel("●")
-        icon.setObjectName("SafetyIcon")
-        icon.setFixedWidth(24)
+        icon = QLabel()
+        icon.setObjectName("ReceiveSafetyIcon")
+        icon.setAlignment(Qt.AlignCenter)
+        icon.setFixedSize(34, 34)
+        icon.setPixmap(self._user_key_icon(30, "#8E159D"))
 
         text = QVBoxLayout()
+        text.setSpacing(2)
 
         title = QLabel("Sicherheit zuerst")
         title.setObjectName("SafetyTitle")
@@ -166,6 +319,73 @@ class ReceivePage(QWidget):
         row.addWidget(icon)
         row.addLayout(text, 1)
         return banner
+
+    def _hat_glasses_icon(self, size: int, color: str) -> QPixmap:
+        pixmap = QPixmap(size, size)
+        pixmap.fill(Qt.transparent)
+
+        painter = QPainter(pixmap)
+        painter.setRenderHint(QPainter.Antialiasing)
+        pen = QPen(color)
+        pen.setWidthF(max(1.8, size / 14))
+        pen.setCapStyle(Qt.RoundCap)
+        pen.setJoinStyle(Qt.RoundJoin)
+        painter.setPen(pen)
+
+        # Hat
+        painter.drawLine(int(size * 0.18), int(size * 0.38), int(size * 0.82), int(size * 0.38))
+        painter.drawLine(int(size * 0.32), int(size * 0.34), int(size * 0.40), int(size * 0.20))
+        painter.drawLine(int(size * 0.40), int(size * 0.20), int(size * 0.60), int(size * 0.20))
+        painter.drawLine(int(size * 0.60), int(size * 0.20), int(size * 0.68), int(size * 0.34))
+
+        # Glasses
+        painter.drawEllipse(
+            int(size * 0.20), int(size * 0.50),
+            int(size * 0.25), int(size * 0.25)
+        )
+        painter.drawEllipse(
+            int(size * 0.55), int(size * 0.50),
+            int(size * 0.25), int(size * 0.25)
+        )
+        painter.drawLine(int(size * 0.45), int(size * 0.61), int(size * 0.55), int(size * 0.61))
+
+        painter.end()
+        return pixmap
+
+    def _user_key_icon(self, size: int, color: str) -> QPixmap:
+        pixmap = QPixmap(size, size)
+        pixmap.fill(Qt.transparent)
+
+        painter = QPainter(pixmap)
+        painter.setRenderHint(QPainter.Antialiasing)
+        pen = QPen(color)
+        pen.setWidthF(max(1.8, size / 14))
+        pen.setCapStyle(Qt.RoundCap)
+        pen.setJoinStyle(Qt.RoundJoin)
+        painter.setPen(pen)
+
+        # User head and shoulders
+        painter.drawEllipse(
+            int(size * 0.18), int(size * 0.10),
+            int(size * 0.30), int(size * 0.30)
+        )
+        painter.drawArc(
+            int(size * 0.08), int(size * 0.38),
+            int(size * 0.52), int(size * 0.44),
+            20 * 16, 140 * 16
+        )
+
+        # Key
+        painter.drawEllipse(
+            int(size * 0.58), int(size * 0.52),
+            int(size * 0.18), int(size * 0.18)
+        )
+        painter.drawLine(int(size * 0.74), int(size * 0.61), int(size * 0.92), int(size * 0.61))
+        painter.drawLine(int(size * 0.85), int(size * 0.61), int(size * 0.85), int(size * 0.72))
+        painter.drawLine(int(size * 0.92), int(size * 0.61), int(size * 0.92), int(size * 0.68))
+
+        painter.end()
+        return pixmap
 
     def set_device_connected(self, connected: bool) -> None:
         if connected:

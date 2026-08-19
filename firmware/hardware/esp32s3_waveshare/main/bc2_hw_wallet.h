@@ -38,6 +38,11 @@ bool bc2_hw_wallet_receive_address(const bc2_hal_t *hal, uint32_t index,
                                    char *address, size_t address_capacity);
 bool bc2_hw_wallet_receive_index(const bc2_hal_t *hal, uint32_t *index);
 bool bc2_hw_wallet_commit_receive_index(const bc2_hal_t *hal, uint32_t index);
+bool bc2_hw_wallet_sign_single_p2wpkh(
+ const bc2_hal_t *hal,const char *input_address,const uint8_t prev_txid_le[32],uint32_t prev_output_index,
+ uint64_t input_amount,uint32_t sequence,const char *recipient_address,uint64_t recipient_amount,
+ uint64_t change_amount,uint32_t lock_time,uint8_t public_key[33],uint8_t *signature,
+ size_t signature_capacity,size_t *signature_length);
 
 void bc2_hw_wallet_clear_words(
     char words[BC2_HW_WALLET_WORD_COUNT][BC2_HW_WALLET_WORD_SIZE]);

@@ -15,6 +15,8 @@ idf_component_register(
          "../../../firmware/wallet/bc2_bip32.c"
          "../../../firmware/wallet/bc2_address.c"
          "../../../firmware/wallet/bc2_network.c"
+         "../../../firmware/wallet/bc2_sign.c"
+         "../../../firmware/wallet/bc2_transaction.c"
          "../../../firmware/protocol/bc2_usb_protocol.c"
          "../../../firmware/protocol/bc2_usb_stream.c"
     INCLUDE_DIRS "." "../../../firmware/include"

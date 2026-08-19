@@ -4,6 +4,13 @@ from collections.abc import Callable
 
 from PySide6.QtCore import Qt, Signal, QSize
 from PySide6.QtGui import QIcon
+GREEN = "#2EAD4A"
+RED = "#C94B40"
+ORANGE = "#F7931A"
+TEXT = "#1E2025"
+MUTED = "#6D7078"
+BORDER = "#E2E4E8"
+
 from PySide6.QtWidgets import (
     QFrame,
     QHBoxLayout,
@@ -36,6 +43,7 @@ class DashboardPage(QWidget):
         self._network_state = "Nicht verbunden"
         self._sync_state = "noch nicht gestartet"
         self._server = electrum_server
+        self._transaction_signature = None
 
         self._build_ui()
         self._refresh_status_icons()
@@ -136,10 +144,141 @@ class DashboardPage(QWidget):
         tx_head.addWidget(all_btn)
         outer.addLayout(tx_head)
 
-        empty = QLabel("Noch keine Transaktionen vorhanden.")
-        empty.setObjectName("DashboardEmptyText")
-        outer.addWidget(empty)
+        self._transactions_container = QWidget()
+        self._transactions_layout = QVBoxLayout(self._transactions_container)
+        self._transactions_layout.setContentsMargins(0, 0, 0, 0)
+        self._transactions_layout.setSpacing(0)
+
+        outer.addWidget(self._transactions_container)
         outer.addStretch()
+
+        self.set_transactions([])
+
+    def set_transactions(self, entries) -> None:
+        entries = list(entries)[:5]
+
+        signature = tuple(
+            (
+                entry.txid,
+                entry.direction,
+                entry.amount,
+                entry.height,
+                entry.confirmed,
+            )
+            for entry in entries
+        )
+
+        if signature == self._transaction_signature:
+            return
+
+        self._transaction_signature = signature
+        self._clear_transactions()
+
+        if not entries:
+            empty = QLabel("Noch keine Transaktionen vorhanden.")
+            empty.setObjectName("DashboardEmptyText")
+            self._transactions_layout.addWidget(empty)
+            return
+
+        for index, entry in enumerate(entries):
+            self._transactions_layout.addWidget(
+                self._transaction_row(entry)
+            )
+
+            if index < len(entries) - 1:
+                divider = QFrame()
+                divider.setFixedHeight(1)
+                divider.setStyleSheet(
+                    f"background:{BORDER}; border:none;"
+                )
+                self._transactions_layout.addWidget(divider)
+
+    def _transaction_row(self, entry) -> QWidget:
+        row = QWidget()
+        row.setMinimumHeight(76)
+
+        layout = QHBoxLayout(row)
+        layout.setContentsMargins(4, 10, 4, 10)
+        layout.setSpacing(14)
+
+        if entry.direction == "incoming":
+            symbol = "↓"
+            title = "Empfangen"
+            prefix = "+"
+            amount_color = GREEN
+        elif entry.direction == "outgoing":
+            symbol = "↑"
+            title = "Gesendet"
+            prefix = "−"
+            amount_color = RED
+        else:
+            symbol = "↔"
+            title = "Eigenübertrag"
+            prefix = ""
+            amount_color = MUTED
+
+        icon = QLabel(symbol)
+        icon.setAlignment(Qt.AlignCenter)
+        icon.setFixedSize(38, 38)
+        icon.setStyleSheet(
+            f"color:{amount_color};"
+            f"border:1px solid {amount_color};"
+            "border-radius:19px;"
+            "font-size:20px;"
+            "font-weight:800;"
+        )
+
+        info = QVBoxLayout()
+        info.setSpacing(2)
+
+        heading = QLabel(title)
+        heading.setStyleSheet(
+            f"color:{TEXT}; font-size:14px; font-weight:700;"
+        )
+
+        if entry.confirmed:
+            state = f"Bestätigt · Block {entry.height}"
+            state_color = GREEN
+        else:
+            state = "Unbestätigt"
+            state_color = ORANGE
+
+        status = QLabel(state)
+        status.setStyleSheet(
+            f"color:{state_color}; font-size:12px; font-weight:600;"
+        )
+
+        txid = QLabel(entry.txid)
+        txid.setTextInteractionFlags(Qt.TextSelectableByMouse)
+        txid.setStyleSheet(
+            f"color:{MUTED}; font-size:11px;"
+        )
+
+        info.addWidget(heading)
+        info.addWidget(status)
+        info.addWidget(txid)
+
+        amount = QLabel(
+            f"{prefix}{entry.amount / 100_000_000:.8f} BC2"
+        )
+        amount.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        amount.setStyleSheet(
+            f"color:{amount_color}; font-size:16px; font-weight:700;"
+        )
+
+        layout.addWidget(icon)
+        layout.addLayout(info, 1)
+        layout.addWidget(amount)
+
+        return row
+
+    def _clear_transactions(self) -> None:
+        while self._transactions_layout.count():
+            item = self._transactions_layout.takeAt(0)
+            widget = item.widget()
+
+            if widget is not None:
+                widget.deleteLater()
 
     def set_device(self, connected: bool) -> None:
         self._device_connected = connected

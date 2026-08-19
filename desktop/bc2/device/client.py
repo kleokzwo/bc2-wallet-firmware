@@ -17,11 +17,11 @@ class BC2DeviceClient:
         must also match protocol version, response command, sequence and payload
         bounds before it is accepted.
         """
-        deadline = time.monotonic() + timeout
+        deadline = None if timeout is None else time.monotonic() + timeout
         buf = bytearray()
         expected_response = expected_command | RESPONSE_FLAG
 
-        while time.monotonic() < deadline:
+        while deadline is None or time.monotonic() < deadline:
             chunk = self._port.read(256)
             if chunk:
                 buf.extend(chunk)
@@ -130,3 +130,54 @@ class BC2DeviceClient:
         address = payload[2:].decode("ascii", errors="strict")
         return status, address
 
+
+
+    def review_transaction(self, recipient: str, amount: int,
+                           change: int, fee: int):
+        raw_address = recipient.encode("ascii", errors="strict")
+        if not raw_address or len(raw_address) > 95:
+            raise ValueError("invalid transaction recipient address length")
+        if amount <= 0 or change < 0 or fee < 0:
+            raise ValueError("invalid transaction amounts")
+
+        payload = (
+            bytes((1, 1, 1))
+            + int(amount).to_bytes(8, "little", signed=False)
+            + int(change).to_bytes(8, "little", signed=False)
+            + int(fee).to_bytes(8, "little", signed=False)
+            + bytes((len(raw_address),))
+            + raw_address
+        )
+        response = self.request(
+            CMD_REVIEW_TRANSACTION,
+            payload,
+            timeout=None,
+        )
+        if len(response) != 1:
+            raise ProtocolError("invalid transaction-review response")
+        return response[0]
+
+    def get_transaction_result(self):
+        response = self.request(
+            CMD_GET_TRANSACTION_RESULT,
+            timeout=None,
+        )
+        if len(response) != 1:
+            raise ProtocolError("invalid transaction-result response")
+        return response[0]
+
+    def sign_transaction_single(self,plan):
+        if plan.input_count!=1:raise ValueError("Sprint 3 unterstützt genau einen Transaktions-Input.")
+        u=plan.utxos[0];a=u.address.encode("ascii");tx=bytes.fromhex(u.tx_hash)
+        payload=bytes((1,))+tx[::-1]+int(u.tx_pos).to_bytes(4,"little")+int(u.value).to_bytes(8,"little")+bytes((len(a),))+a
+        r=self.request(CMD_SIGN_TRANSACTION,payload,timeout=None)
+        if len(r)!=1:raise ProtocolError("invalid sign response")
+        return r[0]
+    def get_sign_result(self):
+        r=self.request(CMD_GET_SIGN_RESULT,timeout=None)
+        if not r:raise ProtocolError("invalid sign result")
+        if r[0]!=1:return r[0],None,None
+        if len(r)<35:raise ProtocolError("truncated sign result")
+        n=r[34]
+        if n==0 or len(r)!=35+n:raise ProtocolError("bad signature length")
+        return 1,bytes(r[1:34]),bytes(r[35:])

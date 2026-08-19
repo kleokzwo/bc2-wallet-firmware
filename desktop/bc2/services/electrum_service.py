@@ -10,6 +10,14 @@ class BalanceResult:
     addresses:int
     server:str
 
+@dataclass(frozen=True)
+class Utxo:
+    tx_hash:str
+    tx_pos:int
+    value:int
+    height:int
+    address:str
+
 CHARSET="qpzry9x8gf2tvdw0s3jn54khce6mua7l"
 
 def _polymod(values):
@@ -82,6 +90,85 @@ def fetch_balances(server,addresses,timeout=8.0):
                     r=_rpc(f,rid,"blockchain.scripthash.get_balance",[electrum_scripthash(address)]) or {}
                     c+=int(r.get("confirmed",0)); u+=int(r.get("unconfirmed",0))
     return BalanceResult(c,u,len(addrs),server)
+
+
+def fetch_utxos(server, addresses, timeout=8.0):
+    if ":" not in server:
+        raise ValueError("Electrum Server muss host:port sein.")
+    host, port = server.rsplit(":", 1)
+    port = int(port)
+    addrs = list(dict.fromkeys(a.strip() for a in addresses if a.strip()))
+    if not addrs:
+        return []
+
+    ctx = ssl.create_default_context()
+    utxos = []
+    with socket.create_connection((host, port), timeout=timeout) as raw:
+        with ctx.wrap_socket(raw, server_hostname=host) as sock:
+            sock.settimeout(timeout)
+            with sock.makefile("rwb") as f:
+                _rpc(f, 1, "server.version", ["BC2 Cold Wallet", "1.4"])
+                for rid, address in enumerate(addrs, 100):
+                    rows = _rpc(
+                        f, rid, "blockchain.scripthash.listunspent",
+                        [electrum_scripthash(address)]
+                    ) or []
+                    for row in rows:
+                        value = int(row.get("value", 0))
+                        if value <= 0:
+                            continue
+                        utxos.append(Utxo(
+                            tx_hash=str(row.get("tx_hash", "")),
+                            tx_pos=int(row.get("tx_pos", 0)),
+                            value=value,
+                            height=int(row.get("height", 0)),
+                            address=address,
+                        ))
+    return utxos
+
+
+def broadcast_transaction(server: str, raw_transaction_hex: str, timeout=15.0) -> str:
+    if ":" not in server:
+        raise ValueError("Electrum Server muss host:port sein.")
+
+    raw_transaction_hex = raw_transaction_hex.strip().lower()
+    if not raw_transaction_hex:
+        raise ValueError("Keine signierte Transaktion vorhanden.")
+
+    try:
+        bytes.fromhex(raw_transaction_hex)
+    except ValueError as exc:
+        raise ValueError("Die signierte Transaktion ist kein gültiger Hex-String.") from exc
+
+    host, port_text = server.rsplit(":", 1)
+    port = int(port_text)
+
+    ctx = ssl.create_default_context()
+
+    with socket.create_connection((host, port), timeout=timeout) as raw:
+        with ctx.wrap_socket(raw, server_hostname=host) as sock:
+            sock.settimeout(timeout)
+
+            with sock.makefile("rwb") as file:
+                _rpc(
+                    file,
+                    1,
+                    "server.version",
+                    ["BC2 Cold Wallet", "1.4"],
+                )
+                txid = _rpc(
+                    file,
+                    2,
+                    "blockchain.transaction.broadcast",
+                    [raw_transaction_hex],
+                )
+
+    if not isinstance(txid, str) or len(txid) != 64:
+        raise RuntimeError(
+            f"Electrum hat eine unerwartete Broadcast-Antwort geliefert: {txid!r}"
+        )
+
+    return txid.lower()
 
 class _Worker(QObject):
     finished=Signal(object); failed=Signal(str)

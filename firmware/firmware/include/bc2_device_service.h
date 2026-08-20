@@ -12,11 +12,12 @@
 extern "C" {
 #endif
 
-#define BC2_DEVICE_FIRMWARE_VERSION "0.44.0"
+#define BC2_DEVICE_FIRMWARE_VERSION "0.45.0"
 #define BC2_DEVICE_INFO_MAX 192U
 #define BC2_DEVICE_RECEIVE_ADDRESS_MAX 96U
 #define BC2_DEVICE_TRANSACTION_ADDRESS_MAX 96U
 #define BC2_DEVICE_RECOVERY_MNEMONIC_MAX 256U
+#define BC2_DEVICE_WALLET_ID_SIZE 16U
 
 typedef struct {
     uint64_t recipient_amount;
@@ -72,6 +73,8 @@ typedef struct {
     char recovery_mnemonic[BC2_DEVICE_RECOVERY_MNEMONIC_MAX];
     int unlock_pending;
     int lock_pending;
+    uint8_t wallet_id[BC2_DEVICE_WALLET_ID_SIZE];
+    int wallet_id_available;
 } bc2_device_service_t;
 
 void bc2_device_service_init(bc2_device_service_t *service);
@@ -103,6 +106,9 @@ int bc2_device_service_take_recovery_mnemonic(bc2_device_service_t *service,
 void bc2_device_service_cancel_recovery(bc2_device_service_t *service);
 int bc2_device_service_take_unlock(bc2_device_service_t *service);
 int bc2_device_service_take_lock(bc2_device_service_t *service);
+void bc2_device_service_set_wallet_id(bc2_device_service_t *service,
+                                      const uint8_t wallet_id[BC2_DEVICE_WALLET_ID_SIZE]);
+void bc2_device_service_clear_wallet_id(bc2_device_service_t *service);
 
 #ifdef __cplusplus
 }

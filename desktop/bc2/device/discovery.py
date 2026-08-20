@@ -57,6 +57,10 @@ def lock_wallet(port_name: str) -> bool:
     with serial.Serial(port_name, baudrate=DeviceDiscovery.BAUD_RATE, timeout=.1, write_timeout=2.0) as port:
         return BC2DeviceClient(port).lock_wallet()
 
+def get_wallet_id(port_name: str) -> str | None:
+    with serial.Serial(port_name, baudrate=DeviceDiscovery.BAUD_RATE, timeout=.1, write_timeout=2.0) as port:
+        return BC2DeviceClient(port).get_wallet_id()
+
 
 def review_transaction(port_name: str, recipient: str,
                        amount: int, change: int, fee: int) -> int:

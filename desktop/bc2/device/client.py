@@ -102,6 +102,14 @@ class BC2DeviceClient:
             raise ProtocolError("invalid lock-wallet response")
         return payload[0] == 1
 
+    def get_wallet_id(self):
+        payload = self.request(CMD_GET_WALLET_ID)
+        if len(payload) == 1 and payload[0] == 0:
+            return None
+        if len(payload) != 17 or payload[0] != 1:
+            raise ProtocolError("invalid wallet-id response")
+        return payload[1:].hex()
+
     def submit_recovery_mnemonic(self, mnemonic: str):
         raw = mnemonic.encode("ascii", errors="strict")
         payload = self.request(CMD_SUBMIT_RECOVERY_MNEMONIC, raw, timeout=3.0)

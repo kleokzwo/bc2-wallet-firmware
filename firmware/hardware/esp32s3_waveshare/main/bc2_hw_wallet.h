@@ -14,6 +14,7 @@ extern "C" {
 #define BC2_HW_WALLET_WORD_COUNT 12U
 #define BC2_HW_WALLET_MAX_WORD_COUNT 24U
 #define BC2_HW_WALLET_WORD_SIZE 9U
+#define BC2_HW_WALLET_ID_SIZE 16U
 
 typedef enum {
     BC2_HW_WALLET_NONE = 0,
@@ -31,6 +32,8 @@ bool bc2_hw_wallet_confirm_backup(const bc2_hal_t *hal);
 bool bc2_hw_wallet_validate_indexes(const uint16_t *indexes, size_t word_count);
 bool bc2_hw_wallet_restore_indexes(const bc2_hal_t *hal, const uint16_t *indexes, size_t word_count);
 bool bc2_hw_wallet_factory_reset(const bc2_hal_t *hal);
+bool bc2_hw_wallet_id(const bc2_hal_t *hal,
+                      uint8_t wallet_id[BC2_HW_WALLET_ID_SIZE]);
 
 /* Derive a public receive address from the encrypted hardware seed.
  * No seed/private-key material leaves this function. */

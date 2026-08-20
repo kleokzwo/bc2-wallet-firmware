@@ -402,6 +402,67 @@ static bool decrypt_entropy_any(const bc2_hal_t *hal, uint8_t entropy[32], size_
     return result == 0;
 }
 
+
+bool bc2_hw_wallet_id(const bc2_hal_t *hal,
+                      uint8_t wallet_id[BC2_HW_WALLET_ID_SIZE]) {
+    static const uint8_t domain[] = "BC2 wallet id v1";
+    uint8_t entropy[32] = {0};
+    size_t entropy_size = 0U;
+    uint8_t seed[64] = {0};
+    uint8_t public_key[33] = {0};
+    uint8_t digest[32] = {0};
+    uint8_t material[(sizeof(domain) - 1U) + sizeof(public_key)];
+    bc2_xprv master = {0};
+    bc2_xprv account = {0};
+    char mnemonic[256] = {0};
+    char path[64] = {0};
+    char salt[] = "mnemonic";
+    const bc2_network *network = bc2_network_mainnet();
+    const mbedtls_md_info_t *sha256 = mbedtls_md_info_from_type(MBEDTLS_MD_SHA256);
+    bool ok = false;
+
+    if (hal == NULL || wallet_id == NULL || network == NULL || sha256 == NULL ||
+        bc2_hw_wallet_status(hal) != BC2_HW_WALLET_READY)
+        return false;
+
+    memset(wallet_id, 0, BC2_HW_WALLET_ID_SIZE);
+    if (!decrypt_entropy_any(hal, entropy, &entropy_size) ||
+        !entropy_to_mnemonic_any(entropy, entropy_size, mnemonic, sizeof(mnemonic)) ||
+        !bc2_pbkdf2_hmac_sha512((const uint8_t *)mnemonic, strlen(mnemonic),
+                                (const uint8_t *)salt, strlen(salt),
+                                2048U, seed, sizeof(seed)))
+        goto cleanup;
+
+    const int written = snprintf(path, sizeof(path), "m/84'/%u'/0'",
+                                 (unsigned int)network->coin_type);
+    if (written < 0 || (size_t)written >= sizeof(path) ||
+        !bc2_bip32_master(seed, sizeof(seed), &master) ||
+        !bc2_bip32_derive_path(&master, path, &account) ||
+        !bc2_secp256k1_public(account.key, public_key))
+        goto cleanup;
+
+    memcpy(material, domain, sizeof(domain) - 1U);
+    memcpy(material + sizeof(domain) - 1U, public_key, sizeof(public_key));
+    if (mbedtls_md(sha256, material, sizeof(material), digest) != 0)
+        goto cleanup;
+
+    memcpy(wallet_id, digest, BC2_HW_WALLET_ID_SIZE);
+    ok = true;
+
+cleanup:
+    secure_zero(entropy, sizeof(entropy));
+    secure_zero(seed, sizeof(seed));
+    secure_zero(public_key, sizeof(public_key));
+    secure_zero(digest, sizeof(digest));
+    secure_zero(material, sizeof(material));
+    secure_zero(&master, sizeof(master));
+    secure_zero(&account, sizeof(account));
+    secure_zero(mnemonic, sizeof(mnemonic));
+    secure_zero(path, sizeof(path));
+    if (!ok) memset(wallet_id, 0, BC2_HW_WALLET_ID_SIZE);
+    return ok;
+}
+
 bool bc2_hw_wallet_receive_address(const bc2_hal_t *hal, uint32_t index,
                                    char *address, size_t address_capacity) {
     uint8_t entropy[32];

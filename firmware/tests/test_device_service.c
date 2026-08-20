@@ -162,6 +162,26 @@ int main(void) {
 
     machine.state = BC2_DEVICE_DASHBOARD;
 
+    /* Wallet identity is only available after authentication and is supplied
+     * by the hardware wallet layer, never by the desktop. */
+    uint8_t wallet_id[BC2_DEVICE_WALLET_ID_SIZE];
+    for (size_t i = 0U; i < sizeof(wallet_id); ++i) wallet_id[i] = (uint8_t)i;
+    bc2_device_service_set_wallet_id(&service, wallet_id);
+    prepare_request(&usb, BC2_USB_CMD_GET_WALLET_ID, 933U, NULL, 0U);
+    process_until_response(&service, &hal, &machine, &identity, &usb);
+    assert(bc2_usb_parse(usb.response, usb.response_size, &response) == BC2_USB_PARSE_OK);
+    assert(response.payload_length == 1U + BC2_DEVICE_WALLET_ID_SIZE);
+    assert(response.payload[0] == 1U);
+    assert(memcmp(response.payload + 1U, wallet_id, sizeof(wallet_id)) == 0);
+
+    machine.state = BC2_DEVICE_LOCKED;
+    prepare_request(&usb, BC2_USB_CMD_GET_WALLET_ID, 934U, NULL, 0U);
+    process_until_response(&service, &hal, &machine, &identity, &usb);
+    assert(bc2_usb_parse(usb.response, usb.response_size, &response) == BC2_USB_PARSE_OK);
+    assert(response.payload_length == 1U && response.payload[0] == 0U);
+    bc2_device_service_clear_wallet_id(&service);
+    machine.state = BC2_DEVICE_DASHBOARD;
+
     /* v0.34 receive flow: desktop requests an address, but the address itself
      * is only returned after the hardware completes physical approval. */
     prepare_request(&usb, BC2_USB_CMD_BEGIN_RECEIVE_ADDRESS, 94U, NULL, 0U);

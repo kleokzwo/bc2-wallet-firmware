@@ -681,6 +681,7 @@ static void process_lock_request(bc2_device_service_t *service,
 
     (void)bc2_device_machine_dispatch(machine, BC2_DEVICE_EVENT_LOCK,
                                       bc2_hal_now_ms(hal));
+    bc2_device_service_clear_wallet_id(service);
     render_current_state(hal, machine);
 }
 
@@ -716,6 +717,27 @@ static void process_receive_request(bc2_device_service_t *service,
     bc2_pin_entry_init(pin_entry);
     render_pin(hal, pin_entry, pin_session->mode);
 }
+
+static void sync_authenticated_wallet_id(bc2_device_service_t *service,
+                                         const bc2_hal_t *hal,
+                                         const bc2_device_machine *machine) {
+    uint8_t wallet_id[BC2_HW_WALLET_ID_SIZE] = {0};
+    if (service == NULL || hal == NULL || machine == NULL) return;
+
+    if (machine->state != BC2_DEVICE_DASHBOARD) {
+        bc2_device_service_clear_wallet_id(service);
+        return;
+    }
+
+    if (!service->wallet_id_available) {
+        if (bc2_hw_wallet_id(hal, wallet_id))
+            bc2_device_service_set_wallet_id(service, wallet_id);
+        else
+            ESP_LOGE(TAG, "Unable to derive authenticated wallet id");
+    }
+    memset(wallet_id, 0, sizeof(wallet_id));
+}
+
 static void process_usb(bc2_device_service_t *service,
                         const bc2_hal_t *hal,
                         const bc2_device_machine *machine) {
@@ -806,6 +828,7 @@ static void bc2_application_task(void *argument) {
         /* Physical input has priority and must never wait behind USB I/O. */
         process_button(&hal, &machine, &device_service, &navigation, &pin_entry,
                        &pin_session, &wallet_setup, &recovery);
+        sync_authenticated_wallet_id(&device_service, &hal, &machine);
         process_usb(&device_service, &hal, &machine);
         process_lock_request(&device_service, &machine, &hal, &pin_session);
         process_create_wallet_request(&device_service, &machine, &wallet_setup,

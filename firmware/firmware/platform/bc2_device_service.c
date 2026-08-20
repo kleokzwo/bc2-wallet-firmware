@@ -169,6 +169,17 @@ case BC2_USB_CMD_LOCK_WALLET:
     service->lock_pending = 1;
     payload[0] = 1U;
     break;
+case BC2_USB_CMD_GET_WALLET_ID:
+    payload[0] = 0U;
+    payload_size = 1U;
+    if (service == NULL || machine == NULL ||
+        machine->state != BC2_DEVICE_DASHBOARD ||
+        !service->wallet_id_available)
+        break;
+    payload[0] = 1U;
+    memcpy(payload + 1U, service->wallet_id, BC2_DEVICE_WALLET_ID_SIZE);
+    payload_size = 1U + BC2_DEVICE_WALLET_ID_SIZE;
+    break;
 case BC2_USB_CMD_BEGIN_RECEIVE_ADDRESS:
     payload[0] = 0U;
     payload_size = 1U;
@@ -454,4 +465,18 @@ int bc2_device_service_take_lock(bc2_device_service_t *service) {
     if (service == NULL || !service->lock_pending) return 0;
     service->lock_pending = 0;
     return 1;
+}
+
+void bc2_device_service_set_wallet_id(
+    bc2_device_service_t *service,
+    const uint8_t wallet_id[BC2_DEVICE_WALLET_ID_SIZE]) {
+    if (service == NULL || wallet_id == NULL) return;
+    memcpy(service->wallet_id, wallet_id, BC2_DEVICE_WALLET_ID_SIZE);
+    service->wallet_id_available = 1;
+}
+
+void bc2_device_service_clear_wallet_id(bc2_device_service_t *service) {
+    if (service == NULL) return;
+    memset(service->wallet_id, 0, sizeof(service->wallet_id));
+    service->wallet_id_available = 0;
 }

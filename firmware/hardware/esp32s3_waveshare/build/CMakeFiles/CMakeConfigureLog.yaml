@@ -33,6 +33,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
       - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
       - "/home/kzwo/.pyenv/shims/"
       - "/home/kzwo/.pyenv/bin/"
       - "/home/kzwo/.npm-global/bin/"
@@ -47,6 +48,7 @@ events:
       - "/usr/games/"
       - "/snap/bin/"
       - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
     searched_directories:
       - "/home/kzwo/esp/esp-idf/components/espcoredump/git"
       - "/home/kzwo/esp/esp-idf/components/partition_table/git"
@@ -58,6 +60,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/git"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/git"
       - "/home/kzwo/esp/esp-idf/tools/git"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/git"
       - "/home/kzwo/.pyenv/shims/git"
       - "/home/kzwo/.pyenv/bin/git"
       - "/home/kzwo/.npm-global/bin/git"
@@ -79,7 +82,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -93,6 +100,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -126,6 +137,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
       - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
       - "/home/kzwo/.pyenv/shims/"
       - "/home/kzwo/.pyenv/bin/"
       - "/home/kzwo/.npm-global/bin/"
@@ -140,6 +152,7 @@ events:
       - "/usr/games/"
       - "/snap/bin/"
       - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
     searched_directories:
       - "/home/kzwo/esp/esp-idf/components/espcoredump/uname"
       - "/home/kzwo/esp/esp-idf/components/partition_table/uname"
@@ -151,6 +164,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/uname"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/uname"
       - "/home/kzwo/esp/esp-idf/tools/uname"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/uname"
       - "/home/kzwo/.pyenv/shims/uname"
       - "/home/kzwo/.pyenv/bin/uname"
       - "/home/kzwo/.npm-global/bin/uname"
@@ -172,7 +186,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -186,6 +204,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -230,6 +252,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
       - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
       - "/home/kzwo/.pyenv/shims/"
       - "/home/kzwo/.pyenv/bin/"
       - "/home/kzwo/.npm-global/bin/"
@@ -244,6 +267,7 @@ events:
       - "/usr/games/"
       - "/snap/bin/"
       - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
     searched_directories:
       - "/home/kzwo/esp/esp-idf/components/espcoredump/ninja-build"
       - "/home/kzwo/esp/esp-idf/components/espcoredump/ninja"
@@ -275,6 +299,9 @@ events:
       - "/home/kzwo/esp/esp-idf/tools/ninja-build"
       - "/home/kzwo/esp/esp-idf/tools/ninja"
       - "/home/kzwo/esp/esp-idf/tools/samu"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/ninja-build"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/ninja"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/samu"
       - "/home/kzwo/.pyenv/shims/ninja-build"
       - "/home/kzwo/.pyenv/shims/ninja"
       - "/home/kzwo/.pyenv/shims/samu"
@@ -313,7 +340,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -327,6 +358,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -361,6 +396,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
       - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
       - "/home/kzwo/.pyenv/shims/"
       - "/home/kzwo/.pyenv/bin/"
       - "/home/kzwo/.npm-global/bin/"
@@ -375,6 +411,7 @@ events:
       - "/usr/games/"
       - "/snap/bin/"
       - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
     searched_directories:
       - "/home/kzwo/esp/esp-idf/components/espcoredump/xtensa-esp32s3-elf-gcc"
       - "/home/kzwo/esp/esp-idf/components/partition_table/xtensa-esp32s3-elf-gcc"
@@ -393,7 +430,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -407,6 +448,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -450,7 +495,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -464,6 +513,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -522,6 +575,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
       - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
       - "/home/kzwo/.pyenv/shims/"
       - "/home/kzwo/.pyenv/bin/"
       - "/home/kzwo/.npm-global/bin/"
@@ -536,6 +590,7 @@ events:
       - "/usr/games/"
       - "/snap/bin/"
       - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
     found: "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-ar"
     search_context:
       ENV{PATH}:
@@ -549,7 +604,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -563,6 +622,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -598,6 +661,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
       - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
       - "/home/kzwo/.pyenv/shims/"
       - "/home/kzwo/.pyenv/bin/"
       - "/home/kzwo/.npm-global/bin/"
@@ -612,6 +676,7 @@ events:
       - "/usr/games/"
       - "/snap/bin/"
       - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
     found: "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-ranlib"
     search_context:
       ENV{PATH}:
@@ -625,7 +690,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -639,6 +708,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -674,6 +747,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
       - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
       - "/home/kzwo/.pyenv/shims/"
       - "/home/kzwo/.pyenv/bin/"
       - "/home/kzwo/.npm-global/bin/"
@@ -688,6 +762,7 @@ events:
       - "/usr/games/"
       - "/snap/bin/"
       - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
     found: "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-strip"
     search_context:
       ENV{PATH}:
@@ -701,7 +776,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -715,6 +794,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -750,6 +833,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
       - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
       - "/home/kzwo/.pyenv/shims/"
       - "/home/kzwo/.pyenv/bin/"
       - "/home/kzwo/.npm-global/bin/"
@@ -764,6 +848,7 @@ events:
       - "/usr/games/"
       - "/snap/bin/"
       - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
     found: "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-ld"
     search_context:
       ENV{PATH}:
@@ -777,7 +862,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -791,6 +880,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -826,6 +919,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
       - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
       - "/home/kzwo/.pyenv/shims/"
       - "/home/kzwo/.pyenv/bin/"
       - "/home/kzwo/.npm-global/bin/"
@@ -840,6 +934,7 @@ events:
       - "/usr/games/"
       - "/snap/bin/"
       - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
     found: "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-nm"
     search_context:
       ENV{PATH}:
@@ -853,7 +948,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -867,6 +966,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -902,6 +1005,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
       - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
       - "/home/kzwo/.pyenv/shims/"
       - "/home/kzwo/.pyenv/bin/"
       - "/home/kzwo/.npm-global/bin/"
@@ -916,6 +1020,7 @@ events:
       - "/usr/games/"
       - "/snap/bin/"
       - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
     found: "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-objdump"
     search_context:
       ENV{PATH}:
@@ -929,7 +1034,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -943,6 +1052,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -978,6 +1091,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
       - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
       - "/home/kzwo/.pyenv/shims/"
       - "/home/kzwo/.pyenv/bin/"
       - "/home/kzwo/.npm-global/bin/"
@@ -992,6 +1106,7 @@ events:
       - "/usr/games/"
       - "/snap/bin/"
       - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
     found: "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-objcopy"
     search_context:
       ENV{PATH}:
@@ -1005,7 +1120,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -1019,6 +1138,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -1054,6 +1177,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
       - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
       - "/home/kzwo/.pyenv/shims/"
       - "/home/kzwo/.pyenv/bin/"
       - "/home/kzwo/.npm-global/bin/"
@@ -1068,6 +1192,7 @@ events:
       - "/usr/games/"
       - "/snap/bin/"
       - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
     found: "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-readelf"
     search_context:
       ENV{PATH}:
@@ -1081,7 +1206,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -1095,6 +1224,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -1130,6 +1263,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
       - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
       - "/home/kzwo/.pyenv/shims/"
       - "/home/kzwo/.pyenv/bin/"
       - "/home/kzwo/.npm-global/bin/"
@@ -1144,6 +1278,7 @@ events:
       - "/usr/games/"
       - "/snap/bin/"
       - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
     searched_directories:
       - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-dlltool"
       - "/home/kzwo/esp/esp-idf/components/espcoredump/xtensa-esp32s3-elf-dlltool"
@@ -1155,6 +1290,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/xtensa-esp32s3-elf-dlltool"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/xtensa-esp32s3-elf-dlltool"
       - "/home/kzwo/esp/esp-idf/tools/xtensa-esp32s3-elf-dlltool"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/xtensa-esp32s3-elf-dlltool"
       - "/home/kzwo/.pyenv/shims/xtensa-esp32s3-elf-dlltool"
       - "/home/kzwo/.pyenv/bin/xtensa-esp32s3-elf-dlltool"
       - "/home/kzwo/.npm-global/bin/xtensa-esp32s3-elf-dlltool"
@@ -1169,6 +1305,7 @@ events:
       - "/usr/games/xtensa-esp32s3-elf-dlltool"
       - "/snap/bin/xtensa-esp32s3-elf-dlltool"
       - "/home/kzwo/go/bin/xtensa-esp32s3-elf-dlltool"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/xtensa-esp32s3-elf-dlltool"
       - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/dlltool"
       - "/home/kzwo/esp/esp-idf/components/espcoredump/dlltool"
       - "/home/kzwo/esp/esp-idf/components/partition_table/dlltool"
@@ -1179,6 +1316,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/dlltool"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/dlltool"
       - "/home/kzwo/esp/esp-idf/tools/dlltool"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/dlltool"
       - "/home/kzwo/.pyenv/shims/dlltool"
       - "/home/kzwo/.pyenv/bin/dlltool"
       - "/home/kzwo/.npm-global/bin/dlltool"
@@ -1193,6 +1331,7 @@ events:
       - "/usr/games/dlltool"
       - "/snap/bin/dlltool"
       - "/home/kzwo/go/bin/dlltool"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/dlltool"
     found: false
     search_context:
       ENV{PATH}:
@@ -1206,7 +1345,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -1220,6 +1363,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -1255,6 +1402,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
       - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
       - "/home/kzwo/.pyenv/shims/"
       - "/home/kzwo/.pyenv/bin/"
       - "/home/kzwo/.npm-global/bin/"
@@ -1269,6 +1417,7 @@ events:
       - "/usr/games/"
       - "/snap/bin/"
       - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
     found: "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-addr2line"
     search_context:
       ENV{PATH}:
@@ -1282,7 +1431,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -1296,6 +1449,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -1331,6 +1488,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
       - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
       - "/home/kzwo/.pyenv/shims/"
       - "/home/kzwo/.pyenv/bin/"
       - "/home/kzwo/.npm-global/bin/"
@@ -1345,6 +1503,7 @@ events:
       - "/usr/games/"
       - "/snap/bin/"
       - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
     searched_directories:
       - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-tapi"
       - "/home/kzwo/esp/esp-idf/components/espcoredump/xtensa-esp32s3-elf-tapi"
@@ -1356,6 +1515,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/xtensa-esp32s3-elf-tapi"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/xtensa-esp32s3-elf-tapi"
       - "/home/kzwo/esp/esp-idf/tools/xtensa-esp32s3-elf-tapi"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/xtensa-esp32s3-elf-tapi"
       - "/home/kzwo/.pyenv/shims/xtensa-esp32s3-elf-tapi"
       - "/home/kzwo/.pyenv/bin/xtensa-esp32s3-elf-tapi"
       - "/home/kzwo/.npm-global/bin/xtensa-esp32s3-elf-tapi"
@@ -1370,6 +1530,7 @@ events:
       - "/usr/games/xtensa-esp32s3-elf-tapi"
       - "/snap/bin/xtensa-esp32s3-elf-tapi"
       - "/home/kzwo/go/bin/xtensa-esp32s3-elf-tapi"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/xtensa-esp32s3-elf-tapi"
       - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/tapi"
       - "/home/kzwo/esp/esp-idf/components/espcoredump/tapi"
       - "/home/kzwo/esp/esp-idf/components/partition_table/tapi"
@@ -1380,6 +1541,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/tapi"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/tapi"
       - "/home/kzwo/esp/esp-idf/tools/tapi"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/tapi"
       - "/home/kzwo/.pyenv/shims/tapi"
       - "/home/kzwo/.pyenv/bin/tapi"
       - "/home/kzwo/.npm-global/bin/tapi"
@@ -1394,6 +1556,7 @@ events:
       - "/usr/games/tapi"
       - "/snap/bin/tapi"
       - "/home/kzwo/go/bin/tapi"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/tapi"
     found: false
     search_context:
       ENV{PATH}:
@@ -1407,7 +1570,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -1421,6 +1588,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -1458,6 +1629,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
       - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
       - "/home/kzwo/.pyenv/shims/"
       - "/home/kzwo/.pyenv/bin/"
       - "/home/kzwo/.npm-global/bin/"
@@ -1472,6 +1644,7 @@ events:
       - "/usr/games/"
       - "/snap/bin/"
       - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
     searched_directories:
       - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc-ar-14.2"
       - "/home/kzwo/esp/esp-idf/components/espcoredump/xtensa-esp32s3-elf-gcc-ar-14.2"
@@ -1483,6 +1656,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/xtensa-esp32s3-elf-gcc-ar-14.2"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/xtensa-esp32s3-elf-gcc-ar-14.2"
       - "/home/kzwo/esp/esp-idf/tools/xtensa-esp32s3-elf-gcc-ar-14.2"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/xtensa-esp32s3-elf-gcc-ar-14.2"
       - "/home/kzwo/.pyenv/shims/xtensa-esp32s3-elf-gcc-ar-14.2"
       - "/home/kzwo/.pyenv/bin/xtensa-esp32s3-elf-gcc-ar-14.2"
       - "/home/kzwo/.npm-global/bin/xtensa-esp32s3-elf-gcc-ar-14.2"
@@ -1497,6 +1671,7 @@ events:
       - "/usr/games/xtensa-esp32s3-elf-gcc-ar-14.2"
       - "/snap/bin/xtensa-esp32s3-elf-gcc-ar-14.2"
       - "/home/kzwo/go/bin/xtensa-esp32s3-elf-gcc-ar-14.2"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/xtensa-esp32s3-elf-gcc-ar-14.2"
       - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc-ar-14"
       - "/home/kzwo/esp/esp-idf/components/espcoredump/xtensa-esp32s3-elf-gcc-ar-14"
       - "/home/kzwo/esp/esp-idf/components/partition_table/xtensa-esp32s3-elf-gcc-ar-14"
@@ -1507,6 +1682,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/xtensa-esp32s3-elf-gcc-ar-14"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/xtensa-esp32s3-elf-gcc-ar-14"
       - "/home/kzwo/esp/esp-idf/tools/xtensa-esp32s3-elf-gcc-ar-14"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/xtensa-esp32s3-elf-gcc-ar-14"
       - "/home/kzwo/.pyenv/shims/xtensa-esp32s3-elf-gcc-ar-14"
       - "/home/kzwo/.pyenv/bin/xtensa-esp32s3-elf-gcc-ar-14"
       - "/home/kzwo/.npm-global/bin/xtensa-esp32s3-elf-gcc-ar-14"
@@ -1521,6 +1697,7 @@ events:
       - "/usr/games/xtensa-esp32s3-elf-gcc-ar-14"
       - "/snap/bin/xtensa-esp32s3-elf-gcc-ar-14"
       - "/home/kzwo/go/bin/xtensa-esp32s3-elf-gcc-ar-14"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/xtensa-esp32s3-elf-gcc-ar-14"
       - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc-ar14"
       - "/home/kzwo/esp/esp-idf/components/espcoredump/xtensa-esp32s3-elf-gcc-ar14"
       - "/home/kzwo/esp/esp-idf/components/partition_table/xtensa-esp32s3-elf-gcc-ar14"
@@ -1531,6 +1708,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/xtensa-esp32s3-elf-gcc-ar14"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/xtensa-esp32s3-elf-gcc-ar14"
       - "/home/kzwo/esp/esp-idf/tools/xtensa-esp32s3-elf-gcc-ar14"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/xtensa-esp32s3-elf-gcc-ar14"
       - "/home/kzwo/.pyenv/shims/xtensa-esp32s3-elf-gcc-ar14"
       - "/home/kzwo/.pyenv/bin/xtensa-esp32s3-elf-gcc-ar14"
       - "/home/kzwo/.npm-global/bin/xtensa-esp32s3-elf-gcc-ar14"
@@ -1545,6 +1723,7 @@ events:
       - "/usr/games/xtensa-esp32s3-elf-gcc-ar14"
       - "/snap/bin/xtensa-esp32s3-elf-gcc-ar14"
       - "/home/kzwo/go/bin/xtensa-esp32s3-elf-gcc-ar14"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/xtensa-esp32s3-elf-gcc-ar14"
     found: "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc-ar"
     search_context:
       ENV{PATH}:
@@ -1558,7 +1737,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -1572,6 +1755,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -1609,6 +1796,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
       - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
       - "/home/kzwo/.pyenv/shims/"
       - "/home/kzwo/.pyenv/bin/"
       - "/home/kzwo/.npm-global/bin/"
@@ -1623,6 +1811,7 @@ events:
       - "/usr/games/"
       - "/snap/bin/"
       - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
     searched_directories:
       - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc-ranlib-14.2"
       - "/home/kzwo/esp/esp-idf/components/espcoredump/xtensa-esp32s3-elf-gcc-ranlib-14.2"
@@ -1634,6 +1823,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/xtensa-esp32s3-elf-gcc-ranlib-14.2"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/xtensa-esp32s3-elf-gcc-ranlib-14.2"
       - "/home/kzwo/esp/esp-idf/tools/xtensa-esp32s3-elf-gcc-ranlib-14.2"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/xtensa-esp32s3-elf-gcc-ranlib-14.2"
       - "/home/kzwo/.pyenv/shims/xtensa-esp32s3-elf-gcc-ranlib-14.2"
       - "/home/kzwo/.pyenv/bin/xtensa-esp32s3-elf-gcc-ranlib-14.2"
       - "/home/kzwo/.npm-global/bin/xtensa-esp32s3-elf-gcc-ranlib-14.2"
@@ -1648,6 +1838,7 @@ events:
       - "/usr/games/xtensa-esp32s3-elf-gcc-ranlib-14.2"
       - "/snap/bin/xtensa-esp32s3-elf-gcc-ranlib-14.2"
       - "/home/kzwo/go/bin/xtensa-esp32s3-elf-gcc-ranlib-14.2"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/xtensa-esp32s3-elf-gcc-ranlib-14.2"
       - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc-ranlib-14"
       - "/home/kzwo/esp/esp-idf/components/espcoredump/xtensa-esp32s3-elf-gcc-ranlib-14"
       - "/home/kzwo/esp/esp-idf/components/partition_table/xtensa-esp32s3-elf-gcc-ranlib-14"
@@ -1658,6 +1849,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/xtensa-esp32s3-elf-gcc-ranlib-14"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/xtensa-esp32s3-elf-gcc-ranlib-14"
       - "/home/kzwo/esp/esp-idf/tools/xtensa-esp32s3-elf-gcc-ranlib-14"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/xtensa-esp32s3-elf-gcc-ranlib-14"
       - "/home/kzwo/.pyenv/shims/xtensa-esp32s3-elf-gcc-ranlib-14"
       - "/home/kzwo/.pyenv/bin/xtensa-esp32s3-elf-gcc-ranlib-14"
       - "/home/kzwo/.npm-global/bin/xtensa-esp32s3-elf-gcc-ranlib-14"
@@ -1672,6 +1864,7 @@ events:
       - "/usr/games/xtensa-esp32s3-elf-gcc-ranlib-14"
       - "/snap/bin/xtensa-esp32s3-elf-gcc-ranlib-14"
       - "/home/kzwo/go/bin/xtensa-esp32s3-elf-gcc-ranlib-14"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/xtensa-esp32s3-elf-gcc-ranlib-14"
       - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc-ranlib14"
       - "/home/kzwo/esp/esp-idf/components/espcoredump/xtensa-esp32s3-elf-gcc-ranlib14"
       - "/home/kzwo/esp/esp-idf/components/partition_table/xtensa-esp32s3-elf-gcc-ranlib14"
@@ -1682,6 +1875,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/xtensa-esp32s3-elf-gcc-ranlib14"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/xtensa-esp32s3-elf-gcc-ranlib14"
       - "/home/kzwo/esp/esp-idf/tools/xtensa-esp32s3-elf-gcc-ranlib14"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/xtensa-esp32s3-elf-gcc-ranlib14"
       - "/home/kzwo/.pyenv/shims/xtensa-esp32s3-elf-gcc-ranlib14"
       - "/home/kzwo/.pyenv/bin/xtensa-esp32s3-elf-gcc-ranlib14"
       - "/home/kzwo/.npm-global/bin/xtensa-esp32s3-elf-gcc-ranlib14"
@@ -1696,6 +1890,7 @@ events:
       - "/usr/games/xtensa-esp32s3-elf-gcc-ranlib14"
       - "/snap/bin/xtensa-esp32s3-elf-gcc-ranlib14"
       - "/home/kzwo/go/bin/xtensa-esp32s3-elf-gcc-ranlib14"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/xtensa-esp32s3-elf-gcc-ranlib14"
     found: "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc-ranlib"
     search_context:
       ENV{PATH}:
@@ -1709,7 +1904,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -1723,6 +1922,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -1757,6 +1960,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
       - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
       - "/home/kzwo/.pyenv/shims/"
       - "/home/kzwo/.pyenv/bin/"
       - "/home/kzwo/.npm-global/bin/"
@@ -1771,6 +1975,7 @@ events:
       - "/usr/games/"
       - "/snap/bin/"
       - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
     searched_directories:
       - "/home/kzwo/esp/esp-idf/components/espcoredump/xtensa-esp32s3-elf-g++"
       - "/home/kzwo/esp/esp-idf/components/partition_table/xtensa-esp32s3-elf-g++"
@@ -1789,7 +1994,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -1803,6 +2012,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -1846,7 +2059,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -1860,6 +2077,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -1920,6 +2141,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
       - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
       - "/home/kzwo/.pyenv/shims/"
       - "/home/kzwo/.pyenv/bin/"
       - "/home/kzwo/.npm-global/bin/"
@@ -1934,6 +2156,7 @@ events:
       - "/usr/games/"
       - "/snap/bin/"
       - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
     searched_directories:
       - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc-ar-14.2"
       - "/home/kzwo/esp/esp-idf/components/espcoredump/xtensa-esp32s3-elf-gcc-ar-14.2"
@@ -1945,6 +2168,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/xtensa-esp32s3-elf-gcc-ar-14.2"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/xtensa-esp32s3-elf-gcc-ar-14.2"
       - "/home/kzwo/esp/esp-idf/tools/xtensa-esp32s3-elf-gcc-ar-14.2"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/xtensa-esp32s3-elf-gcc-ar-14.2"
       - "/home/kzwo/.pyenv/shims/xtensa-esp32s3-elf-gcc-ar-14.2"
       - "/home/kzwo/.pyenv/bin/xtensa-esp32s3-elf-gcc-ar-14.2"
       - "/home/kzwo/.npm-global/bin/xtensa-esp32s3-elf-gcc-ar-14.2"
@@ -1959,6 +2183,7 @@ events:
       - "/usr/games/xtensa-esp32s3-elf-gcc-ar-14.2"
       - "/snap/bin/xtensa-esp32s3-elf-gcc-ar-14.2"
       - "/home/kzwo/go/bin/xtensa-esp32s3-elf-gcc-ar-14.2"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/xtensa-esp32s3-elf-gcc-ar-14.2"
       - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc-ar-14"
       - "/home/kzwo/esp/esp-idf/components/espcoredump/xtensa-esp32s3-elf-gcc-ar-14"
       - "/home/kzwo/esp/esp-idf/components/partition_table/xtensa-esp32s3-elf-gcc-ar-14"
@@ -1969,6 +2194,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/xtensa-esp32s3-elf-gcc-ar-14"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/xtensa-esp32s3-elf-gcc-ar-14"
       - "/home/kzwo/esp/esp-idf/tools/xtensa-esp32s3-elf-gcc-ar-14"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/xtensa-esp32s3-elf-gcc-ar-14"
       - "/home/kzwo/.pyenv/shims/xtensa-esp32s3-elf-gcc-ar-14"
       - "/home/kzwo/.pyenv/bin/xtensa-esp32s3-elf-gcc-ar-14"
       - "/home/kzwo/.npm-global/bin/xtensa-esp32s3-elf-gcc-ar-14"
@@ -1983,6 +2209,7 @@ events:
       - "/usr/games/xtensa-esp32s3-elf-gcc-ar-14"
       - "/snap/bin/xtensa-esp32s3-elf-gcc-ar-14"
       - "/home/kzwo/go/bin/xtensa-esp32s3-elf-gcc-ar-14"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/xtensa-esp32s3-elf-gcc-ar-14"
       - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc-ar14"
       - "/home/kzwo/esp/esp-idf/components/espcoredump/xtensa-esp32s3-elf-gcc-ar14"
       - "/home/kzwo/esp/esp-idf/components/partition_table/xtensa-esp32s3-elf-gcc-ar14"
@@ -1993,6 +2220,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/xtensa-esp32s3-elf-gcc-ar14"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/xtensa-esp32s3-elf-gcc-ar14"
       - "/home/kzwo/esp/esp-idf/tools/xtensa-esp32s3-elf-gcc-ar14"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/xtensa-esp32s3-elf-gcc-ar14"
       - "/home/kzwo/.pyenv/shims/xtensa-esp32s3-elf-gcc-ar14"
       - "/home/kzwo/.pyenv/bin/xtensa-esp32s3-elf-gcc-ar14"
       - "/home/kzwo/.npm-global/bin/xtensa-esp32s3-elf-gcc-ar14"
@@ -2007,6 +2235,7 @@ events:
       - "/usr/games/xtensa-esp32s3-elf-gcc-ar14"
       - "/snap/bin/xtensa-esp32s3-elf-gcc-ar14"
       - "/home/kzwo/go/bin/xtensa-esp32s3-elf-gcc-ar14"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/xtensa-esp32s3-elf-gcc-ar14"
     found: "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc-ar"
     search_context:
       ENV{PATH}:
@@ -2020,7 +2249,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -2034,6 +2267,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -2071,6 +2308,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
       - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
       - "/home/kzwo/.pyenv/shims/"
       - "/home/kzwo/.pyenv/bin/"
       - "/home/kzwo/.npm-global/bin/"
@@ -2085,6 +2323,7 @@ events:
       - "/usr/games/"
       - "/snap/bin/"
       - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
     searched_directories:
       - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc-ranlib-14.2"
       - "/home/kzwo/esp/esp-idf/components/espcoredump/xtensa-esp32s3-elf-gcc-ranlib-14.2"
@@ -2096,6 +2335,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/xtensa-esp32s3-elf-gcc-ranlib-14.2"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/xtensa-esp32s3-elf-gcc-ranlib-14.2"
       - "/home/kzwo/esp/esp-idf/tools/xtensa-esp32s3-elf-gcc-ranlib-14.2"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/xtensa-esp32s3-elf-gcc-ranlib-14.2"
       - "/home/kzwo/.pyenv/shims/xtensa-esp32s3-elf-gcc-ranlib-14.2"
       - "/home/kzwo/.pyenv/bin/xtensa-esp32s3-elf-gcc-ranlib-14.2"
       - "/home/kzwo/.npm-global/bin/xtensa-esp32s3-elf-gcc-ranlib-14.2"
@@ -2110,6 +2350,7 @@ events:
       - "/usr/games/xtensa-esp32s3-elf-gcc-ranlib-14.2"
       - "/snap/bin/xtensa-esp32s3-elf-gcc-ranlib-14.2"
       - "/home/kzwo/go/bin/xtensa-esp32s3-elf-gcc-ranlib-14.2"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/xtensa-esp32s3-elf-gcc-ranlib-14.2"
       - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc-ranlib-14"
       - "/home/kzwo/esp/esp-idf/components/espcoredump/xtensa-esp32s3-elf-gcc-ranlib-14"
       - "/home/kzwo/esp/esp-idf/components/partition_table/xtensa-esp32s3-elf-gcc-ranlib-14"
@@ -2120,6 +2361,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/xtensa-esp32s3-elf-gcc-ranlib-14"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/xtensa-esp32s3-elf-gcc-ranlib-14"
       - "/home/kzwo/esp/esp-idf/tools/xtensa-esp32s3-elf-gcc-ranlib-14"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/xtensa-esp32s3-elf-gcc-ranlib-14"
       - "/home/kzwo/.pyenv/shims/xtensa-esp32s3-elf-gcc-ranlib-14"
       - "/home/kzwo/.pyenv/bin/xtensa-esp32s3-elf-gcc-ranlib-14"
       - "/home/kzwo/.npm-global/bin/xtensa-esp32s3-elf-gcc-ranlib-14"
@@ -2134,6 +2376,7 @@ events:
       - "/usr/games/xtensa-esp32s3-elf-gcc-ranlib-14"
       - "/snap/bin/xtensa-esp32s3-elf-gcc-ranlib-14"
       - "/home/kzwo/go/bin/xtensa-esp32s3-elf-gcc-ranlib-14"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/xtensa-esp32s3-elf-gcc-ranlib-14"
       - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc-ranlib14"
       - "/home/kzwo/esp/esp-idf/components/espcoredump/xtensa-esp32s3-elf-gcc-ranlib14"
       - "/home/kzwo/esp/esp-idf/components/partition_table/xtensa-esp32s3-elf-gcc-ranlib14"
@@ -2144,6 +2387,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/xtensa-esp32s3-elf-gcc-ranlib14"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/xtensa-esp32s3-elf-gcc-ranlib14"
       - "/home/kzwo/esp/esp-idf/tools/xtensa-esp32s3-elf-gcc-ranlib14"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/xtensa-esp32s3-elf-gcc-ranlib14"
       - "/home/kzwo/.pyenv/shims/xtensa-esp32s3-elf-gcc-ranlib14"
       - "/home/kzwo/.pyenv/bin/xtensa-esp32s3-elf-gcc-ranlib14"
       - "/home/kzwo/.npm-global/bin/xtensa-esp32s3-elf-gcc-ranlib14"
@@ -2158,6 +2402,7 @@ events:
       - "/usr/games/xtensa-esp32s3-elf-gcc-ranlib14"
       - "/snap/bin/xtensa-esp32s3-elf-gcc-ranlib14"
       - "/home/kzwo/go/bin/xtensa-esp32s3-elf-gcc-ranlib14"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/xtensa-esp32s3-elf-gcc-ranlib14"
     found: "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc-ranlib"
     search_context:
       ENV{PATH}:
@@ -2171,7 +2416,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -2185,6 +2434,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -2219,6 +2472,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
       - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
       - "/home/kzwo/.pyenv/shims/"
       - "/home/kzwo/.pyenv/bin/"
       - "/home/kzwo/.npm-global/bin/"
@@ -2233,6 +2487,7 @@ events:
       - "/usr/games/"
       - "/snap/bin/"
       - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
     searched_directories:
       - "/home/kzwo/esp/esp-idf/components/espcoredump/xtensa-esp32s3-elf-gcc"
       - "/home/kzwo/esp/esp-idf/components/partition_table/xtensa-esp32s3-elf-gcc"
@@ -2251,7 +2506,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -2265,6 +2524,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -2316,6 +2579,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
       - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
       - "/home/kzwo/.pyenv/shims/"
       - "/home/kzwo/.pyenv/bin/"
       - "/home/kzwo/.npm-global/bin/"
@@ -2330,6 +2594,7 @@ events:
       - "/usr/games/"
       - "/snap/bin/"
       - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
     searched_directories:
       - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc-ar-"
       - "/home/kzwo/esp/esp-idf/components/espcoredump/xtensa-esp32s3-elf-gcc-ar-"
@@ -2341,6 +2606,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/xtensa-esp32s3-elf-gcc-ar-"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/xtensa-esp32s3-elf-gcc-ar-"
       - "/home/kzwo/esp/esp-idf/tools/xtensa-esp32s3-elf-gcc-ar-"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/xtensa-esp32s3-elf-gcc-ar-"
       - "/home/kzwo/.pyenv/shims/xtensa-esp32s3-elf-gcc-ar-"
       - "/home/kzwo/.pyenv/bin/xtensa-esp32s3-elf-gcc-ar-"
       - "/home/kzwo/.npm-global/bin/xtensa-esp32s3-elf-gcc-ar-"
@@ -2355,6 +2621,7 @@ events:
       - "/usr/games/xtensa-esp32s3-elf-gcc-ar-"
       - "/snap/bin/xtensa-esp32s3-elf-gcc-ar-"
       - "/home/kzwo/go/bin/xtensa-esp32s3-elf-gcc-ar-"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/xtensa-esp32s3-elf-gcc-ar-"
       - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc-ar-"
       - "/home/kzwo/esp/esp-idf/components/espcoredump/xtensa-esp32s3-elf-gcc-ar-"
       - "/home/kzwo/esp/esp-idf/components/partition_table/xtensa-esp32s3-elf-gcc-ar-"
@@ -2365,6 +2632,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/xtensa-esp32s3-elf-gcc-ar-"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/xtensa-esp32s3-elf-gcc-ar-"
       - "/home/kzwo/esp/esp-idf/tools/xtensa-esp32s3-elf-gcc-ar-"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/xtensa-esp32s3-elf-gcc-ar-"
       - "/home/kzwo/.pyenv/shims/xtensa-esp32s3-elf-gcc-ar-"
       - "/home/kzwo/.pyenv/bin/xtensa-esp32s3-elf-gcc-ar-"
       - "/home/kzwo/.npm-global/bin/xtensa-esp32s3-elf-gcc-ar-"
@@ -2379,6 +2647,7 @@ events:
       - "/usr/games/xtensa-esp32s3-elf-gcc-ar-"
       - "/snap/bin/xtensa-esp32s3-elf-gcc-ar-"
       - "/home/kzwo/go/bin/xtensa-esp32s3-elf-gcc-ar-"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/xtensa-esp32s3-elf-gcc-ar-"
     found: "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc-ar"
     search_context:
       ENV{PATH}:
@@ -2392,7 +2661,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -2406,6 +2679,10 @@ events:
         - "/usr/local/games"
         - "/usr/games"
         - "/snap/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
@@ -2443,6 +2720,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/"
       - "/home/kzwo/esp/esp-idf/tools/"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/"
       - "/home/kzwo/.pyenv/shims/"
       - "/home/kzwo/.pyenv/bin/"
       - "/home/kzwo/.npm-global/bin/"
@@ -2457,6 +2735,7 @@ events:
       - "/usr/games/"
       - "/snap/bin/"
       - "/home/kzwo/go/bin/"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/"
     searched_directories:
       - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc-ranlib-"
       - "/home/kzwo/esp/esp-idf/components/espcoredump/xtensa-esp32s3-elf-gcc-ranlib-"
@@ -2468,6 +2747,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/xtensa-esp32s3-elf-gcc-ranlib-"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/xtensa-esp32s3-elf-gcc-ranlib-"
       - "/home/kzwo/esp/esp-idf/tools/xtensa-esp32s3-elf-gcc-ranlib-"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/xtensa-esp32s3-elf-gcc-ranlib-"
       - "/home/kzwo/.pyenv/shims/xtensa-esp32s3-elf-gcc-ranlib-"
       - "/home/kzwo/.pyenv/bin/xtensa-esp32s3-elf-gcc-ranlib-"
       - "/home/kzwo/.npm-global/bin/xtensa-esp32s3-elf-gcc-ranlib-"
@@ -2482,6 +2762,7 @@ events:
       - "/usr/games/xtensa-esp32s3-elf-gcc-ranlib-"
       - "/snap/bin/xtensa-esp32s3-elf-gcc-ranlib-"
       - "/home/kzwo/go/bin/xtensa-esp32s3-elf-gcc-ranlib-"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/xtensa-esp32s3-elf-gcc-ranlib-"
       - "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc-ranlib-"
       - "/home/kzwo/esp/esp-idf/components/espcoredump/xtensa-esp32s3-elf-gcc-ranlib-"
       - "/home/kzwo/esp/esp-idf/components/partition_table/xtensa-esp32s3-elf-gcc-ranlib-"
@@ -2492,6 +2773,7 @@ events:
       - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin/xtensa-esp32s3-elf-gcc-ranlib-"
       - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/xtensa-esp32s3-elf-gcc-ranlib-"
       - "/home/kzwo/esp/esp-idf/tools/xtensa-esp32s3-elf-gcc-ranlib-"
+      - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin/xtensa-esp32s3-elf-gcc-ranlib-"
       - "/home/kzwo/.pyenv/shims/xtensa-esp32s3-elf-gcc-ranlib-"
       - "/home/kzwo/.pyenv/bin/xtensa-esp32s3-elf-gcc-ranlib-"
       - "/home/kzwo/.npm-global/bin/xtensa-esp32s3-elf-gcc-ranlib-"
@@ -2506,6 +2788,7 @@ events:
       - "/usr/games/xtensa-esp32s3-elf-gcc-ranlib-"
       - "/snap/bin/xtensa-esp32s3-elf-gcc-ranlib-"
       - "/home/kzwo/go/bin/xtensa-esp32s3-elf-gcc-ranlib-"
+      - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts/xtensa-esp32s3-elf-gcc-ranlib-"
     found: "/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc-ranlib"
     search_context:
       ENV{PATH}:
@@ -2519,7 +2802,11 @@ events:
         - "/home/kzwo/.espressif/tools/openocd-esp32/v0.12.0-esp32-20251215/openocd-esp32/bin"
         - "/home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin"
         - "/home/kzwo/esp/esp-idf/tools"
+        - "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/desktop/.venv/bin"
         - "/home/kzwo/.pyenv/shims"
+        - "/home/kzwo/.pyenv/bin"
+        - "/home/kzwo/.npm-global/bin"
+        - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.pyenv/bin"
         - "/home/kzwo/.npm-global/bin"
         - "/home/kzwo/.npm-global/bin"
@@ -2536,6 +2823,10 @@ events:
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
         - "/home/kzwo/go/bin"
+        - "/home/kzwo/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
+        - "/home/kzwo/go/bin"
   -
     kind: "try_compile-v1"
     backtrace:
@@ -2546,8 +2837,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-1bPAmC"
-      binary: "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-1bPAmC"
+      source: "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-jKZWoq"
+      binary: "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-jKZWoq"
     cmakeVariables:
       CMAKE_CXX_STDLIB_MODULES_JSON: ""
       CMAKE_C_FLAGS: "-mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy"
@@ -2558,10 +2849,10 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-1bPAmC'
+        Change Dir: '/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-jKZWoq'
         
-        Run Build Command(s): /usr/bin/ninja -v cmTC_a6eea
-        [1/2] /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc   -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy    -v -o CMakeFiles/cmTC_a6eea.dir/CMakeCCompilerABI.c.obj -c /usr/share/cmake-4.3/Modules/CMakeCCompilerABI.c
+        Run Build Command(s): /usr/bin/ninja -v cmTC_73cb9
+        [1/2] /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc   -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy    -v -o CMakeFiles/cmTC_73cb9.dir/CMakeCCompilerABI.c.obj -c /usr/share/cmake-4.3/Modules/CMakeCCompilerABI.c
         Using built-in specs.
         COLLECT_GCC=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp-elf-gcc
         Target: xtensa-esp-elf
@@ -2569,8 +2860,8 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 14.2.0 (crosstool-NG esp-14.2.0_20251107) 
-        COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_a6eea.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_a6eea.dir/'
-         /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/cc1 -quiet -v -imultilib esp32s3 -iprefix /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/ -isysroot /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf /usr/share/cmake-4.3/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_a6eea.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mdynconfig=xtensa_esp32s3.so -mlongcalls -version -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -o /tmp/ccfn1y3u.s
+        COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_73cb9.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_73cb9.dir/'
+         /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/cc1 -quiet -v -imultilib esp32s3 -iprefix /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/ -isysroot /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf /usr/share/cmake-4.3/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_73cb9.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mdynconfig=xtensa_esp32s3.so -mlongcalls -version -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -o /tmp/cckLfcpH.s
         GNU C17 (crosstool-NG esp-14.2.0_20251107) version 14.2.0 (xtensa-esp-elf)
         	compiled by GNU C version 4.9.2, GMP version 6.2.1, MPFR version 4.2.1, MPC version 1.2.1, isl version isl-0.26-GMP
         
@@ -2587,12 +2878,12 @@ events:
          /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/include
         End of search list.
         Compiler executable checksum: 782dd18e07e85d7b6107eb02d6b347be
-        COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_a6eea.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_a6eea.dir/'
-         /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/as --traditional-format --longcalls --dynconfig=xtensa_esp32s3.so -o CMakeFiles/cmTC_a6eea.dir/CMakeCCompilerABI.c.obj /tmp/ccfn1y3u.s
+        COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_73cb9.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_73cb9.dir/'
+         /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/as --traditional-format --longcalls --dynconfig=xtensa_esp32s3.so -o CMakeFiles/cmTC_73cb9.dir/CMakeCCompilerABI.c.obj /tmp/cckLfcpH.s
         COMPILER_PATH=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/
         LIBRARY_PATH=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/usr/lib/
-        COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_a6eea.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_a6eea.dir/CMakeCCompilerABI.c.'
-        [2/2] : && /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -nostartfiles  -v CMakeFiles/cmTC_a6eea.dir/CMakeCCompilerABI.c.obj -o cmTC_a6eea   && :
+        COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_73cb9.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_73cb9.dir/CMakeCCompilerABI.c.'
+        [2/2] : && /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -nostartfiles  -v CMakeFiles/cmTC_73cb9.dir/CMakeCCompilerABI.c.obj -o cmTC_73cb9   && :
         Using built-in specs.
         COLLECT_GCC=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp-elf-gcc
         COLLECT_LTO_WRAPPER=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/lto-wrapper
@@ -2603,10 +2894,10 @@ events:
         gcc version 14.2.0 (crosstool-NG esp-14.2.0_20251107) 
         COMPILER_PATH=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/
         LIBRARY_PATH=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/usr/lib/
-        COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-nostartfiles' '-v' '-o' 'cmTC_a6eea' '-dumpdir' 'cmTC_a6eea.'
-         /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/collect2 -plugin /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/liblto_plugin.so -plugin-opt=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccj32kWT.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lnosys -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc --sysroot=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf --dynconfig=xtensa_esp32s3.so -o cmTC_a6eea -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/usr/lib CMakeFiles/cmTC_a6eea.dir/CMakeCCompilerABI.c.obj -lgcc -lc -lnosys -lc -lgcc
+        COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-nostartfiles' '-v' '-o' 'cmTC_73cb9' '-dumpdir' 'cmTC_73cb9.'
+         /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/collect2 -plugin /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/liblto_plugin.so -plugin-opt=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccvYGu6y.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lnosys -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc --sysroot=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf --dynconfig=xtensa_esp32s3.so -o cmTC_73cb9 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/usr/lib CMakeFiles/cmTC_73cb9.dir/CMakeCCompilerABI.c.obj -lgcc -lc -lnosys -lc -lgcc
         /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/ld: warning: cannot find entry symbol _start; defaulting to 00400074
-        COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-nostartfiles' '-v' '-o' 'cmTC_a6eea' '-dumpdir' 'cmTC_a6eea.'
+        COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-nostartfiles' '-v' '-o' 'cmTC_73cb9' '-dumpdir' 'cmTC_73cb9.'
         
       exitCode: 0
   -
@@ -2641,10 +2932,10 @@ events:
       Parsed C implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-1bPAmC']
+        ignore line: [Change Dir: '/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-jKZWoq']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/ninja -v cmTC_a6eea]
-        ignore line: [[1/2] /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc   -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy    -v -o CMakeFiles/cmTC_a6eea.dir/CMakeCCompilerABI.c.obj -c /usr/share/cmake-4.3/Modules/CMakeCCompilerABI.c]
+        ignore line: [Run Build Command(s): /usr/bin/ninja -v cmTC_73cb9]
+        ignore line: [[1/2] /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc   -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy    -v -o CMakeFiles/cmTC_73cb9.dir/CMakeCCompilerABI.c.obj -c /usr/share/cmake-4.3/Modules/CMakeCCompilerABI.c]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp-elf-gcc]
         ignore line: [Target: xtensa-esp-elf]
@@ -2652,8 +2943,8 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 14.2.0 (crosstool-NG esp-14.2.0_20251107) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_a6eea.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_a6eea.dir/']
-        ignore line: [ /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/cc1 -quiet -v -imultilib esp32s3 -iprefix /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/ -isysroot /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf /usr/share/cmake-4.3/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_a6eea.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mdynconfig=xtensa_esp32s3.so -mlongcalls -version -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -o /tmp/ccfn1y3u.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_73cb9.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_73cb9.dir/']
+        ignore line: [ /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/cc1 -quiet -v -imultilib esp32s3 -iprefix /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/ -isysroot /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf /usr/share/cmake-4.3/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_73cb9.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mdynconfig=xtensa_esp32s3.so -mlongcalls -version -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -o /tmp/cckLfcpH.s]
         ignore line: [GNU C17 (crosstool-NG esp-14.2.0_20251107) version 14.2.0 (xtensa-esp-elf)]
         ignore line: [	compiled by GNU C version 4.9.2  GMP version 6.2.1  MPFR version 4.2.1  MPC version 1.2.1  isl version isl-0.26-GMP]
         ignore line: []
@@ -2670,12 +2961,12 @@ events:
         ignore line: [ /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/include]
         ignore line: [End of search list.]
         ignore line: [Compiler executable checksum: 782dd18e07e85d7b6107eb02d6b347be]
-        ignore line: [COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_a6eea.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_a6eea.dir/']
-        ignore line: [ /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/as --traditional-format --longcalls --dynconfig=xtensa_esp32s3.so -o CMakeFiles/cmTC_a6eea.dir/CMakeCCompilerABI.c.obj /tmp/ccfn1y3u.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_73cb9.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_73cb9.dir/']
+        ignore line: [ /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/as --traditional-format --longcalls --dynconfig=xtensa_esp32s3.so -o CMakeFiles/cmTC_73cb9.dir/CMakeCCompilerABI.c.obj /tmp/cckLfcpH.s]
         ignore line: [COMPILER_PATH=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/]
         ignore line: [LIBRARY_PATH=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_a6eea.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_a6eea.dir/CMakeCCompilerABI.c.']
-        ignore line: [[2/2] : && /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -nostartfiles  -v CMakeFiles/cmTC_a6eea.dir/CMakeCCompilerABI.c.obj -o cmTC_a6eea   && :]
+        ignore line: [COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_73cb9.dir/CMakeCCompilerABI.c.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_73cb9.dir/CMakeCCompilerABI.c.']
+        ignore line: [[2/2] : && /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -nostartfiles  -v CMakeFiles/cmTC_73cb9.dir/CMakeCCompilerABI.c.obj -o cmTC_73cb9   && :]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp-elf-gcc]
         ignore line: [COLLECT_LTO_WRAPPER=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/lto-wrapper]
@@ -2686,13 +2977,13 @@ events:
         ignore line: [gcc version 14.2.0 (crosstool-NG esp-14.2.0_20251107) ]
         ignore line: [COMPILER_PATH=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/]
         ignore line: [LIBRARY_PATH=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-nostartfiles' '-v' '-o' 'cmTC_a6eea' '-dumpdir' 'cmTC_a6eea.']
-        link line: [ /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/collect2 -plugin /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/liblto_plugin.so -plugin-opt=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccj32kWT.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lnosys -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc --sysroot=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf --dynconfig=xtensa_esp32s3.so -o cmTC_a6eea -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/usr/lib CMakeFiles/cmTC_a6eea.dir/CMakeCCompilerABI.c.obj -lgcc -lc -lnosys -lc -lgcc]
+        ignore line: [COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-nostartfiles' '-v' '-o' 'cmTC_73cb9' '-dumpdir' 'cmTC_73cb9.']
+        link line: [ /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/collect2 -plugin /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/liblto_plugin.so -plugin-opt=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccvYGu6y.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lnosys -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc --sysroot=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf --dynconfig=xtensa_esp32s3.so -o cmTC_73cb9 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/usr/lib CMakeFiles/cmTC_73cb9.dir/CMakeCCompilerABI.c.obj -lgcc -lc -lnosys -lc -lgcc]
           arg [/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccj32kWT.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccvYGu6y.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
           arg [-plugin-opt=-pass-through=-lnosys] ==> ignore
@@ -2701,7 +2992,7 @@ events:
           arg [--sysroot=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf] ==> ignore
           arg [--dynconfig=xtensa_esp32s3.so] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_a6eea] ==> ignore
+          arg [cmTC_73cb9] ==> ignore
           arg [-L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/esp32s3] ==> dir [/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/esp32s3]
           arg [-L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/esp32s3] ==> dir [/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/esp32s3]
           arg [-L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/esp32s3] ==> dir [/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/esp32s3]
@@ -2710,7 +3001,7 @@ events:
           arg [-L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib] ==> dir [/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib]
           arg [-L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib] ==> dir [/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib]
           arg [-L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/usr/lib] ==> dir [/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/usr/lib]
-          arg [CMakeFiles/cmTC_a6eea.dir/CMakeCCompilerABI.c.obj] ==> ignore
+          arg [CMakeFiles/cmTC_73cb9.dir/CMakeCCompilerABI.c.obj] ==> ignore
           arg [-lgcc] ==> lib [gcc]
           arg [-lc] ==> lib [c]
           arg [-lnosys] ==> lib [nosys]
@@ -2718,7 +3009,7 @@ events:
           arg [-lgcc] ==> lib [gcc]
         ignore line: [/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/ld: warning: cannot find entry symbol _start]
         ignore line: [ defaulting to 00400074]
-        ignore line: [COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-nostartfiles' '-v' '-o' 'cmTC_a6eea' '-dumpdir' 'cmTC_a6eea.']
+        ignore line: [COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-nostartfiles' '-v' '-o' 'cmTC_73cb9' '-dumpdir' 'cmTC_73cb9.']
         ignore line: []
         ignore line: []
         collapse library dir [/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/esp32s3] ==> [/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/lib/gcc/xtensa-esp-elf/14.2.0/esp32s3]
@@ -2745,8 +3036,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-wIeA1y"
-      binary: "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-wIeA1y"
+      source: "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-XAuhrX"
+      binary: "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-XAuhrX"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "-mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy"
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -2758,10 +3049,10 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-wIeA1y'
+        Change Dir: '/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-XAuhrX'
         
-        Run Build Command(s): /usr/bin/ninja -v cmTC_39fd7
-        [1/2] /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-g++   -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy    -v -o CMakeFiles/cmTC_39fd7.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/share/cmake-4.3/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /usr/bin/ninja -v cmTC_2b71a
+        [1/2] /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-g++   -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy    -v -o CMakeFiles/cmTC_2b71a.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/share/cmake-4.3/Modules/CMakeCXXCompilerABI.cpp
         Using built-in specs.
         COLLECT_GCC=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp-elf-g++
         Target: xtensa-esp-elf
@@ -2769,8 +3060,8 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 14.2.0 (crosstool-NG esp-14.2.0_20251107) 
-        COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_39fd7.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_39fd7.dir/'
-         /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/cc1plus -quiet -v -imultilib esp32s3 -iprefix /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/ -isysroot /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf /usr/share/cmake-4.3/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_39fd7.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mdynconfig=xtensa_esp32s3.so -mlongcalls -version -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -o /tmp/cc6T9Sa5.s
+        COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_2b71a.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_2b71a.dir/'
+         /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/cc1plus -quiet -v -imultilib esp32s3 -iprefix /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/ -isysroot /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf /usr/share/cmake-4.3/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_2b71a.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mdynconfig=xtensa_esp32s3.so -mlongcalls -version -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -o /tmp/ccAe0yjM.s
         GNU C++17 (crosstool-NG esp-14.2.0_20251107) version 14.2.0 (xtensa-esp-elf)
         	compiled by GNU C version 4.9.2, GMP version 6.2.1, MPFR version 4.2.1, MPC version 1.2.1, isl version isl-0.26-GMP
         
@@ -2793,12 +3084,12 @@ events:
          /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/include
         End of search list.
         Compiler executable checksum: e8cb1a3fd36a1a71b245f2221550b4a5
-        COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_39fd7.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_39fd7.dir/'
-         /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/as --traditional-format --longcalls --dynconfig=xtensa_esp32s3.so -o CMakeFiles/cmTC_39fd7.dir/CMakeCXXCompilerABI.cpp.obj /tmp/cc6T9Sa5.s
+        COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_2b71a.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_2b71a.dir/'
+         /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/as --traditional-format --longcalls --dynconfig=xtensa_esp32s3.so -o CMakeFiles/cmTC_2b71a.dir/CMakeCXXCompilerABI.cpp.obj /tmp/ccAe0yjM.s
         COMPILER_PATH=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/
         LIBRARY_PATH=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/usr/lib/
-        COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_39fd7.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_39fd7.dir/CMakeCXXCompilerABI.cpp.'
-        [2/2] : && /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-g++ -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -nostartfiles  -v CMakeFiles/cmTC_39fd7.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_39fd7   && :
+        COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_2b71a.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_2b71a.dir/CMakeCXXCompilerABI.cpp.'
+        [2/2] : && /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-g++ -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -nostartfiles  -v CMakeFiles/cmTC_2b71a.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_2b71a   && :
         Using built-in specs.
         COLLECT_GCC=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp-elf-g++
         COLLECT_LTO_WRAPPER=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/lto-wrapper
@@ -2809,10 +3100,10 @@ events:
         gcc version 14.2.0 (crosstool-NG esp-14.2.0_20251107) 
         COMPILER_PATH=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/
         LIBRARY_PATH=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/usr/lib/
-        COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-nostartfiles' '-v' '-o' 'cmTC_39fd7' '-dumpdir' 'cmTC_39fd7.'
-         /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/collect2 -plugin /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/liblto_plugin.so -plugin-opt=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccOfNt48.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lnosys -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc --sysroot=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf --dynconfig=xtensa_esp32s3.so -o cmTC_39fd7 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/usr/lib CMakeFiles/cmTC_39fd7.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm -lgcc -lc -lnosys -lc -lgcc
+        COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-nostartfiles' '-v' '-o' 'cmTC_2b71a' '-dumpdir' 'cmTC_2b71a.'
+         /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/collect2 -plugin /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/liblto_plugin.so -plugin-opt=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccpSsD6p.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lnosys -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc --sysroot=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf --dynconfig=xtensa_esp32s3.so -o cmTC_2b71a -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/usr/lib CMakeFiles/cmTC_2b71a.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm -lgcc -lc -lnosys -lc -lgcc
         /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/ld: warning: cannot find entry symbol _start; defaulting to 00400074
-        COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-nostartfiles' '-v' '-o' 'cmTC_39fd7' '-dumpdir' 'cmTC_39fd7.'
+        COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-nostartfiles' '-v' '-o' 'cmTC_2b71a' '-dumpdir' 'cmTC_2b71a.'
         
       exitCode: 0
   -
@@ -2853,10 +3144,10 @@ events:
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-wIeA1y']
+        ignore line: [Change Dir: '/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-XAuhrX']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/ninja -v cmTC_39fd7]
-        ignore line: [[1/2] /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-g++   -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy    -v -o CMakeFiles/cmTC_39fd7.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/share/cmake-4.3/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): /usr/bin/ninja -v cmTC_2b71a]
+        ignore line: [[1/2] /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-g++   -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy    -v -o CMakeFiles/cmTC_2b71a.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/share/cmake-4.3/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp-elf-g++]
         ignore line: [Target: xtensa-esp-elf]
@@ -2864,8 +3155,8 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 14.2.0 (crosstool-NG esp-14.2.0_20251107) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_39fd7.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_39fd7.dir/']
-        ignore line: [ /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/cc1plus -quiet -v -imultilib esp32s3 -iprefix /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/ -isysroot /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf /usr/share/cmake-4.3/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_39fd7.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mdynconfig=xtensa_esp32s3.so -mlongcalls -version -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -o /tmp/cc6T9Sa5.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_2b71a.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_2b71a.dir/']
+        ignore line: [ /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/cc1plus -quiet -v -imultilib esp32s3 -iprefix /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/ -isysroot /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf /usr/share/cmake-4.3/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_2b71a.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mdynconfig=xtensa_esp32s3.so -mlongcalls -version -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -o /tmp/ccAe0yjM.s]
         ignore line: [GNU C++17 (crosstool-NG esp-14.2.0_20251107) version 14.2.0 (xtensa-esp-elf)]
         ignore line: [	compiled by GNU C version 4.9.2  GMP version 6.2.1  MPFR version 4.2.1  MPC version 1.2.1  isl version isl-0.26-GMP]
         ignore line: []
@@ -2888,12 +3179,12 @@ events:
         ignore line: [ /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/include]
         ignore line: [End of search list.]
         ignore line: [Compiler executable checksum: e8cb1a3fd36a1a71b245f2221550b4a5]
-        ignore line: [COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_39fd7.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_39fd7.dir/']
-        ignore line: [ /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/as --traditional-format --longcalls --dynconfig=xtensa_esp32s3.so -o CMakeFiles/cmTC_39fd7.dir/CMakeCXXCompilerABI.cpp.obj /tmp/cc6T9Sa5.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_2b71a.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_2b71a.dir/']
+        ignore line: [ /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/as --traditional-format --longcalls --dynconfig=xtensa_esp32s3.so -o CMakeFiles/cmTC_2b71a.dir/CMakeCXXCompilerABI.cpp.obj /tmp/ccAe0yjM.s]
         ignore line: [COMPILER_PATH=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/]
         ignore line: [LIBRARY_PATH=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_39fd7.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_39fd7.dir/CMakeCXXCompilerABI.cpp.']
-        ignore line: [[2/2] : && /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-g++ -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -nostartfiles  -v CMakeFiles/cmTC_39fd7.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_39fd7   && :]
+        ignore line: [COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-v' '-o' 'CMakeFiles/cmTC_2b71a.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-dumpdir' 'CMakeFiles/cmTC_2b71a.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [[2/2] : && /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-g++ -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -nostartfiles  -v CMakeFiles/cmTC_2b71a.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_2b71a   && :]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp-elf-g++]
         ignore line: [COLLECT_LTO_WRAPPER=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/lto-wrapper]
@@ -2904,13 +3195,13 @@ events:
         ignore line: [gcc version 14.2.0 (crosstool-NG esp-14.2.0_20251107) ]
         ignore line: [COMPILER_PATH=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/]
         ignore line: [LIBRARY_PATH=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/esp32s3/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/:/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-nostartfiles' '-v' '-o' 'cmTC_39fd7' '-dumpdir' 'cmTC_39fd7.']
-        link line: [ /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/collect2 -plugin /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/liblto_plugin.so -plugin-opt=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccOfNt48.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lnosys -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc --sysroot=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf --dynconfig=xtensa_esp32s3.so -o cmTC_39fd7 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/usr/lib CMakeFiles/cmTC_39fd7.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm -lgcc -lc -lnosys -lc -lgcc]
+        ignore line: [COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-nostartfiles' '-v' '-o' 'cmTC_2b71a' '-dumpdir' 'cmTC_2b71a.']
+        link line: [ /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/collect2 -plugin /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/liblto_plugin.so -plugin-opt=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccpSsD6p.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lnosys -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc --sysroot=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf --dynconfig=xtensa_esp32s3.so -o cmTC_2b71a -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/esp32s3 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0 -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib -L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/usr/lib CMakeFiles/cmTC_2b71a.dir/CMakeCXXCompilerABI.cpp.obj -lstdc++ -lm -lgcc -lc -lnosys -lc -lgcc]
           arg [/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../libexec/gcc/xtensa-esp-elf/14.2.0/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccOfNt48.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccpSsD6p.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
           arg [-plugin-opt=-pass-through=-lnosys] ==> ignore
@@ -2919,7 +3210,7 @@ events:
           arg [--sysroot=/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf] ==> ignore
           arg [--dynconfig=xtensa_esp32s3.so] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_39fd7] ==> ignore
+          arg [cmTC_2b71a] ==> ignore
           arg [-L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/esp32s3] ==> dir [/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/esp32s3]
           arg [-L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/esp32s3] ==> dir [/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib/esp32s3]
           arg [-L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/esp32s3] ==> dir [/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib/esp32s3]
@@ -2928,7 +3219,7 @@ events:
           arg [-L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib] ==> dir [/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/lib]
           arg [-L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib] ==> dir [/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/lib]
           arg [-L/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/usr/lib] ==> dir [/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../xtensa-esp-elf/usr/lib]
-          arg [CMakeFiles/cmTC_39fd7.dir/CMakeCXXCompilerABI.cpp.obj] ==> ignore
+          arg [CMakeFiles/cmTC_2b71a.dir/CMakeCXXCompilerABI.cpp.obj] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc] ==> lib [gcc]
@@ -2938,7 +3229,7 @@ events:
           arg [-lgcc] ==> lib [gcc]
         ignore line: [/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/ld: warning: cannot find entry symbol _start]
         ignore line: [ defaulting to 00400074]
-        ignore line: [COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-nostartfiles' '-v' '-o' 'cmTC_39fd7' '-dumpdir' 'cmTC_39fd7.']
+        ignore line: [COLLECT_GCC_OPTIONS='-mdynconfig=xtensa_esp32s3.so' '-mlongcalls' '-fno-builtin-memcpy' '-fno-builtin-memset' '-fno-builtin-bzero' '-fno-builtin-stpcpy' '-fno-builtin-strncpy' '-nostartfiles' '-v' '-o' 'cmTC_2b71a' '-dumpdir' 'cmTC_2b71a.']
         ignore line: []
         ignore line: []
         collapse library dir [/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/esp32s3] ==> [/home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/lib/gcc/xtensa-esp-elf/14.2.0/esp32s3]
@@ -2966,8 +3257,8 @@ events:
     checks:
       - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
     directories:
-      source: "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-RKjMXu"
-      binary: "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-RKjMXu"
+      source: "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-ji24cy"
+      binary: "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-ji24cy"
     cmakeVariables:
       CMAKE_CXX_STDLIB_MODULES_JSON: ""
       CMAKE_C_FLAGS: "-mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy"
@@ -2978,17 +3269,17 @@ events:
       variable: "CMAKE_HAVE_LIBC_PTHREAD"
       cached: true
       stdout: |
-        Change Dir: '/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-RKjMXu'
+        Change Dir: '/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-ji24cy'
         
-        Run Build Command(s): /usr/bin/ninja -v cmTC_a1f76
-        [1/2] /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc -DCMAKE_HAVE_LIBC_PTHREAD  -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -o CMakeFiles/cmTC_a1f76.dir/src.c.obj -c /home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-RKjMXu/src.c
-        [2/2] : && /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -nostartfiles CMakeFiles/cmTC_a1f76.dir/src.c.obj -o cmTC_a1f76   && :
-        /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/ld: CMakeFiles/cmTC_a1f76.dir/src.c.obj:(.literal+0x14): warning: pthread_atfork is not implemented and will always fail
-        /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/ld: CMakeFiles/cmTC_a1f76.dir/src.c.obj:(.literal+0xc): warning: pthread_cancel is not implemented and will always fail
-        /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/ld: CMakeFiles/cmTC_a1f76.dir/src.c.obj:(.literal+0x4): warning: pthread_create is not implemented and will always fail
-        /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/ld: CMakeFiles/cmTC_a1f76.dir/src.c.obj:(.literal+0x8): warning: pthread_detach is not implemented and will always fail
-        /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/ld: CMakeFiles/cmTC_a1f76.dir/src.c.obj:(.literal+0x18): warning: pthread_exit is not implemented and will always fail
-        /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/ld: CMakeFiles/cmTC_a1f76.dir/src.c.obj:(.literal+0x10): warning: pthread_join is not implemented and will always fail
+        Run Build Command(s): /usr/bin/ninja -v cmTC_48093
+        [1/2] /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc -DCMAKE_HAVE_LIBC_PTHREAD  -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -o CMakeFiles/cmTC_48093.dir/src.c.obj -c /home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-ji24cy/src.c
+        [2/2] : && /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -nostartfiles CMakeFiles/cmTC_48093.dir/src.c.obj -o cmTC_48093   && :
+        /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/ld: CMakeFiles/cmTC_48093.dir/src.c.obj:(.literal+0x14): warning: pthread_atfork is not implemented and will always fail
+        /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/ld: CMakeFiles/cmTC_48093.dir/src.c.obj:(.literal+0xc): warning: pthread_cancel is not implemented and will always fail
+        /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/ld: CMakeFiles/cmTC_48093.dir/src.c.obj:(.literal+0x4): warning: pthread_create is not implemented and will always fail
+        /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/ld: CMakeFiles/cmTC_48093.dir/src.c.obj:(.literal+0x8): warning: pthread_detach is not implemented and will always fail
+        /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/ld: CMakeFiles/cmTC_48093.dir/src.c.obj:(.literal+0x18): warning: pthread_exit is not implemented and will always fail
+        /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/ld: CMakeFiles/cmTC_48093.dir/src.c.obj:(.literal+0x10): warning: pthread_join is not implemented and will always fail
         /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/ld: warning: cannot find entry symbol _start; defaulting to 00400054
         
       exitCode: 0
@@ -3002,8 +3293,8 @@ events:
     checks:
       - "Performing Test C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS"
     directories:
-      source: "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-EZ4CT3"
-      binary: "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-EZ4CT3"
+      source: "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-vlHE9P"
+      binary: "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-vlHE9P"
     cmakeVariables:
       CMAKE_CXX_STDLIB_MODULES_JSON: ""
       CMAKE_C_FLAGS: "-mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -Wall -Wextra -Wwrite-strings -Wmissing-prototypes -Wformat=2 -Wno-format-nonliteral -Wvla -Wlogical-op -Wshadow"
@@ -3014,11 +3305,11 @@ events:
       variable: "C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS"
       cached: true
       stdout: |
-        Change Dir: '/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-EZ4CT3'
+        Change Dir: '/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-vlHE9P'
         
-        Run Build Command(s): /usr/bin/ninja -v cmTC_fe663
-        [1/2] /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc -DC_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS  -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -Wall -Wextra -Wwrite-strings -Wmissing-prototypes -Wformat=2 -Wno-format-nonliteral -Wvla -Wlogical-op -Wshadow    -Wformat-signedness -o CMakeFiles/cmTC_fe663.dir/src.c.obj -c /home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-EZ4CT3/src.c
-        [2/2] : && /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -Wall -Wextra -Wwrite-strings -Wmissing-prototypes -Wformat=2 -Wno-format-nonliteral -Wvla -Wlogical-op -Wshadow -nostartfiles CMakeFiles/cmTC_fe663.dir/src.c.obj -o cmTC_fe663   && :
+        Run Build Command(s): /usr/bin/ninja -v cmTC_d3e14
+        [1/2] /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc -DC_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS  -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -Wall -Wextra -Wwrite-strings -Wmissing-prototypes -Wformat=2 -Wno-format-nonliteral -Wvla -Wlogical-op -Wshadow    -Wformat-signedness -o CMakeFiles/cmTC_d3e14.dir/src.c.obj -c /home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/CMakeFiles/CMakeScratch/TryCompile-vlHE9P/src.c
+        [2/2] : && /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc -mlongcalls  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -Wall -Wextra -Wwrite-strings -Wmissing-prototypes -Wformat=2 -Wno-format-nonliteral -Wvla -Wlogical-op -Wshadow -nostartfiles CMakeFiles/cmTC_d3e14.dir/src.c.obj -o cmTC_d3e14   && :
         /home/kzwo/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20251107/xtensa-esp-elf/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/ld: warning: cannot find entry symbol _start; defaulting to 00400054
         
       exitCode: 0

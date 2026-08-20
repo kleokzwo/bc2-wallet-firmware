@@ -22,7 +22,7 @@ from PySide6.QtWidgets import (
 
 from bc2.device.discovery import (
     DiscoveryResult, begin_create_wallet, begin_recovery, begin_unlock,
-    submit_recovery_mnemonic, lock_wallet,
+    submit_recovery_mnemonic, lock_wallet, get_wallet_id,
 )
 from bc2.device.model import DeviceInfo
 from bc2.services.device_service import DeviceService
@@ -38,6 +38,7 @@ from bc2.ui.pages.transaction_page import TransactionPage
 from bc2.ui.pages.device_page import DevicePage
 from bc2.ui.pages.settings_page import SettingsPage
 from bc2.ui.pages.about_page import AboutPage
+from bc2.wallet_context import WalletContext
 
 
 APP_VERSION = "0.42.1"
@@ -69,6 +70,7 @@ class MainWindow(QMainWindow):
 
         self._settings = QSettings("BC2", "ColdWallet")
         self._device: DeviceInfo | None = None
+        self._wallet_context = WalletContext()
         self._setup_in_progress = False
         self._current_send_plan = None
         self._current_signed_transaction = None
@@ -519,6 +521,7 @@ class MainWindow(QMainWindow):
             )
             return
 
+        self._wallet_context.deactivate()
         self._device = None
         self._sidebar.setVisible(False)
         self._navigate("setup")
@@ -800,6 +803,24 @@ class MainWindow(QMainWindow):
                     self._create_wallet_button.setEnabled(True)
                     self._recovery_wallet_button.setEnabled(True)
             elif d.unlocked:
+                # Phase 2: bind the desktop session to the authenticated wallet.
+                # No cache is loaded here yet; WalletContext is RAM-only.
+                if self._wallet_context.active_wallet_id() is None:
+                    try:
+                        wallet_id = get_wallet_id(d.port)
+                        if wallet_id is None:
+                            raise RuntimeError("Hardware hat keine Wallet-ID geliefert.")
+                        self._wallet_context.activate(wallet_id)
+                    except Exception as exc:
+                        self._wallet_context.deactivate()
+                        self._sidebar.setVisible(False)
+                        self._navigate("setup")
+                        self._setup_status_title.setText("Wallet-Identität konnte nicht bestätigt werden")
+                        self._setup_status_text.setVisible(True)
+                        self._setup_status_text.setText(str(exc))
+                        QTimer.singleShot(1200, self._device_service.scan)
+                        self._refresh_status_styles()
+                        return
                 self._setup_in_progress = False
                 self._sidebar.setVisible(True)
                 if not self._balance_timer.isActive():

@@ -36,23 +36,40 @@ static int review_and_lock_flows(void) {
     return 1;
 }
 
-static int cooldown_flow(void) {
+static int lockdown_flow(void) {
     bc2_device_machine m;
-    unsigned int i;
     bc2_device_machine_init(&m, 1, 0U);
     CHECK(bc2_device_machine_dispatch(&m, BC2_DEVICE_EVENT_BOOT_COMPLETE, 1U));
-    for (i = 0U; i < 5U; ++i) {
-        CHECK(bc2_device_machine_dispatch(&m, BC2_DEVICE_EVENT_BEGIN_UNLOCK, 10U + i * 2U));
-        CHECK(bc2_device_machine_dispatch(&m, BC2_DEVICE_EVENT_UNLOCK_FAILURE, 11U + i * 2U));
+
+    for (unsigned int i = 0U; i < 2U; ++i) {
+        CHECK(bc2_device_machine_dispatch(
+            &m, BC2_DEVICE_EVENT_BEGIN_UNLOCK, 10U + i * 2U));
+        CHECK(bc2_device_machine_dispatch(
+            &m, BC2_DEVICE_EVENT_UNLOCK_FAILURE, 11U + i * 2U));
+        CHECK(m.state == BC2_DEVICE_LOCKED);
     }
-    CHECK(m.state == BC2_DEVICE_COOLDOWN);
-    CHECK(m.last_action == BC2_DEVICE_ACTION_COOLDOWN_STARTED);
-    CHECK(bc2_device_machine_cooldown_remaining(&m, 20U) > 0U);
-    CHECK(!bc2_device_machine_dispatch(&m, BC2_DEVICE_EVENT_BEGIN_UNLOCK, 20U));
-    CHECK(!bc2_device_machine_tick(&m, m.cooldown_until_ms - 1U));
-    CHECK(bc2_device_machine_tick(&m, m.cooldown_until_ms));
-    CHECK(m.state == BC2_DEVICE_LOCKED);
-    CHECK(m.failed_unlock_attempts == 0U);
+
+    CHECK(bc2_device_machine_dispatch(&m, BC2_DEVICE_EVENT_BEGIN_UNLOCK, 20U));
+    CHECK(bc2_device_machine_dispatch(&m, BC2_DEVICE_EVENT_UNLOCK_FAILURE, 21U));
+    CHECK(m.state == BC2_DEVICE_LOCKDOWN);
+    CHECK(m.last_action == BC2_DEVICE_ACTION_LOCKDOWN);
+    CHECK(!bc2_device_machine_is_unlocked(&m));
+    CHECK(!bc2_device_machine_dispatch(&m, BC2_DEVICE_EVENT_BEGIN_UNLOCK, 22U));
+    CHECK(!bc2_device_machine_dispatch(&m, BC2_DEVICE_EVENT_OPEN_TRANSACTION, 23U));
+    CHECK(!bc2_device_machine_dispatch(&m, BC2_DEVICE_EVENT_OPEN_RECEIVE, 24U));
+    return 1;
+}
+
+static int explicit_lockdown_flow(void) {
+    bc2_device_machine m;
+    bc2_device_machine_init(&m, 1, 0U);
+    CHECK(bc2_device_machine_dispatch(&m, BC2_DEVICE_EVENT_BOOT_COMPLETE, 1U));
+    CHECK(bc2_device_machine_dispatch(&m, BC2_DEVICE_EVENT_ENTER_LOCKDOWN, 2U));
+    CHECK(m.state == BC2_DEVICE_LOCKDOWN);
+    CHECK(m.failed_unlock_attempts == m.max_unlock_attempts);
+    CHECK(!bc2_device_machine_dispatch(&m, BC2_DEVICE_EVENT_BEGIN_UNLOCK, 3U));
+    CHECK(bc2_device_machine_dispatch(&m, BC2_DEVICE_EVENT_FACTORY_RESET_TO_SETUP, 4U));
+    CHECK(m.state == BC2_DEVICE_SETUP_REQUIRED);
     return 1;
 }
 
@@ -128,7 +145,8 @@ static int timeout_then_unlock_flow(void) {
 int main(void) {
     CHECK(unlock_success_flow());
     CHECK(review_and_lock_flows());
-    CHECK(cooldown_flow());
+    CHECK(lockdown_flow());
+    CHECK(explicit_lockdown_flow());
     CHECK(timeout_flow());
     CHECK(setup_and_error_flow());
     CHECK(factory_reset_to_setup_flow());

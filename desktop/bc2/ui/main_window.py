@@ -42,7 +42,7 @@ from bc2.wallet_context import WalletContext
 from bc2.wallet_cache import WalletCache
 
 
-APP_VERSION = "0.49.5"
+APP_VERSION = "0.50.7"
 DEFAULT_ELECTRUM = "infra1.bitcoin-ii.org:50009"
 
 ORANGE = "#F7931A"
@@ -128,6 +128,12 @@ class MainWindow(QMainWindow):
         self._balance_timer.setInterval(30000)
         self._balance_timer.timeout.connect(self._sync_balance)
 
+        # Setup/login state monitor. This is intentionally limited to the
+        # setup page so it cannot contend with transaction/receive USB flows.
+        self._setup_state_timer = QTimer(self)
+        self._setup_state_timer.setInterval(750)
+        self._setup_state_timer.timeout.connect(self._poll_setup_device_state)
+
         self._nav_buttons: dict[str, QPushButton] = {}
         self._pages: dict[str, QWidget] = {}
 
@@ -152,6 +158,7 @@ class MainWindow(QMainWindow):
 
         self._sidebar = self._build_sidebar()
         row.addWidget(self._sidebar)
+
         row.addWidget(self._build_pages(), 1)
         self.setCentralWidget(root)
 
@@ -393,9 +400,9 @@ class MainWindow(QMainWindow):
         links.setSpacing(8)
         links.addStretch()
         links.addWidget(self._recovery_wallet_button)
-        separator = QLabel("·")
-        separator.setObjectName("SmallMuted")
-        links.addWidget(separator)
+        self._setup_link_separator = QLabel("·")
+        self._setup_link_separator.setObjectName("SmallMuted")
+        links.addWidget(self._setup_link_separator)
         links.addWidget(self._setup_scan_button)
         links.addStretch()
         card_layout.addLayout(links)
@@ -433,63 +440,39 @@ class MainWindow(QMainWindow):
     def _electrum_server(self) -> str:
         return str(self._settings.value("electrum/server", DEFAULT_ELECTRUM))
 
+    def _poll_setup_device_state(self) -> None:
+        """Poll only while the login/setup page is visible.
+
+        This catches hardware-side PIN failures and LOCKDOWN without requiring
+        the user to click "Erneut verbinden". DeviceService suppresses
+        overlapping scans itself.
+        """
+        if self._stack.currentWidget() is not self._pages["setup"]:
+            self._setup_state_timer.stop()
+            return
+        self._device_service.scan()
+
     @Slot()
     def _begin_wallet_creation(self) -> None:
         if self._device is None:
-            self._set_setup_message(
-                "Hardware Wallet nicht verbunden",
-                "Verbinde zuerst dein BC2 Gerät per USB.",
-            )
+            self._set_setup_message("Hardware Wallet nicht verbunden", "Verbinde zuerst dein BC2 Gerät per USB.")
             return
-
-        if self._device.wallet_ready:
-            answer = QMessageBox.question(
-                self,
-                "Create New Wallet",
-                "Auf diesem Gerät ist bereits eine Wallet vorhanden.\n\n"
-                "Wenn du fortfährst, bestätigst du zuerst die aktuelle 4-stellige "
-                "PIN auf der Hardware. Danach legst du eine neue 4-stellige PIN fest "
-                "und wiederholst sie. Erst danach wird die aktuelle Wallet vollständig "
-                "ersetzt und ein neuer Seed ausschließlich auf der Hardware erzeugt.\n\n"
-                "Fortfahren?",
-                QMessageBox.Yes | QMessageBox.Cancel,
-                QMessageBox.Cancel,
-            )
-            if answer != QMessageBox.Yes:
-                return
-
+        if self._device.wallet_ready or not self._device.setup_required:
+            self._set_setup_message("Wallet bereits eingerichtet", "Eine neue Wallet kann nur im Factory State erstellt werden.")
+            return
         try:
             accepted = begin_create_wallet(self._device.port)
         except Exception as exc:
-            self._set_setup_message(
-                "Wallet-Erstellung konnte nicht gestartet werden",
-                str(exc),
-            )
+            self._set_setup_message("Wallet-Erstellung konnte nicht gestartet werden", str(exc))
             return
         if not accepted:
-            self._set_setup_message(
-                "Gerät ist noch nicht bereit",
-                "Die Hardware hat die Wallet-Erstellung nicht angenommen.",
-            )
+            self._set_setup_message("Gerät ist noch nicht bereit", "Die Hardware hat die Wallet-Erstellung nicht angenommen.")
             return
-
-        replacing_existing = self._device.wallet_ready
         self._setup_in_progress = True
         self._create_wallet_button.setEnabled(False)
         self._unlock_wallet_button.setEnabled(False)
         self._recovery_wallet_button.setEnabled(False)
-        if replacing_existing:
-            self._set_setup_message(
-                "Bestätigung auf der Hardware",
-                "Bestätige zuerst die aktuelle PIN auf der Hardware. Danach legst du "
-                "die neue 4-stellige PIN fest und wiederholst sie.",
-            )
-        else:
-            self._set_setup_message(
-                "Einrichtung auf der Hardware",
-                "Lege zuerst eine 4-stellige PIN auf der Hardware an. Danach erzeugt "
-                "die Hardware die neue Wallet und zeigt die 12 Recovery-Wörter nur auf dem Gerät.",
-            )
+        self._set_setup_message("Einrichtung auf der Hardware", "Lege zuerst eine 4-stellige PIN auf der Hardware an. Danach erzeugt die Hardware die neue Wallet und zeigt die 12 Recovery-Wörter nur auf dem Gerät.")
         QTimer.singleShot(1200, self._device_service.scan)
 
     @Slot()
@@ -523,7 +506,12 @@ class MainWindow(QMainWindow):
 
         self._set_setup_quiet()
         self._unlock_wallet_button.setEnabled(False)
-        QTimer.singleShot(1200, self._device_service.scan)
+
+        # Keep observing the hardware while the PIN screen is active.
+        # This makes LOCKDOWN visible immediately after the third failed PIN.
+        if not self._setup_state_timer.isActive():
+            self._setup_state_timer.start()
+        QTimer.singleShot(250, self._device_service.scan)
 
     @Slot()
     def _begin_wallet_recovery(self) -> None:
@@ -558,17 +546,22 @@ class MainWindow(QMainWindow):
         self._create_wallet_button.setEnabled(False)
         self._recovery_wallet_button.setEnabled(False)
         self._setup_status_title.setText("Recovery-Daten übertragen")
-        if self._device.wallet_status == 2:
+        if self._device.state == 10:
+            self._setup_status_text.setText(
+                "Lege jetzt auf der Hardware eine neue 4-stellige PIN an und "
+                "wiederhole sie. Danach wird die Wallet automatisch wiederhergestellt."
+            )
+        elif self._device.wallet_status == 2:
             self._setup_status_text.setText(
                 "Gib jetzt auf der Hardware deine bestehende 4-stellige PIN ein. "
                 "Nach erfolgreicher PIN-Prüfung wird die Wallet automatisch wiederhergestellt."
             )
         else:
             self._setup_status_text.setText(
-                "Lege jetzt auf der Hardware eine neue 4-stellige PIN an und wiederhole sie. "
-                "Danach wird die Wallet automatisch wiederhergestellt."
+                "Lege jetzt auf der Hardware eine neue 4-stellige PIN an und "
+                "wiederhole sie. Danach wird die Wallet automatisch wiederhergestellt."
             )
-        QTimer.singleShot(1200, self._device_service.scan)
+        QTimer.singleShot(800, self._device_service.scan)
 
 
     @Slot(str, str)
@@ -598,15 +591,15 @@ class MainWindow(QMainWindow):
             if not lock_wallet(self._device.port):
                 QMessageBox.warning(
                     self,
-                    "Wallet sperren",
-                    "Die Hardware Wallet konnte nicht gesperrt werden.",
+                    "Hardware Wallet gesperrt",
+                    "Bitte entsperre zuerst die Hardware Wallet.",
                 )
                 return
         except Exception as exc:
             QMessageBox.warning(
                 self,
-                "Wallet sperren",
-                f"Die Hardware Wallet konnte nicht gesperrt werden:\n{exc}",
+                "Hardware Wallet gesperrt",
+                "Bitte entsperre zuerst die Hardware Wallet.",
             )
             return
 
@@ -886,16 +879,18 @@ class MainWindow(QMainWindow):
         elif not d.wallet_ready:
             self._sidebar.setVisible(False)
             self._navigate("setup")
+            if not self._setup_state_timer.isActive():
+                self._setup_state_timer.start()
+            self._create_wallet_button.setVisible(True)
+            self._unlock_wallet_button.setVisible(False)
+            self._recovery_wallet_button.setVisible(True)
+            self._setup_link_separator.setVisible(True)
             self._unlock_wallet_button.setEnabled(False)
-
             if self._setup_in_progress:
                 self._create_wallet_button.setEnabled(False)
                 self._recovery_wallet_button.setEnabled(False)
                 if not self._setup_status_title.isVisible():
-                    self._set_setup_message(
-                        "Wallet-Einrichtung läuft auf der Hardware",
-                        "Folge den Anweisungen auf dem Gerät.",
-                    )
+                    self._set_setup_message("Wallet-Einrichtung läuft auf der Hardware", "Folge den Anweisungen auf dem Gerät.")
                 QTimer.singleShot(1400, self._device_service.scan)
             else:
                 self._set_setup_quiet()
@@ -927,6 +922,7 @@ class MainWindow(QMainWindow):
                     return
 
             self._setup_in_progress = False
+            self._setup_state_timer.stop()
             self._set_setup_quiet()
             self._sidebar.setVisible(True)
             if not self._balance_timer.isActive():
@@ -943,20 +939,40 @@ class MainWindow(QMainWindow):
         else:
             self._sidebar.setVisible(False)
             self._navigate("setup")
-            ready_for_action = d.state == 2
-            self._create_wallet_button.setEnabled(ready_for_action)
-            self._unlock_wallet_button.setEnabled(ready_for_action)
-            self._recovery_wallet_button.setEnabled(ready_for_action)
+            if not self._setup_state_timer.isActive():
+                self._setup_state_timer.start()
+            if d.state == 10:
+                self._create_wallet_button.setVisible(False)
+                self._unlock_wallet_button.setVisible(False)
+                self._recovery_wallet_button.setVisible(True)
+                self._setup_link_separator.setVisible(True)
+                self._create_wallet_button.setEnabled(False)
+                self._unlock_wallet_button.setEnabled(False)
 
-            if d.state == 4:
-                self._set_setup_message(
-                    "PIN vorübergehend gesperrt",
-                    "Zu viele falsche PIN-Versuche. Warte auf die Hardware-Freigabe.",
-                )
+                if self._setup_in_progress:
+                    # Recovery is still running on the hardware. LOCKDOWN is
+                    # expected until the new PIN has been created and confirmed.
+                    # Keep scanning until the device reports DASHBOARD/unlocked.
+                    self._recovery_wallet_button.setEnabled(False)
+                    self._set_setup_message("Recovery läuft")
+                    QTimer.singleShot(1000, self._device_service.scan)
+                else:
+                    self._recovery_wallet_button.setEnabled(True)
+                    self._set_setup_message("Recovery erforderlich")
             else:
-                self._set_setup_quiet()
-                if d.state == 3:
-                    QTimer.singleShot(1200, self._device_service.scan)
+                self._create_wallet_button.setVisible(False)
+                self._recovery_wallet_button.setVisible(False)
+                self._setup_link_separator.setVisible(False)
+                self._unlock_wallet_button.setVisible(True)
+                self._create_wallet_button.setEnabled(False)
+                self._recovery_wallet_button.setEnabled(False)
+                self._unlock_wallet_button.setEnabled(d.state == 2)
+                if d.state == 4:
+                    self._set_setup_message("PIN vorübergehend gesperrt", "Warte kurz und versuche anschließend erneut zu entsperren.")
+                else:
+                    self._set_setup_quiet()
+                    if d.state == 3:
+                        QTimer.singleShot(1200, self._device_service.scan)
 
         self._refresh_status_styles()
 

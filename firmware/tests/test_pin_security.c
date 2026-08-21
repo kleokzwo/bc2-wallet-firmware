@@ -66,11 +66,23 @@ int main(void) {
     assert(!contains_pin(storage.record, storage.record_size, "2468"));
     assert(bc2_pin_security_verify(&security, &hal, "2468", 0U) == BC2_PIN_SECURITY_OK);
     assert(bc2_pin_security_verify(&security, &hal, "1111", 100U) == BC2_PIN_SECURITY_INVALID);
+    assert(!bc2_pin_security_is_locked_down(&security));
     assert(bc2_pin_security_verify(&security, &hal, "2222", 200U) == BC2_PIN_SECURITY_INVALID);
-    assert(bc2_pin_security_verify(&security, &hal, "3333", 300U) == BC2_PIN_SECURITY_INVALID);
-    assert(bc2_pin_security_remaining_delay(&security, 300U) == 5000U);
-    assert(bc2_pin_security_verify(&security, &hal, "2468", 400U) == BC2_PIN_SECURITY_DELAYED);
-    assert(bc2_pin_security_verify(&security, &hal, "2468", 5300U) == BC2_PIN_SECURITY_OK);
+    assert(!bc2_pin_security_is_locked_down(&security));
+    assert(bc2_pin_security_verify(&security, &hal, "3333", 300U) == BC2_PIN_SECURITY_LOCKED);
+    assert(bc2_pin_security_is_locked_down(&security));
+    assert(bc2_pin_security_verify(&security, &hal, "2468", 400U) == BC2_PIN_SECURITY_LOCKED);
+
+    /* Lockdown survives a reboot because the failure count is persisted. */
+    bc2_pin_security_t after_reboot;
+    assert(bc2_pin_security_load(&after_reboot, &hal, 500U) == BC2_PIN_SECURITY_OK);
+    assert(bc2_pin_security_is_locked_down(&after_reboot));
+    assert(bc2_pin_security_verify(&after_reboot, &hal, "2468", 500U) == BC2_PIN_SECURITY_LOCKED);
+
+    /* Recovery/new PIN creation is the explicit way out. */
+    assert(bc2_pin_security_create(&after_reboot, &hal, "1357") == BC2_PIN_SECURITY_OK);
+    assert(!bc2_pin_security_is_locked_down(&after_reboot));
+    assert(bc2_pin_security_verify(&after_reboot, &hal, "1357", 600U) == BC2_PIN_SECURITY_OK);
 
     assert(bc2_authorization_required_pin(BC2_AUTH_TRANSACTION) == BC2_AUTH_DEVICE_PIN);
     assert(bc2_authorization_required_pin(BC2_AUTH_RECEIVE_ADDRESS) == BC2_AUTH_DEVICE_PIN);

@@ -2,24 +2,14 @@
 
 #include <limits.h>
 
-#define BC2_DEFAULT_MAX_UNLOCK_ATTEMPTS 5U
+#define BC2_DEFAULT_MAX_UNLOCK_ATTEMPTS 3U
 #define BC2_DEFAULT_SESSION_TIMEOUT_MS (5ULL * 60ULL * 1000ULL)
-#define BC2_BASE_COOLDOWN_MS 30000ULL
-#define BC2_MAX_COOLDOWN_MS (24ULL * 60ULL * 60ULL * 1000ULL)
 
 static int state_is_unlocked(bc2_device_state state) {
-    return state == BC2_DEVICE_DASHBOARD || state == BC2_DEVICE_RECEIVE_REVIEW ||
-           state == BC2_DEVICE_TRANSACTION_REVIEW || state == BC2_DEVICE_SETTINGS;
-}
-
-static uint64_t cooldown_duration(uint32_t level) {
-    uint64_t duration = BC2_BASE_COOLDOWN_MS;
-    uint32_t i;
-    for (i = 1U; i < level && duration < BC2_MAX_COOLDOWN_MS; ++i) {
-        if (duration > BC2_MAX_COOLDOWN_MS / 2ULL) return BC2_MAX_COOLDOWN_MS;
-        duration *= 2ULL;
-    }
-    return duration > BC2_MAX_COOLDOWN_MS ? BC2_MAX_COOLDOWN_MS : duration;
+    return state == BC2_DEVICE_DASHBOARD ||
+           state == BC2_DEVICE_RECEIVE_REVIEW ||
+           state == BC2_DEVICE_TRANSACTION_REVIEW ||
+           state == BC2_DEVICE_SETTINGS;
 }
 
 static void lock_machine(bc2_device_machine *machine, uint64_t now_ms) {
@@ -65,6 +55,17 @@ int bc2_device_machine_dispatch(bc2_device_machine *machine, bc2_device_event ev
         return 1;
     }
 
+    if (event == BC2_DEVICE_EVENT_ENTER_LOCKDOWN &&
+        machine->wallet_is_initialized) {
+        machine->failed_unlock_attempts = machine->max_unlock_attempts;
+        machine->cooldown_level = 0U;
+        machine->cooldown_until_ms = 0U;
+        machine->last_activity_ms = now_ms;
+        machine->state = BC2_DEVICE_LOCKDOWN;
+        machine->last_action = BC2_DEVICE_ACTION_LOCKDOWN;
+        return 1;
+    }
+
     if (event == BC2_DEVICE_EVENT_LOCK && state_is_unlocked(machine->state)) {
         lock_machine(machine, now_ms);
         return 1;
@@ -105,12 +106,13 @@ int bc2_device_machine_dispatch(bc2_device_machine *machine, bc2_device_event ev
                 machine->state = BC2_DEVICE_DASHBOARD;
                 machine->last_action = BC2_DEVICE_ACTION_UNLOCKED;
             } else if (event == BC2_DEVICE_EVENT_UNLOCK_FAILURE) {
-                if (machine->failed_unlock_attempts < UINT_MAX) ++machine->failed_unlock_attempts;
+                if (machine->failed_unlock_attempts < UINT_MAX)
+                    ++machine->failed_unlock_attempts;
                 if (machine->failed_unlock_attempts >= machine->max_unlock_attempts) {
-                    if (machine->cooldown_level < UINT_MAX) ++machine->cooldown_level;
-                    machine->cooldown_until_ms = now_ms + cooldown_duration(machine->cooldown_level);
-                    machine->state = BC2_DEVICE_COOLDOWN;
-                    machine->last_action = BC2_DEVICE_ACTION_COOLDOWN_STARTED;
+                    machine->state = BC2_DEVICE_LOCKDOWN;
+                    machine->last_action = BC2_DEVICE_ACTION_LOCKDOWN;
+                    machine->cooldown_level = 0U;
+                    machine->cooldown_until_ms = 0U;
                 } else {
                     lock_machine(machine, now_ms);
                 }
@@ -160,6 +162,10 @@ int bc2_device_machine_dispatch(bc2_device_machine *machine, bc2_device_event ev
         case BC2_DEVICE_ERROR:
             if (event == BC2_DEVICE_EVENT_RECOVER) lock_machine(machine, now_ms);
             break;
+        case BC2_DEVICE_LOCKDOWN:
+            /* Recovery is orchestrated explicitly by the hardware recovery flow.
+             * Unlock, receive, transaction review and settings are forbidden. */
+            break;
         default:
             break;
     }
@@ -199,6 +205,7 @@ const char *bc2_device_state_name(bc2_device_state state) {
         case BC2_DEVICE_TRANSACTION_REVIEW: return "Transaction review";
         case BC2_DEVICE_SETTINGS: return "Settings";
         case BC2_DEVICE_ERROR: return "Error";
+        case BC2_DEVICE_LOCKDOWN: return "Lockdown";
         default: return "Unknown";
     }
 }
@@ -214,6 +221,7 @@ const char *bc2_device_action_name(bc2_device_action action) {
         case BC2_DEVICE_ACTION_CANCELLED: return "Cancelled";
         case BC2_DEVICE_ACTION_COOLDOWN_STARTED: return "Cooldown started";
         case BC2_DEVICE_ACTION_FATAL_ERROR: return "Fatal error";
+        case BC2_DEVICE_ACTION_LOCKDOWN: return "Lockdown";
         default: return "Unknown";
     }
 }

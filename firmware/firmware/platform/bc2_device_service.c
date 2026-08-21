@@ -251,7 +251,7 @@ case BC2_USB_CMD_BEGIN_RECOVERY:
     payload_size = 1U;
     if (service == NULL || machine == NULL ||
         (machine->state != BC2_DEVICE_SETUP_REQUIRED &&
-         machine->state != BC2_DEVICE_LOCKED) ||
+         machine->state != BC2_DEVICE_LOCKDOWN) ||
         service->recovery_pending)
         break;
     service->recovery_pending = 1;
@@ -263,8 +263,10 @@ case BC2_USB_CMD_SUBMIT_RECOVERY_MNEMONIC:
     payload_size = 1U;
     if (service == NULL || machine == NULL ||
         !service->recovery_input_enabled || service->recovery_mnemonic_pending ||
-        (machine->state != BC2_DEVICE_SETUP_REQUIRED && machine->state != BC2_DEVICE_LOCKED) ||
-        request->payload_length == 0U || request->payload_length >= BC2_DEVICE_RECOVERY_MNEMONIC_MAX)
+        (machine->state != BC2_DEVICE_SETUP_REQUIRED &&
+         machine->state != BC2_DEVICE_LOCKDOWN) ||
+        request->payload_length == 0U ||
+        request->payload_length >= BC2_DEVICE_RECOVERY_MNEMONIC_MAX)
         break;
     memcpy(service->recovery_mnemonic, request->payload, request->payload_length);
     service->recovery_mnemonic[request->payload_length] = '\0';

@@ -98,10 +98,8 @@ static bool derive(const char *pin, const uint8_t salt[BC2_PIN_SALT_SIZE],
 }
 
 static uint64_t delay_ms(uint8_t failures) {
-    static const uint64_t delays[] = {0U, 0U, 0U, 5000U, 15000U, 30000U,
-                                     60000U, 300000U, 900000U, 1800000U, 3600000U};
-    if (failures >= BC2_SECURITY_PIN_MAX_FAILURES) return delays[10];
-    return delays[failures];
+    (void)failures;
+    return 0U;
 }
 
 static bc2_pin_security_result_t read_record(const bc2_hal_t *hal, bc2_pin_record_t *record) {
@@ -173,6 +171,8 @@ bc2_pin_security_result_t bc2_pin_security_verify(bc2_pin_security_t *security,
     uint8_t difference = 0U;
     size_t index;
     if (security == NULL || hal == NULL || !valid_pin(pin)) return BC2_PIN_SECURITY_INVALID;
+    if (security->failures >= BC2_SECURITY_PIN_MAX_FAILURES)
+        return BC2_PIN_SECURITY_LOCKED;
     if (now_ms < security->blocked_until_ms) return BC2_PIN_SECURITY_DELAYED;
     if (read_record(hal, &record) != BC2_PIN_SECURITY_OK ||
         !derive(pin, record.salt, candidate)) return BC2_PIN_SECURITY_ERROR;
@@ -199,8 +199,9 @@ bc2_pin_security_result_t bc2_pin_security_verify(bc2_pin_security_t *security,
         secure_clear(&record, sizeof(record));
         return BC2_PIN_SECURITY_ERROR;
     }
+    const bool locked = record.failures >= BC2_SECURITY_PIN_MAX_FAILURES;
     secure_clear(&record, sizeof(record));
-    return BC2_PIN_SECURITY_INVALID;
+    return locked ? BC2_PIN_SECURITY_LOCKED : BC2_PIN_SECURITY_INVALID;
 }
 
 bc2_pin_security_result_t bc2_pin_security_reset(bc2_pin_security_t *security, const bc2_hal_t *hal) {
@@ -215,6 +216,12 @@ uint64_t bc2_pin_security_remaining_delay(const bc2_pin_security_t *security,
                                           uint64_t now_ms) {
     if (security == NULL || now_ms >= security->blocked_until_ms) return 0U;
     return security->blocked_until_ms - now_ms;
+}
+
+bool bc2_pin_security_is_locked_down(const bc2_pin_security_t *security) {
+    return security != NULL &&
+           security->configured &&
+           security->failures >= BC2_SECURITY_PIN_MAX_FAILURES;
 }
 
 bc2_authorization_pin_t bc2_authorization_required_pin(bc2_authorization_action_t action) {

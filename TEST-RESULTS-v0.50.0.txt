@@ -1,0 +1,28 @@
+BC2 Cold Wallet v0.50.0 — Sprint S1 Test Results
+
+Firmware portable core:
+  21/21 passed
+  0 failed
+  Build flags include -Werror
+
+Desktop pytest:
+  52 passed
+  1 skipped
+  0 failed
+
+Security regression coverage added:
+- 1st wrong PIN -> remains LOCKED
+- 2nd wrong PIN -> remains LOCKED
+- 3rd wrong PIN -> LOCKDOWN
+- BEGIN_UNLOCK rejected in LOCKDOWN
+- Receive/transaction state transitions rejected in LOCKDOWN
+- PIN failure count persists across reload/reboot simulation
+- Correct old PIN rejected while persistent lockdown is active
+- Creating a new PIN resets the persisted lockdown record
+- Factory-reset-to-setup exits state-machine lockdown
+- Idle/session timeout remains LOCKED and can unlock normally afterwards
+
+Environment limitation:
+ESP-IDF/idf.py is not installed in the build environment, therefore the actual
+Waveshare ESP32-S3 firmware target must still be built/flashed and physically
+accepted by the product-owner test before Sprint S1 is considered fully closed.

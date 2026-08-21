@@ -24,6 +24,7 @@
 #define BC2_WALLET_RECORD_MAGIC 0x42325753U
 #define BC2_WALLET_VERSION 1U
 #define BC2_WALLET_ENTROPY_SIZE 16U
+#define BC2_WALLET_SIGN_ADDRESS_SEARCH_LIMIT 1024U
 #define BC2_WALLET_NONCE_SIZE 12U
 #define BC2_WALLET_TAG_SIZE 16U
 
@@ -523,15 +524,19 @@ cleanup:
 }
 
 
-bool bc2_hw_wallet_sign_single_p2wpkh(
+bc2_hw_sign_result_t bc2_hw_wallet_sign_input_p2wpkh(
     const bc2_hal_t *hal,
     const char *input_address,
+    uint32_t input_index,
+    const uint8_t hash_prevouts[32],
+    const uint8_t hash_sequence[32],
     const uint8_t prev_txid_le[32],
     uint32_t prev_output_index,
     uint64_t input_amount,
     uint32_t sequence,
     const char *recipient_address,
     uint64_t recipient_amount,
+    const char *change_address,
     uint64_t change_amount,
     uint32_t lock_time,
     uint8_t public_key[33],
@@ -558,29 +563,32 @@ bool bc2_hw_wallet_sign_single_p2wpkh(
     char derived_address[96] = {0};
     char salt[] = "mnemonic";
 
-    uint32_t receive_count = 0U;
     const bc2_network *network = bc2_network_mainnet();
-    bool ok = false;
+    bc2_hw_sign_result_t result = BC2_HW_SIGN_ERROR_CRYPTO;
+    uint32_t matched_index = 0U;
+    bool matched = false;
 
     if (hal == NULL ||
         input_address == NULL ||
+        hash_prevouts == NULL ||
+        hash_sequence == NULL ||
         prev_txid_le == NULL ||
         recipient_address == NULL ||
+        (change_amount > 0U && change_address == NULL) ||
         recipient_amount == 0U ||
         public_key == NULL ||
         signature == NULL ||
         signature_length == NULL ||
         network == NULL ||
+        input_index > 0x7fffffffU ||
         bc2_hw_wallet_status(hal) != BC2_HW_WALLET_READY) {
-        return false;
+        return BC2_HW_SIGN_ERROR_WALLET;
     }
 
     *signature_length = 0U;
     memset(public_key, 0, 33U);
 
-    if (!bc2_hw_wallet_receive_index(hal, &receive_count) ||
-        receive_count == 0U ||
-        !decrypt_entropy_any(hal, entropy, &entropy_size) ||
+    if (!decrypt_entropy_any(hal, entropy, &entropy_size) ||
         !entropy_to_mnemonic_any(
             entropy,
             entropy_size,
@@ -595,20 +603,102 @@ bool bc2_hw_wallet_sign_single_p2wpkh(
             seed,
             sizeof(seed)) ||
         !bc2_bip32_master(seed, sizeof(seed), &master)) {
+        result = BC2_HW_SIGN_ERROR_WALLET;
         goto cleanup;
     }
 
-    for (uint32_t index = 0U; index < receive_count; ++index) {
-        secure_zero(&node, sizeof(node));
-        memset(derived_address, 0, sizeof(derived_address));
-        memset(public_key, 0, 33U);
-
+    /*
+     * The desktop index is a public performance hint only.
+     * First verify it by deriving the address on hardware.
+     */
+    {
         const int written = snprintf(
             path,
             sizeof(path),
             "m/84'/%u'/0'/0/%u",
             (unsigned int)network->coin_type,
-            (unsigned int)index);
+            (unsigned int)input_index);
+
+        if (written >= 0 &&
+            (size_t)written < sizeof(path) &&
+            bc2_bip32_derive_path(&master, path, &node) &&
+            bc2_secp256k1_public(node.key, public_key) &&
+            bc2_address_p2wpkh(
+                public_key,
+                network->bech32_hrp,
+                derived_address,
+                sizeof(derived_address)) &&
+            strcmp(derived_address, input_address) == 0) {
+            matched = true;
+            matched_index = input_index;
+        }
+    }
+
+    /*
+     * Recovery and legacy migration can make a desktop address-list position
+     * differ from the original derivation index. If the hint does not match,
+     * search a bounded receive-address window entirely on hardware.
+     *
+     * Security is unchanged: a key is accepted only when the hardware-derived
+     * address exactly equals the UTXO input address.
+     */
+    if (!matched) {
+        for (uint32_t index = 0U;
+             index < BC2_WALLET_SIGN_ADDRESS_SEARCH_LIMIT;
+             ++index) {
+            if (index == input_index)
+                continue;
+
+            secure_zero(&node, sizeof(node));
+            memset(public_key, 0, 33U);
+            memset(derived_address, 0, sizeof(derived_address));
+
+            const int written = snprintf(
+                path,
+                sizeof(path),
+                "m/84'/%u'/0'/0/%u",
+                (unsigned int)network->coin_type,
+                (unsigned int)index);
+
+            if (written < 0 ||
+                (size_t)written >= sizeof(path) ||
+                !bc2_bip32_derive_path(&master, path, &node) ||
+                !bc2_secp256k1_public(node.key, public_key) ||
+                !bc2_address_p2wpkh(
+                    public_key,
+                    network->bech32_hrp,
+                    derived_address,
+                    sizeof(derived_address))) {
+                result = BC2_HW_SIGN_ERROR_CRYPTO;
+                goto cleanup;
+            }
+
+            if (strcmp(derived_address, input_address) == 0) {
+                matched = true;
+                matched_index = index;
+                break;
+            }
+        }
+    }
+
+    if (!matched) {
+        result = BC2_HW_SIGN_ERROR_OWNERSHIP;
+        goto cleanup;
+    }
+
+    /* Re-derive the matched node once, so the signing key is explicit even
+     * after a fallback search. */
+    secure_zero(&node, sizeof(node));
+    memset(public_key, 0, 33U);
+    memset(derived_address, 0, sizeof(derived_address));
+
+    {
+        const int written = snprintf(
+            path,
+            sizeof(path),
+            "m/84'/%u'/0'/0/%u",
+            (unsigned int)network->coin_type,
+            (unsigned int)matched_index);
 
         if (written < 0 ||
             (size_t)written >= sizeof(path) ||
@@ -618,56 +708,109 @@ bool bc2_hw_wallet_sign_single_p2wpkh(
                 public_key,
                 network->bech32_hrp,
                 derived_address,
-                sizeof(derived_address))) {
+                sizeof(derived_address)) ||
+            strcmp(derived_address, input_address) != 0) {
+            result = BC2_HW_SIGN_ERROR_OWNERSHIP;
             goto cleanup;
         }
-
-        if (strcmp(derived_address, input_address) != 0) {
-            continue;
-        }
-
-        if (!bc2_hash160(public_key, 33U, pubkey_hash) ||
-            bc2_address_to_script(
-                recipient_address,
-                network,
-                recipient_script,
-                sizeof(recipient_script),
-                &recipient_script_length) != BC2_TX_OK ||
-            bc2_address_to_script(
-                input_address,
-                network,
-                change_script,
-                sizeof(change_script),
-                &change_script_length) != BC2_TX_OK ||
-            change_script_length != 22U ||
-            change_script[0] != 0x00U ||
-            change_script[1] != 0x14U ||
-            !bc2_p2wpkh_sighash_all_single(
-                prev_txid_le,
-                prev_output_index,
-                input_amount,
-                pubkey_hash,
-                sequence,
-                recipient_script,
-                recipient_script_length,
-                recipient_amount,
-                change_amount > 0U ? change_script : NULL,
-                change_amount > 0U ? change_script_length : 0U,
-                change_amount,
-                lock_time,
-                digest) ||
-            !bc2_ecdsa_sign_der(
-                node.key,
-                digest,
-                signature,
-                signature_capacity,
-                signature_length)) {
-            goto cleanup;
-        }
-
-        ok = true;
-        break;
     }
+
+    if (change_amount > 0U) {
+        bool change_owned = false;
+        for (uint32_t change_index = 0U;
+             change_index < BC2_WALLET_SIGN_ADDRESS_SEARCH_LIMIT;
+             ++change_index) {
+            bc2_xprv change_node = {0};
+            uint8_t change_public_key[33] = {0};
+            char change_candidate[96] = {0};
+            const int change_written = snprintf(
+                path,
+                sizeof(path),
+                "m/84'/%u'/0'/0/%u",
+                (unsigned int)network->coin_type,
+                (unsigned int)change_index);
+
+            if (change_written < 0 ||
+                (size_t)change_written >= sizeof(path) ||
+                !bc2_bip32_derive_path(&master, path, &change_node) ||
+                !bc2_secp256k1_public(change_node.key, change_public_key) ||
+                !bc2_address_p2wpkh(
+                    change_public_key,
+                    network->bech32_hrp,
+                    change_candidate,
+                    sizeof(change_candidate))) {
+                secure_zero(&change_node, sizeof(change_node));
+                secure_zero(change_public_key, sizeof(change_public_key));
+                result = BC2_HW_SIGN_ERROR_CRYPTO;
+                goto cleanup;
+            }
+
+            if (strcmp(change_candidate, change_address) == 0)
+                change_owned = true;
+
+            secure_zero(&change_node, sizeof(change_node));
+            secure_zero(change_public_key, sizeof(change_public_key));
+            memset(change_candidate, 0, sizeof(change_candidate));
+
+            if (change_owned)
+                break;
+        }
+
+        if (!change_owned) {
+            result = BC2_HW_SIGN_ERROR_OWNERSHIP;
+            goto cleanup;
+        }
+    }
+
+    if (!bc2_hash160(public_key, 33U, pubkey_hash) ||
+        bc2_address_to_script(
+            recipient_address,
+            network,
+            recipient_script,
+            sizeof(recipient_script),
+            &recipient_script_length) != BC2_TX_OK ||
+        (change_amount > 0U &&
+         bc2_address_to_script(
+            change_address,
+            network,
+            change_script,
+            sizeof(change_script),
+            &change_script_length) != BC2_TX_OK) ||
+        (change_amount > 0U &&
+         (change_script_length != 22U ||
+          change_script[0] != 0x00U ||
+          change_script[1] != 0x14U)) ||
+        !bc2_p2wpkh_sighash_all_multi(
+            hash_prevouts,
+            hash_sequence,
+            prev_txid_le,
+            prev_output_index,
+            input_amount,
+            pubkey_hash,
+            sequence,
+            recipient_script,
+            recipient_script_length,
+            recipient_amount,
+            change_amount > 0U ? change_script : NULL,
+            change_amount > 0U ? change_script_length : 0U,
+            change_amount,
+            lock_time,
+            digest)) {
+        result = BC2_HW_SIGN_ERROR_TRANSACTION;
+        goto cleanup;
+    }
+
+    if (!bc2_ecdsa_sign_der(
+            node.key,
+            digest,
+            signature,
+            signature_capacity,
+            signature_length)) {
+        result = BC2_HW_SIGN_ERROR_CRYPTO;
+        goto cleanup;
+    }
+
+    result = BC2_HW_SIGN_OK;
 
 cleanup:
     secure_zero(entropy, sizeof(entropy));
@@ -682,18 +825,16 @@ cleanup:
     secure_zero(recipient_script, sizeof(recipient_script));
     secure_zero(change_script, sizeof(change_script));
 
-    if (!ok) {
+    if (result != BC2_HW_SIGN_OK) {
         memset(public_key, 0, 33U);
-
-        if (signature_capacity > 0U) {
+        if (signature_capacity > 0U)
             memset(signature, 0, signature_capacity);
-        }
-
         *signature_length = 0U;
     }
 
-    return ok;
+    return result;
 }
+
 
 bool bc2_hw_wallet_receive_index(const bc2_hal_t *hal, uint32_t *index) {
     uint8_t data[4];

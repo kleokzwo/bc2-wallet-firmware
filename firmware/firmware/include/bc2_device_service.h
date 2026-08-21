@@ -12,7 +12,7 @@
 extern "C" {
 #endif
 
-#define BC2_DEVICE_FIRMWARE_VERSION "0.45.0"
+#define BC2_DEVICE_FIRMWARE_VERSION "0.49.5"
 #define BC2_DEVICE_INFO_MAX 192U
 #define BC2_DEVICE_RECEIVE_ADDRESS_MAX 96U
 #define BC2_DEVICE_TRANSACTION_ADDRESS_MAX 96U
@@ -25,7 +25,18 @@ typedef struct {
     uint64_t fee_amount;
     char recipient_address[BC2_DEVICE_TRANSACTION_ADDRESS_MAX];
 } bc2_device_transaction_review_t;
-typedef struct {uint8_t prev_txid_le[32];uint32_t prev_output_index;uint64_t input_amount;char input_address[BC2_DEVICE_TRANSACTION_ADDRESS_MAX];} bc2_device_sign_request_t;
+typedef struct {
+    uint8_t prev_txid_le[32];
+    uint32_t prev_output_index;
+    uint64_t input_amount;
+    uint32_t input_index;
+    uint8_t input_count;
+    uint8_t input_position;
+    uint8_t hash_prevouts[32];
+    uint8_t hash_sequence[32];
+    char input_address[BC2_DEVICE_TRANSACTION_ADDRESS_MAX];
+    char change_address[BC2_DEVICE_TRANSACTION_ADDRESS_MAX];
+} bc2_device_sign_request_t;
 
 typedef enum {
     BC2_DEVICE_REVIEW_PENDING = 0,
@@ -64,7 +75,17 @@ typedef struct {
     bc2_device_review_result_t transaction_result;
     bc2_device_transaction_review_t reviewed_transaction;
     bc2_device_sign_request_t pending_sign;
-    int sign_pending;uint8_t sign_status;uint8_t sign_public_key[33];uint8_t sign_signature[80];size_t sign_signature_length;
+    int sign_pending;
+    uint8_t sign_status;
+    uint8_t sign_public_key[33];
+    uint8_t sign_signature[80];
+    size_t sign_signature_length;
+    uint8_t sign_session_count;
+    uint8_t sign_session_next_position;
+    uint64_t sign_session_total_amount;
+    uint8_t sign_session_hash_prevouts[32];
+    uint8_t sign_session_hash_sequence[32];
+    char sign_session_change_address[BC2_DEVICE_TRANSACTION_ADDRESS_MAX];
     int create_wallet_pending;
     int recovery_pending;
     int recovery_input_enabled;
@@ -98,7 +119,12 @@ int bc2_device_service_take_transaction(bc2_device_service_t *service,
 void bc2_device_service_complete_transaction(bc2_device_service_t *service,
                                              int approved);
 int bc2_device_service_take_sign_request(bc2_device_service_t *service,bc2_device_sign_request_t *output);
-void bc2_device_service_complete_sign(bc2_device_service_t *service,int success,const uint8_t public_key[33],const uint8_t *signature,size_t signature_length);
+void bc2_device_service_complete_sign(
+    bc2_device_service_t *service,
+    uint8_t status,
+    const uint8_t public_key[33],
+    const uint8_t *signature,
+    size_t signature_length);
 int bc2_device_service_take_create_wallet(bc2_device_service_t *service);
 int bc2_device_service_take_recovery(bc2_device_service_t *service);
 int bc2_device_service_take_recovery_mnemonic(bc2_device_service_t *service,

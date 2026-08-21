@@ -1,7 +1,7 @@
 {
     "version":            "1.2",
     "project_name":       "bc2_wallet_hardware_v0340",
-    "project_version":    "9e28905-dirty",
+    "project_version":    "bce42eb-dirty",
     "project_path":       "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare",
     "idf_path":           "/home/kzwo/esp/esp-idf",
     "build_dir":          "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build",

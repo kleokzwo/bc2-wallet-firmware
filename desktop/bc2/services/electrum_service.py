@@ -17,6 +17,7 @@ class Utxo:
     value:int
     height:int
     address:str
+    derivation_index:int
 
 CHARSET="qpzry9x8gf2tvdw0s3jn54khce6mua7l"
 
@@ -108,7 +109,8 @@ def fetch_utxos(server, addresses, timeout=8.0):
             sock.settimeout(timeout)
             with sock.makefile("rwb") as f:
                 _rpc(f, 1, "server.version", ["BC2 Cold Wallet", "1.4"])
-                for rid, address in enumerate(addrs, 100):
+                for derivation_index, address in enumerate(addrs):
+                    rid = 100 + derivation_index
                     rows = _rpc(
                         f, rid, "blockchain.scripthash.listunspent",
                         [electrum_scripthash(address)]
@@ -123,6 +125,7 @@ def fetch_utxos(server, addresses, timeout=8.0):
                             value=value,
                             height=int(row.get("height", 0)),
                             address=address,
+                            derivation_index=derivation_index,
                         ))
     return utxos
 

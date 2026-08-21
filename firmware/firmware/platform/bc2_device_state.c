@@ -54,6 +54,17 @@ int bc2_device_machine_dispatch(bc2_device_machine *machine, bc2_device_event ev
         return 1;
     }
 
+    if (event == BC2_DEVICE_EVENT_FACTORY_RESET_TO_SETUP) {
+        machine->wallet_is_initialized = 0;
+        machine->failed_unlock_attempts = 0U;
+        machine->cooldown_level = 0U;
+        machine->cooldown_until_ms = 0U;
+        machine->last_activity_ms = now_ms;
+        machine->state = BC2_DEVICE_SETUP_REQUIRED;
+        machine->last_action = BC2_DEVICE_ACTION_NONE;
+        return 1;
+    }
+
     if (event == BC2_DEVICE_EVENT_LOCK && state_is_unlocked(machine->state)) {
         lock_machine(machine, now_ms);
         return 1;

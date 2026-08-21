@@ -28,7 +28,7 @@ Loading defaults file /home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmwa
 -- Performing Test C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS
 -- Performing Test C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS - Success
 -- USING O3
--- App "bc2_wallet_hardware_v0340" version: 9e28905-dirty
+-- App "bc2_wallet_hardware_v0340" version: bce42eb-dirty
 -- Adding linker script /home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/esp-idf/esp_system/ld/memory.ld
 -- Adding linker script /home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/esp-idf/esp_system/ld/sections.ld.in
 -- Adding linker script /home/kzwo/esp/esp-idf/components/esp_rom/esp32s3/ld/esp32s3.rom.ld

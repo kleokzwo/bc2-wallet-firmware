@@ -1,0 +1,29 @@
+test_identify (test_device_client.T.test_identify) ... ok
+test_receive_result_is_only_returned_after_approval (test_device_client.T.test_receive_result_is_only_returned_after_approval) ... ok
+test_wallet_id (test_device_client.T.test_wallet_id) ... ok
+test_info_fields_are_parsed_without_extra_complexity (test_device_model.DeviceModelTests.test_info_fields_are_parsed_without_extra_complexity) ... ok
+test_bad_magic (test_protocol.T.test_bad_magic) ... ok
+test_limit (test_protocol.T.test_limit) ... ok
+test_magic (test_protocol.T.test_magic) ... ok
+test_roundtrip (test_protocol.T.test_roundtrip) ... ok
+test_all_navigation_pages_exist_and_are_switchable (test_ui_smoke.UISmokeTests.test_all_navigation_pages_exist_and_are_switchable) ... skipped 'PySide6 not available'
+test_clear_wallet_does_not_touch_other_wallet (test_wallet_cache.WalletCacheTests.test_clear_wallet_does_not_touch_other_wallet) ... ok
+test_corrupted_cache_is_safe_cache_miss (test_wallet_cache.WalletCacheTests.test_corrupted_cache_is_safe_cache_miss) ... ok
+test_invalid_wallet_id_is_rejected (test_wallet_cache.WalletCacheTests.test_invalid_wallet_id_is_rejected) ... ok
+test_malformed_cache_is_safe_cache_miss (test_wallet_cache.WalletCacheTests.test_malformed_cache_is_safe_cache_miss) ... ok
+test_missing_wallet_is_empty (test_wallet_cache.WalletCacheTests.test_missing_wallet_is_empty) ... ok
+test_same_wallet_id_recovers_same_cache (test_wallet_cache.WalletCacheTests.test_same_wallet_id_recovers_same_cache) ... ok
+test_transaction_validation_rejects_bad_records (test_wallet_cache.WalletCacheTests.test_transaction_validation_rejects_bad_records) ... ok
+test_wallets_are_strictly_isolated (test_wallet_cache.WalletCacheTests.test_wallets_are_strictly_isolated) ... ok
+test_activate_normalizes_case_and_whitespace (test_wallet_context.WalletContextTests.test_activate_normalizes_case_and_whitespace) ... ok
+test_activate_replaces_previous_identity (test_wallet_context.WalletContextTests.test_activate_replaces_previous_identity) ... ok
+test_activate_sets_wallet_id (test_wallet_context.WalletContextTests.test_activate_sets_wallet_id) ... ok
+test_deactivate_forgets_identity (test_wallet_context.WalletContextTests.test_deactivate_forgets_identity) ... ok
+test_invalid_wallet_id_is_rejected_without_changing_context (test_wallet_context.WalletContextTests.test_invalid_wallet_id_is_rejected_without_changing_context) ... ok
+test_non_string_wallet_id_is_rejected (test_wallet_context.WalletContextTests.test_non_string_wallet_id_is_rejected) ... ok
+test_starts_inactive (test_wallet_context.WalletContextTests.test_starts_inactive) ... ok
+
+----------------------------------------------------------------------
+Ran 24 tests in 0.005s
+
+OK (skipped=1)

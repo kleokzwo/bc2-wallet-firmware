@@ -85,11 +85,53 @@ static int setup_and_error_flow(void) {
     return 1;
 }
 
+static int factory_reset_to_setup_flow(void) {
+    bc2_device_machine m;
+    bc2_device_machine_init(&m, 1, 0U);
+    CHECK(bc2_device_machine_dispatch(&m, BC2_DEVICE_EVENT_BOOT_COMPLETE, 1U));
+    CHECK(m.state == BC2_DEVICE_LOCKED);
+    CHECK(bc2_device_machine_dispatch(&m, BC2_DEVICE_EVENT_BEGIN_UNLOCK, 2U));
+    CHECK(m.state == BC2_DEVICE_UNLOCKING);
+    CHECK(bc2_device_machine_dispatch(&m, BC2_DEVICE_EVENT_FACTORY_RESET_TO_SETUP, 3U));
+    CHECK(m.state == BC2_DEVICE_SETUP_REQUIRED);
+    CHECK(m.wallet_is_initialized == 0);
+    CHECK(!bc2_device_machine_is_unlocked(&m));
+    return 1;
+}
+
+static int timeout_then_unlock_flow(void) {
+    bc2_device_machine m;
+    bc2_device_machine_init(&m, 1, 100U);
+    CHECK(bc2_device_machine_dispatch(&m, BC2_DEVICE_EVENT_BOOT_COMPLETE, 101U));
+    CHECK(m.state == BC2_DEVICE_LOCKED);
+    CHECK(bc2_device_machine_dispatch(&m, BC2_DEVICE_EVENT_BEGIN_UNLOCK, 102U));
+    CHECK(bc2_device_machine_dispatch(&m, BC2_DEVICE_EVENT_UNLOCK_SUCCESS, 103U));
+    CHECK(m.state == BC2_DEVICE_DASHBOARD);
+
+    CHECK(bc2_device_machine_tick(
+        &m, 103U + m.session_timeout_ms + 1U));
+    CHECK(m.state == BC2_DEVICE_LOCKED);
+
+    CHECK(bc2_device_machine_dispatch(
+        &m, BC2_DEVICE_EVENT_BEGIN_UNLOCK,
+        103U + m.session_timeout_ms + 2U));
+    CHECK(m.state == BC2_DEVICE_UNLOCKING);
+
+    CHECK(bc2_device_machine_dispatch(
+        &m, BC2_DEVICE_EVENT_UNLOCK_SUCCESS,
+        103U + m.session_timeout_ms + 3U));
+    CHECK(m.state == BC2_DEVICE_DASHBOARD);
+    CHECK(m.last_action == BC2_DEVICE_ACTION_UNLOCKED);
+    return 1;
+}
+
 int main(void) {
     CHECK(unlock_success_flow());
     CHECK(review_and_lock_flows());
     CHECK(cooldown_flow());
     CHECK(timeout_flow());
     CHECK(setup_and_error_flow());
+    CHECK(factory_reset_to_setup_flow());
+    CHECK(timeout_then_unlock_flow());
     return EXIT_SUCCESS;
 }

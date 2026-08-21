@@ -387,6 +387,33 @@ class ReceivePage(QWidget):
         painter.end()
         return pixmap
 
+    def reset_wallet_view(self) -> None:
+        """Remove every wallet-specific receive value from the visible page."""
+        self._set_qr(None)
+        self._result_title.setText("Noch keine Adresse")
+        self._result_text.setText(
+            "Sobald du die Adresse auf der Hardware bestätigt hast, "
+            "erscheint sie hier zusammen mit QR-Code und Kopierfunktion."
+        )
+        self._result_text.setTextInteractionFlags(Qt.NoTextInteraction)
+        self._copy_button.setVisible(False)
+        self._copy_button.setText("Adresse kopieren")
+        self._state.setText(
+            "Entsperre deine Hardware Wallet, um eine Empfangsadresse anzufordern."
+        )
+
+    def show_cached_address(self, address: str) -> None:
+        """Show a public address only from the currently authenticated wallet cache."""
+        value = str(address).strip()
+        if not value:
+            self.reset_wallet_view()
+            return
+        self._result_title.setText("Letzte bekannte Empfangsadresse")
+        self._set_qr(value)
+        self._result_text.setText(f"Adresse: {value}")
+        self._result_text.setTextInteractionFlags(Qt.TextSelectableByMouse)
+        self._copy_button.setVisible(True)
+
     def set_device_connected(self, connected: bool) -> None:
         if connected:
             self._state.setText(

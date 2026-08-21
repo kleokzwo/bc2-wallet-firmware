@@ -153,6 +153,14 @@ int main(void) {
 
     machine.state = BC2_DEVICE_LOCKED;
     machine.wallet_is_initialized = 1;
+
+    prepare_request(&usb, BC2_USB_CMD_BEGIN_CREATE_WALLET, 9315U, NULL, 0U);
+    process_until_response(&service, &hal, &machine, &identity, &usb);
+    assert(bc2_usb_parse(usb.response, usb.response_size, &response) == BC2_USB_PARSE_OK);
+    assert(response.payload_length == 1U && response.payload[0] == 1U);
+    assert(bc2_device_service_take_create_wallet(&service));
+    assert(!bc2_device_service_take_create_wallet(&service));
+
     prepare_request(&usb, BC2_USB_CMD_BEGIN_UNLOCK, 932U, NULL, 0U);
     process_until_response(&service, &hal, &machine, &identity, &usb);
     assert(bc2_usb_parse(usb.response, usb.response_size, &response) == BC2_USB_PARSE_OK);

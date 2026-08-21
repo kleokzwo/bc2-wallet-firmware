@@ -447,18 +447,31 @@ class SendPage(QWidget):
 
         self.send_requested.emit(address, amount_text)
 
-    def _reset(self) -> None:
+    def _reset_ui(self, clear_inputs: bool) -> None:
+        """Return Send to a clean draft state without crossing wallet sessions."""
         self._mode = "prepare"
         self._error.setText("")
+        self._preview_text.setText("")
         self._preview.setVisible(False)
         self._status.setText("")
         self._address_input.setEnabled(True)
         self._amount_input.setEnabled(True)
+        if clear_inputs:
+            self._address_input.clear()
+            self._amount_input.clear()
         self._change_button.setVisible(False)
         self._action_button.setEnabled(True)
         self._action_button.setText("Weiter")
         self._set_progress(completed=0, current=0)
+
+    def _reset(self) -> None:
+        # "Ändern" belongs to the same wallet/session, so keep what the user typed.
+        self._reset_ui(clear_inputs=False)
         self.reset_requested.emit()
+
+    def reset_wallet_view(self) -> None:
+        """Hard reset for logout, wallet replacement, recovery, or wallet switch."""
+        self._reset_ui(clear_inputs=True)
 
     def show_hardware_required(self) -> None:
         self.show_prepare_failed(

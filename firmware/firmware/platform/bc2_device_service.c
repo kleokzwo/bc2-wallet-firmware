@@ -8,7 +8,7 @@
 
 #define BC2_USB_RESPONSE_FLAG 0x80U
 #define BC2_TRANSACTION_PAYLOAD_FIXED_SIZE 28U
-#define BC2_SIGN_PAYLOAD_FIXED_SIZE 46U
+#define BC2_SIGN_PAYLOAD_V3_FIXED_SIZE 116U
 
 static uint32_t read_u32_le(const uint8_t*b){return (uint32_t)b[0]|((uint32_t)b[1]<<8U)|((uint32_t)b[2]<<16U)|((uint32_t)b[3]<<24U);}
 
@@ -51,16 +51,137 @@ static int queue_transaction(bc2_device_service_t *service,
     return 1;
 }
 
-static int queue_sign_request(bc2_device_service_t*s,const uint8_t*p,size_t n){
- size_t al;uint64_t total;if(!s||!p||n<BC2_SIGN_PAYLOAD_FIXED_SIZE||s->sign_pending||s->transaction_result!=BC2_DEVICE_REVIEW_APPROVED||p[0]!=1U)return 0;
- al=p[45];if(al==0||al>=BC2_DEVICE_TRANSACTION_ADDRESS_MAX||n!=BC2_SIGN_PAYLOAD_FIXED_SIZE+al)return 0;
- memset(&s->pending_sign,0,sizeof s->pending_sign);memcpy(s->pending_sign.prev_txid_le,p+1,32);s->pending_sign.prev_output_index=read_u32_le(p+33);
- s->pending_sign.input_amount=read_u64_le(p+37);memcpy(s->pending_sign.input_address,p+46,al);s->pending_sign.input_address[al]='\0';
- total=s->reviewed_transaction.recipient_amount;if(UINT64_MAX-total<s->reviewed_transaction.change_amount)return 0;total+=s->reviewed_transaction.change_amount;
- if (UINT64_MAX - total < s->reviewed_transaction.fee_amount) return 0;
- total += s->reviewed_transaction.fee_amount;
- if(s->pending_sign.input_amount!=total||!bc2_receive_address_is_valid(s->pending_sign.input_address)){memset(&s->pending_sign,0,sizeof s->pending_sign);return 0;}
- s->sign_pending=1;s->sign_status=0;s->sign_signature_length=0;memset(s->sign_public_key,0,sizeof s->sign_public_key);memset(s->sign_signature,0,sizeof s->sign_signature);return 1;
+static void reset_sign_session(bc2_device_service_t *service) {
+    if (service == NULL) return;
+    service->sign_session_count = 0U;
+    service->sign_session_next_position = 0U;
+    service->sign_session_total_amount = 0U;
+    memset(service->sign_session_hash_prevouts, 0, 32U);
+    memset(service->sign_session_hash_sequence, 0, 32U);
+    memset(service->sign_session_change_address, 0,
+           sizeof(service->sign_session_change_address));
+}
+
+static int queue_sign_request(
+    bc2_device_service_t *service,
+    const uint8_t *payload,
+    size_t payload_length) {
+    size_t input_len;
+    size_t change_len;
+    size_t change_offset;
+    uint64_t expected_total;
+    uint64_t new_total;
+    uint8_t count;
+    uint8_t position;
+
+    if (service == NULL || payload == NULL ||
+        payload_length < BC2_SIGN_PAYLOAD_V3_FIXED_SIZE ||
+        service->sign_pending ||
+        service->transaction_result != BC2_DEVICE_REVIEW_APPROVED ||
+        payload[0] != 3U)
+        return 0;
+
+    count = payload[1];
+    position = payload[2];
+    if (count == 0U || position >= count)
+        return 0;
+
+    input_len = payload[115];
+    if (input_len == 0U ||
+        input_len >= BC2_DEVICE_TRANSACTION_ADDRESS_MAX)
+        return 0;
+
+    change_offset = 116U + input_len;
+    if (change_offset >= payload_length)
+        return 0;
+
+    change_len = payload[change_offset];
+    if (change_len >= BC2_DEVICE_TRANSACTION_ADDRESS_MAX ||
+        payload_length != change_offset + 1U + change_len)
+        return 0;
+
+    if (position == 0U) {
+        reset_sign_session(service);
+        service->sign_session_count = count;
+        memcpy(service->sign_session_hash_prevouts, payload + 3, 32U);
+        memcpy(service->sign_session_hash_sequence, payload + 35, 32U);
+        if (change_len > 0U) {
+            memcpy(service->sign_session_change_address,
+                   payload + change_offset + 1U, change_len);
+            service->sign_session_change_address[change_len] = '\0';
+            if (!bc2_receive_address_is_valid(
+                    service->sign_session_change_address))
+                return 0;
+        }
+    } else {
+        if (service->sign_session_count != count ||
+            service->sign_session_next_position != position ||
+            memcmp(service->sign_session_hash_prevouts,
+                   payload + 3, 32U) != 0 ||
+            memcmp(service->sign_session_hash_sequence,
+                   payload + 35, 32U) != 0)
+            return 0;
+
+        if (strlen(service->sign_session_change_address) != change_len ||
+            (change_len > 0U &&
+             memcmp(service->sign_session_change_address,
+                    payload + change_offset + 1U,
+                    change_len) != 0))
+            return 0;
+    }
+
+    memset(&service->pending_sign, 0, sizeof(service->pending_sign));
+    service->pending_sign.input_count = count;
+    service->pending_sign.input_position = position;
+    memcpy(service->pending_sign.hash_prevouts, payload + 3, 32U);
+    memcpy(service->pending_sign.hash_sequence, payload + 35, 32U);
+    memcpy(service->pending_sign.prev_txid_le, payload + 67, 32U);
+    service->pending_sign.prev_output_index = read_u32_le(payload + 99);
+    service->pending_sign.input_amount = read_u64_le(payload + 103);
+    service->pending_sign.input_index = read_u32_le(payload + 111);
+    if (service->pending_sign.input_index > 0x7fffffffU)
+        return 0;
+
+    memcpy(service->pending_sign.input_address, payload + 116, input_len);
+    service->pending_sign.input_address[input_len] = '\0';
+    if (!bc2_receive_address_is_valid(service->pending_sign.input_address))
+        return 0;
+
+    if (change_len > 0U) {
+        memcpy(service->pending_sign.change_address,
+               payload + change_offset + 1U, change_len);
+        service->pending_sign.change_address[change_len] = '\0';
+    }
+
+    if (UINT64_MAX - service->sign_session_total_amount <
+        service->pending_sign.input_amount)
+        return 0;
+    new_total = service->sign_session_total_amount +
+                service->pending_sign.input_amount;
+
+    expected_total = service->reviewed_transaction.recipient_amount;
+    if (UINT64_MAX - expected_total <
+        service->reviewed_transaction.change_amount)
+        return 0;
+    expected_total += service->reviewed_transaction.change_amount;
+    if (UINT64_MAX - expected_total <
+        service->reviewed_transaction.fee_amount)
+        return 0;
+    expected_total += service->reviewed_transaction.fee_amount;
+
+    if (new_total > expected_total)
+        return 0;
+    if (position + 1U == count && new_total != expected_total)
+        return 0;
+
+    service->sign_session_total_amount = new_total;
+    service->sign_session_next_position = (uint8_t)(position + 1U);
+    service->sign_pending = 1;
+    service->sign_status = 0U;
+    service->sign_signature_length = 0U;
+    memset(service->sign_public_key, 0, sizeof(service->sign_public_key));
+    memset(service->sign_signature, 0, sizeof(service->sign_signature));
+    return 1;
 }
 
 static size_t build_info_payload(const bc2_device_identity_t *identity,
@@ -118,7 +239,8 @@ static size_t build_response(const bc2_usb_message_t *request,
             payload[0] = 0U;
             payload_size = 1U;
             if (service == NULL || machine == NULL ||
-                machine->state != BC2_DEVICE_SETUP_REQUIRED ||
+                (machine->state != BC2_DEVICE_SETUP_REQUIRED &&
+                 machine->state != BC2_DEVICE_LOCKED) ||
                 service->create_wallet_pending)
                 break;
             service->create_wallet_pending = 1;
@@ -129,7 +251,7 @@ case BC2_USB_CMD_BEGIN_RECOVERY:
     payload_size = 1U;
     if (service == NULL || machine == NULL ||
         (machine->state != BC2_DEVICE_SETUP_REQUIRED &&
-         machine->state != BC2_DEVICE_LOCKED) ||
+         machine->state != BC2_DEVICE_LOCKDOWN) ||
         service->recovery_pending)
         break;
     service->recovery_pending = 1;
@@ -141,8 +263,10 @@ case BC2_USB_CMD_SUBMIT_RECOVERY_MNEMONIC:
     payload_size = 1U;
     if (service == NULL || machine == NULL ||
         !service->recovery_input_enabled || service->recovery_mnemonic_pending ||
-        (machine->state != BC2_DEVICE_SETUP_REQUIRED && machine->state != BC2_DEVICE_LOCKED) ||
-        request->payload_length == 0U || request->payload_length >= BC2_DEVICE_RECOVERY_MNEMONIC_MAX)
+        (machine->state != BC2_DEVICE_SETUP_REQUIRED &&
+         machine->state != BC2_DEVICE_LOCKDOWN) ||
+        request->payload_length == 0U ||
+        request->payload_length >= BC2_DEVICE_RECOVERY_MNEMONIC_MAX)
         break;
     memcpy(service->recovery_mnemonic, request->payload, request->payload_length);
     service->recovery_mnemonic[request->payload_length] = '\0';
@@ -168,6 +292,17 @@ case BC2_USB_CMD_LOCK_WALLET:
         break;
     service->lock_pending = 1;
     payload[0] = 1U;
+    break;
+case BC2_USB_CMD_GET_WALLET_ID:
+    payload[0] = 0U;
+    payload_size = 1U;
+    if (service == NULL || machine == NULL ||
+        machine->state != BC2_DEVICE_DASHBOARD ||
+        !service->wallet_id_available)
+        break;
+    payload[0] = 1U;
+    memcpy(payload + 1U, service->wallet_id, BC2_DEVICE_WALLET_ID_SIZE);
+    payload_size = 1U + BC2_DEVICE_WALLET_ID_SIZE;
     break;
 case BC2_USB_CMD_BEGIN_RECEIVE_ADDRESS:
     payload[0] = 0U;
@@ -256,9 +391,22 @@ case BC2_USB_CMD_GET_RECEIVE_RESULT: {
             if (!service || request->payload_length != 0U) return 0U;
             payload[0] = service->sign_status;
             payload_size = 1U;
-            if(service->sign_status==1U){if(service->sign_signature_length==0U||35U+service->sign_signature_length>sizeof(payload))return 0U;
-              memcpy(payload+1,service->sign_public_key,33);payload[34]=(uint8_t)service->sign_signature_length;
-              memcpy(payload+35,service->sign_signature,service->sign_signature_length);payload_size=35U+service->sign_signature_length;}
+            if (service->sign_status == 1U) {
+                if (service->sign_signature_length == 0U ||
+                    35U + service->sign_signature_length > sizeof(payload))
+                    return 0U;
+                memcpy(payload + 1, service->sign_public_key, 33U);
+                payload[34] = (uint8_t)service->sign_signature_length;
+                memcpy(payload + 35, service->sign_signature,
+                       service->sign_signature_length);
+                payload_size = 35U + service->sign_signature_length;
+                service->sign_status = 0U;
+                service->sign_signature_length = 0U;
+                memset(service->sign_public_key, 0,
+                       sizeof(service->sign_public_key));
+                memset(service->sign_signature, 0,
+                       sizeof(service->sign_signature));
+            }
             break;
         case BC2_USB_CMD_GET_TRANSACTION_RESULT:
             if (service == NULL || request->payload_length != 0U) return 0U;
@@ -400,12 +548,32 @@ void bc2_device_service_complete_transaction(bc2_device_service_t *service,
 }
 
 int bc2_device_service_take_sign_request(bc2_device_service_t*s,bc2_device_sign_request_t*o){if(!s||!o||!s->sign_pending)return 0;*o=s->pending_sign;s->sign_pending=0;return 1;}
-void bc2_device_service_complete_sign(bc2_device_service_t*s,int ok,const uint8_t pub[33],const uint8_t*sig,size_t n){
- if (!s) return;
- memset(s->sign_public_key, 0, sizeof s->sign_public_key);
- memset(s->sign_signature, 0, sizeof s->sign_signature);
- s->sign_signature_length = 0U;
- if(!ok||!pub||!sig||n==0||n>sizeof s->sign_signature){s->sign_status=2;return;}memcpy(s->sign_public_key,pub,33);memcpy(s->sign_signature,sig,n);s->sign_signature_length=n;s->sign_status=1;
+void bc2_device_service_complete_sign(
+    bc2_device_service_t *service,
+    uint8_t status,
+    const uint8_t public_key[33],
+    const uint8_t *signature,
+    size_t signature_length) {
+    if (service == NULL)
+        return;
+
+    memset(service->sign_public_key, 0, sizeof(service->sign_public_key));
+    memset(service->sign_signature, 0, sizeof(service->sign_signature));
+    service->sign_signature_length = 0U;
+
+    if (status != 1U ||
+        public_key == NULL ||
+        signature == NULL ||
+        signature_length == 0U ||
+        signature_length > sizeof(service->sign_signature)) {
+        service->sign_status = status == 0U ? 2U : status;
+        return;
+    }
+
+    memcpy(service->sign_public_key, public_key, 33U);
+    memcpy(service->sign_signature, signature, signature_length);
+    service->sign_signature_length = signature_length;
+    service->sign_status = 1U;
 }
 
 int bc2_device_service_take_create_wallet(bc2_device_service_t *service) {
@@ -454,4 +622,18 @@ int bc2_device_service_take_lock(bc2_device_service_t *service) {
     if (service == NULL || !service->lock_pending) return 0;
     service->lock_pending = 0;
     return 1;
+}
+
+void bc2_device_service_set_wallet_id(
+    bc2_device_service_t *service,
+    const uint8_t wallet_id[BC2_DEVICE_WALLET_ID_SIZE]) {
+    if (service == NULL || wallet_id == NULL) return;
+    memcpy(service->wallet_id, wallet_id, BC2_DEVICE_WALLET_ID_SIZE);
+    service->wallet_id_available = 1;
+}
+
+void bc2_device_service_clear_wallet_id(bc2_device_service_t *service) {
+    if (service == NULL) return;
+    memset(service->wallet_id, 0, sizeof(service->wallet_id));
+    service->wallet_id_available = 0;
 }

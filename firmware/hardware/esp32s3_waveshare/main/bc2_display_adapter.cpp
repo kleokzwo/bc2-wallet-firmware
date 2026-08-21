@@ -212,6 +212,14 @@ extern "C" esp_err_t bc2_display_adapter_show_text(const char *title,
   draw_lock_screen(body, footer);
  } else if (title != nullptr && std::strcmp(title, "ADRESSE PRUEFEN") == 0) {
   draw_receive_screen(body);
+ } else if (title != nullptr && std::strncmp(title, "RECOVERY ", 9U) == 0) {
+  /* Seed words are security-critical: use 2x text and fewer lines rather
+   * than squeezing all content into the small generic body font. */
+  draw_status_bar();
+  draw_line(title, 43, 2, true);
+  draw_multiline(body, 75, 2, 3);
+  fill_rect(7, 178, 186, 1);
+  draw_line(footer != nullptr ? footer : "BEIDE: WEITER", 185, 1, true);
  } else {
   draw_status_bar();
   draw_line(title != nullptr ? title : "BC2 COLD WALLET", 43, 2, true);

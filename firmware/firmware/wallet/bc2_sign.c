@@ -516,6 +516,38 @@ static int bc2_sign_put_u32(uint8_t *o,size_t c,size_t *x,uint32_t v){if(!o||!x|
 static int bc2_sign_put_u64(uint8_t *o,size_t c,size_t *x,uint64_t v){if(!o||!x||c-*x<8U)return 0;for(unsigned i=0;i<8U;i++)o[(*x)++]=(uint8_t)(v>>(i*8U));return 1;}
 static int bc2_sign_put_data(uint8_t*o,size_t c,size_t*x,const uint8_t*d,size_t n){if(!o||!x||(n&& !d)||n>c-*x)return 0;if(n)memcpy(o+*x,d,n);*x+=n;return 1;}
 static int bc2_sign_put_script(uint8_t*o,size_t c,size_t*x,const uint8_t*s,size_t n){if(n>252U||*x>=c)return 0;o[(*x)++]=(uint8_t)n;return bc2_sign_put_data(o,c,x,s,n);}
+bool bc2_p2wpkh_sighash_all_multi(
+ const uint8_t hp[32],const uint8_t hs[32],const uint8_t ptx[32],uint32_t vout,
+ uint64_t amount,const uint8_t pkh[20],uint32_t seq,
+ const uint8_t*rs,size_t rn,uint64_t ra,const uint8_t*cs,size_t cn,uint64_t ca,
+ uint32_t lock,uint8_t out[32]){
+ uint8_t op[36],outs[512],pre[512],ho[32],script[26];size_t oo=0,po=0;
+ if(!hp||!hs||!ptx||!pkh||!rs||rn==0||rn>252U||
+    (ca>0U&&(!cs||cn==0U))||cn>252U||!out)return false;
+ memcpy(op,ptx,32);op[32]=(uint8_t)vout;op[33]=(uint8_t)(vout>>8U);
+ op[34]=(uint8_t)(vout>>16U);op[35]=(uint8_t)(vout>>24U);
+ if(!bc2_sign_put_u64(outs,sizeof outs,&oo,ra)||
+    !bc2_sign_put_script(outs,sizeof outs,&oo,rs,rn))return false;
+ if(ca>0U&&(!bc2_sign_put_u64(outs,sizeof outs,&oo,ca)||
+    !bc2_sign_put_script(outs,sizeof outs,&oo,cs,cn)))return false;
+ if(!bc2_sha256d(outs,oo,ho))return false;
+ script[0]=0x19;script[1]=0x76;script[2]=0xa9;script[3]=0x14;
+ memcpy(script+4,pkh,20);script[24]=0x88;script[25]=0xac;
+ if(!bc2_sign_put_u32(pre,sizeof pre,&po,2U)||
+    !bc2_sign_put_data(pre,sizeof pre,&po,hp,32)||
+    !bc2_sign_put_data(pre,sizeof pre,&po,hs,32)||
+    !bc2_sign_put_data(pre,sizeof pre,&po,op,sizeof op)||
+    !bc2_sign_put_data(pre,sizeof pre,&po,script,sizeof script)||
+    !bc2_sign_put_u64(pre,sizeof pre,&po,amount)||
+    !bc2_sign_put_u32(pre,sizeof pre,&po,seq)||
+    !bc2_sign_put_data(pre,sizeof pre,&po,ho,32)||
+    !bc2_sign_put_u32(pre,sizeof pre,&po,lock)||
+    !bc2_sign_put_u32(pre,sizeof pre,&po,1U))return false;
+ bool ok=bc2_sha256d(pre,po,out);
+ memset(op,0,sizeof op);memset(outs,0,sizeof outs);memset(pre,0,sizeof pre);
+ memset(ho,0,sizeof ho);memset(script,0,sizeof script);return ok;
+}
+
 bool bc2_p2wpkh_sighash_all_single(const uint8_t ptx[32],uint32_t vout,uint64_t amount,const uint8_t pkh[20],uint32_t seq,
  const uint8_t*rs,size_t rn,uint64_t ra,const uint8_t*cs,size_t cn,uint64_t ca,uint32_t lock,uint8_t out[32]){
  uint8_t op[36],sb[4],outs[512],pre[512],hp[32],hs[32],ho[32],sc[26];size_t oo=0,po=0;

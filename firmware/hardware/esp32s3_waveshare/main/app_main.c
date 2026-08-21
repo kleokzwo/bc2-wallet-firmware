@@ -36,7 +36,8 @@ typedef enum {
 typedef enum {
     BC2_PIN_POST_NONE = 0,
     BC2_PIN_POST_CREATE_WALLET,
-    BC2_PIN_POST_RECOVERY
+    BC2_PIN_POST_RECOVERY,
+    BC2_PIN_POST_REPLACE_CREATE
 } bc2_pin_post_action_t;
 
 typedef struct {
@@ -71,6 +72,7 @@ typedef enum {
 typedef struct {
     bool active;
     bool replacing_existing;
+    bool lockdown_recovery;
     bc2_recovery_stage_t stage;
     size_t word_count;
     uint16_t indexes[BC2_HW_WALLET_MAX_WORD_COUNT];
@@ -94,6 +96,21 @@ static void render_pin(const bc2_hal_t *hal, const bc2_pin_entry_t *entry,
                                          (unsigned int)entry->digit_count);
 }
 
+static void render_pin_incorrect(const bc2_hal_t *hal, uint8_t failures) {
+    bc2_display_frame_t frame;
+    const unsigned int remaining = failures < BC2_SECURITY_PIN_MAX_FAILURES ? (unsigned int)(BC2_SECURITY_PIN_MAX_FAILURES - failures) : 0U;
+    memset(&frame, 0, sizeof(frame));
+    (void)snprintf(frame.title, sizeof(frame.title), "PIN FALSCH");
+    if (remaining == 1U)
+        (void)snprintf(frame.body, sizeof(frame.body), "Noch 1 Versuch.\nDanach Recovery.");
+    else
+        (void)snprintf(frame.body, sizeof(frame.body), "Noch %u Versuche.\nDanach Recovery.", remaining);
+    (void)snprintf(frame.footer, sizeof(frame.footer), "PIN erneut eingeben");
+    frame.require_full_refresh = true;
+    (void)bc2_hal_present(hal, &frame);
+    vTaskDelay(pdMS_TO_TICKS(1600U));
+}
+
 static void render_current_state(const bc2_hal_t *hal,
                                  const bc2_device_machine *machine) {
     char status[160];
@@ -105,6 +122,12 @@ static void render_current_state(const bc2_hal_t *hal,
                        BC2_DEVICE_FIRMWARE_VERSION);
         view.primary_text = status;
         view.secondary_text = "Desktop: Neue Wallet erstellen";
+    } else if (machine->state == BC2_DEVICE_LOCKDOWN) {
+        (void)snprintf(status, sizeof(status),
+                       "RECOVERY ERFORDERLICH\nFirmware %s",
+                       BC2_DEVICE_FIRMWARE_VERSION);
+        view.primary_text = status;
+        view.secondary_text = "";
     } else {
         (void)snprintf(status,
                        sizeof(status),
@@ -173,6 +196,7 @@ static void recovery_clear(bc2_recovery_session_t *recovery) {
     memset(recovery->fingerprint, 0, sizeof(recovery->fingerprint));
     recovery->active=false;
     recovery->replacing_existing=false;
+    recovery->lockdown_recovery=false;
     recovery->stage=BC2_RECOVERY_WAITING_DESKTOP;
     recovery->word_count=0U;
 }
@@ -331,7 +355,22 @@ static void process_button(const bc2_hal_t *hal,
                     const bc2_pin_security_result_t verified = bc2_pin_security_verify(
                         &pin_session->security, hal, pin_entry->digits, now_ms);
                     bc2_pin_entry_clear(pin_entry);
-                    if (verified == BC2_PIN_SECURITY_OK) {
+                    if (verified == BC2_PIN_SECURITY_LOCKED) {
+                        if (pin_session->mode == BC2_PIN_MODE_AUTHORIZE_RECEIVE)
+                            bc2_device_service_complete_receive(service, 0, NULL);
+                        else
+                            bc2_device_service_complete_transaction(service, 0);
+                        pin_session->active = false;
+                        memset(pin_session->receive_address, 0,
+                               sizeof(pin_session->receive_address));
+                        memset(&pin_session->transaction, 0,
+                               sizeof(pin_session->transaction));
+                        pin_session->receive_index = 0U;
+                        (void)bc2_device_machine_dispatch(
+                            machine, BC2_DEVICE_EVENT_ENTER_LOCKDOWN, now_ms);
+                        bc2_device_service_clear_wallet_id(service);
+                        render_current_state(hal, machine);
+                    } else if (verified == BC2_PIN_SECURITY_OK) {
                         char transaction_text[256];
                         const bool is_transaction =
                             pin_session->mode == BC2_PIN_MODE_AUTHORIZE_TRANSACTION;
@@ -354,6 +393,8 @@ static void process_button(const bc2_hal_t *hal,
                                                           now_ms);
                         (void)bc2_device_flow_render(hal, machine, &view);
                     } else {
+                        if (verified == BC2_PIN_SECURITY_INVALID)
+                            render_pin_incorrect(hal, pin_session->security.failures);
                         bc2_pin_entry_init(pin_entry);
                         render_pin(hal, pin_entry, pin_session->mode);
                     }
@@ -363,39 +404,145 @@ static void process_button(const bc2_hal_t *hal,
                         &pin_session->security, hal, pin_entry->digits, now_ms);
                     if (verified == BC2_PIN_SECURITY_OK)
                         unlock_result = BC2_DEVICE_EVENT_UNLOCK_SUCCESS;
-                    else if (verified == BC2_PIN_SECURITY_DELAYED)
+                    else if (verified == BC2_PIN_SECURITY_LOCKED) {
+                        pin_session->active = false;
+                        pin_session->post_action = BC2_PIN_POST_NONE;
+                        (void)bc2_device_machine_dispatch(
+                            machine, BC2_DEVICE_EVENT_ENTER_LOCKDOWN, now_ms);
+                        bc2_device_service_clear_wallet_id(service);
+                        bc2_pin_entry_clear(pin_entry);
+                        render_current_state(hal, machine);
+                        return;
+                    } else if (verified == BC2_PIN_SECURITY_DELAYED)
                         ESP_LOGW(TAG, "PIN delayed for %llu ms",
                                  (unsigned long long)bc2_pin_security_remaining_delay(
                                      &pin_session->security, now_ms));
+                    else if (verified == BC2_PIN_SECURITY_INVALID)
+                        render_pin_incorrect(hal, pin_session->security.failures);
                 }
                 bc2_pin_entry_clear(pin_entry);
 
                 if (pin_session->mode == BC2_PIN_MODE_UNLOCK &&
-                    pin_session->post_action == BC2_PIN_POST_RECOVERY) {
+                    pin_session->post_action == BC2_PIN_POST_REPLACE_CREATE) {
                     if (unlock_result == BC2_DEVICE_EVENT_UNLOCK_SUCCESS) {
-                        pin_session->post_action = BC2_PIN_POST_NONE;
-                        if (!bc2_hw_wallet_factory_reset(hal) ||
-                            !bc2_hw_wallet_restore_indexes(hal, recovery->indexes,
-                                                           recovery->word_count)) {
-                            bc2_device_service_cancel_recovery(service);
-                            recovery_clear(recovery);
-                            pin_session->active = false;
-                            (void)bc2_device_machine_dispatch(machine,
-                                                              BC2_DEVICE_EVENT_FATAL_ERROR,
-                                                              now_ms);
-                            render_current_state(hal, machine);
-                            return;
-                        }
-                        bc2_device_service_cancel_recovery(service);
-                        recovery_clear(recovery);
-                        /* Keep the verified existing PIN. The machine is already
-                         * in UNLOCKING, so the normal UNLOCK_SUCCESS dispatch below
-                         * opens the recovered wallet. */
-                    } else {
+                        /* Current PIN authorized replacement. Keep the old
+                         * wallet intact while the user selects the new PIN. */
+                        pin_session->mode = BC2_PIN_MODE_CREATE;
+                        pin_session->active = true;
+                        bc2_pin_entry_init(pin_entry);
+                        render_pin(hal, pin_entry, pin_session->mode);
+                        return;
+                    }
+
+                    pin_session->post_action = BC2_PIN_POST_NONE;
+                    pin_session->active = false;
+                    (void)bc2_device_machine_dispatch(machine, unlock_result, now_ms);
+                    render_current_state(hal, machine);
+                    return;
+                }
+
+                if (pin_session->mode == BC2_PIN_MODE_UNLOCK &&
+                    pin_session->post_action == BC2_PIN_POST_RECOVERY) {
+                    if (unlock_result == BC2_DEVICE_EVENT_UNLOCK_SUCCESS &&
+                        recovery->replacing_existing) {
+                        /* Existing-wallet recovery is a full replacement.
+                         * The current PIN only authorizes the operation.
+                         * Keep the old wallet intact and require a NEW PIN
+                         * plus confirmation before any wallet data is erased. */
+                        pin_session->mode = BC2_PIN_MODE_CREATE;
+                        pin_session->active = true;
+                        bc2_pin_entry_init(pin_entry);
+                        render_pin(hal, pin_entry, pin_session->mode);
+                        return;
+                    }
+
+                    if (unlock_result != BC2_DEVICE_EVENT_UNLOCK_SUCCESS) {
                         pin_session->post_action = BC2_PIN_POST_NONE;
                         bc2_device_service_cancel_recovery(service);
                         recovery_clear(recovery);
                     }
+                }
+
+                if (pin_session->mode == BC2_PIN_MODE_CONFIRM &&
+                    pin_session->post_action == BC2_PIN_POST_RECOVERY &&
+                    recovery->replacing_existing &&
+                    unlock_result == BC2_DEVICE_EVENT_UNLOCK_SUCCESS) {
+                    /* New PIN has been created and confirmed successfully.
+                     * Only now erase Wallet B and restore Wallet A. */
+                    if (!bc2_hw_wallet_factory_reset(hal)) {
+                        pin_session->post_action = BC2_PIN_POST_NONE;
+                        pin_session->active = false;
+                        bc2_device_service_cancel_recovery(service);
+                        recovery_clear(recovery);
+                        (void)bc2_device_machine_dispatch(machine,
+                                                          BC2_DEVICE_EVENT_FATAL_ERROR,
+                                                          now_ms);
+                        render_current_state(hal, machine);
+                        return;
+                    }
+
+                    bc2_device_service_clear_wallet_id(service);
+                    (void)bc2_device_machine_dispatch(
+                        machine, BC2_DEVICE_EVENT_FACTORY_RESET_TO_SETUP, now_ms);
+
+                    if (!bc2_hw_wallet_restore_indexes(hal, recovery->indexes,
+                                                       recovery->word_count)) {
+                        pin_session->post_action = BC2_PIN_POST_NONE;
+                        pin_session->active = false;
+                        bc2_device_service_cancel_recovery(service);
+                        recovery_clear(recovery);
+                        (void)bc2_device_machine_dispatch(machine,
+                                                          BC2_DEVICE_EVENT_FATAL_ERROR,
+                                                          now_ms);
+                        render_current_state(hal, machine);
+                        return;
+                    }
+
+                    bc2_device_service_cancel_recovery(service);
+                    recovery_clear(recovery);
+                    pin_session->post_action = BC2_PIN_POST_NONE;
+                    pin_session->active = false;
+                    clear_pin_text(pin_session->first_pin);
+
+                    (void)bc2_device_machine_dispatch(
+                        machine, BC2_DEVICE_EVENT_SETUP_COMPLETE, now_ms);
+                    (void)bc2_device_machine_dispatch(
+                        machine, BC2_DEVICE_EVENT_BEGIN_UNLOCK, now_ms);
+                    (void)bc2_device_machine_dispatch(
+                        machine, BC2_DEVICE_EVENT_UNLOCK_SUCCESS, now_ms);
+                    render_current_state(hal, machine);
+                    return;
+                }
+
+                if (pin_session->mode == BC2_PIN_MODE_CONFIRM &&
+                    pin_session->post_action == BC2_PIN_POST_REPLACE_CREATE &&
+                    unlock_result == BC2_DEVICE_EVENT_UNLOCK_SUCCESS) {
+                    /* New PIN is now durable. Only after both PIN steps
+                     * succeeded do we erase the old wallet and enter the
+                     * existing hardware-only wallet creation flow. */
+                    if (!bc2_hw_wallet_factory_reset(hal)) {
+                        pin_session->post_action = BC2_PIN_POST_NONE;
+                        pin_session->active = false;
+                        (void)bc2_device_machine_dispatch(machine,
+                                                          BC2_DEVICE_EVENT_FATAL_ERROR,
+                                                          now_ms);
+                        render_current_state(hal, machine);
+                        return;
+                    }
+
+                    bc2_device_service_clear_wallet_id(service);
+                    (void)bc2_device_machine_dispatch(
+                        machine, BC2_DEVICE_EVENT_FACTORY_RESET_TO_SETUP, now_ms);
+
+                    pin_session->post_action = BC2_PIN_POST_NONE;
+                    pin_session->active = false;
+                    clear_pin_text(pin_session->first_pin);
+
+                    wallet_setup->active = true;
+                    wallet_setup->stage = BC2_WALLET_SETUP_CONFIRM;
+                    wallet_setup->page = 0U;
+                    render_wallet_setup_confirm(hal);
+                    return;
                 }
 
                 if (pin_session->mode == BC2_PIN_MODE_CONFIRM &&
@@ -457,9 +604,19 @@ static void process_button(const bc2_hal_t *hal,
         return;
     if (bc2_device_machine_dispatch(machine, device_event, bc2_hal_now_ms(hal)) != 0) {
         if (machine->state == BC2_DEVICE_UNLOCKING) {
+            /* A physical unlock after idle/timeout must never inherit the PIN
+             * mode or post-action from an earlier receive/send/recovery flow. */
+            bc2_pin_entry_clear(pin_entry);
             bc2_pin_entry_init(pin_entry);
+            pin_session->mode = BC2_PIN_MODE_UNLOCK;
+            pin_session->post_action = BC2_PIN_POST_NONE;
             pin_session->active = true;
-            render_pin(hal, pin_entry, pin_session->mode);
+            memset(pin_session->receive_address, 0,
+                   sizeof(pin_session->receive_address));
+            memset(&pin_session->transaction, 0,
+                   sizeof(pin_session->transaction));
+            pin_session->receive_index = 0U;
+            render_pin(hal, pin_entry, BC2_PIN_MODE_UNLOCK);
         } else {
             if (machine->last_action == BC2_DEVICE_ACTION_RECEIVE_CONFIRMED) {
                 /* The address is released to the desktop only after physical
@@ -501,23 +658,42 @@ static void process_button(const bc2_hal_t *hal,
 }
 
 static void process_create_wallet_request(bc2_device_service_t *service,
-                                          const bc2_device_machine *machine,
+                                          bc2_device_machine *machine,
                                           bc2_wallet_setup_session_t *wallet_setup,
                                           const bc2_hal_t *hal,
                                           bc2_pin_entry_t *pin_entry,
                                           bc2_pin_session_t *pin_session) {
-    if (machine->state != BC2_DEVICE_SETUP_REQUIRED || wallet_setup->active || pin_session->active)
+    if ((machine->state != BC2_DEVICE_SETUP_REQUIRED &&
+         machine->state != BC2_DEVICE_LOCKED) ||
+        wallet_setup->active || pin_session->active)
         return;
     if (!bc2_device_service_take_create_wallet(service)) return;
+
+    if (machine->state == BC2_DEVICE_LOCKED) {
+        pin_session->mode = BC2_PIN_MODE_UNLOCK;
+        pin_session->post_action = BC2_PIN_POST_REPLACE_CREATE;
+        pin_session->active = true;
+        bc2_pin_entry_clear(pin_entry);
+        bc2_pin_entry_init(pin_entry);
+        (void)bc2_device_machine_dispatch(machine, BC2_DEVICE_EVENT_BEGIN_UNLOCK,
+                                          bc2_hal_now_ms(hal));
+        render_pin(hal, pin_entry, pin_session->mode);
+        return;
+    }
+
     if (!pin_session->security.configured) {
         pin_session->mode = BC2_PIN_MODE_CREATE;
         pin_session->post_action = BC2_PIN_POST_CREATE_WALLET;
         pin_session->active = true;
-        bc2_pin_entry_clear(pin_entry); bc2_pin_entry_init(pin_entry);
+        bc2_pin_entry_clear(pin_entry);
+        bc2_pin_entry_init(pin_entry);
         render_pin(hal, pin_entry, pin_session->mode);
         return;
     }
-    wallet_setup->active = true; wallet_setup->stage = BC2_WALLET_SETUP_CONFIRM; wallet_setup->page = 0U;
+
+    wallet_setup->active = true;
+    wallet_setup->stage = BC2_WALLET_SETUP_CONFIRM;
+    wallet_setup->page = 0U;
     render_wallet_setup_confirm(hal);
 }
 
@@ -575,10 +751,14 @@ static void process_recovery_request(bc2_device_service_t *service,
                                      bc2_recovery_session_t *recovery,
                                      const bc2_pin_session_t *pin_session) {
     if (recovery->active || pin_session->active || !bc2_device_service_take_recovery(service)) return;
-    if (machine->state != BC2_DEVICE_SETUP_REQUIRED && machine->state != BC2_DEVICE_LOCKED) return;
+    if (machine->state != BC2_DEVICE_SETUP_REQUIRED &&
+        machine->state != BC2_DEVICE_LOCKED &&
+        machine->state != BC2_DEVICE_LOCKDOWN) return;
+    const bool lockdown_recovery = machine->state == BC2_DEVICE_LOCKDOWN;
     recovery_clear(recovery);
     recovery->active = true;
     recovery->replacing_existing = machine->wallet_is_initialized != 0;
+    recovery->lockdown_recovery = lockdown_recovery;
     recovery->stage = BC2_RECOVERY_WAITING_DESKTOP;
     /* Desktop-assisted recovery: mnemonic entry stays on the desktop.
      * The hardware remains on its current screen until it needs a PIN. */
@@ -611,7 +791,8 @@ static void process_recovery_mnemonic(bc2_device_service_t *service,
     /* v0.39.0: VALID DESKTOP MNEMONIC -> PIN DIRECTLY.
      * There is NO hardware mnemonic entry, word navigation, fingerprint screen,
      * or second seed confirmation.
-     * Existing wallet: current 4-digit PIN authorizes replacement.
+     * Existing wallet: current 4-digit PIN authorizes replacement, then
+     * a new 4-digit PIN must be created and confirmed before replacement.
      * Fresh device: create/confirm a new 4-digit PIN, then restore automatically. */
     recovery->active = false;
     bc2_pin_entry_clear(pin_entry);
@@ -619,10 +800,14 @@ static void process_recovery_mnemonic(bc2_device_service_t *service,
     pin_session->post_action = BC2_PIN_POST_RECOVERY;
     pin_session->active = true;
 
-    if (recovery->replacing_existing) {
+    if (recovery->replacing_existing && !recovery->lockdown_recovery) {
         pin_session->mode = BC2_PIN_MODE_UNLOCK;
         (void)bc2_device_machine_dispatch(machine, BC2_DEVICE_EVENT_BEGIN_UNLOCK,
                                           bc2_hal_now_ms(hal));
+    } else if (recovery->lockdown_recovery) {
+        /* Lockdown deliberately disables the old PIN. A valid recovery seed
+         * is the only route to choosing a new PIN and replacing the wallet. */
+        pin_session->mode = BC2_PIN_MODE_CREATE;
     } else {
         /* A leftover PIN without a wallet is an incomplete setup. Recovery
          * starts clean and lets the user choose a fresh PIN. */
@@ -658,12 +843,62 @@ static void process_transaction_request(bc2_device_service_t *service,
     render_pin(hal, pin_entry, pin_session->mode);
 }
 
-static void process_sign_request(bc2_device_service_t*s,const bc2_hal_t*h,const bc2_device_machine*m){
- bc2_device_sign_request_t r;uint8_t pub[33]={0},sig[80]={0};size_t n=0;if(!s||!h||!m||m->state!=BC2_DEVICE_DASHBOARD)return;
- memset(&r,0,sizeof r);if(!bc2_device_service_take_sign_request(s,&r))return;
- int ok=bc2_hw_wallet_sign_single_p2wpkh(h,r.input_address,r.prev_txid_le,r.prev_output_index,r.input_amount,0xfffffffdU,
- s->reviewed_transaction.recipient_address,s->reviewed_transaction.recipient_amount,s->reviewed_transaction.change_amount,0U,pub,sig,sizeof sig,&n);
- bc2_device_service_complete_sign(s,ok,pub,sig,n);memset(&r,0,sizeof r);memset(pub,0,sizeof pub);memset(sig,0,sizeof sig);
+static void process_sign_request(
+    bc2_device_service_t *service,
+    const bc2_hal_t *hal,
+    const bc2_device_machine *machine) {
+    bc2_device_sign_request_t request;
+    uint8_t public_key[33] = {0};
+    uint8_t signature[80] = {0};
+    size_t signature_length = 0U;
+
+    if (service == NULL || hal == NULL || machine == NULL ||
+        machine->state != BC2_DEVICE_DASHBOARD)
+        return;
+
+    memset(&request, 0, sizeof(request));
+    if (!bc2_device_service_take_sign_request(service, &request))
+        return;
+
+    const bc2_hw_sign_result_t result =
+        bc2_hw_wallet_sign_input_p2wpkh(
+            hal,
+            request.input_address,
+            request.input_index,
+            request.hash_prevouts,
+            request.hash_sequence,
+            request.prev_txid_le,
+            request.prev_output_index,
+            request.input_amount,
+            0xfffffffdU,
+            service->reviewed_transaction.recipient_address,
+            service->reviewed_transaction.recipient_amount,
+            request.change_address,
+            service->reviewed_transaction.change_amount,
+            0U,
+            public_key,
+            signature,
+            sizeof(signature),
+            &signature_length);
+
+    if (result != BC2_HW_SIGN_OK) {
+        ESP_LOGE(TAG,
+                 "Transaction signing failed: status=%u address=%s hint_index=%u",
+                 (unsigned int)result,
+                 request.input_address,
+                 (unsigned int)request.input_index);
+    }
+
+    bc2_device_service_complete_sign(
+        service,
+        (uint8_t)result,
+        public_key,
+        signature,
+        signature_length);
+
+    memset(&request, 0, sizeof(request));
+    memset(public_key, 0, sizeof(public_key));
+    memset(signature, 0, sizeof(signature));
 }
 
 static void process_lock_request(bc2_device_service_t *service,
@@ -681,6 +916,7 @@ static void process_lock_request(bc2_device_service_t *service,
 
     (void)bc2_device_machine_dispatch(machine, BC2_DEVICE_EVENT_LOCK,
                                       bc2_hal_now_ms(hal));
+    bc2_device_service_clear_wallet_id(service);
     render_current_state(hal, machine);
 }
 
@@ -716,6 +952,27 @@ static void process_receive_request(bc2_device_service_t *service,
     bc2_pin_entry_init(pin_entry);
     render_pin(hal, pin_entry, pin_session->mode);
 }
+
+static void sync_authenticated_wallet_id(bc2_device_service_t *service,
+                                         const bc2_hal_t *hal,
+                                         const bc2_device_machine *machine) {
+    uint8_t wallet_id[BC2_HW_WALLET_ID_SIZE] = {0};
+    if (service == NULL || hal == NULL || machine == NULL) return;
+
+    if (machine->state != BC2_DEVICE_DASHBOARD) {
+        bc2_device_service_clear_wallet_id(service);
+        return;
+    }
+
+    if (!service->wallet_id_available) {
+        if (bc2_hw_wallet_id(hal, wallet_id))
+            bc2_device_service_set_wallet_id(service, wallet_id);
+        else
+            ESP_LOGE(TAG, "Unable to derive authenticated wallet id");
+    }
+    memset(wallet_id, 0, sizeof(wallet_id));
+}
+
 static void process_usb(bc2_device_service_t *service,
                         const bc2_hal_t *hal,
                         const bc2_device_machine *machine) {
@@ -794,6 +1051,12 @@ static void bc2_application_task(void *argument) {
     (void)bc2_device_machine_dispatch(&machine,
                                       boot_result,
                                       bc2_hal_now_ms(&hal));
+    if (boot_result == BC2_DEVICE_EVENT_BOOT_COMPLETE &&
+        wallet_status == BC2_HW_WALLET_READY &&
+        bc2_pin_security_is_locked_down(&pin_session.security)) {
+        (void)bc2_device_machine_dispatch(
+            &machine, BC2_DEVICE_EVENT_ENTER_LOCKDOWN, bc2_hal_now_ms(&hal));
+    }
     render_current_state(&hal, &machine);
 
     ESP_LOGI(TAG,
@@ -806,6 +1069,7 @@ static void bc2_application_task(void *argument) {
         /* Physical input has priority and must never wait behind USB I/O. */
         process_button(&hal, &machine, &device_service, &navigation, &pin_entry,
                        &pin_session, &wallet_setup, &recovery);
+        sync_authenticated_wallet_id(&device_service, &hal, &machine);
         process_usb(&device_service, &hal, &machine);
         process_lock_request(&device_service, &machine, &hal, &pin_session);
         process_create_wallet_request(&device_service, &machine, &wallet_setup,
@@ -817,8 +1081,27 @@ static void bc2_application_task(void *argument) {
         process_transaction_request(&device_service, &hal, &machine, &pin_entry, &pin_session);
         process_sign_request(&device_service, &hal, &machine);
         if (bc2_device_machine_tick(&machine, bc2_hal_now_ms(&hal)) != 0) {
-            if (machine.state != BC2_DEVICE_TRANSACTION_REVIEW)
+            if (machine.state == BC2_DEVICE_LOCKED &&
+                machine.last_action == BC2_DEVICE_ACTION_LOCKED) {
+                /* Session timeout is a security boundary. Destroy all
+                 * transient authorization state so the next PIN entry is a
+                 * clean unlock and cannot resume an old operation. */
+                pin_session.active = false;
+                pin_session.mode = BC2_PIN_MODE_UNLOCK;
+                pin_session.post_action = BC2_PIN_POST_NONE;
+                clear_pin_text(pin_session.first_pin);
+                bc2_pin_entry_clear(&pin_entry);
+                memset(pin_session.receive_address, 0,
+                       sizeof(pin_session.receive_address));
+                memset(&pin_session.transaction, 0,
+                       sizeof(pin_session.transaction));
+                pin_session.receive_index = 0U;
+
                 bc2_device_service_complete_transaction(&device_service, 0);
+                bc2_device_service_clear_wallet_id(&device_service);
+            } else if (machine.state != BC2_DEVICE_TRANSACTION_REVIEW) {
+                bc2_device_service_complete_transaction(&device_service, 0);
+            }
             render_current_state(&hal, &machine);
         }
         vTaskDelay(pdMS_TO_TICKS(BC2_DEVICE_LOOP_DELAY_MS));

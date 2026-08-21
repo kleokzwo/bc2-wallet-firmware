@@ -14,6 +14,7 @@ bc2_device_screen_t bc2_device_flow_screen_for_state(bc2_device_state state) {
         case BC2_DEVICE_LOCKED:
         case BC2_DEVICE_UNLOCKING:
         case BC2_DEVICE_COOLDOWN:
+        case BC2_DEVICE_LOCKDOWN:
             return BC2_DEVICE_SCREEN_LOCKED;
         case BC2_DEVICE_DASHBOARD:
         case BC2_DEVICE_SETTINGS:

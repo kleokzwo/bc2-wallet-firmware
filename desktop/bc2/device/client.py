@@ -102,6 +102,14 @@ class BC2DeviceClient:
             raise ProtocolError("invalid lock-wallet response")
         return payload[0] == 1
 
+    def get_wallet_id(self):
+        payload = self.request(CMD_GET_WALLET_ID)
+        if len(payload) == 1 and payload[0] == 0:
+            return None
+        if len(payload) != 17 or payload[0] != 1:
+            raise ProtocolError("invalid wallet-id response")
+        return payload[1:].hex()
+
     def submit_recovery_mnemonic(self, mnemonic: str):
         raw = mnemonic.encode("ascii", errors="strict")
         payload = self.request(CMD_SUBMIT_RECOVERY_MNEMONIC, raw, timeout=3.0)
@@ -166,13 +174,43 @@ class BC2DeviceClient:
             raise ProtocolError("invalid transaction-result response")
         return response[0]
 
-    def sign_transaction_single(self,plan):
-        if plan.input_count!=1:raise ValueError("Sprint 3 unterstützt genau einen Transaktions-Input.")
-        u=plan.utxos[0];a=u.address.encode("ascii");tx=bytes.fromhex(u.tx_hash)
-        payload=bytes((1,))+tx[::-1]+int(u.tx_pos).to_bytes(4,"little")+int(u.value).to_bytes(8,"little")+bytes((len(a),))+a
-        r=self.request(CMD_SIGN_TRANSACTION,payload,timeout=None)
-        if len(r)!=1:raise ProtocolError("invalid sign response")
-        return r[0]
+    def sign_transaction_input(
+        self, plan, position, hash_prevouts, hash_sequence, change_address
+    ):
+        if not 0 <= position < plan.input_count:
+            raise ValueError("Ungültige Input-Position.")
+        if not 1 <= plan.input_count <= 255:
+            raise ValueError("Ungültige Anzahl Transaktions-Inputs.")
+        if len(hash_prevouts) != 32 or len(hash_sequence) != 32:
+            raise ValueError("Ungültiger Signierkontext.")
+
+        utxo = plan.utxos[position]
+        input_address = utxo.address.encode("ascii")
+        change_raw = change_address.encode("ascii")
+        derivation_index = int(getattr(utxo, "derivation_index", -1))
+        if derivation_index < 0 or derivation_index > 0x7FFFFFFF:
+            raise ValueError("Der Derivationsindex des UTXO fehlt.")
+        if len(input_address) >= 96 or len(change_raw) >= 96:
+            raise ValueError("BC2-Adresse ist zu lang.")
+
+        payload = (
+            bytes((3, plan.input_count, position))
+            + hash_prevouts
+            + hash_sequence
+            + bytes.fromhex(utxo.tx_hash)[::-1]
+            + int(utxo.tx_pos).to_bytes(4, "little")
+            + int(utxo.value).to_bytes(8, "little")
+            + derivation_index.to_bytes(4, "little")
+            + bytes((len(input_address),))
+            + input_address
+            + bytes((len(change_raw),))
+            + change_raw
+        )
+        response = self.request(CMD_SIGN_TRANSACTION, payload, timeout=None)
+        if len(response) != 1:
+            raise ProtocolError("invalid sign response")
+        return response[0]
+
     def get_sign_result(self):
         r=self.request(CMD_GET_SIGN_RESULT,timeout=None)
         if not r:raise ProtocolError("invalid sign result")

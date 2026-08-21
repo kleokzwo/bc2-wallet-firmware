@@ -1,6 +1,6 @@
 Command: ninja flash
 [1/5] cd /home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/esp-idf/esptool_py && /home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/python /home/kzwo/esp/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/partition_table/partition-table.bin /home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/bc2_wallet_hardware_v0340.bin
-bc2_wallet_hardware_v0340.bin binary size 0x5bc90 bytes. Smallest app partition is 0x100000 bytes. 0xa4370 bytes (64%) free.
+bc2_wallet_hardware_v0340.bin binary size 0x5ca10 bytes. Smallest app partition is 0x100000 bytes. 0xa35f0 bytes (64%) free.
 [2/5] Performing build step for 'bootloader'
 [1/1] cd /home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/bootloader/esp-idf/esptool_py && /home/kzwo/.espressif/python_env/idf5.5_py3.13_env/bin/python /home/kzwo/esp/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 /home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/bootloader/bootloader.bin
 Bootloader binary size 0x5160 bytes. 0x2ea0 bytes (36%) free.
@@ -23,33 +23,33 @@ Changing baud rate to 460800
 Changed.
 Configuring flash size...
 Flash will be erased from 0x00000000 to 0x00005fff...
-Flash will be erased from 0x00010000 to 0x0006bfff...
+Flash will be erased from 0x00010000 to 0x0006cfff...
 Flash will be erased from 0x00008000 to 0x00008fff...
 SHA digest in image updated
-Compressed 20832 bytes to 13347...
+Compressed 20832 bytes to 13348...
 Writing at 0x00000000... (100 %)
-Wrote 20832 bytes (13347 compressed) at 0x00000000 in 0.3 seconds (effective 593.3 kbit/s)...
+Wrote 20832 bytes (13348 compressed) at 0x00000000 in 0.3 seconds (effective 607.6 kbit/s)...
 Hash of data verified.
-Compressed 375952 bytes to 224286...
+Compressed 379408 bytes to 226666...
 Writing at 0x00010000... (7 %)
-Writing at 0x0001a201... (14 %)
-Writing at 0x00023ec8... (21 %)
-Writing at 0x0002c397... (28 %)
-Writing at 0x00031dd4... (35 %)
-Writing at 0x0003749d... (42 %)
-Writing at 0x0003ccf7... (50 %)
-Writing at 0x000424fd... (57 %)
-Writing at 0x00047bba... (64 %)
-Writing at 0x0004d387... (71 %)
-Writing at 0x00052ce9... (78 %)
-Writing at 0x0005be40... (85 %)
-Writing at 0x000616ec... (92 %)
-Writing at 0x0006796f... (100 %)
-Wrote 375952 bytes (224286 compressed) at 0x00010000 in 2.3 seconds (effective 1280.3 kbit/s)...
+Writing at 0x0001a23d... (14 %)
+Writing at 0x00023f69... (21 %)
+Writing at 0x0002c3fb... (28 %)
+Writing at 0x00031e2d... (35 %)
+Writing at 0x000374f0... (42 %)
+Writing at 0x0003cd8a... (50 %)
+Writing at 0x00042610... (57 %)
+Writing at 0x00047d01... (64 %)
+Writing at 0x0004d4c0... (71 %)
+Writing at 0x00052cf7... (78 %)
+Writing at 0x0005bf3c... (85 %)
+Writing at 0x00061634... (92 %)
+Writing at 0x00067662... (100 %)
+Wrote 379408 bytes (226666 compressed) at 0x00010000 in 2.4 seconds (effective 1269.7 kbit/s)...
 Hash of data verified.
 Compressed 3072 bytes to 103...
 Writing at 0x00008000... (100 %)
-Wrote 3072 bytes (103 compressed) at 0x00008000 in 0.0 seconds (effective 687.0 kbit/s)...
+Wrote 3072 bytes (103 compressed) at 0x00008000 in 0.0 seconds (effective 738.2 kbit/s)...
 Hash of data verified.
 
 Leaving...

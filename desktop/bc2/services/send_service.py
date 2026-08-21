@@ -10,7 +10,7 @@ from .electrum_service import (
     address_to_scriptpubkey,
     broadcast_transaction,
 )
-from bc2.device.discovery import review_transaction, get_transaction_result, sign_transaction_single, get_sign_result
+from bc2.device.discovery import review_transaction, get_transaction_result, sign_transaction_input, get_sign_result
 import time
 
 SATOSHIS_PER_BC2 = 100_000_000
@@ -93,22 +93,98 @@ def create_send_plan(utxos, recipient: str, amount: int,
 
 
 
-def _compact_size(v):return bytes((v,)) if v<0xfd else (_ for _ in ()).throw(ValueError("Script zu groß."))
-def _serialize_unsigned_single(plan):
-    u=plan.utxos[0];tx=bytes.fromhex(u.tx_hash)[::-1];rs=address_to_scriptpubkey(plan.recipient);cs=address_to_scriptpubkey(u.address)
-    b=bytearray((2).to_bytes(4,"little"));b+=b"\x01"+tx+int(u.tx_pos).to_bytes(4,"little")+b"\x00"+(0xfffffffd).to_bytes(4,"little")
-    b+=b"\x02" if plan.change else b"\x01";b+=int(plan.amount).to_bytes(8,"little")+_compact_size(len(rs))+rs
-    if plan.change:b+=int(plan.change).to_bytes(8,"little")+_compact_size(len(cs))+cs
-    b+=(0).to_bytes(4,"little");return bytes(b)
-def _build_signed_single(plan,pub,sig):
+def _compact_size(value: int) -> bytes:
+    if value < 0xFD:
+        return bytes((value,))
+    if value <= 0xFFFF:
+        return b"\xfd" + value.to_bytes(2, "little")
+    if value <= 0xFFFFFFFF:
+        return b"\xfe" + value.to_bytes(4, "little")
+    return b"\xff" + value.to_bytes(8, "little")
+
+
+def _sha256d(data: bytes) -> bytes:
     import hashlib
-    u=plan.utxos[0];tx=bytes.fromhex(u.tx_hash)[::-1];rs=address_to_scriptpubkey(plan.recipient);cs=address_to_scriptpubkey(u.address);sw=sig+b"\x01"
-    b=bytearray((2).to_bytes(4,"little")+b"\x00\x01\x01");b+=tx+int(u.tx_pos).to_bytes(4,"little")+b"\x00"+(0xfffffffd).to_bytes(4,"little")
-    b+=b"\x02" if plan.change else b"\x01";b+=int(plan.amount).to_bytes(8,"little")+_compact_size(len(rs))+rs
-    if plan.change:b+=int(plan.change).to_bytes(8,"little")+_compact_size(len(cs))+cs
-    b+=b"\x02"+_compact_size(len(sw))+sw+_compact_size(len(pub))+pub+(0).to_bytes(4,"little")
-    nw=_serialize_unsigned_single(plan);tid=hashlib.sha256(hashlib.sha256(nw).digest()).digest()[::-1].hex();wid=hashlib.sha256(hashlib.sha256(bytes(b)).digest()).digest()[::-1].hex()
-    return SignedTransaction(bytes(b).hex(),tid,wid,pub.hex(),sig.hex())
+    return hashlib.sha256(hashlib.sha256(data).digest()).digest()
+
+
+def _change_address(plan) -> str:
+    if not plan.utxos:
+        raise ValueError("Transaktion enthält keine Inputs.")
+    return plan.utxos[0].address
+
+
+def _serialize_outputs(plan) -> bytes:
+    recipient_script = address_to_scriptpubkey(plan.recipient)
+    result = bytearray()
+    result += _compact_size(2 if plan.change else 1)
+    result += int(plan.amount).to_bytes(8, "little")
+    result += _compact_size(len(recipient_script)) + recipient_script
+    if plan.change:
+        change_script = address_to_scriptpubkey(_change_address(plan))
+        result += int(plan.change).to_bytes(8, "little")
+        result += _compact_size(len(change_script)) + change_script
+    return bytes(result)
+
+
+def _serialize_unsigned(plan) -> bytes:
+    result = bytearray((2).to_bytes(4, "little"))
+    result += _compact_size(len(plan.utxos))
+    for utxo in plan.utxos:
+        result += bytes.fromhex(utxo.tx_hash)[::-1]
+        result += int(utxo.tx_pos).to_bytes(4, "little")
+        result += b"\x00"
+        result += (0xFFFFFFFD).to_bytes(4, "little")
+    result += _serialize_outputs(plan)
+    result += (0).to_bytes(4, "little")
+    return bytes(result)
+
+
+def _sign_context(plan) -> tuple[bytes, bytes]:
+    prevouts = bytearray()
+    sequences = bytearray()
+    for utxo in plan.utxos:
+        prevouts += bytes.fromhex(utxo.tx_hash)[::-1]
+        prevouts += int(utxo.tx_pos).to_bytes(4, "little")
+        sequences += (0xFFFFFFFD).to_bytes(4, "little")
+    return _sha256d(bytes(prevouts)), _sha256d(bytes(sequences))
+
+
+def _build_signed(plan, signed_inputs) -> SignedTransaction:
+    if len(signed_inputs) != len(plan.utxos):
+        raise ValueError("Nicht alle Inputs wurden signiert.")
+
+    result = bytearray((2).to_bytes(4, "little"))
+    result += b"\x00\x01"
+    result += _compact_size(len(plan.utxos))
+    for utxo in plan.utxos:
+        result += bytes.fromhex(utxo.tx_hash)[::-1]
+        result += int(utxo.tx_pos).to_bytes(4, "little")
+        result += b"\x00"
+        result += (0xFFFFFFFD).to_bytes(4, "little")
+    result += _serialize_outputs(plan)
+
+    pubkeys = []
+    signatures_hex = []
+    for public_key, signature in signed_inputs:
+        sig_with_type = signature + b"\x01"
+        result += b"\x02"
+        result += _compact_size(len(sig_with_type)) + sig_with_type
+        result += _compact_size(len(public_key)) + public_key
+        pubkeys.append(public_key.hex())
+        signatures_hex.append(signature.hex())
+
+    result += (0).to_bytes(4, "little")
+    txid = _sha256d(_serialize_unsigned(plan))[::-1].hex()
+    wtxid = _sha256d(bytes(result))[::-1].hex()
+
+    return SignedTransaction(
+        bytes(result).hex(),
+        txid,
+        wtxid,
+        ",".join(pubkeys),
+        ",".join(signatures_hex),
+    )
 
 class _Worker(QObject):
     finished = Signal(object)
@@ -235,10 +311,27 @@ class SendService(QObject):
         self._review_worker = None
         self.review_failed.emit(message)
 
-    def sign(self,port_name,plan):
-        if self._sign_thread is not None:return
-        if plan.input_count!=1:self.sign_failed.emit("Dieser Sprint signiert bewusst nur Transaktionen mit genau einem Input.");return
-        self.sign_started.emit();th=QThread(self);w=_SignWorker(port_name,plan);w.moveToThread(th);th.started.connect(w.run);w.progress.connect(self.sign_progress);w.finished.connect(self._sign_done);w.failed.connect(self._sign_fail);w.finished.connect(th.quit);w.failed.connect(th.quit);th.finished.connect(w.deleteLater);th.finished.connect(th.deleteLater);self._sign_thread=th;self._sign_worker=w;th.start()
+    def sign(self, port_name, plan):
+        if self._sign_thread is not None:
+            return
+        if plan.input_count < 1:
+            self.sign_failed.emit("Transaktion enthält keine Inputs.")
+            return
+        self.sign_started.emit()
+        thread = QThread(self)
+        worker = _SignWorker(port_name, plan)
+        worker.moveToThread(thread)
+        thread.started.connect(worker.run)
+        worker.progress.connect(self.sign_progress)
+        worker.finished.connect(self._sign_done)
+        worker.failed.connect(self._sign_fail)
+        worker.finished.connect(thread.quit)
+        worker.failed.connect(thread.quit)
+        thread.finished.connect(worker.deleteLater)
+        thread.finished.connect(thread.deleteLater)
+        self._sign_thread = thread
+        self._sign_worker = worker
+        thread.start()
     @Slot(object)
     def _sign_done(self,x):self._sign_thread=None;self._sign_worker=None;self.sign_finished.emit(x)
     @Slot(str)
@@ -347,20 +440,65 @@ class _ReviewWorker(QObject):
             self.failed.emit(str(exc))
 
 class _SignWorker(QObject):
-    progress=Signal(str);finished=Signal(object);failed=Signal(str)
-    def __init__(self,port,plan):super().__init__();self.port=port;self.plan=plan
+    progress = Signal(str)
+    finished = Signal(object)
+    failed = Signal(str)
+
+    def __init__(self, port, plan):
+        super().__init__()
+        self.port = port
+        self.plan = plan
+
+    @staticmethod
+    def _raise_result(result: int) -> None:
+        messages = {
+            2: "Hardware konnte die Transaktion nicht signieren.",
+            5: "Eine UTXO-Adresse gehört nicht zu dieser Wallet.",
+            6: "Die Hardware konnte die Wallet-Schlüssel nicht laden.",
+            7: "Die Hardware hat die Transaktionsdaten beim Signieren abgelehnt.",
+            8: "Die kryptografische Signatur auf der Hardware ist fehlgeschlagen.",
+        }
+        raise RuntimeError(messages.get(result, f"Unbekannter Signaturstatus: {result}"))
+
     @Slot()
     def run(self):
         try:
-            s=sign_transaction_single(self.port,self.plan)
-            if s!=1:raise RuntimeError({2:"Hardware Wallet ist nicht im Dashboard.",3:"Transaktion wurde noch nicht bestätigt.",4:"Signatur läuft bereits."}.get(s,"Signaturanfrage abgelehnt."))
-            self.progress.emit("Hardware signiert die bereits bestätigte Transaktion …")
-            while True:
-                time.sleep(.4);r,pub,sig=get_sign_result(self.port)
-                if r==0:continue
-                if r==1:self.finished.emit(_build_signed_single(self.plan,pub,sig));return
-                if r==2:raise RuntimeError("Hardware konnte die Transaktion nicht signieren.")
-        except Exception as e:self.failed.emit(str(e))
+            hash_prevouts, hash_sequence = _sign_context(self.plan)
+            change_address = _change_address(self.plan) if self.plan.change else ""
+            signed_inputs = []
+
+            for position in range(self.plan.input_count):
+                self.progress.emit(
+                    f"Hardware signiert Input {position + 1} von {self.plan.input_count} …"
+                )
+                status = sign_transaction_input(
+                    self.port,
+                    self.plan,
+                    position,
+                    hash_prevouts,
+                    hash_sequence,
+                    change_address,
+                )
+                if status != 1:
+                    raise RuntimeError({
+                        2: "Hardware Wallet ist nicht im Dashboard.",
+                        3: "Transaktion wurde noch nicht bestätigt.",
+                        4: "Signatur läuft bereits.",
+                    }.get(status, "Signaturanfrage abgelehnt."))
+
+                while True:
+                    time.sleep(0.25)
+                    result, public_key, signature = get_sign_result(self.port)
+                    if result == 0:
+                        continue
+                    if result == 1:
+                        signed_inputs.append((public_key, signature))
+                        break
+                    self._raise_result(result)
+
+            self.finished.emit(_build_signed(self.plan, signed_inputs))
+        except Exception as exc:
+            self.failed.emit(str(exc))
 
 
 

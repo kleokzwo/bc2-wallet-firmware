@@ -11,13 +11,14 @@ extern "C" {
 #endif
 
 #define BC2_SECURITY_PIN_LENGTH 4U
-#define BC2_SECURITY_PIN_MAX_FAILURES 10U
+#define BC2_SECURITY_PIN_MAX_FAILURES 3U
 
 typedef enum {
     BC2_PIN_SECURITY_OK = 0,
     BC2_PIN_SECURITY_NOT_CONFIGURED,
     BC2_PIN_SECURITY_INVALID,
     BC2_PIN_SECURITY_DELAYED,
+    BC2_PIN_SECURITY_LOCKED,
     BC2_PIN_SECURITY_ERROR
 } bc2_pin_security_result_t;
 
@@ -52,6 +53,7 @@ bc2_pin_security_result_t bc2_pin_security_verify(bc2_pin_security_t *security,
 bc2_pin_security_result_t bc2_pin_security_reset(bc2_pin_security_t *security, const bc2_hal_t *hal);
 uint64_t bc2_pin_security_remaining_delay(const bc2_pin_security_t *security,
                                           uint64_t now_ms);
+bool bc2_pin_security_is_locked_down(const bc2_pin_security_t *security);
 bc2_authorization_pin_t bc2_authorization_required_pin(bc2_authorization_action_t action);
 
 #ifdef __cplusplus

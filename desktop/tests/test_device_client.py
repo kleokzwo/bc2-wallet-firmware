@@ -16,6 +16,7 @@ class Fake:
             CMD_BEGIN_CREATE_WALLET:bytes([1]),
             CMD_BEGIN_RECEIVE_ADDRESS:bytes([1]),
             CMD_GET_RECEIVE_RESULT:bytes([1,len(address)])+address,
+            CMD_GET_WALLET_ID:bytes([1])+bytes.fromhex("00112233445566778899aabbccddeeff"),
         }[q.command]
         self.r=encode_frame(q.command|RESPONSE_FLAG,q.sequence,payload)
         return len(data)
@@ -31,4 +32,8 @@ class T(unittest.TestCase):
         status,address=client.get_receive_result()
         self.assertEqual(status,1)
         self.assertTrue(address.startswith("bc1"))
+
+    def test_wallet_id(self):
+        client=BC2DeviceClient(Fake())
+        self.assertEqual(client.get_wallet_id(), "00112233445566778899aabbccddeeff")
 if __name__=="__main__": unittest.main()

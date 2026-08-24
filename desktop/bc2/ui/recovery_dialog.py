@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
     QComboBox, QDialog, QHBoxLayout, QLabel, QMessageBox,
     QPushButton, QTextEdit, QVBoxLayout,
@@ -70,9 +69,11 @@ class RecoveryDialog(QDialog):
         buttons.addWidget(self._submit)
         layout.addLayout(buttons)
 
-    @property
-    def mnemonic(self) -> str | None:
-        return self._mnemonic
+    def take_mnemonic(self) -> str | None:
+        """Return the accepted phrase once and immediately drop our reference."""
+        mnemonic = self._mnemonic
+        self._mnemonic = None
+        return mnemonic
 
     def _update_status(self) -> None:
         count = len(self._input.toPlainText().split())

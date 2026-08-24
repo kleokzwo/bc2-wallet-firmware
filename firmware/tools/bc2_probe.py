@@ -23,6 +23,7 @@ try:
 except ImportError as exc:
     raise SystemExit("pyserial fehlt. Installation: python -m pip install pyserial") from exc
 
+PROBE_VERSION = "0.51.5"
 MAGIC = b"BC2"
 VERSION = 1
 HEADER_SIZE = 9
@@ -105,7 +106,7 @@ def read_available(port: serial.Serial, duration: float) -> bytes:
     return bytes(out)
 
 
-def read_frame(port: serial.Serial, timeout: float = 2.0) -> Frame:
+def read_frame(port: serial.Serial, timeout: float = 3.0) -> Frame:
     deadline = time.monotonic() + timeout
     buffer = bytearray()
     garbage = bytearray()
@@ -203,10 +204,15 @@ def run_request(port: serial.Serial, command: int, sequence: int, payload: bytes
     # Only clear bytes already present. New foreign bytes emitted while processing the
     # request are kept and reported by read_frame().
     port.reset_input_buffer()
+    started = time.monotonic()
     port.write(request)
     port.flush()
     response = read_frame(port)
+    elapsed_ms = (time.monotonic() - started) * 1000.0
 
+    print(f"  Antwortzeit: {elapsed_ms:.1f} ms")
+    if elapsed_ms > 500.0:
+        print("  HINWEIS: Antwort ist korrekt, aber fuer einen Diagnose-Request ungewoehnlich langsam.")
     print()
     channel_clean = not response.garbage_before
     if response.garbage_before:
@@ -258,7 +264,7 @@ def main() -> int:
         return 0
 
     port_name = choose_port(args.port)
-    print("BC2 Cold Wallet - USB Protocol Probe")
+    print(f"BC2 Cold Wallet - USB Protocol Probe v{PROBE_VERSION}")
     print(f"Port: {port_name}")
     print("Sicherer Diagnosetest: nur PING, GET_STATE und GET_WALLET_STATUS.")
     print("Es werden KEINE PINs, Seeds, Mnemonics, Private Keys oder Signaturen gesendet.\n")

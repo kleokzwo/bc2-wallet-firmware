@@ -1,7 +1,7 @@
 {
     "version":            "1.2",
     "project_name":       "bc2_wallet_hardware_v0340",
-    "project_version":    "4f6deb7-dirty",
+    "project_version":    "c8dd30a-dirty",
     "project_path":       "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare",
     "idf_path":           "/home/kzwo/esp/esp-idf",
     "build_dir":          "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build",
@@ -685,7 +685,7 @@
             "managed_reqs": [],
             "managed_priv_reqs": [],
             "file": "/home/kzwo/Dokumente/Projects/bc2/wallet/bc2-wallet-firmware/firmware/hardware/esp32s3_waveshare/build/esp-idf/esp_driver_usb_serial_jtag/libesp_driver_usb_serial_jtag.a",
-            "sources": [ "/home/kzwo/esp/esp-idf/components/esp_driver_usb_serial_jtag/src/usb_serial_jtag.c", "/home/kzwo/esp/esp-idf/components/esp_driver_usb_serial_jtag/src/usb_serial_jtag_connection_monitor.c", "/home/kzwo/esp/esp-idf/components/esp_driver_usb_serial_jtag/src/usb_serial_jtag_vfs.c" ],
+            "sources": [ "/home/kzwo/esp/esp-idf/components/esp_driver_usb_serial_jtag/src/usb_serial_jtag.c", "/home/kzwo/esp/esp-idf/components/esp_driver_usb_serial_jtag/src/usb_serial_jtag_connection_monitor.c" ],
             "include_dirs": [ "include" ]
         },
         "esp_eth": {

@@ -17,6 +17,7 @@
 #define BC2_USB_TX_BUFFER_SIZE 4096U
 #define BC2_USB_RX_TIMEOUT_TICKS 0U
 #define BC2_USB_TX_TIMEOUT_TICKS pdMS_TO_TICKS(20U)
+#define BC2_USB_TX_TOTAL_TIMEOUT_TICKS pdMS_TO_TICKS(100U)
 
 static const char *TAG = "bc2_bsp";
 
@@ -138,10 +139,22 @@ static bc2_hal_result_t usb_send(void *context,
         return BC2_HAL_ERROR_ARGUMENT;
     if (!bsp->usb_ready) return BC2_HAL_ERROR_UNAVAILABLE;
 
-    const int written = usb_serial_jtag_write_bytes(data,
-                                                    data_size,
-                                                    BC2_USB_TX_TIMEOUT_TICKS);
-    return written == (int)data_size ? BC2_HAL_OK : BC2_HAL_ERROR_IO;
+    /* A USB write is a byte-stream operation: a successful call may write only
+     * part of the frame. Keep sending until the complete BC2 frame has been
+     * queued, or until the small bounded transport deadline expires. */
+    size_t offset = 0U;
+    const TickType_t started = xTaskGetTickCount();
+    while (offset < data_size) {
+        const int written = usb_serial_jtag_write_bytes(data + offset,
+                                                        data_size - offset,
+                                                        BC2_USB_TX_TIMEOUT_TICKS);
+        if (written < 0) return BC2_HAL_ERROR_IO;
+        if (written > 0) offset += (size_t)written;
+        if ((xTaskGetTickCount() - started) >= BC2_USB_TX_TOTAL_TIMEOUT_TICKS)
+            return BC2_HAL_ERROR_IO;
+        if (written == 0) taskYIELD();
+    }
+    return BC2_HAL_OK;
 }
 
 static bc2_hal_result_t usb_receive(void *context,

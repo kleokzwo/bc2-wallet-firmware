@@ -15,6 +15,8 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from bc2.i18n import tr
+
 
 class ReceivePage(QWidget):
     request_receive_requested = Signal()
@@ -142,11 +144,11 @@ class ReceivePage(QWidget):
         texts = QVBoxLayout()
         texts.setSpacing(6)
 
-        title_label = QLabel("EMPFANGEN")
+        title_label = QLabel(tr("EMPFANGEN"))
         title_label.setObjectName("PageTitle")
 
         subtitle_label = QLabel(
-            "Eine neue BC2 Empfangsadresse wird erst nach Bestätigung auf der Hardware angezeigt."
+            tr("Eine neue BC2 Empfangsadresse wird erst nach Bestätigung auf der Hardware angezeigt.")
         )
         subtitle_label.setObjectName("PageSubtitle")
         subtitle_label.setWordWrap(True)
@@ -170,7 +172,7 @@ class ReceivePage(QWidget):
         section_icon.setObjectName("SectionIcon")
         section_icon.setFixedWidth(18)
 
-        title = QLabel("BC2 empfangen")
+        title = QLabel(tr("BC2 empfangen"))
         title.setObjectName("SectionTitle")
 
         section_head.addWidget(section_icon)
@@ -178,12 +180,12 @@ class ReceivePage(QWidget):
         section_head.addStretch()
 
         self._state = QLabel(
-            "Verbinde deine Hardware Wallet, um eine Empfangsadresse anzufordern."
+            tr("Verbinde deine Hardware Wallet, um eine Empfangsadresse anzufordern.")
         )
         self._state.setObjectName("BodyText")
         self._state.setWordWrap(True)
 
-        self._request_button = QPushButton("Empfangsadresse anfordern")
+        self._request_button = QPushButton(tr("Empfangsadresse anfordern"))
         self._request_button.setObjectName("PrimaryButton")
         self._request_button.clicked.connect(self.request_receive_requested)
 
@@ -213,7 +215,7 @@ class ReceivePage(QWidget):
         result_icon.setObjectName("SectionIcon")
         result_icon.setFixedWidth(18)
 
-        self._result_title = QLabel("Noch keine Adresse")
+        self._result_title = QLabel(tr("Noch keine Adresse"))
         self._result_title.setObjectName("CardTitle")
 
         result_head.addWidget(result_icon)
@@ -221,8 +223,7 @@ class ReceivePage(QWidget):
         result_head.addStretch()
 
         self._result_text = QLabel(
-            "Sobald du die Adresse auf der Hardware bestätigt hast, "
-            "erscheint sie hier zusammen mit QR-Code und Kopierfunktion."
+            tr("Sobald du die Adresse auf der Hardware bestätigt hast, erscheint sie hier zusammen mit QR-Code und Kopierfunktion.")
         )
         self._result_text.setObjectName("SmallMuted")
         self._result_text.setWordWrap(True)
@@ -233,7 +234,7 @@ class ReceivePage(QWidget):
         self._qr.setFixedSize(220, 220)
         self._qr.setVisible(False)
 
-        self._copy_button = QPushButton("Adresse kopieren")
+        self._copy_button = QPushButton(tr("Adresse kopieren"))
         self._copy_button.setObjectName("OutlineButton")
         self._copy_button.setVisible(False)
         self._copy_button.clicked.connect(self._copy_receive_address)
@@ -273,10 +274,10 @@ class ReceivePage(QWidget):
         text = QVBoxLayout()
         text.setSpacing(1)
 
-        primary = QLabel("Sicher & Offline")
+        primary = QLabel(tr("Sicher & Offline"))
         primary.setObjectName("SecurityPrimary")
 
-        secondary = QLabel("Schlüssel bleiben auf Hardware")
+        secondary = QLabel(tr("Schlüssel bleiben auf Hardware"))
         secondary.setObjectName("SecuritySecondary")
 
         text.addWidget(primary)
@@ -303,12 +304,11 @@ class ReceivePage(QWidget):
         text = QVBoxLayout()
         text.setSpacing(2)
 
-        title = QLabel("Sicherheit zuerst")
+        title = QLabel(tr("Sicherheit zuerst"))
         title.setObjectName("SafetyTitle")
 
         detail = QLabel(
-            "PIN, Seed und private Schlüssel bleiben ausschließlich auf der Hardware. "
-            "Die Geräte-PIN besteht aus genau 4 Ziffern."
+            tr("PIN, Seed und private Schlüssel bleiben ausschließlich auf der Hardware. Die Geräte-PIN besteht aus genau 4 Ziffern.")
         )
         detail.setObjectName("SafetyText")
         detail.setWordWrap(True)
@@ -390,16 +390,15 @@ class ReceivePage(QWidget):
     def reset_wallet_view(self) -> None:
         """Remove every wallet-specific receive value from the visible page."""
         self._set_qr(None)
-        self._result_title.setText("Noch keine Adresse")
+        self._result_title.setText(tr("Noch keine Adresse"))
         self._result_text.setText(
-            "Sobald du die Adresse auf der Hardware bestätigt hast, "
-            "erscheint sie hier zusammen mit QR-Code und Kopierfunktion."
+            tr("Sobald du die Adresse auf der Hardware bestätigt hast, erscheint sie hier zusammen mit QR-Code und Kopierfunktion.")
         )
         self._result_text.setTextInteractionFlags(Qt.NoTextInteraction)
         self._copy_button.setVisible(False)
-        self._copy_button.setText("Adresse kopieren")
+        self._copy_button.setText(tr("Adresse kopieren"))
         self._state.setText(
-            "Entsperre deine Hardware Wallet, um eine Empfangsadresse anzufordern."
+            tr("Entsperre deine Hardware Wallet, um eine Empfangsadresse anzufordern.")
         )
 
     def show_cached_address(self, address: str) -> None:
@@ -408,85 +407,84 @@ class ReceivePage(QWidget):
         if not value:
             self.reset_wallet_view()
             return
-        self._result_title.setText("Letzte bekannte Empfangsadresse")
+        self._result_title.setText(tr("Letzte bekannte Empfangsadresse"))
         self._set_qr(value)
-        self._result_text.setText(f"Adresse: {value}")
+        self._result_text.setText(f"{tr('Adresse:')} {value}")
         self._result_text.setTextInteractionFlags(Qt.TextSelectableByMouse)
         self._copy_button.setVisible(True)
 
     def set_device_connected(self, connected: bool) -> None:
         if connected:
             self._state.setText(
-                "Hardware Wallet verbunden. Empfangsadresse muss auf dem Gerät bestätigt werden."
+                tr("Hardware Wallet verbunden. Empfangsadresse muss auf dem Gerät bestätigt werden.")
             )
         else:
-            self._state.setText("Hardware Wallet nicht verbunden.")
+            self._state.setText(tr("Hardware Wallet nicht verbunden."))
 
     def show_hardware_required(self) -> None:
-        self._result_title.setText("Hardware Wallet erforderlich")
+        self._result_title.setText(tr("Hardware Wallet erforderlich"))
         self._result_text.setText(
-            "Schließe zuerst deine BC2 Hardware Wallet an."
+            tr("Schließe zuerst deine BC2 Hardware Wallet an.")
         )
         self._copy_button.setVisible(False)
 
     def show_wallet_not_ready(self) -> None:
-        self._result_title.setText("Wallet noch nicht eingerichtet")
+        self._result_title.setText(tr("Wallet noch nicht eingerichtet"))
         self._result_text.setText(
-            "Richte zuerst deine Wallet vollständig auf der Hardware ein."
+            tr("Richte zuerst deine Wallet vollständig auf der Hardware ein.")
         )
         self._copy_button.setVisible(False)
 
     def show_wallet_locked(self) -> None:
-        self._result_title.setText("Wallet ist gesperrt")
+        self._result_title.setText(tr("Wallet ist gesperrt"))
         self._result_text.setText(
-            "Entsperre zuerst die Hardware Wallet mit deiner 4-stelligen PIN."
+            tr("Entsperre zuerst die Hardware Wallet mit deiner 4-stelligen PIN.")
         )
         self._copy_button.setVisible(False)
 
     def show_request_started(self) -> None:
         self._request_button.setEnabled(False)
-        self._request_button.setText("Warte auf Hardware …")
+        self._request_button.setText(tr("Warte auf Hardware …"))
         self._set_qr(None)
-        self._result_title.setText("Bestätigung auf Hardware erforderlich")
+        self._result_title.setText(tr("Bestätigung auf Hardware erforderlich"))
         self._result_text.setText(
-            "Die Empfangsadresse wird ausschließlich auf der Hardware erzeugt."
+            tr("Die Empfangsadresse wird ausschließlich auf der Hardware erzeugt.")
         )
         self._copy_button.setVisible(False)
 
     def show_progress(self, message: str) -> None:
-        self._result_title.setText("Adresse auf Hardware prüfen")
+        self._result_title.setText(tr("Adresse auf Hardware prüfen"))
         self._result_text.setText(message)
 
     def show_finished(self, status: int, address) -> str | None:
         self._request_button.setEnabled(True)
-        self._request_button.setText("Neue Empfangsadresse anfordern")
+        self._request_button.setText(tr("Neue Empfangsadresse anfordern"))
 
         if status == 1 and address:
             address_text = str(address)
-            self._result_title.setText("Empfangsadresse bestätigt")
+            self._result_title.setText(tr("Empfangsadresse bestätigt"))
             self._set_qr(address_text)
-            self._result_text.setText(f"Adresse: {address_text}")
+            self._result_text.setText(f"{tr('Adresse:')} {address_text}")
             self._result_text.setTextInteractionFlags(Qt.TextSelectableByMouse)
             self._copy_button.setVisible(True)
             self._state.setText(
-                "Diese Adresse wurde auf deiner BC2 Hardware Wallet geprüft und bestätigt."
+                tr("Diese Adresse wurde auf deiner BC2 Hardware Wallet geprüft und bestätigt.")
             )
             return address_text
 
         self._set_qr(None)
-        self._result_title.setText("Adresse nicht freigegeben")
+        self._result_title.setText(tr("Adresse nicht freigegeben"))
         self._result_text.setText(
-            "Die Hardware Wallet hat die Adresse abgelehnt oder konnte sie nicht sicher erzeugen. "
-            "Bei einem technischen Ableitungsfehler wird jetzt eine genauere Meldung ausgegeben."
+            tr("Die Hardware Wallet hat die Adresse abgelehnt oder konnte sie nicht sicher erzeugen. Bei einem technischen Ableitungsfehler wird jetzt eine genauere Meldung ausgegeben.")
         )
         self._copy_button.setVisible(False)
         return None
 
     def show_failed(self, message: str) -> None:
         self._request_button.setEnabled(True)
-        self._request_button.setText("Empfangsadresse anfordern")
+        self._request_button.setText(tr("Empfangsadresse anfordern"))
         self._set_qr(None)
-        self._result_title.setText("Empfangen nicht möglich")
+        self._result_title.setText(tr("Empfangen nicht möglich"))
         self._result_text.setText(message)
         self._copy_button.setVisible(False)
 
@@ -524,13 +522,13 @@ class ReceivePage(QWidget):
 
     def _copy_receive_address(self) -> None:
         address = self._result_text.text().strip()
-        if address.startswith("Adresse:"):
+        if address.startswith(("Adresse:", "Address:")):
             address = address.split(":", 1)[1].strip()
 
         if address:
             QGuiApplication.clipboard().setText(address)
-            self._copy_button.setText("✓ Kopiert")
+            self._copy_button.setText(tr("✓ Kopiert"))
             QTimer.singleShot(
                 1400,
-                lambda: self._copy_button.setText("Adresse kopieren"),
+                lambda: self._copy_button.setText(tr("Adresse kopieren")),
             )

@@ -20,6 +20,8 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from bc2.i18n import tr
+
 
 class DashboardPage(QWidget):
     """Dashboard presentation only.
@@ -40,8 +42,8 @@ class DashboardPage(QWidget):
         super().__init__(parent)
         self._icon_path = icon_path
         self._device_connected = False
-        self._network_state = "Nicht verbunden"
-        self._sync_state = "noch nicht gestartet"
+        self._network_state = tr("Nicht verbunden")
+        self._sync_state = tr("noch nicht gestartet")
         self._server = electrum_server
         self._transaction_signature = None
 
@@ -59,9 +61,9 @@ class DashboardPage(QWidget):
         title_box = QVBoxLayout()
         title_box.setSpacing(4)
 
-        title = QLabel("DASHBOARD")
+        title = QLabel(tr("DASHBOARD"))
         title.setObjectName("PageTitle")
-        subtitle = QLabel("Deine BC2 Wallet auf einen Blick.")
+        subtitle = QLabel(tr("Deine BC2 Wallet auf einen Blick."))
         subtitle.setObjectName("PageSubtitle")
 
         title_box.addWidget(title)
@@ -73,15 +75,15 @@ class DashboardPage(QWidget):
 
         self._device_icon = QPushButton()
         self._device_icon.setObjectName("TopStatusIcon")
-        self._device_icon.setToolTip("Hardware Wallet nicht verbunden")
+        self._device_icon.setToolTip(tr("Hardware Wallet nicht verbunden"))
 
         self._network_icon = QPushButton()
         self._network_icon.setObjectName("TopStatusIcon")
-        self._network_icon.setToolTip("Netzwerk nicht verbunden")
+        self._network_icon.setToolTip(tr("Netzwerk nicht verbunden"))
 
         self._sync_icon = QPushButton()
         self._sync_icon.setObjectName("TopStatusIcon")
-        self._sync_icon.setToolTip("Wallet noch nicht synchronisiert")
+        self._sync_icon.setToolTip(tr("Wallet noch nicht synchronisiert"))
 
         for status in (self._device_icon, self._network_icon, self._sync_icon):
             status.setFlat(True)
@@ -100,11 +102,11 @@ class DashboardPage(QWidget):
         balance_layout.setContentsMargins(0, 20, 0, 24)
         balance_layout.setSpacing(5)
 
-        label = QLabel("Aktuelles Guthaben")
+        label = QLabel(tr("Aktuelles Guthaben"))
         label.setObjectName("DashboardBalanceLabel")
         self._confirmed_balance = QLabel("0.00000000 BC2")
         self._confirmed_balance.setObjectName("DashboardMainBalance")
-        note = QLabel("Blockchain bestätigt")
+        note = QLabel(tr("Blockchain bestätigt"))
         note.setObjectName("DashboardBalanceNote")
 
         balance_layout.addWidget(label)
@@ -113,7 +115,7 @@ class DashboardPage(QWidget):
         balance_layout.addSpacing(18)
 
         pending_row = QHBoxLayout()
-        pending_label = QLabel("Unbestätigt")
+        pending_label = QLabel(tr("Unbestätigt"))
         pending_label.setObjectName("DashboardPendingLabel")
         self._unconfirmed_balance = QLabel("0.00000000 BC2")
         self._unconfirmed_balance.setObjectName("DashboardPendingBalance")
@@ -122,7 +124,7 @@ class DashboardPage(QWidget):
         pending_row.addStretch()
         balance_layout.addLayout(pending_row)
 
-        self._unconfirmed_note = QLabel("Keine ausstehenden Transaktionen")
+        self._unconfirmed_note = QLabel(tr("Keine ausstehenden Transaktionen"))
         self._unconfirmed_note.setObjectName("DashboardBalanceNote")
         balance_layout.addWidget(self._unconfirmed_note)
 
@@ -134,9 +136,9 @@ class DashboardPage(QWidget):
         outer.addWidget(divider)
 
         tx_head = QHBoxLayout()
-        tx_title = QLabel("Letzte Transaktionen")
+        tx_title = QLabel(tr("Letzte Transaktionen"))
         tx_title.setObjectName("DashboardSectionTitle")
-        all_btn = QPushButton("Alle anzeigen")
+        all_btn = QPushButton(tr("Alle anzeigen"))
         all_btn.setObjectName("DashboardTextButton")
         all_btn.clicked.connect(self.show_transactions_requested.emit)
         tx_head.addWidget(tx_title)
@@ -175,7 +177,7 @@ class DashboardPage(QWidget):
         self._clear_transactions()
 
         if not entries:
-            empty = QLabel("Noch keine Transaktionen vorhanden.")
+            empty = QLabel(tr("Noch keine Transaktionen vorhanden."))
             empty.setObjectName("DashboardEmptyText")
             self._transactions_layout.addWidget(empty)
             return
@@ -203,17 +205,17 @@ class DashboardPage(QWidget):
 
         if entry.direction == "incoming":
             symbol = "↓"
-            title = "Empfangen"
+            title = tr("Empfangen")
             prefix = "+"
             amount_color = GREEN
         elif entry.direction == "outgoing":
             symbol = "↑"
-            title = "Gesendet"
+            title = tr("Gesendet")
             prefix = "−"
             amount_color = RED
         else:
             symbol = "↔"
-            title = "Eigenübertrag"
+            title = tr("Eigenübertrag")
             prefix = ""
             amount_color = MUTED
 
@@ -237,10 +239,10 @@ class DashboardPage(QWidget):
         )
 
         if entry.confirmed:
-            state = f"Bestätigt · Block {entry.height}"
+            state = f"{tr('Bestätigt · Block')} {entry.height}"
             state_color = GREEN
         else:
-            state = "Unbestätigt"
+            state = tr("Unbestätigt")
             state_color = ORANGE
 
         status = QLabel(state)
@@ -263,7 +265,7 @@ class DashboardPage(QWidget):
         )
         amount.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         amount.setStyleSheet(
-            f"color:{amount_color}; font-size:16px; font-weight:700;"
+            f"color:{amount_color}; font-size:16px; font-weight:400;"
         )
 
         layout.addWidget(icon)
@@ -292,9 +294,9 @@ class DashboardPage(QWidget):
         if tooltip:
             self._network_icon.setToolTip(tooltip)
         elif state == "Verbunden":
-            self._network_icon.setToolTip("BC2 Netzwerk verbunden")
+            self._network_icon.setToolTip(tr("BC2 Netzwerk verbunden"))
         else:
-            self._network_icon.setToolTip("BC2 Netzwerk nicht verbunden")
+            self._network_icon.setToolTip(tr("BC2 Netzwerk nicht verbunden"))
         self._refresh_status_icons()
 
     def set_sync_state(self, state: str) -> None:
@@ -305,22 +307,22 @@ class DashboardPage(QWidget):
         self._confirmed_balance.setText(confirmed)
         self._unconfirmed_balance.setText(unconfirmed)
         self._unconfirmed_note.setText(
-            "Wartet auf Blockchain-Bestätigung"
+            tr("Wartet auf Blockchain-Bestätigung")
             if has_pending
-            else "Keine ausstehenden Transaktionen"
+            else tr("Keine ausstehenden Transaktionen")
         )
 
     def _refresh_status_icons(self) -> None:
         network_ok = self._network_state == "Verbunden"
-        sync_ok = self._sync_state.startswith("Aktuell")
+        sync_ok = self._sync_state.startswith(tr("Aktuell"))
 
         self._device_icon.setIcon(
             QIcon(self._icon_path("usb-green" if self._device_connected else "usb-gray"))
         )
         self._device_icon.setToolTip(
-            "Hardware Wallet verbunden"
+            tr("Hardware Wallet verbunden")
             if self._device_connected
-            else "Hardware Wallet nicht verbunden"
+            else tr("Hardware Wallet nicht verbunden")
         )
 
         self._network_icon.setIcon(
@@ -330,5 +332,5 @@ class DashboardPage(QWidget):
             QIcon(self._icon_path("sync-green" if sync_ok else "sync-gray"))
         )
         self._sync_icon.setToolTip(
-            "Wallet synchronisiert" if sync_ok else "Wallet noch nicht synchronisiert"
+            tr("Wallet synchronisiert") if sync_ok else tr("Wallet noch nicht synchronisiert")
         )

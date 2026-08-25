@@ -5,6 +5,7 @@ This directory is the documentation hub for the BC2 Cold Wallet repository. It s
 ## User documentation
 
 - [Getting Started](GETTING_STARTED.md)
+- [Community HOWTO](COMMUNITY_HOWTO.md)
 - [User Guide](USER_GUIDE.md)
 - [PIN and Lockdown](PIN_AND_LOCKDOWN.md)
 - [Recovery](RECOVERY.md)
@@ -19,6 +20,7 @@ This directory is the documentation hub for the BC2 Cold Wallet repository. It s
 - [USB Protocol](USB_PROTOCOL.md)
 - [Internal Security Test Record](SECURITY_TESTS.md)
 - [v1.0.0 Release Checklist](RELEASE_CHECKLIST.md)
+- [Desktop Translations](TRANSLATIONS.md)
 
 ## Documentation status
 

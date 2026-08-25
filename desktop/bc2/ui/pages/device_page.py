@@ -11,6 +11,8 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from bc2.i18n import tr
+
 
 class DevicePage(QWidget):
     scan_requested = Signal()
@@ -32,11 +34,11 @@ class DevicePage(QWidget):
         texts = QVBoxLayout()
         texts.setSpacing(5)
 
-        title_label = QLabel("HARDWARE WALLET")
+        title_label = QLabel(tr("HARDWARE WALLET"))
         title_label.setObjectName("PageTitle")
 
         subtitle_label = QLabel(
-            "Verbindung und Eigenschaften deiner BC2 Hardware Wallet."
+            tr("Verbindung und Eigenschaften deiner BC2 Hardware Wallet.")
         )
         subtitle_label.setObjectName("PageSubtitle")
         subtitle_label.setWordWrap(True)
@@ -65,16 +67,16 @@ class DevicePage(QWidget):
 
         hs = QVBoxLayout()
 
-        self._status = QLabel("Suche nach BC2 Hardware Wallet …")
+        self._status = QLabel(tr("Suche nach BC2 Hardware Wallet …"))
         self._status.setObjectName("SectionTitle")
 
-        self._detail = QLabel("Serielle Geräte werden geprüft.")
+        self._detail = QLabel(tr("Serielle Geräte werden geprüft."))
         self._detail.setObjectName("SmallMuted")
 
         hs.addWidget(self._status)
         hs.addWidget(self._detail)
 
-        self._badge = QLabel("Suche …")
+        self._badge = QLabel(tr("Suche …"))
         self._badge.setObjectName("ConnectionBadgeScanning")
         self._badge.setAlignment(Qt.AlignCenter)
         self._badge.setFixedSize(150, 36)
@@ -119,13 +121,13 @@ class DevicePage(QWidget):
         dl.setSpacing(0)
 
         for key in (
-            "Gerät",
-            "Hardware",
+            tr("Gerät"),
+            tr("Hardware"),
             "Display",
             "Revision",
             "Port",
-            "Gerätestatus",
-            "Fähigkeiten",
+            tr("Gerätestatus"),
+            tr("Fähigkeiten"),
             "Board-Revision",
         ):
             dl.addWidget(self._detail_row(key))
@@ -135,13 +137,13 @@ class DevicePage(QWidget):
 
         layout.addLayout(body, 1)
 
-        self._scan_button = QPushButton("↻   Erneut suchen")
+        self._scan_button = QPushButton(tr("↻   Erneut suchen"))
         self._scan_button.setObjectName("PrimaryButton")
         self._scan_button.clicked.connect(self.scan_requested)
         layout.addWidget(self._scan_button, alignment=Qt.AlignHCenter)
 
         self._factory_reset_button = QPushButton(
-            "Gerät zurücksetzen (nach Stabilisierung)"
+            tr("Gerät zurücksetzen (nach Stabilisierung)")
         )
         self._factory_reset_button.setObjectName("DangerButton")
         self._factory_reset_button.setEnabled(False)
@@ -193,10 +195,10 @@ class DevicePage(QWidget):
         text = QVBoxLayout()
         text.setSpacing(0)
 
-        primary = QLabel("Sicher & Offline")
+        primary = QLabel(tr("Sicher & Offline"))
         primary.setObjectName("SecurityPrimary")
 
-        secondary = QLabel("Schlüssel bleiben auf Hardware")
+        secondary = QLabel(tr("Schlüssel bleiben auf Hardware"))
         secondary.setObjectName("SecuritySecondary")
 
         text.addWidget(primary)
@@ -220,12 +222,11 @@ class DevicePage(QWidget):
 
         text = QVBoxLayout()
 
-        title = QLabel("Sicherheit zuerst")
+        title = QLabel(tr("Sicherheit zuerst"))
         title.setObjectName("SafetyTitle")
 
         detail = QLabel(
-            "PIN, Seed und private Schlüssel bleiben ausschließlich auf der Hardware. "
-            "Die Geräte-PIN besteht aus genau 4 Ziffern."
+            tr("PIN, Seed und private Schlüssel bleiben ausschließlich auf der Hardware. Die Geräte-PIN besteht aus genau 4 Ziffern.")
         )
         detail.setObjectName("SafetyText")
         detail.setWordWrap(True)
@@ -240,33 +241,33 @@ class DevicePage(QWidget):
 
     def show_scanning(self) -> None:
         self._scan_button.setEnabled(False)
-        self._scan_button.setText("Suche …")
+        self._scan_button.setText(tr("Suche …"))
 
-        self._status.setText("Suche nach BC2 Hardware Wallet …")
-        self._detail.setText("Serielle Geräte werden sicher geprüft.")
+        self._status.setText(tr("Suche nach BC2 Hardware Wallet …"))
+        self._detail.setText(tr("Serielle Geräte werden sicher geprüft."))
 
         self._status_icon.setText("…")
         self._status_icon.setObjectName("StatusIconScanning")
 
-        self._badge.setText("Suche …")
+        self._badge.setText(tr("Suche …"))
         self._badge.setObjectName("ConnectionBadgeScanning")
 
         self._repolish_status()
 
     def show_offline(self) -> None:
         self._scan_button.setEnabled(True)
-        self._scan_button.setText("↻   Erneut suchen")
+        self._scan_button.setText(tr("↻   Erneut suchen"))
         self._factory_reset_button.setEnabled(False)
 
-        self._status.setText("Hardware Wallet nicht verbunden")
+        self._status.setText(tr("Hardware Wallet nicht verbunden"))
         self._detail.setText(
-            "Schließe die BC2 Hardware Wallet per USB an und suche erneut."
+            tr("Schließe die BC2 Hardware Wallet per USB an und suche erneut.")
         )
 
         self._status_icon.setText("!")
         self._status_icon.setObjectName("StatusIconOffline")
 
-        self._badge.setText("Nicht verbunden")
+        self._badge.setText(tr("Nicht verbunden"))
         self._badge.setObjectName("ConnectionBadgeOffline")
 
         for value in self._values.values():
@@ -276,32 +277,32 @@ class DevicePage(QWidget):
 
     def show_connected(self, device) -> None:
         self._scan_button.setEnabled(True)
-        self._scan_button.setText("↻   Erneut suchen")
+        self._scan_button.setText(tr("↻   Erneut suchen"))
         self._factory_reset_button.setEnabled(False)
 
-        self._status.setText("BC2 Hardware Wallet verbunden")
+        self._status.setText(tr("BC2 Hardware Wallet verbunden"))
         self._detail.setText(
-            "Das Gerät antwortet korrekt auf das BC2 USB-Protokoll."
+            tr("Das Gerät antwortet korrekt auf das BC2 USB-Protokoll.")
         )
 
         self._status_icon.setText("✓")
         self._status_icon.setObjectName("StatusIconConnected")
 
-        self._badge.setText("✓  Verbindung aktiv")
+        self._badge.setText(tr("✓  Verbindung aktiv"))
         self._badge.setObjectName("ConnectionBadgeConnected")
 
         values = {
-            "Gerät": device.device_name,
-            "Hardware": device.hardware_name,
+            tr("Gerät"): device.device_name,
+            tr("Hardware"): device.hardware_name,
             "Display": device.display_name,
             "Revision": device.firmware_revision,
             "Port": device.port,
-            "Gerätestatus": (
+            tr("Gerätestatus"): (
                 "unbekannt"
                 if device.state is None
                 else str(device.state)
             ),
-            "Fähigkeiten": device.capabilities_text,
+            tr("Fähigkeiten"): device.capabilities_text,
             "Board-Revision": str(device.board_revision),
         }
 

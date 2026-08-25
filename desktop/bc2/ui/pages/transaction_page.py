@@ -19,6 +19,8 @@ TEXT = "#1E2025"
 MUTED = "#6D7078"
 BORDER = "#E2E4E8"
 
+from bc2.i18n import tr
+
 
 class TransactionPage(QWidget):
     def __init__(self, parent=None):
@@ -38,11 +40,11 @@ class TransactionPage(QWidget):
         texts = QVBoxLayout()
         texts.setSpacing(5)
 
-        title_label = QLabel("TRANSAKTIONEN")
+        title_label = QLabel(tr("TRANSAKTIONEN"))
         title_label.setObjectName("PageTitle")
 
         subtitle_label = QLabel(
-            "Alle eingehenden und ausgehenden BC2 Transaktionen deiner Wallet."
+            tr("Alle eingehenden und ausgehenden BC2 Transaktionen deiner Wallet.")
         )
         subtitle_label.setObjectName("PageSubtitle")
         subtitle_label.setWordWrap(True)
@@ -69,7 +71,7 @@ class TransactionPage(QWidget):
 
         header = QHBoxLayout()
 
-        title = QLabel("Transaktionsverlauf")
+        title = QLabel(tr("Transaktionsverlauf"))
         title.setObjectName("TransactionHistoryTitle")
         title.setStyleSheet("""
             QLabel#TransactionHistoryTitle {
@@ -79,7 +81,7 @@ class TransactionPage(QWidget):
             }
         """)
 
-        self._sync_state = QLabel("Noch nicht synchronisiert")
+        self._sync_state = QLabel(tr("Noch nicht synchronisiert"))
         self._sync_state.setObjectName("SmallMuted")
         self._sync_state.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
 
@@ -108,15 +110,15 @@ class TransactionPage(QWidget):
 
         pagination = QHBoxLayout()
 
-        self._prev_button = QPushButton("← Zurück")
+        self._prev_button = QPushButton(tr("← Zurück"))
         self._prev_button.setObjectName("OutlineButton")
         self._prev_button.clicked.connect(self._previous_page)
 
-        self._page_label = QLabel("Seite 1 / 1")
+        self._page_label = QLabel(tr("Seite 1 / 1"))
         self._page_label.setObjectName("SmallMuted")
         self._page_label.setAlignment(Qt.AlignCenter)
 
-        self._next_button = QPushButton("Weiter →")
+        self._next_button = QPushButton(tr("Weiter →"))
         self._next_button.setObjectName("OutlineButton")
         self._next_button.clicked.connect(self._next_page)
 
@@ -160,18 +162,18 @@ class TransactionPage(QWidget):
         self._next_button.setStyleSheet(pagination_button_style)
 
     def show_loading(self) -> None:
-        self._sync_state.setText("Synchronisiere …")
+        self._sync_state.setText(tr("Synchronisiere …"))
 
         if self._entries:
             return
 
         self._clear_rows()
-        self._page_label.setText("Lade …")
+        self._page_label.setText(tr("Lade …"))
         self._prev_button.setEnabled(False)
         self._next_button.setEnabled(False)
 
         label = QLabel(
-            "Transaktionen werden von Electrum geladen …"
+            tr("Transaktionen werden von Electrum geladen …")
         )
         label.setObjectName("EmptyState")
         label.setAlignment(Qt.AlignCenter)
@@ -212,9 +214,9 @@ class TransactionPage(QWidget):
                 1,
                 (len(self._entries) + self._page_size - 1) // self._page_size,
             )
-            self._sync_state.setText(f"Aktuell · {len(self._entries)}")
+            self._sync_state.setText(f"{tr('Aktuell')} · {len(self._entries)}")
             self._page_label.setText(
-                f"Seite {self._page + 1} / {total_pages}"
+                f"{tr('Seite')} {self._page + 1} / {total_pages}"
             )
             self._prev_button.setEnabled(self._page > 0)
             self._next_button.setEnabled(self._page + 1 < total_pages)
@@ -227,13 +229,13 @@ class TransactionPage(QWidget):
         self._clear_rows()
 
         if not self._entries:
-            self._sync_state.setText("Aktuell")
-            self._page_label.setText("Seite 1 / 1")
+            self._sync_state.setText(tr("Aktuell"))
+            self._page_label.setText(tr("Seite 1 / 1"))
             self._prev_button.setEnabled(False)
             self._next_button.setEnabled(False)
 
             label = QLabel(
-                "Keine Transaktionen für die bekannten Wallet-Adressen gefunden."
+                tr("Keine Transaktionen für die bekannten Wallet-Adressen gefunden.")
             )
             label.setObjectName("EmptyState")
             label.setAlignment(Qt.AlignCenter)
@@ -256,9 +258,9 @@ class TransactionPage(QWidget):
         end_index = start_index + self._page_size
         visible_entries = self._entries[start_index:end_index]
 
-        self._sync_state.setText(f"Aktuell · {len(self._entries)}")
+        self._sync_state.setText(f"{tr('Aktuell')} · {len(self._entries)}")
         self._page_label.setText(
-            f"Seite {self._page + 1} / {total_pages}"
+            f"{tr('Seite')} {self._page + 1} / {total_pages}"
         )
         self._prev_button.setEnabled(self._page > 0)
         self._next_button.setEnabled(self._page + 1 < total_pages)
@@ -299,13 +301,13 @@ class TransactionPage(QWidget):
 
     def show_error(self, message: str) -> None:
         self._clear_rows()
-        self._sync_state.setText("Sync fehlgeschlagen")
+        self._sync_state.setText(tr("Sync fehlgeschlagen"))
         self._page_label.setText("—")
         self._prev_button.setEnabled(False)
         self._next_button.setEnabled(False)
 
         label = QLabel(
-            f"Transaktionen konnten nicht geladen werden.\n\n{message}"
+            f"{tr('Transaktionen konnten nicht geladen werden.')}\n\n{message}"
         )
         label.setObjectName("ErrorText")
         label.setAlignment(Qt.AlignCenter)
@@ -325,17 +327,17 @@ class TransactionPage(QWidget):
 
         if entry.direction == "incoming":
             symbol = "↓"
-            title = "Empfangen"
+            title = tr("Empfangen")
             prefix = "+"
             amount_color = GREEN
         elif entry.direction == "outgoing":
             symbol = "↑"
-            title = "Gesendet"
+            title = tr("Gesendet")
             prefix = "−"
             amount_color = RED
         else:
             symbol = "↔"
-            title = "Eigenübertrag"
+            title = tr("Eigenübertrag")
             prefix = ""
             amount_color = MUTED
 
@@ -359,10 +361,10 @@ class TransactionPage(QWidget):
         )
 
         if entry.confirmed:
-            state = f"Bestätigt · Block {entry.height}"
+            state = f"{tr('Bestätigt · Block')} {entry.height}"
             state_color = GREEN
         else:
-            state = "Unbestätigt"
+            state = tr("Unbestätigt")
             state_color = ORANGE
 
         status = QLabel(state)
@@ -385,7 +387,7 @@ class TransactionPage(QWidget):
         )
         amount.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         amount.setStyleSheet(
-            f"color:{amount_color}; font-size:16px; font-weight:700;"
+            f"color:{amount_color}; font-size:16px; font-weight:400;"
         )
 
         layout.addWidget(icon)
@@ -418,10 +420,10 @@ class TransactionPage(QWidget):
         text = QVBoxLayout()
         text.setSpacing(0)
 
-        primary = QLabel("Sicher & Offline")
+        primary = QLabel(tr("Sicher & Offline"))
         primary.setObjectName("SecurityPrimary")
 
-        secondary = QLabel("Schlüssel bleiben auf Hardware")
+        secondary = QLabel(tr("Schlüssel bleiben auf Hardware"))
         secondary.setObjectName("SecuritySecondary")
 
         text.addWidget(primary)

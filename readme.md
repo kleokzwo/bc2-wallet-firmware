@@ -64,7 +64,7 @@ You also need a **USB data cable**, a computer for flashing/running the desktop 
 ### 1. Get the repository
 
 ```bash
-git clone <YOUR-REPOSITORY-URL>
+git clone https://github.com/kleokzwo/bc2-wallet-firmware.git
 cd bc2-wallet-firmware-main
 ```
 

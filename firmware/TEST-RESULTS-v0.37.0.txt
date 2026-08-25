@@ -1,3 +1,0 @@
-Host core build: OK
-ctest: 21/21 passed
-ESP-IDF hardware target build: not available in this execution environment; build before flashing.

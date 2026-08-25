@@ -10,6 +10,8 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from bc2.i18n import tr
+
 
 class AboutPage(QWidget):
     def __init__(self, app_version: str, asset_path, parent=None):
@@ -94,11 +96,11 @@ class AboutPage(QWidget):
         texts = QVBoxLayout()
         texts.setSpacing(6)
 
-        title_label = QLabel("ÜBER")
+        title_label = QLabel(tr("ÜBER"))
         title_label.setObjectName("PageTitle")
 
         subtitle_label = QLabel(
-            "Informationen über die BC2 Cold Wallet."
+            tr("Informationen über die BC2 Cold Wallet.")
         )
         subtitle_label.setObjectName("PageSubtitle")
         subtitle_label.setWordWrap(True)
@@ -134,15 +136,13 @@ class AboutPage(QWidget):
         name.setAlignment(Qt.AlignCenter)
 
         version = QLabel(
-            f"Desktop-Version {self._app_version}"
+            f"{tr('Desktop-Version')} {self._app_version}"
         )
         version.setObjectName("SmallMuted")
         version.setAlignment(Qt.AlignCenter)
 
         text = QLabel(
-            "Eine einfache Cold-Wallet-Anwendung für Bitcoin II (BC2).\n\n"
-            "Sicherheitsprinzip: Seed und private Schlüssel verlassen die Hardware niemals. "
-            "Sicherheitskritische Aktionen werden auf dem Gerät geprüft und bestätigt."
+            tr("Eine einfache Cold-Wallet-Anwendung für Bitcoin II (BC2).\n\nSicherheitsprinzip: Seed und private Schlüssel verlassen die Hardware niemals. Sicherheitskritische Aktionen werden auf dem Gerät geprüft und bestätigt.")
         )
         text.setObjectName("BodyText")
         text.setAlignment(Qt.AlignCenter)
@@ -183,10 +183,10 @@ class AboutPage(QWidget):
         text = QVBoxLayout()
         text.setSpacing(1)
 
-        primary = QLabel("Sicher & Offline")
+        primary = QLabel(tr("Sicher & Offline"))
         primary.setObjectName("SecurityPrimary")
 
-        secondary = QLabel("Schlüssel bleiben auf Hardware")
+        secondary = QLabel(tr("Schlüssel bleiben auf Hardware"))
         secondary.setObjectName("SecuritySecondary")
 
         text.addWidget(primary)
@@ -213,12 +213,11 @@ class AboutPage(QWidget):
         text = QVBoxLayout()
         text.setSpacing(2)
 
-        title = QLabel("Sicherheit zuerst")
+        title = QLabel(tr("Sicherheit zuerst"))
         title.setObjectName("SafetyTitle")
 
         detail = QLabel(
-            "PIN, Seed und private Schlüssel bleiben ausschließlich auf der Hardware. "
-            "Die Geräte-PIN besteht aus genau 4 Ziffern."
+            tr("PIN, Seed und private Schlüssel bleiben ausschließlich auf der Hardware. Die Geräte-PIN besteht aus genau 4 Ziffern.")
         )
         detail.setObjectName("SafetyText")
         detail.setWordWrap(True)

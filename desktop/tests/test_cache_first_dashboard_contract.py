@@ -32,7 +32,7 @@ def test_network_is_not_claimed_connected_from_cache():
     start = source.index("def _load_active_wallet_cache")
     end = source.index("def ", start + 4)
     body = source[start:end]
-    assert 'set_network_state("Nicht verbunden")' in body
+    assert 'set_network_state(tr("Nicht verbunden"))' in body
     assert 'set_network_state("Verbunden")' not in body
 
 

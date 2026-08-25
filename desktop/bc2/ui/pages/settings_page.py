@@ -7,14 +7,17 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
     QLabel,
     QLineEdit,
+    QComboBox,
     QPushButton,
     QVBoxLayout,
     QWidget,
 )
 
+from bc2.i18n import get_language, tr
+
 
 class SettingsPage(QWidget):
-    save_requested = Signal(str, str)
+    save_requested = Signal(str, str, str)
 
     def __init__(self, electrum_server: str, parent=None):
         super().__init__(parent)
@@ -84,6 +87,19 @@ class SettingsPage(QWidget):
             QLineEdit#Input:focus {
                 border: 1px solid #8E159D;
             }
+            QComboBox#LanguageCombo {
+                background: white;
+                color: #1E2025;
+                border: 1px solid #C9CDD5;
+                border-radius: 10px;
+                padding: 8px 12px;
+                font-size: 15px;
+                font-weight: 400;
+                min-height: 28px;
+            }
+            QComboBox#LanguageCombo:focus {
+                border: 1px solid #8E159D;
+            }
             QPushButton#PrimaryButton {
                 background: #8E159D;
                 color: white;
@@ -146,11 +162,11 @@ class SettingsPage(QWidget):
         texts = QVBoxLayout()
         texts.setSpacing(6)
 
-        title_label = QLabel("EINSTELLUNGEN")
+        title_label = QLabel(tr("EINSTELLUNGEN"))
         title_label.setObjectName("PageTitle")
 
         subtitle_label = QLabel(
-            "Nur Einstellungen, die wirklich nötig sind."
+            tr("Nur Einstellungen, die wirklich nötig sind.")
         )
         subtitle_label.setObjectName("PageSubtitle")
         subtitle_label.setWordWrap(True)
@@ -174,7 +190,7 @@ class SettingsPage(QWidget):
         network_icon.setObjectName("SectionIcon")
         network_icon.setFixedWidth(18)
 
-        title = QLabel("Netzwerk")
+        title = QLabel(tr("Netzwerk"))
         title.setObjectName("SectionTitle")
 
         network_head.addWidget(network_icon)
@@ -182,7 +198,7 @@ class SettingsPage(QWidget):
         network_head.addStretch()
         layout.addLayout(network_head)
 
-        layout.addWidget(self._form_label("Electrum Server"))
+        layout.addWidget(self._form_label(tr("Electrum Server")))
 
         self._server_input = QLineEdit(self._electrum_server)
         self._server_input.setObjectName("Input")
@@ -190,8 +206,7 @@ class SettingsPage(QWidget):
         layout.addWidget(self._server_input)
 
         note = QLabel(
-            "SSL wird für den BC2 Electrum-Zugriff verwendet. "
-            "Bestätigte Empfangsadressen werden automatisch synchronisiert."
+            tr("SSL wird für den BC2 Electrum-Zugriff verwendet. Bestätigte Empfangsadressen werden automatisch synchronisiert.")
         )
         note.setObjectName("SmallMuted")
         note.setWordWrap(True)
@@ -213,7 +228,7 @@ class SettingsPage(QWidget):
         sync_icon.setObjectName("SectionIcon")
         sync_icon.setFixedWidth(18)
 
-        sync_title = QLabel("Empfangsadresse synchronisieren")
+        sync_title = QLabel(tr("Empfangsadresse synchronisieren"))
         sync_title.setObjectName("SectionTitle")
 
         sync_head.addWidget(sync_icon)
@@ -223,7 +238,7 @@ class SettingsPage(QWidget):
 
         layout.addWidget(
             self._form_label(
-                "Vorhandene Empfangsadresse für Sync hinzufügen (optional)"
+                tr("Vorhandene Empfangsadresse für Sync hinzufügen (optional)")
             )
         )
 
@@ -233,14 +248,54 @@ class SettingsPage(QWidget):
         layout.addWidget(self._sync_address_input)
 
         old_note = QLabel(
-            "Nur für Adressen nötig, die vor v0.42.0 erzeugt wurden. "
-            "Neue Empfangsadressen werden automatisch gespeichert."
+            tr("Nur für Adressen nötig, die vor v0.42.0 erzeugt wurden. Neue Empfangsadressen werden automatisch gespeichert.")
         )
         old_note.setObjectName("SmallMuted")
         old_note.setWordWrap(True)
         layout.addWidget(old_note)
 
-        self._save_button = QPushButton("Einstellungen speichern")
+        # Language stays a normal Settings option and does not alter wallet logic.
+        layout.addSpacing(18)
+        language_divider = QFrame()
+        language_divider.setObjectName("SettingsDivider")
+        language_divider.setFrameShape(QFrame.HLine)
+        layout.addWidget(language_divider)
+        layout.addSpacing(2)
+
+        language_head = QHBoxLayout()
+        language_head.setSpacing(10)
+        language_icon = QLabel("文")
+        language_icon.setObjectName("SectionIcon")
+        language_icon.setFixedWidth(18)
+        language_title = QLabel(tr("Sprache"))
+        language_title.setObjectName("SectionTitle")
+        language_head.addWidget(language_icon)
+        language_head.addWidget(language_title)
+        language_head.addStretch()
+        layout.addLayout(language_head)
+
+        language_row = QHBoxLayout()
+        language_row.setContentsMargins(0, 0, 0, 0)
+        language_row.setSpacing(12)
+        self._language_combo = QComboBox()
+        self._language_combo.setObjectName("LanguageCombo")
+        self._language_combo.setFixedWidth(220)
+        self._language_combo.addItem("English", "en")
+        self._language_combo.addItem("Deutsch", "de")
+        current_language = get_language()
+        current_index = self._language_combo.findData(current_language)
+        if current_index >= 0:
+            self._language_combo.setCurrentIndex(current_index)
+        language_row.addWidget(self._language_combo)
+        language_row.addStretch()
+        layout.addLayout(language_row)
+
+        language_note = QLabel(tr("Sprachänderungen werden nach einem Neustart der Desktop Wallet aktiv."))
+        language_note.setObjectName("SmallMuted")
+        language_note.setWordWrap(True)
+        layout.addWidget(language_note)
+
+        self._save_button = QPushButton(tr("Einstellungen speichern"))
         self._save_button.setObjectName("PrimaryButton")
         self._save_button.clicked.connect(self._submit)
         layout.addWidget(self._save_button, alignment=Qt.AlignLeft)
@@ -282,10 +337,10 @@ class SettingsPage(QWidget):
         text = QVBoxLayout()
         text.setSpacing(1)
 
-        primary = QLabel("Sicher & Offline")
+        primary = QLabel(tr("Sicher & Offline"))
         primary.setObjectName("SecurityPrimary")
 
-        secondary = QLabel("Schlüssel bleiben auf Hardware")
+        secondary = QLabel(tr("Schlüssel bleiben auf Hardware"))
         secondary.setObjectName("SecuritySecondary")
 
         text.addWidget(primary)
@@ -313,12 +368,11 @@ class SettingsPage(QWidget):
         text = QVBoxLayout()
         text.setSpacing(2)
 
-        title = QLabel("Sicherheit zuerst")
+        title = QLabel(tr("Sicherheit zuerst"))
         title.setObjectName("SafetyTitle")
 
         detail = QLabel(
-            "PIN, Seed und private Schlüssel bleiben ausschließlich auf der Hardware. "
-            "Die Geräte-PIN besteht aus genau 4 Ziffern."
+            tr("PIN, Seed und private Schlüssel bleiben ausschließlich auf der Hardware. Die Geräte-PIN besteht aus genau 4 Ziffern.")
         )
         detail.setObjectName("SafetyText")
         detail.setWordWrap(True)
@@ -398,7 +452,7 @@ class SettingsPage(QWidget):
 
         if ":" not in value or value.startswith(":") or value.endswith(":"):
             self.show_error(
-                "Bitte einen Server im Format host:port eingeben."
+                tr("Bitte einen Server im Format host:port eingeben.")
             )
             return
 
@@ -410,21 +464,21 @@ class SettingsPage(QWidget):
             or not (1 <= int(port) <= 65535)
         ):
             self.show_error(
-                "Bitte einen gültigen Host und Port eingeben."
+                tr("Bitte einen gültigen Host und Port eingeben.")
             )
             return
 
         address = self._sync_address_input.text().strip()
-        self.save_requested.emit(value, address)
+        self.save_requested.emit(value, address, str(self._language_combo.currentData()))
 
     def show_error(self, message: str) -> None:
         self._message.setObjectName("ErrorText")
         self._message.setText(message)
         self._repolish(self._message)
 
-    def show_saved(self) -> None:
+    def show_saved(self, restart_required: bool = False) -> None:
         self._message.setObjectName("SuccessText")
-        self._message.setText("✓ Gespeichert")
+        self._message.setText(tr("✓ Gespeichert · Neustart erforderlich") if restart_required else tr("✓ Gespeichert"))
         self._sync_address_input.clear()
         self._repolish(self._message)
 

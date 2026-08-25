@@ -5,8 +5,8 @@ def test_lockdown_ui_is_minimal():
     source=(ROOT/"desktop/bc2/ui/main_window.py").read_text(encoding="utf-8")
     start=source.index("if d.state == 10:")
     block=source[start:start+1800]
-    assert 'self._set_setup_message("Recovery erforderlich")' in block
-    assert 'self._set_setup_message("Recovery läuft")' in block
+    assert 'self._set_setup_message(tr("Recovery erforderlich"))' in block
+    assert 'self._set_setup_message(tr("Recovery läuft"))' in block
     assert "Nach 3 falschen PIN-Versuchen" not in block
 
 def test_begin_recovery_accepts_lockdown_not_normal_locked():

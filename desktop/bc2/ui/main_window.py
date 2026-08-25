@@ -40,6 +40,7 @@ from bc2.ui.pages.settings_page import SettingsPage
 from bc2.ui.pages.about_page import AboutPage
 from bc2.wallet_context import WalletContext
 from bc2.wallet_cache import WalletCache
+from bc2.i18n import get_language, set_language, tr
 
 
 APP_VERSION = "0.50.7"
@@ -197,13 +198,13 @@ class MainWindow(QMainWindow):
         layout.addSpacing(34)
 
         nav_items = [
-            ("dashboard", "layout-dashboard", "DASHBOARD"),
-            ("receive", "arrow-down-to-line", "EMPFANGEN"),
-            ("send", "send", "SENDEN"),
-            ("transactions", "list", "TRANSAKTIONEN"),
-            ("device", "usb", "GERÄT"),
-            ("settings", "settings", "EINSTELLUNGEN"),
-            ("about", "circle-help", "ÜBER"),
+            ("dashboard", "layout-dashboard", tr("DASHBOARD")),
+            ("receive", "arrow-down-to-line", tr("EMPFANGEN")),
+            ("send", "send", tr("SENDEN")),
+            ("transactions", "list", tr("TRANSAKTIONEN")),
+            ("device", "usb", tr("GERÄT")),
+            ("settings", "settings", tr("EINSTELLUNGEN")),
+            ("about", "circle-help", tr("ÜBER")),
         ]
 
         group = QButtonGroup(self)
@@ -224,7 +225,7 @@ class MainWindow(QMainWindow):
 
         layout.addStretch()
 
-        self._logout_button = QPushButton("⏻    Wallet sperren")
+        self._logout_button = QPushButton(tr("⏻    Wallet sperren"))
         self._logout_button.setObjectName("LogoutButton")
         self._logout_button.setCursor(Qt.PointingHandCursor)
         self._logout_button.setMinimumHeight(46)
@@ -237,7 +238,7 @@ class MainWindow(QMainWindow):
         st = QVBoxLayout(self._sidebar_status)
         st.setContentsMargins(14, 11, 14, 11)
         st.setSpacing(4)
-        self._sidebar_ready = QLabel("●  Suche Gerät …")
+        self._sidebar_ready = QLabel(tr("●  Suche Gerät …"))
         self._sidebar_ready.setObjectName("SidebarSearching")
         version = QLabel(f"v{APP_VERSION}")
         version.setObjectName("SidebarVersion")
@@ -343,7 +344,7 @@ class MainWindow(QMainWindow):
         title.setAlignment(Qt.AlignCenter)
         outer.addWidget(title)
 
-        intro = QLabel("Wallet entsperren, neu erstellen oder wiederherstellen.")
+        intro = QLabel(tr("Wallet entsperren, neu erstellen oder wiederherstellen."))
         intro.setObjectName("SetupText")
         intro.setAlignment(Qt.AlignCenter)
         intro.setWordWrap(True)
@@ -360,21 +361,21 @@ class MainWindow(QMainWindow):
         self._setup_status_text.setWordWrap(True)
         self._setup_status_text.setVisible(False)
 
-        self._create_wallet_button = QPushButton("Create New Wallet")
+        self._create_wallet_button = QPushButton(tr("Create New Wallet"))
         self._create_wallet_button.setObjectName("PrimaryButton")
         self._create_wallet_button.setCursor(Qt.PointingHandCursor)
         self._create_wallet_button.setMinimumWidth(300)
         self._create_wallet_button.setEnabled(False)
         self._create_wallet_button.clicked.connect(self._begin_wallet_creation)
 
-        self._unlock_wallet_button = QPushButton("Unlock Wallet")
+        self._unlock_wallet_button = QPushButton(tr("Unlock Wallet"))
         self._unlock_wallet_button.setObjectName("PrimaryButton")
         self._unlock_wallet_button.setCursor(Qt.PointingHandCursor)
         self._unlock_wallet_button.setMinimumWidth(300)
         self._unlock_wallet_button.setEnabled(False)
         self._unlock_wallet_button.clicked.connect(self._begin_wallet_unlock)
 
-        self._recovery_wallet_button = QPushButton("Recovery Wallet")
+        self._recovery_wallet_button = QPushButton(tr("Recovery Wallet"))
         self._recovery_wallet_button.setObjectName("LinkButton")
         self._recovery_wallet_button.setCursor(Qt.PointingHandCursor)
         self._recovery_wallet_button.setEnabled(False)
@@ -436,24 +437,24 @@ class MainWindow(QMainWindow):
     @Slot()
     def _begin_wallet_creation(self) -> None:
         if self._device is None:
-            self._set_setup_message("Hardware Wallet nicht verbunden", "Verbinde zuerst dein BC2 Gerät per USB.")
+            self._set_setup_message(tr("Hardware Wallet nicht verbunden"), tr("Verbinde zuerst dein BC2 Gerät per USB."))
             return
         if self._device.wallet_ready or not self._device.setup_required:
-            self._set_setup_message("Wallet bereits eingerichtet", "Eine neue Wallet kann nur im Factory State erstellt werden.")
+            self._set_setup_message(tr("Wallet bereits eingerichtet"), tr("Eine neue Wallet kann nur im Factory State erstellt werden."))
             return
         try:
             accepted = begin_create_wallet(self._device.port)
         except Exception as exc:
-            self._set_setup_message("Wallet-Erstellung konnte nicht gestartet werden", str(exc))
+            self._set_setup_message(tr("Wallet-Erstellung konnte nicht gestartet werden"), str(exc))
             return
         if not accepted:
-            self._set_setup_message("Gerät ist noch nicht bereit", "Die Hardware hat die Wallet-Erstellung nicht angenommen.")
+            self._set_setup_message(tr("Gerät ist noch nicht bereit"), tr("Die Hardware hat die Wallet-Erstellung nicht angenommen."))
             return
         self._setup_in_progress = True
         self._create_wallet_button.setEnabled(False)
         self._unlock_wallet_button.setEnabled(False)
         self._recovery_wallet_button.setEnabled(False)
-        self._set_setup_message("Einrichtung auf der Hardware", "Lege zuerst eine 4-stellige PIN auf der Hardware an. Danach erzeugt die Hardware die neue Wallet und zeigt die 12 Recovery-Wörter nur auf dem Gerät.")
+        self._set_setup_message(tr("Einrichtung auf der Hardware"), tr("Lege zuerst eine 4-stellige PIN auf der Hardware an. Danach erzeugt die Hardware die neue Wallet und zeigt die 12 Recovery-Wörter nur auf dem Gerät."))
         QTimer.singleShot(1200, self._device_service.scan)
 
     @Slot()
@@ -473,8 +474,8 @@ class MainWindow(QMainWindow):
             return
         if not self._device.wallet_ready:
             self._set_setup_message(
-                "Noch keine Wallet eingerichtet",
-                "Erstelle zuerst eine neue Wallet oder nutze Recovery Wallet.",
+                tr("Noch keine Wallet eingerichtet"),
+                tr("Erstelle zuerst eine neue Wallet oder nutze Recovery Wallet."),
             )
             return
         if self._device.unlocked:
@@ -483,12 +484,12 @@ class MainWindow(QMainWindow):
         try:
             accepted = begin_unlock(self._device.port)
         except Exception as exc:
-            self._set_setup_message("Unlock konnte nicht gestartet werden", str(exc))
+            self._set_setup_message(tr("Unlock konnte nicht gestartet werden"), str(exc))
             return
         if not accepted:
             self._set_setup_message(
-                "Gerät ist nicht bereit",
-                "Unlock konnte auf der Hardware nicht gestartet werden.",
+                tr("Gerät ist nicht bereit"),
+                tr("Unlock konnte auf der Hardware nicht gestartet werden."),
             )
             return
 
@@ -504,8 +505,8 @@ class MainWindow(QMainWindow):
     @Slot()
     def _begin_wallet_recovery(self) -> None:
         if self._device is None:
-            self._setup_status_title.setText("Hardware Wallet nicht verbunden")
-            self._setup_status_text.setText("Verbinde zuerst dein BC2 Gerät per USB.")
+            self._setup_status_title.setText(tr("Hardware Wallet nicht verbunden"))
+            self._setup_status_text.setText(tr("Verbinde zuerst dein BC2 Gerät per USB."))
             return
 
         dialog = RecoveryDialog(self)
@@ -518,58 +519,57 @@ class MainWindow(QMainWindow):
         try:
             accepted = begin_recovery(self._device.port)
             if not accepted:
-                raise RuntimeError("Die Hardware hat Recovery nicht angenommen.")
+                raise RuntimeError(tr("Die Hardware hat Recovery nicht angenommen."))
             accepted = submit_recovery_mnemonic(self._device.port, mnemonic)
         except Exception as exc:
-            self._setup_status_title.setText("Recovery konnte nicht gestartet werden")
+            self._setup_status_title.setText(tr("Recovery konnte nicht gestartet werden"))
             self._setup_status_text.setText(str(exc))
             return
         finally:
             mnemonic = None
 
         if not accepted:
-            self._setup_status_title.setText("Recovery-Daten wurden abgelehnt")
-            self._setup_status_text.setText("Die Hardware konnte die Recovery-Phrase nicht übernehmen. Prüfe Firmware-Version und Gerätezustand.")
+            self._setup_status_title.setText(tr("Recovery-Daten wurden abgelehnt"))
+            self._setup_status_text.setText(tr("Die Hardware konnte die Recovery-Phrase nicht übernehmen. Prüfe Firmware-Version und Gerätezustand."))
             return
 
         self._setup_in_progress = True
         self._create_wallet_button.setEnabled(False)
         self._recovery_wallet_button.setEnabled(False)
-        self._setup_status_title.setText("Recovery-Daten übertragen")
+        self._setup_status_title.setText(tr("Recovery-Daten übertragen"))
         if self._device.state == 10:
             self._setup_status_text.setText(
-                "Lege jetzt auf der Hardware eine neue 4-stellige PIN an und "
-                "wiederhole sie. Danach wird die Wallet automatisch wiederhergestellt."
+                tr("Lege jetzt auf der Hardware eine neue 4-stellige PIN an und wiederhole sie. Danach wird die Wallet automatisch wiederhergestellt.")
             )
         elif self._device.wallet_status == 2:
             self._setup_status_text.setText(
-                "Gib jetzt auf der Hardware deine bestehende 4-stellige PIN ein. "
-                "Nach erfolgreicher PIN-Prüfung wird die Wallet automatisch wiederhergestellt."
+                tr("Gib jetzt auf der Hardware deine bestehende 4-stellige PIN ein. Nach erfolgreicher PIN-Prüfung wird die Wallet automatisch wiederhergestellt.")
             )
         else:
             self._setup_status_text.setText(
-                "Lege jetzt auf der Hardware eine neue 4-stellige PIN an und "
-                "wiederhole sie. Danach wird die Wallet automatisch wiederhergestellt."
+                tr("Lege jetzt auf der Hardware eine neue 4-stellige PIN an und wiederhole sie. Danach wird die Wallet automatisch wiederhergestellt.")
             )
         QTimer.singleShot(800, self._device_service.scan)
 
 
-    @Slot(str, str)
-    def _save_settings(self, value: str, address: str) -> None:
+    @Slot(str, str, str)
+    def _save_settings(self, value: str, address: str, language: str) -> None:
         if address:
             try:
                 address_to_scriptpubkey(address)
             except Exception as exc:
                 self._settings_page.show_error(
-                    f"Adresse ungültig: {exc}"
+                    tr("Adresse ungültig: {error}").format(error=exc)
                 )
                 return
 
             self._remember_receive_address(address)
 
+        restart_required = language != get_language()
         self._settings.setValue("electrum/server", value)
+        set_language(language)
         self._dashboard_page.set_server(value)
-        self._settings_page.show_saved()
+        self._settings_page.show_saved(restart_required=restart_required)
         QTimer.singleShot(150, self._sync_balance)
 
 
@@ -581,15 +581,15 @@ class MainWindow(QMainWindow):
             if not lock_wallet(self._device.port):
                 QMessageBox.warning(
                     self,
-                    "Hardware Wallet gesperrt",
-                    "Bitte entsperre zuerst die Hardware Wallet.",
+                    tr("Hardware Wallet gesperrt"),
+                    tr("Bitte entsperre zuerst die Hardware Wallet."),
                 )
                 return
         except Exception as exc:
             QMessageBox.warning(
                 self,
-                "Hardware Wallet gesperrt",
-                "Bitte entsperre zuerst die Hardware Wallet.",
+                tr("Hardware Wallet gesperrt"),
+                tr("Bitte entsperre zuerst die Hardware Wallet."),
             )
             return
 
@@ -652,13 +652,13 @@ class MainWindow(QMainWindow):
 
         if not self._device.wallet_ready:
             self._send_page.show_prepare_failed(
-                "Wallet noch nicht eingerichtet."
+                tr("Wallet noch nicht eingerichtet.")
             )
             return
 
         if not self._device.unlocked:
             self._send_page.show_prepare_failed(
-                "Wallet ist gesperrt. Bitte zuerst mit der 4-stelligen PIN entsperren."
+                tr("Wallet ist gesperrt. Bitte zuerst mit der 4-stelligen PIN entsperren.")
             )
             return
 
@@ -666,15 +666,14 @@ class MainWindow(QMainWindow):
             address_to_scriptpubkey(address)
         except Exception as exc:
             self._send_page.show_prepare_failed(
-                f"Empfängeradresse ungültig: {exc}"
+                tr("Empfängeradresse ungültig: {error}").format(error=exc)
             )
             return
 
         addresses = self._known_receive_addresses()
         if not addresses:
             self._send_page.show_prepare_failed(
-                "Keine eigenen Wallet-Adressen gespeichert. "
-                "Erzeuge zuerst unter Empfangen eine bestätigte Adresse."
+                tr("Keine eigenen Wallet-Adressen gespeichert. Erzeuge zuerst unter Empfangen eine bestätigte Adresse.")
             )
             return
 
@@ -702,13 +701,13 @@ class MainWindow(QMainWindow):
     def _review_send_plan(self) -> None:
         if self._device is None:
             self._send_page.show_review_failed(
-                "Hardware Wallet nicht verbunden."
+                tr("Hardware Wallet nicht verbunden.")
             )
             return
 
         if self._current_send_plan is None:
             self._send_page.show_review_failed(
-                "Bitte zuerst den Transaktionsentwurf berechnen."
+                tr("Bitte zuerst den Transaktionsentwurf berechnen.")
             )
             return
 
@@ -737,13 +736,13 @@ class MainWindow(QMainWindow):
     def _sign_send_plan(self) -> None:
         if self._device is None:
             self._send_page.show_sign_failed(
-                "Hardware Wallet nicht verbunden."
+                tr("Hardware Wallet nicht verbunden.")
             )
             return
 
         if self._current_send_plan is None:
             self._send_page.show_sign_failed(
-                "Bitte zuerst einen Transaktionsentwurf erstellen."
+                tr("Bitte zuerst einen Transaktionsentwurf erstellen.")
             )
             return
 
@@ -773,7 +772,7 @@ class MainWindow(QMainWindow):
     def _broadcast_signed_transaction(self) -> None:
         if self._current_signed_transaction is None:
             self._send_page.show_broadcast_failed(
-                "Keine signierte Transaktion vorhanden."
+                tr("Keine signierte Transaktion vorhanden.")
             )
             return
 
@@ -805,15 +804,15 @@ class MainWindow(QMainWindow):
     def _factory_reset_device(self) -> None:
         QMessageBox.information(
             self,
-            "Reset vorübergehend deaktiviert",
-            "Der Factory Reset wird erst wieder freigeschaltet, wenn USB-Verbindung und 4-stellige PIN stabil funktionieren.",
+            tr("Reset vorübergehend deaktiviert"),
+            tr("Der Factory Reset wird erst wieder freigeschaltet, wenn USB-Verbindung und 4-stellige PIN stabil funktionieren."),
         )
 
     @Slot()
     def _on_scan_started(self) -> None:
         # Normal USB discovery is silent on the login page.
         self._device_page.show_scanning()
-        self._sidebar_ready.setText("●  Suche Gerät …")
+        self._sidebar_ready.setText(tr("●  Suche Gerät …"))
         self._sidebar_ready.setObjectName("SidebarSearching")
         self._refresh_status_styles()
 
@@ -823,12 +822,12 @@ class MainWindow(QMainWindow):
             self._device = None
             self._unlock_after_scan = False
             self._device_page.show_offline()
-            self._sidebar_ready.setText("●  Gerät offline")
+            self._sidebar_ready.setText(tr("●  Gerät offline"))
             self._sidebar_ready.setObjectName("SidebarOffline")
             self._dashboard_page.set_device(False)
             self._receive_page.set_device_connected(False)
             self._balance_timer.stop()
-            self._dashboard_page.set_network_state("Nicht verbunden")
+            self._dashboard_page.set_network_state(tr("Nicht verbunden"))
 
             if self._stack.currentWidget() is self._pages["setup"]:
                 self._sidebar.setVisible(False)
@@ -847,7 +846,7 @@ class MainWindow(QMainWindow):
         resume_unlock = self._unlock_after_scan
         self._unlock_after_scan = False
         self._device_page.show_connected(d)
-        self._sidebar_ready.setText("●  Bereit")
+        self._sidebar_ready.setText(tr("●  Bereit"))
         self._sidebar_ready.setObjectName("SidebarReady")
         self._dashboard_page.set_device(True)
         self._receive_page.set_device_connected(True)
@@ -859,9 +858,8 @@ class MainWindow(QMainWindow):
             self._unlock_wallet_button.setEnabled(False)
             self._recovery_wallet_button.setEnabled(False)
             self._set_setup_message(
-                "Sicherheitsfehler auf der Hardware",
-                "Die Hardware meldet einen ungültigen Sicherheitszustand. "
-                "Es wird nichts automatisch überschrieben.",
+                tr("Sicherheitsfehler auf der Hardware"),
+                tr("Die Hardware meldet einen ungültigen Sicherheitszustand. Es wird nichts automatisch überschrieben."),
             )
 
         elif not d.wallet_ready:
@@ -877,7 +875,7 @@ class MainWindow(QMainWindow):
                 self._create_wallet_button.setEnabled(False)
                 self._recovery_wallet_button.setEnabled(False)
                 if not self._setup_status_title.isVisible():
-                    self._set_setup_message("Wallet-Einrichtung läuft auf der Hardware", "Folge den Anweisungen auf dem Gerät.")
+                    self._set_setup_message(tr("Wallet-Einrichtung läuft auf der Hardware"), tr("Folge den Anweisungen auf dem Gerät."))
                 QTimer.singleShot(1400, self._device_service.scan)
             else:
                 self._set_setup_quiet()
@@ -889,7 +887,7 @@ class MainWindow(QMainWindow):
                 try:
                     wallet_id = get_wallet_id(d.port)
                     if wallet_id is None:
-                        raise RuntimeError("Hardware hat keine Wallet-ID geliefert.")
+                        raise RuntimeError(tr("Hardware hat keine Wallet-ID geliefert."))
                     self._wallet_context.activate(wallet_id)
                     self._offer_legacy_receive_address_migration(wallet_id)
                     self._load_active_wallet_cache()
@@ -901,7 +899,7 @@ class MainWindow(QMainWindow):
                     self._unlock_wallet_button.setEnabled(False)
                     self._recovery_wallet_button.setEnabled(False)
                     self._set_setup_message(
-                        "Wallet-Identität konnte nicht bestätigt werden",
+                        tr("Wallet-Identität konnte nicht bestätigt werden"),
                         str(exc),
                     )
                     QTimer.singleShot(1200, self._device_service.scan)
@@ -940,11 +938,11 @@ class MainWindow(QMainWindow):
                     # expected until the new PIN has been created and confirmed.
                     # Keep scanning until the device reports DASHBOARD/unlocked.
                     self._recovery_wallet_button.setEnabled(False)
-                    self._set_setup_message("Recovery läuft")
+                    self._set_setup_message(tr("Recovery läuft"))
                     QTimer.singleShot(1000, self._device_service.scan)
                 else:
                     self._recovery_wallet_button.setEnabled(True)
-                    self._set_setup_message("Recovery erforderlich")
+                    self._set_setup_message(tr("Recovery erforderlich"))
             else:
                 self._create_wallet_button.setVisible(False)
                 self._recovery_wallet_button.setVisible(False)
@@ -955,7 +953,7 @@ class MainWindow(QMainWindow):
                 if resume_unlock and d.state == 2:
                     QTimer.singleShot(0, self._begin_wallet_unlock)
                 if d.state == 4:
-                    self._set_setup_message("PIN vorübergehend gesperrt", "Warte kurz und versuche anschließend erneut zu entsperren.")
+                    self._set_setup_message(tr("PIN vorübergehend gesperrt"), tr("Warte kurz und versuche anschließend erneut zu entsperren."))
                 else:
                     self._set_setup_quiet()
                     if d.state == 3:
@@ -997,13 +995,8 @@ class MainWindow(QMainWindow):
 
         answer = QMessageBox.question(
             self,
-            "Alte Wallet-Daten gefunden",
-            "Diese BC2-App hat noch öffentliche Empfangsadressen aus einer älteren "
-            "Version gefunden. Damals waren diese Adressen noch keiner Wallet-ID "
-            "zugeordnet.\n\n"
-            "Gehören diese alten Empfangsadressen zur JETZT entsperrten Wallet?\n\n"
-            "Nur mit Ja werden sie dieser Wallet zugeordnet und Balance sowie "
-            "Transaktionen anschließend neu über Electrum geladen.",
+            tr("Alte Wallet-Daten gefunden"),
+            tr("Diese BC2-App hat noch öffentliche Empfangsadressen aus einer älteren Version gefunden. Damals waren diese Adressen noch keiner Wallet-ID zugeordnet.\n\nGehören diese alten Empfangsadressen zur JETZT entsperrten Wallet?\n\nNur mit Ja werden sie dieser Wallet zugeordnet und Balance sowie Transaktionen anschließend neu über Electrum geladen."),
             QMessageBox.Yes | QMessageBox.No,
             QMessageBox.No,
         )
@@ -1052,15 +1045,15 @@ class MainWindow(QMainWindow):
 
         if data.last_sync:
             self._dashboard_page.set_sync_state(
-                f"Gespeichert · zuletzt {data.last_sync}"
+                f"{tr('Gespeichert · zuletzt')} {data.last_sync}"
             )
         elif data.receive_addresses or cached_entries or data.confirmed_balance or data.unconfirmed_balance:
-            self._dashboard_page.set_sync_state("Gespeicherte Wallet-Daten")
+            self._dashboard_page.set_sync_state(tr("Gespeicherte Wallet-Daten"))
         else:
-            self._dashboard_page.set_sync_state("Noch keine gespeicherten Blockchain-Daten")
+            self._dashboard_page.set_sync_state(tr("Noch keine gespeicherten Blockchain-Daten"))
 
         # Cache is useful offline, but it must never pretend that the network is live.
-        self._dashboard_page.set_network_state("Nicht verbunden")
+        self._dashboard_page.set_network_state(tr("Nicht verbunden"))
 
     def _reset_send_session(self) -> None:
         """Destroy all ephemeral transaction state between wallet sessions."""
@@ -1079,7 +1072,7 @@ class MainWindow(QMainWindow):
             self._format_bc2(0),
             False,
         )
-        self._dashboard_page.set_sync_state("Nicht synchronisiert")
+        self._dashboard_page.set_sync_state(tr("Nicht synchronisiert"))
         self._transaction_page.show_transactions([])
         if hasattr(self._dashboard_page, "set_transactions"):
             self._dashboard_page.set_transactions([])
@@ -1112,7 +1105,7 @@ class MainWindow(QMainWindow):
 
         addresses = self._known_receive_addresses()
         if not addresses:
-            self._dashboard_page.set_sync_state("Keine Adresse bekannt")
+            self._dashboard_page.set_sync_state(tr("Keine Adresse bekannt"))
             return
 
         self._balance_sync_wallet_id = wallet_id
@@ -1126,8 +1119,8 @@ class MainWindow(QMainWindow):
 
     @Slot()
     def _on_balance_sync_started(self) -> None:
-        self._dashboard_page.set_sync_state("Synchronisiere …")
-        self._dashboard_page.set_network_state("Verbinde …")
+        self._dashboard_page.set_sync_state(tr("Synchronisiere …"))
+        self._dashboard_page.set_network_state(tr("Verbinde …"))
 
     @staticmethod
     def _format_bc2(sats: int) -> str:
@@ -1157,9 +1150,9 @@ class MainWindow(QMainWindow):
             bool(result.unconfirmed),
         )
         self._dashboard_page.set_sync_state(
-            f"Aktuell · {result.addresses} Adresse(n)"
+            f"{tr('Aktuell')} · {result.addresses} {tr('Adresse(n)')}"
         )
-        self._dashboard_page.set_network_state("Verbunden")
+        self._dashboard_page.set_network_state(tr("Verbunden"))
 
     @Slot(str)
     def _on_balance_sync_failed(self, message: str) -> None:
@@ -1168,8 +1161,8 @@ class MainWindow(QMainWindow):
         self._balance_sync_wallet_id = None
         if wallet_id is None or request_wallet_id != wallet_id:
             return
-        self._dashboard_page.set_sync_state("Sync fehlgeschlagen")
-        self._dashboard_page.set_network_state("Nicht verbunden")
+        self._dashboard_page.set_sync_state(tr("Sync fehlgeschlagen"))
+        self._dashboard_page.set_network_state(tr("Nicht verbunden"))
 
     def _sync_transactions(self) -> None:
         if self._device is None or not self._device.unlocked:

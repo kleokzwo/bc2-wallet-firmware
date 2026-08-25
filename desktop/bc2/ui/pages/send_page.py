@@ -21,6 +21,8 @@ BORDER = "#D8DBE0"
 SURFACE = "#FFFFFF"
 PURPLE = "#8E159D"
 
+from bc2.i18n import tr
+
 
 class SendPage(QWidget):
     send_requested = Signal(str, str)
@@ -185,11 +187,11 @@ class SendPage(QWidget):
         texts = QVBoxLayout()
         texts.setSpacing(6)
 
-        title_label = QLabel("SENDEN")
+        title_label = QLabel(tr("SENDEN"))
         title_label.setObjectName("PageTitle")
 
         subtitle_label = QLabel(
-            "Transaktion vorbereiten, auf der Hardware prüfen, signieren und anschließend senden."
+            tr("Transaktion vorbereiten, auf der Hardware prüfen, signieren und anschließend senden.")
         )
         subtitle_label.setObjectName("PageSubtitle")
         subtitle_label.setWordWrap(True)
@@ -213,7 +215,7 @@ class SendPage(QWidget):
         section_icon.setObjectName("SectionIcon")
         section_icon.setFixedWidth(18)
 
-        title = QLabel("BC2 senden")
+        title = QLabel(tr("BC2 senden"))
         title.setObjectName("SectionTitle")
 
         section_head.addWidget(section_icon)
@@ -224,14 +226,14 @@ class SendPage(QWidget):
         layout.addWidget(self._build_progress())
         layout.addSpacing(6)
 
-        layout.addWidget(self._form_label("Empfängeradresse"))
+        layout.addWidget(self._form_label(tr("Empfängeradresse")))
 
         self._address_input = QLineEdit()
-        self._address_input.setPlaceholderText("BC2-Adresse eingeben")
+        self._address_input.setPlaceholderText(tr("BC2-Adresse eingeben"))
         self._address_input.setObjectName("Input")
         layout.addWidget(self._address_input)
 
-        layout.addWidget(self._form_label("Betrag"))
+        layout.addWidget(self._form_label(tr("Betrag")))
 
         self._amount_input = QLineEdit()
         self._amount_input.setPlaceholderText("0.00000000")
@@ -263,7 +265,7 @@ class SendPage(QWidget):
         preview_icon.setObjectName("SectionIcon")
         preview_icon.setFixedWidth(18)
 
-        preview_title = QLabel("Transaktionsentwurf")
+        preview_title = QLabel(tr("Transaktionsentwurf"))
         preview_title.setObjectName("CardTitle")
 
         preview_title_row.addWidget(preview_icon)
@@ -295,12 +297,12 @@ class SendPage(QWidget):
 
         actions = QHBoxLayout()
 
-        self._change_button = QPushButton("Ändern")
+        self._change_button = QPushButton(tr("Ändern"))
         self._change_button.setObjectName("OutlineButton")
         self._change_button.setVisible(False)
         self._change_button.clicked.connect(self._reset)
 
-        self._action_button = QPushButton("Weiter")
+        self._action_button = QPushButton(tr("Weiter"))
         self._action_button.setObjectName("PrimaryButton")
         self._action_button.clicked.connect(self._run_action)
 
@@ -325,7 +327,7 @@ class SendPage(QWidget):
         layout.setContentsMargins(0, 4, 0, 8)
         layout.setSpacing(0)
 
-        labels = ("Entwurf", "Prüfen", "Signieren", "Senden")
+        labels = (tr("Entwurf"), tr("Prüfen"), tr("Signieren"), tr("Senden"))
 
         for index, label_text in enumerate(labels):
             # Each node and its label share the same vertical column.
@@ -434,15 +436,15 @@ class SendPage(QWidget):
         amount_text = self._amount_input.text().strip().replace(",", ".")
 
         if not address:
-            self._error.setText("Bitte eine Empfängeradresse eingeben.")
+            self._error.setText(tr("Bitte eine Empfängeradresse eingeben."))
             return
 
         if len(address) < 20:
-            self._error.setText("Die Empfängeradresse ist zu kurz.")
+            self._error.setText(tr("Die Empfängeradresse ist zu kurz."))
             return
 
         if not amount_text:
-            self._error.setText("Bitte einen Betrag eingeben.")
+            self._error.setText(tr("Bitte einen Betrag eingeben."))
             return
 
         self.send_requested.emit(address, amount_text)
@@ -461,7 +463,7 @@ class SendPage(QWidget):
             self._amount_input.clear()
         self._change_button.setVisible(False)
         self._action_button.setEnabled(True)
-        self._action_button.setText("Weiter")
+        self._action_button.setText(tr("Weiter"))
         self._set_progress(completed=0, current=0)
 
     def _reset(self) -> None:
@@ -475,14 +477,13 @@ class SendPage(QWidget):
 
     def show_hardware_required(self) -> None:
         self.show_prepare_failed(
-            "Hardware Wallet nicht verbunden. "
-            "Senden ist ohne Hardware-Bestätigung nicht möglich."
+            tr("Hardware Wallet nicht verbunden. Senden ist ohne Hardware-Bestätigung nicht möglich.")
         )
 
     def show_preparing(self) -> None:
         self._error.setText("")
         self._action_button.setEnabled(False)
-        self._action_button.setText("Entwurf wird berechnet …")
+        self._action_button.setText(tr("Entwurf wird berechnet …"))
 
     def show_plan(self, plan) -> None:
         self._mode = "review"
@@ -492,29 +493,29 @@ class SendPage(QWidget):
         self._change_button.setVisible(True)
 
         self._preview_text.setText(
-            f"Empfänger: {plan.recipient}\n"
-            f"Betrag: {plan.amount / 100_000_000:.8f} BC2\n"
-            f"Netzwerkgebühr: {plan.fee / 100_000_000:.8f} BC2 "
+            f"{tr('Empfänger: ')}{plan.recipient}\n"
+            f"{tr('Betrag: ')}{plan.amount / 100_000_000:.8f} BC2\n"
+            f"{tr('Netzwerkgebühr: ')}{plan.fee / 100_000_000:.8f} BC2 "
             f"({plan.fee_rate} sat/vB)\n"
-            f"Wechselgeld: {plan.change / 100_000_000:.8f} BC2\n"
-            f"Eingänge: {plan.input_count} · geschätzt {plan.estimated_vbytes} vB"
+            f"{tr('Wechselgeld: ')}{plan.change / 100_000_000:.8f} BC2\n"
+            f"{tr('Eingänge: ')}{plan.input_count}{tr(' · geschätzt ')}{plan.estimated_vbytes} vB"
         )
 
         self._status.setText(
-            "Entwurf erstellt. Als Nächstes auf der Hardware prüfen."
+            tr("Entwurf erstellt. Als Nächstes auf der Hardware prüfen.")
         )
         self._preview.setVisible(True)
 
         self._action_button.setEnabled(True)
-        self._action_button.setText("Auf Hardware prüfen")
+        self._action_button.setText(tr("Auf Hardware prüfen"))
         self._set_progress(completed=1, current=1)
 
     def show_review_started(self) -> None:
         self._error.setText("")
         self._action_button.setEnabled(False)
-        self._action_button.setText("Warte auf Hardware …")
+        self._action_button.setText(tr("Warte auf Hardware …"))
         self._status.setText(
-            "PIN auf der Hardware eingeben und Transaktion dort prüfen."
+            tr("PIN auf der Hardware eingeben und Transaktion dort prüfen.")
         )
 
     def show_review_progress(self, message: str) -> None:
@@ -524,32 +525,31 @@ class SendPage(QWidget):
         if approved:
             self._mode = "sign"
             self._action_button.setEnabled(True)
-            self._action_button.setText("Auf Hardware signieren")
+            self._action_button.setText(tr("Auf Hardware signieren"))
             self._status.setText(
-                "✓ Auf der Hardware bestätigt. "
-                "Als Nächstes wird die bestätigte Transaktion signiert."
+                tr("✓ Auf der Hardware bestätigt. Als Nächstes wird die bestätigte Transaktion signiert.")
             )
             self._set_progress(completed=2, current=2)
         else:
             self._mode = "review"
             self._action_button.setEnabled(True)
-            self._action_button.setText("Erneut auf Hardware prüfen")
-            self._status.setText("Transaktion wurde auf der Hardware abgelehnt.")
+            self._action_button.setText(tr("Erneut auf Hardware prüfen"))
+            self._status.setText(tr("Transaktion wurde auf der Hardware abgelehnt."))
             self._set_progress(completed=1, current=1)
 
     def show_review_failed(self, message: str) -> None:
         self._mode = "review"
         self._action_button.setEnabled(True)
-        self._action_button.setText("Auf Hardware prüfen")
+        self._action_button.setText(tr("Auf Hardware prüfen"))
         self._error.setText(message)
         self._set_progress(completed=1, current=1)
 
     def show_sign_started(self) -> None:
         self._error.setText("")
         self._action_button.setEnabled(False)
-        self._action_button.setText("Hardware signiert …")
+        self._action_button.setText(tr("Hardware signiert …"))
         self._status.setText(
-            "Die privaten Schlüssel bleiben ausschließlich auf der Hardware."
+            tr("Die privaten Schlüssel bleiben ausschließlich auf der Hardware.")
         )
 
     def show_sign_progress(self, message: str) -> None:
@@ -558,36 +558,36 @@ class SendPage(QWidget):
     def show_signed(self, signed) -> None:
         self._mode = "broadcast"
         self._action_button.setEnabled(True)
-        self._action_button.setText("Transaktion senden")
+        self._action_button.setText(tr("Transaktion senden"))
         self._status.setText(
-            f"✓ Auf Hardware signiert.\n"
+            f"{tr('✓ Auf Hardware signiert.')}\n"
             f"TXID: {signed.txid}\n"
-            "Die Transaktion wurde noch nicht ins Netzwerk gesendet."
+            f"{tr('Die Transaktion wurde noch nicht ins Netzwerk gesendet.')}"
         )
         self._set_progress(completed=3, current=3)
 
     def show_sign_failed(self, message: str) -> None:
         self._mode = "sign"
         self._action_button.setEnabled(True)
-        self._action_button.setText("Auf Hardware signieren")
+        self._action_button.setText(tr("Auf Hardware signieren"))
         self._error.setText(message)
         self._set_progress(completed=2, current=2)
 
     def show_broadcast_started(self) -> None:
         self._error.setText("")
         self._action_button.setEnabled(False)
-        self._action_button.setText("Wird gesendet …")
+        self._action_button.setText(tr("Wird gesendet …"))
         self._status.setText(
-            "Die signierte Transaktion wird an den BC2 Electrum-Server übertragen."
+            tr("Die signierte Transaktion wird an den BC2 Electrum-Server übertragen.")
         )
 
     def show_broadcast_success(self, txid: str) -> None:
         self._mode = "done"
         self._action_button.setEnabled(False)
-        self._action_button.setText("✓ Gesendet")
+        self._action_button.setText(tr("✓ Gesendet"))
         self._change_button.setVisible(False)
         self._status.setText(
-            f"✓ Transaktion erfolgreich ins Netzwerk gesendet.\n"
+            f"{tr('✓ Transaktion erfolgreich ins Netzwerk gesendet.')}\n"
             f"TXID: {txid}"
         )
         self._set_progress(completed=4, current=None)
@@ -595,14 +595,14 @@ class SendPage(QWidget):
     def show_broadcast_failed(self, message: str) -> None:
         self._mode = "broadcast"
         self._action_button.setEnabled(True)
-        self._action_button.setText("Erneut senden")
+        self._action_button.setText(tr("Erneut senden"))
         self._error.setText(message)
         self._set_progress(completed=3, current=3)
 
     def show_prepare_failed(self, message: str) -> None:
         self._mode = "prepare"
         self._action_button.setEnabled(True)
-        self._action_button.setText("Weiter")
+        self._action_button.setText(tr("Weiter"))
         self._error.setText(message)
         self._set_progress(completed=0, current=0)
 
@@ -632,10 +632,10 @@ class SendPage(QWidget):
         text = QVBoxLayout()
         text.setSpacing(1)
 
-        primary = QLabel("Sicher & Offline")
+        primary = QLabel(tr("Sicher & Offline"))
         primary.setObjectName("SecurityPrimary")
 
-        secondary = QLabel("Schlüssel bleiben auf Hardware")
+        secondary = QLabel(tr("Schlüssel bleiben auf Hardware"))
         secondary.setObjectName("SecuritySecondary")
 
         text.addWidget(primary)
@@ -662,12 +662,11 @@ class SendPage(QWidget):
         text = QVBoxLayout()
         text.setSpacing(2)
 
-        title = QLabel("Sicherheit zuerst")
+        title = QLabel(tr("Sicherheit zuerst"))
         title.setObjectName("SafetyTitle")
 
         detail = QLabel(
-            "PIN, Seed und private Schlüssel bleiben ausschließlich auf der Hardware. "
-            "Die Geräte-PIN besteht aus genau 4 Ziffern."
+            tr("PIN, Seed und private Schlüssel bleiben ausschließlich auf der Hardware. Die Geräte-PIN besteht aus genau 4 Ziffern.")
         )
         detail.setObjectName("SafetyText")
         detail.setWordWrap(True)

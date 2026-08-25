@@ -78,6 +78,7 @@ class MainWindow(QMainWindow):
         self._balance_sync_wallet_id: str | None = None
         self._transaction_sync_wallet_id: str | None = None
         self._setup_in_progress = False
+        self._unlock_after_scan = False
         self._current_send_plan = None
         self._current_signed_transaction = None
         self._transaction_entries = []
@@ -348,12 +349,6 @@ class MainWindow(QMainWindow):
         intro.setWordWrap(True)
         outer.addWidget(intro)
 
-        card = self._card()
-        card.setMaximumWidth(500)
-        card_layout = QVBoxLayout(card)
-        card_layout.setContentsMargins(30, 24, 30, 24)
-        card_layout.setSpacing(12)
-
         self._setup_status_title = QLabel("")
         self._setup_status_title.setObjectName("SectionTitle")
         self._setup_status_title.setAlignment(Qt.AlignCenter)
@@ -385,29 +380,15 @@ class MainWindow(QMainWindow):
         self._recovery_wallet_button.setEnabled(False)
         self._recovery_wallet_button.clicked.connect(self._begin_wallet_recovery)
 
-        self._setup_scan_button = QPushButton("Erneut verbinden")
-        self._setup_scan_button.setObjectName("LinkButton")
-        self._setup_scan_button.setCursor(Qt.PointingHandCursor)
-        self._setup_scan_button.clicked.connect(self._device_service.scan)
-
-        card_layout.addWidget(self._setup_status_title)
-        card_layout.addWidget(self._setup_status_text)
-        card_layout.addWidget(self._create_wallet_button, alignment=Qt.AlignHCenter)
-        card_layout.addWidget(self._unlock_wallet_button, alignment=Qt.AlignHCenter)
-        card_layout.addSpacing(2)
-
-        links = QHBoxLayout()
-        links.setSpacing(8)
-        links.addStretch()
-        links.addWidget(self._recovery_wallet_button)
-        self._setup_link_separator = QLabel("·")
-        self._setup_link_separator.setObjectName("SmallMuted")
-        links.addWidget(self._setup_link_separator)
-        links.addWidget(self._setup_scan_button)
-        links.addStretch()
-        card_layout.addLayout(links)
-
-        outer.addWidget(card, alignment=Qt.AlignHCenter)
+        # Setup actions intentionally live directly on the page.  There is no
+        # surrounding card and no user-facing reconnect control: USB discovery
+        # is an implementation detail handled by the actions themselves.
+        outer.addWidget(self._setup_status_title)
+        outer.addWidget(self._setup_status_text)
+        outer.addWidget(self._create_wallet_button, alignment=Qt.AlignHCenter)
+        outer.addWidget(self._unlock_wallet_button, alignment=Qt.AlignHCenter)
+        outer.addSpacing(2)
+        outer.addWidget(self._recovery_wallet_button, alignment=Qt.AlignHCenter)
         outer.addStretch()
         return page
 
@@ -443,9 +424,9 @@ class MainWindow(QMainWindow):
     def _poll_setup_device_state(self) -> None:
         """Poll only while the login/setup page is visible.
 
-        This catches hardware-side PIN failures and LOCKDOWN without requiring
-        the user to click "Erneut verbinden". DeviceService suppresses
-        overlapping scans itself.
+        This catches hardware-side PIN failures and LOCKDOWN while keeping
+        USB discovery completely transparent to the user. DeviceService
+        suppresses overlapping scans itself.
         """
         if self._stack.currentWidget() is not self._pages["setup"]:
             self._setup_state_timer.stop()
@@ -477,11 +458,18 @@ class MainWindow(QMainWindow):
 
     @Slot()
     def _begin_wallet_unlock(self) -> None:
+        # Re-discovery is deliberately transparent to the user.  A stale or
+        # missing device handle simply triggers a scan; once discovery returns,
+        # _on_scan_finished() resumes this unlock attempt.
         if self._device is None:
-            self._set_setup_message(
-                "Hardware Wallet nicht verbunden",
-                "Verbinde zuerst dein BC2 Gerät per USB.",
-            )
+            self._unlock_after_scan = True
+            self._unlock_wallet_button.setEnabled(False)
+            self._set_setup_quiet()
+            try:
+                self._device_service.scan()
+            except Exception:
+                self._unlock_after_scan = False
+                self._unlock_wallet_button.setEnabled(True)
             return
         if not self._device.wallet_ready:
             self._set_setup_message(
@@ -521,9 +509,11 @@ class MainWindow(QMainWindow):
             return
 
         dialog = RecoveryDialog(self)
-        if dialog.exec() != QDialog.Accepted or not dialog.mnemonic:
+        if dialog.exec() != QDialog.Accepted:
             return
-        mnemonic = dialog.mnemonic
+        mnemonic = dialog.take_mnemonic()
+        if not mnemonic:
+            return
 
         try:
             accepted = begin_recovery(self._device.port)
@@ -821,9 +811,6 @@ class MainWindow(QMainWindow):
 
     @Slot()
     def _on_scan_started(self) -> None:
-        if hasattr(self, "_setup_scan_button"):
-            self._setup_scan_button.setEnabled(False)
-
         # Normal USB discovery is silent on the login page.
         self._device_page.show_scanning()
         self._sidebar_ready.setText("●  Suche Gerät …")
@@ -832,11 +819,9 @@ class MainWindow(QMainWindow):
 
     @Slot(object)
     def _on_scan_finished(self, result: DiscoveryResult) -> None:
-        if hasattr(self, "_setup_scan_button"):
-            self._setup_scan_button.setEnabled(True)
-
         if result.device is None:
             self._device = None
+            self._unlock_after_scan = False
             self._device_page.show_offline()
             self._sidebar_ready.setText("●  Gerät offline")
             self._sidebar_ready.setObjectName("SidebarOffline")
@@ -848,7 +833,8 @@ class MainWindow(QMainWindow):
             if self._stack.currentWidget() is self._pages["setup"]:
                 self._sidebar.setVisible(False)
                 self._create_wallet_button.setEnabled(False)
-                self._unlock_wallet_button.setEnabled(False)
+                # Unlock doubles as a transparent reconnect attempt.
+                self._unlock_wallet_button.setEnabled(True)
                 self._recovery_wallet_button.setEnabled(False)
                 self._set_setup_quiet()
                 QTimer.singleShot(2000, self._retry_setup_scan)
@@ -858,6 +844,8 @@ class MainWindow(QMainWindow):
 
         self._device = result.device
         d = result.device
+        resume_unlock = self._unlock_after_scan
+        self._unlock_after_scan = False
         self._device_page.show_connected(d)
         self._sidebar_ready.setText("●  Bereit")
         self._sidebar_ready.setObjectName("SidebarReady")
@@ -884,7 +872,6 @@ class MainWindow(QMainWindow):
             self._create_wallet_button.setVisible(True)
             self._unlock_wallet_button.setVisible(False)
             self._recovery_wallet_button.setVisible(True)
-            self._setup_link_separator.setVisible(True)
             self._unlock_wallet_button.setEnabled(False)
             if self._setup_in_progress:
                 self._create_wallet_button.setEnabled(False)
@@ -945,7 +932,6 @@ class MainWindow(QMainWindow):
                 self._create_wallet_button.setVisible(False)
                 self._unlock_wallet_button.setVisible(False)
                 self._recovery_wallet_button.setVisible(True)
-                self._setup_link_separator.setVisible(True)
                 self._create_wallet_button.setEnabled(False)
                 self._unlock_wallet_button.setEnabled(False)
 
@@ -962,11 +948,12 @@ class MainWindow(QMainWindow):
             else:
                 self._create_wallet_button.setVisible(False)
                 self._recovery_wallet_button.setVisible(False)
-                self._setup_link_separator.setVisible(False)
                 self._unlock_wallet_button.setVisible(True)
                 self._create_wallet_button.setEnabled(False)
                 self._recovery_wallet_button.setEnabled(False)
                 self._unlock_wallet_button.setEnabled(d.state == 2)
+                if resume_unlock and d.state == 2:
+                    QTimer.singleShot(0, self._begin_wallet_unlock)
                 if d.state == 4:
                     self._set_setup_message("PIN vorübergehend gesperrt", "Warte kurz und versuche anschließend erneut zu entsperren.")
                 else:

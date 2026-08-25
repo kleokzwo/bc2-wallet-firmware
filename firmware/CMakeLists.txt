@@ -7,6 +7,7 @@ project(
 )
 
 option(BC2_BUILD_SIMULATOR "Build the Qt 6 desktop simulator" OFF)
+option(BC2_BUILD_DEVELOPER_CLI "Build the mnemonic/xprv developer CLI" OFF)
 
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
@@ -70,21 +71,23 @@ else()
     )
 endif()
 
-add_executable(bc2-wallet-cli firmware/app/main.c)
-target_link_libraries(bc2-wallet-cli PRIVATE bc2_wallet_core)
+if(BC2_BUILD_DEVELOPER_CLI)
+    add_executable(bc2-wallet-cli firmware/app/main.c)
+    target_link_libraries(bc2-wallet-cli PRIVATE bc2_wallet_core)
 
-if(MSVC)
-    target_compile_options(bc2-wallet-cli PRIVATE /W4)
-else()
-    target_compile_options(
-        bc2-wallet-cli
-        PRIVATE
-            -Wall
-            -Wextra
-            -Wpedantic
-            -Werror
-            -Wno-deprecated-declarations
-    )
+    if(MSVC)
+        target_compile_options(bc2-wallet-cli PRIVATE /W4)
+    else()
+        target_compile_options(
+            bc2-wallet-cli
+            PRIVATE
+                -Wall
+                -Wextra
+                -Wpedantic
+                -Werror
+                -Wno-deprecated-declarations
+        )
+    endif()
 endif()
 
 enable_testing()

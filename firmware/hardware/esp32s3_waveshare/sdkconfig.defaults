@@ -3,7 +3,9 @@ CONFIG_ESPTOOLPY_FLASHSIZE_8MB=y
 CONFIG_SPIRAM=y
 CONFIG_SPIRAM_MODE_OCT=y
 CONFIG_ESP_CONSOLE_UART_DEFAULT=y
-# USB Serial/JTAG is reserved for the framed BC2 protocol, not log output.
+CONFIG_ESP_CONSOLE_SECONDARY_NONE=y
+# USB Serial/JTAG is reserved exclusively for the framed BC2 protocol.
+# Keep ESP-IDF logs on UART0; never mirror console output to USB Serial/JTAG.
 CONFIG_COMPILER_OPTIMIZATION_SIZE=y
 CONFIG_LOG_DEFAULT_LEVEL_INFO=y
 CONFIG_ESP_SYSTEM_PANIC_PRINT_REBOOT=y
@@ -17,7 +19,14 @@ CONFIG_MBEDTLS_RIPEMD160_C=y
 CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_240=y
 CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ=240
 
-# BC2 Cold Wallet radio policy
+# BC2 Cold Wallet radio policy: USB only. Do not compile radio stacks.
+CONFIG_ESP_WIFI_ENABLED=n
+CONFIG_ESP32_WIFI_ENABLED=n
 CONFIG_BT_ENABLED=n
 CONFIG_BT_NIMBLE_ENABLED=n
 CONFIG_BT_BLUEDROID_ENABLED=n
+
+# USB protocol isolation: the native USB Serial/JTAG endpoint is BC2-only.
+# Suppress ROM/bootloader text so no startup bytes can contaminate framed traffic.
+CONFIG_BOOTLOADER_LOG_LEVEL_NONE=y
+CONFIG_BOOT_ROM_LOG_ALWAYS_OFF=y

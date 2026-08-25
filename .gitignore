@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# CMake / ESP-IDF build output
+build/
+**/build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+*~
+
+# Local runtime/log artifacts
+*.log
+*.tmp
